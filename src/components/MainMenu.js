@@ -1,3 +1,11 @@
 import React from 'react'
 
-//TODO: Create functional component for main menu
+const MainMenu = () =>{
+    return(
+        <div>
+            MainMenu
+        </div>
+    )
+};
+
+export default MainMenu
