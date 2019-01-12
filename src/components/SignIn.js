@@ -5,7 +5,11 @@ const SignIn = () =>{
         <div>
 
              {/*Besterbikes Logo */}{/*TODO Get new logo and put here*/}
-            <img className="ui centered medium image" alt="Besterbikes Logo" src={require('../images/logo.png')}/>
+            <img className="ui centered medium image"
+                 alt="Besterbikes Logo"
+                 src={require('../images/logo.png')}
+            />
+            {/*require() from Apswak on StackOverFlow*/}
 
             {/*Divider Line*/}
             <div className="ui horizontal divider">
