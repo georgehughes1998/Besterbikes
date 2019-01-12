@@ -5,12 +5,10 @@ class SignIn extends React.Component{
     renderInput = ({input, label}) => {
 
         return(
-            <div className="ui container">
-                <div className="ui input">
-                    <label>{label}</label>
+                <div className="field">
+                    <label>{label }</label>
                     <input {...input}/>
                 </div>
-            </div>
             )
     };
 
@@ -34,20 +32,20 @@ class SignIn extends React.Component{
                 </div>
 
                 {/*Log In Form*/}
-                <form className="ui container middle aligned center aligned grid" onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                <form className="ui container middle aligned center aligned grid form" onSubmit={this.props.handleSubmit(this.onSubmit)}>
                     <div className="column">
 
-                        <Field>
+                        <Field
                             name = "email"
                             component = {this.renderInput}
                             label = "Email:"
-                        </Field>
+                        />
 
-                        <Field>
+                        <Field
                             name = "password"
                             component = {this.renderInput}
                             label = "Password:"
-                        </Field>
+                        />
 
 
                         <br/>
