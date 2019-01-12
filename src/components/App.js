@@ -10,7 +10,7 @@ import Header from "./Header";
 const App = () => {
     return(
         <div>
-            //BroweserRouter handles the pages and their associated URLs for the entire App
+            {/*BroweserRouter handles the pages and their associated URLs for the entire App*/}
             <BrowserRouter>
                 <div>
                     <Header/>
