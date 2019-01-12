@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 
-import firebase from './firebase'
+import Firebase, { FirebaseContext } from './components/Firebase'
 import App from "./components/App";
 import reducers from "./reducers";
 
@@ -17,8 +17,10 @@ const store = createStore(
 );
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App/>
-    </Provider>,
+    <FirebaseContext.Provider value={new Firebase()}>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </FirebaseContext.Provider>,
     document.querySelector('#root')
 );
