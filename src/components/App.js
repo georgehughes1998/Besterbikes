@@ -2,8 +2,8 @@ import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import MainMenu from './MainMenu'
-import SignIn from './SignIn'
-import SignUp from './SignUp'
+import SignIn from './Account/SignIn'
+import SignUp from './Account/SignUp'
 import Header from "./Header";
 
 
