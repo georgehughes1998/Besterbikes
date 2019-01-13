@@ -8,3 +8,11 @@ export const signIn = ({email, password}) => {
     promise.catch(e => console.log(e.message));
     promise.then(e => console.log(e));
 };
+
+export const signUp = ({email, password}) => {
+    const auth = firebase.auth();
+    const promise = auth.createUserWithEmailAndPassword(email, password);
+
+    promise.catch(e => console.log(e.message));
+    promise.then(e => console.log(e));
+};

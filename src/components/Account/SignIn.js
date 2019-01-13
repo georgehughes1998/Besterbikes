@@ -51,6 +51,8 @@ class SignIn extends React.Component{
                         <button className="ui big primary button">
                             Log In
                         </button>
+
+                        {/*TODO Button should link to SignUp page.*/}
                         <button className="ui big button">
                             Sign Up
                         </button>
