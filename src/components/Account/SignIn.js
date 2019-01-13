@@ -1,26 +1,8 @@
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
+import AccountForm from "./AccountForm";
 
-import { signIn } from '../Firebase/authentication'
+const SignIn = () => {
 
-class SignIn extends React.Component{
-
-    // Renders fields for redux form
-    renderInput = ({input, label}) => {
-        return(
-                <div className="field">
-                    <label>{label }</label>
-                    <input {...input}/>
-                </div>
-            )
-    };
-
-    //Calls firebase to log in using form values
-    onSubmit = (formValues) => {
-        signIn(formValues)
-    };
-
-    render(){
         return(
             <div>
                 {/*Besterbikes Logo */}
@@ -32,37 +14,37 @@ class SignIn extends React.Component{
 
                 {/*Divider Line*/}
                 <div className="ui horizontal divider">
-                    Log In
+                    Sign In
                 </div>
 
                 {/*Log In Form*/}
-                <form className="ui container middle aligned center aligned grid form" onSubmit={this.props.handleSubmit(this.onSubmit)}>
-                    <div className="column">
-                        <Field
-                            name = "email"
-                            component = {this.renderInput}
-                            label = "Email:"
-                        />
-                        <Field
-                            name = "password"
-                            component = {this.renderInput}
-                            label = "Password:"
-                        />
-                        <button className="ui big primary button">
-                            Log In
-                        </button>
-                        <button className="ui big button">
-                            Sign Up
-                        </button>
-                    </div>
-                </form>
+                <AccountForm
+                    fields={{
+                        Email: {
+                            name: 'email',
+                            label: 'Email'
+                        },
+                        Password: {
+                            name: 'password',
+                            label: 'Password'
+                        }
+                    }}
+
+                    button={{
+                        text: "Sign In",
+                        link: "/"
+                    }}
+
+                    link={{
+                        text: "Sign Up",
+                        link: "/signup"
+                    }}
+                />
+
             </div>
         )
-    }
 }
 
 //TODO: Add validation for SignIn
 
-export default reduxForm({
-    form: 'signIn'
-})(SignIn);
+export default SignIn
