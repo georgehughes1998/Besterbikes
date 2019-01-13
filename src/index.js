@@ -28,3 +28,4 @@ ReactDOM.render(
     </FirebaseContext.Provider>,
     document.querySelector('#root')
 );
+
