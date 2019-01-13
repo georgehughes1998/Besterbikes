@@ -7,7 +7,8 @@ export const signIn = ({email, password}) => {
 
     promise
         .then(e => console.log(e, "then"))
-        .catch(e => console.log(e.message, "catch"));
+        //TODO: Return and display any error messages
+        .catch(e => console.log(e.message));
 
 };
 

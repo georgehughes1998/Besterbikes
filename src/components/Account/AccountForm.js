@@ -1,32 +1,46 @@
 import React from 'react'
 import {Field, reduxForm} from "redux-form";
-import { Link } from "react-router-dom";
-
 import {signIn, signUp} from "../Firebase/authentication";
 
 //Class to render a form based on props
 class AccountForm extends React.Component{
 
-    //Calls firebase to handle account correctly using form values
+    //Calls firebase to handle account correctly depending on what account process is being carried out
     onSubmit = (formValues) => {
-            if (this.props.button.text == 'Sign In'){
+            if (this.props.button.text === 'Sign In'){
                 signIn(formValues)
-            }else if (this.props.link.text == 'Sign Up'){
+            }else if (this.props.button.text === 'Sign Up'){
                 signUp(formValues)
             }
     };
 
-    // Renders JSX elements for fields in redux form
-    renderInput = ({input, label}) => {
+    //Renders Error if field invalid
+    renderError = ({error, touched}) => {
+        if (touched && error){
+            return(
+                <div className="ui error message">
+                    <div className="header">{error}</div>
+                </div>
+            )
+        }
+    };
+
+
+    // Renders JSX elements for each field in the redux form
+    renderInput = ({input, label, type, meta}) => {
+
+        const classname = `field ${meta.error && meta.touched ? 'error' : ''}`;
+
         return(
-            <div className="field">
+            <div className={classname}>
                 <label>{label}</label>
-                <input {...input}/>
+                <input {...input} placeholder={label} type={type}/>
+                {this.renderError(meta)}
             </div>
         )
     };
 
-    //Renders Redux Form Fields for all props
+    //Renders Redux Form Fields for all props passed in from parent component
     renderFields = Object.values(this.props.fields).map((key, index) => {
         return(
             <Field
@@ -34,6 +48,7 @@ class AccountForm extends React.Component{
                 name = {key.name}
                 component = {this.renderInput}
                 label = {key.label}
+                type = {key.type}
             />
         )
     });
@@ -42,28 +57,41 @@ class AccountForm extends React.Component{
     render(){
         return(
 
-            <form className="ui container middle aligned center aligned grid form" onSubmit={this.props.handleSubmit(this.onSubmit)}>
+            <form className="ui container middle aligned center aligned grid form error" onSubmit={this.props.handleSubmit(this.onSubmit)}>
                 <div className="column">
-                        <div className="column">
 
-                            {this.renderFields}
+                    {this.renderFields}
 
-                            <button className="ui big primary button container">
-                                {this.props.button.text}
-                            </button>
+                    <button className="ui big primary button">
+                        {this.props.button.text}
+                    </button>
 
-                            <br/>
-                            <Link to={this.props.button.link} className="blue">
-                                {this.props.link.text}
-                            </Link>
+                    <br/>
 
-                        </div>
                 </div>
             </form>
         )
     }
 };
 
+const validate = (formValues) => {
+
+    const errors = {};
+
+    // Object.values(this.props.fields).map((key, index) => {
+    //
+    //     const name = key.name;
+
+        if (!formValues.email) {
+            //Only run if user did not enter email
+            errors.email = 'You must enter a email' ;
+        }
+    // };
+
+    return errors;
+};
+
 export default reduxForm({
-    form: 'AccountForm'
+    form: 'AccountForm',
+    validate
 })(AccountForm);

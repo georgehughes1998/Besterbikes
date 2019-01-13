@@ -1,32 +1,31 @@
 import React from 'react'
 import AccountForm from "./AccountForm";
+import {Link} from "react-router-dom";
 
 const SignIn = () => {
 
         return(
             <div>
-                {/*Besterbikes Logo */}
-                {/*TODO Get new logo and put here, GDRIVE not working on mobile*/}
+                {/*TODO: Gdrive not working on mobile*/}
                 <img className="ui centered medium image"
                      alt="Besterbikes Logo"
                      src="https://lh6.googleusercontent.com/jsF13Ay0tZSL5qr7Bcoj1H84O9tePF-U0XsC3Z2mRikOFkE9Bf-lmppDB-V-Kf32etoUP-Aw2vcTXrp2lNqT=w1920-h903"
                 />
 
-                {/*Divider Line*/}
-                <div className="ui horizontal divider">
-                    Sign In
-                </div>
+                <div className="ui horizontal divider">Sign In</div>
 
-                {/*Log In Form*/}
+                {/*Sign In Form*/}
                 <AccountForm
                     fields={{
                         Email: {
                             name: 'email',
-                            label: 'Email'
+                            label: 'Email',
+                            type: 'text'
                         },
                         Password: {
                             name: 'password',
-                            label: 'Password'
+                            label: 'Password',
+                            type: 'password'
                         }
                     }}
 
@@ -40,6 +39,12 @@ const SignIn = () => {
                         link: "/signup"
                     }}
                 />
+
+                <Link to="/Signup" className="ui center aligned grid">
+                    <div className="column">
+                        Don't have an account, Sign Up
+                    </div>
+                </Link>
 
             </div>
         )
