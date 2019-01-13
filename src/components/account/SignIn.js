@@ -1,12 +1,16 @@
 import React from 'react'
-import AccountForm from "./AccountForm";
 import {Link} from "react-router-dom";
 
-const SignIn = () => {
+import AccountForm from "./AccountHandlingForm";
+import AccountPageContainer from "./AccountPageContainer";
 
+
+class SignIn extends React.Component {
+
+    render(){
         return(
-            <div>
-                {/*TODO: Gdrive not working on mobile*/}
+            <AccountPageContainer>
+                {/*TODO: Gdrive image not working on mobile, throws 403*/}
                 <img className="ui centered medium image"
                      alt="Besterbikes Logo"
                      src="https://lh6.googleusercontent.com/jsF13Ay0tZSL5qr7Bcoj1H84O9tePF-U0XsC3Z2mRikOFkE9Bf-lmppDB-V-Kf32etoUP-Aw2vcTXrp2lNqT=w1920-h903"
@@ -29,15 +33,11 @@ const SignIn = () => {
                         }
                     }}
 
-                    button={{
+                    operation={{
                         text: "Sign In",
                         link: "/"
                     }}
 
-                    link={{
-                        text: "Sign Up",
-                        link: "/signup"
-                    }}
                 />
 
                 <Link to="/Signup" className="ui center aligned grid">
@@ -46,10 +46,9 @@ const SignIn = () => {
                     </div>
                 </Link>
 
-            </div>
+            </AccountPageContainer>
         )
+    }
 }
-
-//TODO: Add validation for SignIn
 
 export default SignIn

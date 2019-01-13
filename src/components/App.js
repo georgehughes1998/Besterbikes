@@ -2,15 +2,15 @@ import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import MainMenu from './MainMenu'
-import SignIn from './Account/SignIn'
-import SignUp from './Account/SignUp'
+import SignIn from './account/SignIn'
+import SignUp from './account/SignUp'
 import Header from "./Header";
 
-
 const App = () => {
+
     return(
         <div>
-            {/*BroweserRouter handles the pages and their associated URLs for the entire App*/}
+            {/*BrowserRouter handles the pages and their associated URLs for the entire App*/}
             <BrowserRouter>
                 <div>
                     <Header/>

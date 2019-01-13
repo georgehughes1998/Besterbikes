@@ -1,20 +1,30 @@
 import React from 'react'
 import {Field, reduxForm} from "redux-form";
-import {signIn, signUp} from "../Firebase/authentication";
 
-//Class to render a form based on props
-class AccountForm extends React.Component{
+import {signIn, signUp, signOut} from "../../firebase/authentication";
+
+
+//Class to render a form based on props given from an account component
+class AccountHandlingForm extends React.Component{
 
     //Calls firebase to handle account correctly depending on what account process is being carried out
     onSubmit = (formValues) => {
-            if (this.props.button.text === 'Sign In'){
-                signIn(formValues)
-            }else if (this.props.button.text === 'Sign Up'){
-                signUp(formValues)
-            }
+
+        //Uses operation prop to determine which firebase process to follow
+        switch(this.props.operation.text){
+            case "Sign In":
+                return signIn(formValues);
+            case "Sign Up":
+                return signUp(formValues);
+            case "Sign Out":
+                return signOut();
+            default:
+                return null;
+        }
+
     };
 
-    //Renders Error if field invalid
+    //Renders Error if field is invalid using semantic UI and redux forms
     renderError = ({error, touched}) => {
         if (touched && error){
             return(
@@ -25,8 +35,7 @@ class AccountForm extends React.Component{
         }
     };
 
-
-    // Renders JSX elements for each field in the redux form
+    //Renders JSX elements for each field in the redux form if they exist
     renderInput = ({input, label, type, meta}) => {
 
         const classname = `field ${meta.error && meta.touched ? 'error' : ''}`;
@@ -40,7 +49,7 @@ class AccountForm extends React.Component{
         )
     };
 
-    //Renders Redux Form Fields for all props passed in from parent component
+    //Renders Redux Form Fields for all the props passed in from the parent component
     renderFields = Object.values(this.props.fields).map((key, index) => {
         return(
             <Field
@@ -63,7 +72,7 @@ class AccountForm extends React.Component{
                     {this.renderFields}
 
                     <button className="ui big primary button">
-                        {this.props.button.text}
+                        {this.props.operation.text}
                     </button>
 
                     <br/>
@@ -74,24 +83,30 @@ class AccountForm extends React.Component{
     }
 };
 
+//Validates inputs using redux forms
 const validate = (formValues) => {
 
     const errors = {};
 
-    // Object.values(this.props.fields).map((key, index) => {
-    //
-    //     const name = key.name;
-
-        if (!formValues.email) {
-            //Only run if user did not enter email
-            errors.email = 'You must enter a email' ;
+        if(!formValues.email){
+            errors.email = "You must enter a valid email"
         }
-    // };
+
+        //Attempt to iterate through props and render each ones validation
+        // TODO: Fux validation and Use functions in Props object to validate
+        // if(this){
+        //     Object.values(this.props.fields).map((key, index) => {
+        //         if (!formValues.key.name) {
+        //             errors.key.name = "You must enter a valid " + key
+        //         }
+        //     });
+        // }
 
     return errors;
-};
+
+    };
 
 export default reduxForm({
-    form: 'AccountForm',
+    form: 'AccountHandlingForm',
     validate
-})(AccountForm);
+})(AccountHandlingForm);

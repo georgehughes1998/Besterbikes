@@ -2,11 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
-
-import Firebase, { FirebaseContext } from './components/Firebase'
+import Firebase, { FirebaseContext } from './firebase/index'
 
 import App from "./components/App";
-import reducers from "./reducers";
+import reducers from "./redux/reducers";
 
 //Hooks up Redux development tool
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
