@@ -20,7 +20,7 @@ export const signIn = async ({email, password}) => {
 //Function to sign up to firebase with auth using props from redux form
 export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
     const auth = firebase.auth();
-    //TODO: Store name and birthdates and passoword in firetsore
+    //TODO: Store name and birthdates and password in firetstore
     const promise = auth.createUserWithEmailAndPassword(email, password);
 
     return promise
