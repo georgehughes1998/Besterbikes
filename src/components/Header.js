@@ -20,18 +20,20 @@ const Header = (props) => {
             default:
                 return null;
         }
-    }
+    };
 
     return(
         <div className="ui inverted blue three item menu">
 
             {/*TODO: Change back button to side menu as web already has back button*/}
             <div className="item">
-                <i className="bars  icon"/>
+                <i className="bars icon"/>
             </div>
+
             <div className="item">
                 { getDisplayTitle(props.location.pathname) }
             </div>
+
             <Link to="/" className="item">
                 <i className="bicycle icon"/>
             </Link>

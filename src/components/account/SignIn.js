@@ -3,17 +3,18 @@ import {Link} from "react-router-dom";
 
 import AccountForm from "./AccountHandlingForm";
 import AccountPageContainer from "./AccountPageContainer";
+import {reduxForm} from "redux-form";
 
 
-class SignIn extends React.Component {
+//Component that passes relevant fields to AccountPageContainer for a signin
+const SignIn = ({error}) => {
 
-    render(){
         return(
             <AccountPageContainer>
-                {/*TODO: Gdrive image not working on mobile, throws 403*/}
+                {/*Use procedure to show image from: https://support.awesome-table.com/hc/en-us/articles/115002196665-Display-images-from-Google-Drive*/}
                 <img className="ui centered medium image"
+                     src="https://drive.google.com/thumbnail?id=1DWfv569MmvtLipSX_vFQVihtJcbbmiTx"
                      alt="Besterbikes Logo"
-                     src="https://lh6.googleusercontent.com/jsF13Ay0tZSL5qr7Bcoj1H84O9tePF-U0XsC3Z2mRikOFkE9Bf-lmppDB-V-Kf32etoUP-Aw2vcTXrp2lNqT=w1920-h903"
                 />
 
                 <div className="ui horizontal divider">Sign In</div>
@@ -33,6 +34,8 @@ class SignIn extends React.Component {
                         }
                     }}
 
+                    errors = {error}
+
                     operation={{
                         text: "Sign In",
                         link: "/"
@@ -40,7 +43,7 @@ class SignIn extends React.Component {
 
                 />
 
-                <Link to="/Signup" className="ui center aligned grid">
+                <Link to="/signup" className="ui center aligned grid">
                     <div className="column">
                         Don't have an account, Sign Up
                     </div>
@@ -48,7 +51,8 @@ class SignIn extends React.Component {
 
             </AccountPageContainer>
         )
-    }
-}
+};
 
-export default SignIn
+export default reduxForm({
+    form: 'AccountHandlingForm',
+})(SignIn);

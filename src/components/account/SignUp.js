@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 import AccountForm from "./AccountHandlingForm";
 import AccountPageContainer from "./AccountPageContainer";
 
+
+//Component that passes relevant fields to AccountPageContainer for a sign Up
 class SignUp extends React.Component {
 
     render(){
