@@ -1,13 +1,12 @@
 import React from 'react'
 
 import AccountForm from "./AccountHandlingForm";
-import AccountPageContainer from "./AccountPageContainer";
+import AccountPageContainer from "../PageContainer";
 
 
 //Component that passes relevant fields to AccountPageContainer for a sign out
-class SignOut extends  React.Component{
+const SignOut =() =>{
 
-    render(){
         return(
             <AccountPageContainer>
 
@@ -23,7 +22,6 @@ class SignOut extends  React.Component{
                 />
             </AccountPageContainer>
         )
-    }
-}
+};
 
 export default SignOut

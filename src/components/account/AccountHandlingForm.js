@@ -1,10 +1,11 @@
 import React from 'react'
-import {Field, reduxForm} from "redux-form";
+import {Field, reduxForm, SubmissionError} from "redux-form";
+import {withRouter} from "react-router-dom";
+import { Message, Form, Container, Button } from 'semantic-ui-react'
 
 import {signIn, signUp, signOut} from "../../firebase/authentication";
-import { SubmissionError } from "redux-form";
 import FirebaseError from '../FirebaseError'
-import {withRouter} from "react-router-dom";
+
 
 
 //Class to render a form related to firebase authentication and handle the submission
@@ -54,11 +55,14 @@ class AccountHandlingForm extends React.Component{
 
     //Renders Error for individual fields if they're invalid using semantic UI and redux forms
     renderReduxError = ({error, touched}) => {
+
         if (touched && error){
             return(
-                <div className="ui error message">
-                    <div className="header">{error}</div>
-                </div>
+                <Message
+                    error
+                    header = 'Please review this field'
+                    content = {error}
+                />
             )
         }
     };
@@ -66,14 +70,15 @@ class AccountHandlingForm extends React.Component{
     //Renders JSX elements for each field in the redux form if they exist
     renderInput = ({input, label, type, meta}) => {
 
-        const classname = `field ${meta.error && meta.touched ? 'error' : ''}`;
-
         return(
-            <div className={classname}>
+            <Form.Field>
                 <label>{label}</label>
-                <input {...input} placeholder={label} type={type}/>
+                <input
+                    {...input}
+                    type = {type}
+                />
                 {this.renderReduxError(meta)}
-            </div>
+            </Form.Field>
         )
     };
 
@@ -81,9 +86,9 @@ class AccountHandlingForm extends React.Component{
     renderFields = Object.values(this.props.fields).map((key, index) => {
         return(
             <Field
-                key = {index}
                 name = {key.name}
                 component = {this.renderInput}
+                key = {index}
                 label = {key.label}
                 type = {key.type}
             />
@@ -94,22 +99,30 @@ class AccountHandlingForm extends React.Component{
     render(){
         return(
 
-            <form className="ui container middle aligned center aligned grid form error" onSubmit={this.props.handleSubmit(this.onSubmit)}>
-                <div className="column">
+            <Container>
+                {/*<form className="ui container middle aligned center aligned grid form error" onSubmit={this.props.handleSubmit(this.onSubmit)}>*/}
 
-                    {this.renderFields}
 
-                    {/*Firebase error displayed if an erro is returned after submission of form*/}
-                    {this.props.error?<FirebaseError error={this.props.error}/>:null}
+                    <Form onSubmit={this.props.handleSubmit(this.onSubmit)} error>
 
-                    <br/>
-                        <button className="ui big primary button">
-                            {this.props.operation.text}
-                        </button>
-                    <br/>
+                            {this.renderFields}
 
-                </div>
-            </form>
+                            {/*Firebase error displayed if an error is returned after submission of form*/}
+                            {this.props.error?<FirebaseError error={this.props.error}/>:null}
+
+                            <br/>
+
+                            <Container textAlign='center'>
+                                <Button size="big" primary >
+                                    {this.props.operation.text}
+                                </Button>
+                            </Container>
+
+                            <br/>
+
+                    </Form>
+
+            </Container>
         )
     }
 }

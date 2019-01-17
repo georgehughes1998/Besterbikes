@@ -46,3 +46,15 @@ export const signOut = () => {
             return err;
         });
 };
+
+//Function to Edit users account details on firebase
+export const editDeatils = () => {
+    //TODO: Complete function to return promise with user if successful or error if not
+};
+
+
+//Function to return current user
+export const authenticate = async () => {
+  const auth = firebase.auth();
+  return await auth.currentUser;
+};

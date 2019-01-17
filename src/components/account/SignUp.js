@@ -1,17 +1,17 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {Container, Divider} from 'semantic-ui-react'
 
 import AccountForm from "./AccountHandlingForm";
-import AccountPageContainer from "./AccountPageContainer";
+import AccountPageContainer from "../PageContainer";
 
 
 //Component that passes relevant fields to AccountPageContainer for a sign Up
-class SignUp extends React.Component {
+const SignUp = () => {
 
-    render(){
         return(
             <AccountPageContainer>
-                <div className="ui horizontal divider">Sign Up</div>
+                <Divider horizontal>Sign Up</Divider>
 
                 {/*Sign Up Form*/}
                 <AccountForm
@@ -50,14 +50,15 @@ class SignUp extends React.Component {
 
                 />
 
-                <Link to="/SignIn" className="ui center aligned grid">
-                    Already have an account, Sign In
-                </Link>
+                <Container textAlign='center'>
+                     <Link to="/signin">
+                        Already have an account, Sign In
+                    </Link>
+                </Container>
 
             </AccountPageContainer>
         )
-    }
 
-}
+};
 
 export default SignUp

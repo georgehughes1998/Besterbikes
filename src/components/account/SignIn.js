@@ -1,9 +1,11 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {reduxForm} from "redux-form";
+import {Divider, Image, Container} from 'semantic-ui-react'
 
 import AccountForm from "./AccountHandlingForm";
-import AccountPageContainer from "./AccountPageContainer";
-import {reduxForm} from "redux-form";
+import AccountPageContainer from "../PageContainer";
+
 
 
 //Component that passes relevant fields to AccountPageContainer for a signin
@@ -12,12 +14,14 @@ const SignIn = ({error}) => {
         return(
             <AccountPageContainer>
                 {/*Use procedure to show image from: https://support.awesome-table.com/hc/en-us/articles/115002196665-Display-images-from-Google-Drive*/}
-                <img className="ui centered medium image"
-                     src="https://drive.google.com/thumbnail?id=1DWfv569MmvtLipSX_vFQVihtJcbbmiTx"
-                     alt="Besterbikes Logo"
+                <Image
+                    src={"https://drive.google.com/thumbnail?id=1DWfv569MmvtLipSX_vFQVihtJcbbmiTx"}
+                    size='medium'
+                    alt="Besterbikes Logo"
+                    centered
                 />
 
-                <div className="ui horizontal divider">Sign In</div>
+                <Divider horizontal>Sign In</Divider>
 
                 {/*Sign In Form*/}
                 <AccountForm
@@ -43,11 +47,13 @@ const SignIn = ({error}) => {
 
                 />
 
-                <Link to="/signup" className="ui center aligned grid">
-                    <div className="column">
+
+                <Container textAlign='center'>
+                    <Link to="/signup">
                         Don't have an account, Sign Up
-                    </div>
-                </Link>
+                    </Link>
+                </Container>
+
 
             </AccountPageContainer>
         )

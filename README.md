@@ -25,7 +25,7 @@ Also, read the following guide carefully to ensure you clone, push and pull to G
 2. Once the repository has been cloned you will need to run the following commands
 ```shell
 cd besterbikes
-npm install --save react react-router redux redux-form react-redux react-router-dom firebase faker
+npm install --save react react-router redux redux-form react-redux react-router-dom firebase faker semantic-ui-react
 ```
 
 3. Run the following command to host the project locally

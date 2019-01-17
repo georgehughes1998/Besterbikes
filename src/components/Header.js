@@ -1,13 +1,17 @@
 import React from 'react'
-import { Link } from "react-router-dom";
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from "react-router-dom";
+import {connect} from "react-redux";
 
-//TODO: Make pretty, display logo and link back
-const Header = (props) => {
+import {changeSideBar} from "../redux/actions";
+import {Menu, Icon} from 'semantic-ui-react'
 
+class Header extends React.Component{
+
+    handleHideClick = () => this.props.changeSideBar("Hide");
+    handleShowClick = () => this.props.changeSideBar("Show");
 
     //Function to display title of page based on pathname in react router dom
-    const getDisplayTitle = (pathname) =>{
+    getDisplayTitle = (pathname) =>{
         switch (pathname) {
             case "/":
                 return "Main Menu";
@@ -22,23 +26,37 @@ const Header = (props) => {
         }
     };
 
-    return(
-        <div className="ui inverted blue three item menu">
+    render(){
+        return(
+            <Menu widths={3} color="blue" inverted>
 
-            {/*TODO: Change back button to side menu as web already has back button*/}
-            <div className="item">
-                <i className="bars icon"/>
-            </div>
+                {/*TODO: Change back button to side menu as web already has back button*/}
+                <Menu.Item disabled={this.props.sideBarVisible} onClick={this.props.sideBarVisible?this.handleHideClick:this.handleShowClick}>
+                    <Icon name="bars"/>
+                </Menu.Item>
 
-            <div className="item">
-                { getDisplayTitle(props.location.pathname) }
-            </div>
+                <Menu.Item>
+                    { this.getDisplayTitle(this.props.location.pathname) }
+                </Menu.Item>
 
-            <Link to="/" className="item">
-                <i className="bicycle icon"/>
-            </Link>
-        </div>
-    )
+                <Menu.Item>
+                    <Link to="/" className="item">
+                        <Icon name="bicycle"/>
+                    </Link>
+                </Menu.Item>
+
+            </Menu>
+        )
+    }
+
+}
+
+
+const mapStateToProps = (state) => {
+    return { sideBarVisible: state.ui.sideBarVisible }
 };
 
-export default withRouter(Header)
+export default withRouter(connect(
+    mapStateToProps,
+    { changeSideBar }
+)(Header));

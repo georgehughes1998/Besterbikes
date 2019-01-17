@@ -1,14 +1,9 @@
-import {ACK_SIGN_IN ,ACK_SIGN_OUT} from './types'
+import {CHANGE_SIDEBAR_STATUS} from './types'
 
-export const ackAuthChange = (user) => {
-    if(user){
+export const changeSideBar = (tap) => {
         return {
-            type: ACK_SIGN_IN,
-            payload: user
-        }
-    }else{
-        return {
-            type: ACK_SIGN_OUT,
+            type: CHANGE_SIDEBAR_STATUS,
+            payload: tap
         }
     }
-};
+;
