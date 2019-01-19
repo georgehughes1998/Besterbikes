@@ -32,9 +32,7 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
             return user;
         })
         //TODO: Return and display any error messages
-        .catch(async err => {
-            return err;
-        });
+        .catch(async err => {return err});
 };
 
 //Function to sign out of firebase
@@ -42,9 +40,7 @@ export const signOut = () => {
     const promise = firebase.auth().signOut();
 
     return promise
-        .then(user => {
-            return "success";
-        })
+        .then(() => {return "success";})
         //TODO: Return and display any error messages
         .catch(async err => {
             return err;
@@ -102,13 +98,14 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
                 firstName : forename,
                 lastName : surname
             },
-            dateOfBirth : dateOfBirth
+            dateOfBirth : dateOfBirth,
+            reservationsArray : []
     };
 
     const promise = usersDoc.set(userDetails);
 
     return promise
-        .then(result => {return "success"})
+        .then(() => {return "success"})
         .catch(err => {return err});
 
 };
