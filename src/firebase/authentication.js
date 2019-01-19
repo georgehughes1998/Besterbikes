@@ -25,6 +25,9 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
 
     return promise
         .then(user => {
+
+            addUserDetails({forename,surname,dateOfBirth});
+
             return user;
         })
         //TODO: Return and display any error messages
@@ -39,7 +42,7 @@ export const signOut = () => {
 
     return promise
         .then(user => {
-            return user;
+            return "success";
         })
         //TODO: Return and display any error messages
         .catch(async err => {
@@ -48,13 +51,53 @@ export const signOut = () => {
 };
 
 //Function to Edit users accountManagement details on firebase
-export const editDeatils = () => {
+export const editDetails = () => {
     //TODO: Complete function to return promise with user if successful or error if not
 };
 
 
 //Function to return current user
-export const authenticate = async () => {
+export const getUser = async () => {
   const auth = firebase.auth();
   return await auth.currentUser;
+};
+
+export const getUserDetails = async () => {
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    const db = firebase.database();
+    const dbRef = db.ref().child('users').child(uid);
+
+    const userDetails = dbRef.valueOf();
+
+    return await userDetails;
+
+};
+
+export const addUserDetails = ({forename, surname, dateOfBirth}) => {
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    const db = firebase.database();
+    const dbRef = db.ref().child('users');
+
+    const userDetails = {
+        uid : {
+            name : {
+                first : forename,
+                last : surname
+            },
+            dob : dateOfBirth
+        }
+    }
+
+    const promise = dbRef.set(userDetails);
+
+    return promise
+        .then(result => {return result})
+        .catch(async err => {return err});
+
 };
