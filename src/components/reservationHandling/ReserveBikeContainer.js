@@ -2,20 +2,21 @@ import React from 'react'
 
 import PageContainer from "../PageContainer";
 import Steps from "./Steps";
-import ReserveBikeForm from "./ReserveBikeForm";
+import ReservationHandlingFormWizard from "./ReservationHandlingFormWizard";
 import {Segment} from "semantic-ui-react";
 
 
 const ReserveBikeContainer = (props) => {
-    {/*TODO: Review content of steps and mark as complete storing state in redux*/}
-    return(
+    {/*TODO: Review content of steps and mark as complete storing state in redux*/
+    }
+    return (
         <PageContainer>
 
-                <Segment attached='top'>
-                    <ReserveBikeForm/>
+            <Segment attached='top'>
+                <ReservationHandlingFormWizard/>
 
                 <Steps
-                    steps = {{
+                    steps={{
                         Bikes: {
                             title: 'Select Bikes',
                             content: 'Choose your station and number of bikes',
@@ -43,7 +44,7 @@ const ReserveBikeContainer = (props) => {
                         }
                     }}
                 />
-                </Segment>
+            </Segment>
 
         </PageContainer>
     )

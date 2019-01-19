@@ -6,14 +6,14 @@ export const signIn = async ({email, password}) => {
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(email, password);
 
-        return promise
-            .then(user => {
-                return user;
-            })
-            //TODO: Return and display any error messages
-            .catch(async err => {
-                return err;
-            });
+    return promise
+        .then(user => {
+            return user;
+        })
+        //TODO: Return and display any error messages
+        .catch(async err => {
+            return err;
+        });
 
 };
 
@@ -25,9 +25,9 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
 
     return promise
         .then(user => {
+
             return user;
         })
-        //TODO: Return and display any error messages
         .catch(async err => {
             return err;
         });
@@ -55,6 +55,6 @@ export const editDeatils = () => {
 
 //Function to return current user
 export const authenticate = async () => {
-  const auth = firebase.auth();
-  return await auth.currentUser;
+    const auth = firebase.auth();
+    return await auth.currentUser;
 };

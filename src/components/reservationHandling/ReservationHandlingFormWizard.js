@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import SelectBikes from './SelectBikes'
 import DateAndTime from './DateAndTime'
 import Confirmation from "./ReviewOrder";
 import Payment from "./Payment";
 
 //Code from semantic UI React to handle multistep form
-class ReserveBikeForm extends Component {
+class ReservationHandlingFormWizard extends Component {
     constructor(props) {
         super(props);
         this.nextPage = this.nextPage.bind(this);
@@ -14,17 +14,18 @@ class ReserveBikeForm extends Component {
             page: 1
         }
     }
+
     nextPage() {
-        this.setState({ page: this.state.page + 1 })
+        this.setState({page: this.state.page + 1})
     }
 
     previousPage() {
-        this.setState({ page: this.state.page - 1 })
+        this.setState({page: this.state.page - 1})
     }
 
     render() {
-        const { onSubmit } = this.props;
-        const { page } = this.state;
+        const {onSubmit} = this.props;
+        const {page} = this.state;
 
         return (<div>
                 {page === 1 && <SelectBikes onSubmit={this.nextPage}/>}
@@ -36,4 +37,4 @@ class ReserveBikeForm extends Component {
     }
 }
 
-export default ReserveBikeForm
+export default ReservationHandlingFormWizard

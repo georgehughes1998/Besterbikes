@@ -7,23 +7,23 @@ const Steps = (props) => {
     //Change functionality of clicking steps to work with redux form
     const handleClick = (link) => props.history.push(link);
 
-    const renderSteps = (Object.values(props.steps).map((key, index)=>{
-        return(
+    const renderSteps = (Object.values(props.steps).map((key, index) => {
+        return (
             <Step
                 key={index}
                 link
                 onClick={() => handleClick(key.link)}
             >
-                    <Icon name={key.icon} />
-                    <Step.Content>
-                        <Step.Title>{key.title}</Step.Title>
-                        <Step.Content>{key.content}</Step.Content>
-                    </Step.Content>
+                <Icon name={key.icon}/>
+                <Step.Content>
+                    <Step.Title>{key.title}</Step.Title>
+                    <Step.Content>{key.content}</Step.Content>
+                </Step.Content>
             </Step>
-            )
+        )
     }))
 
-    return(
+    return (
         <Step.Group
             fluid
             widths={4}

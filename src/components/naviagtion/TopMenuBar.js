@@ -1,17 +1,17 @@
 import React from 'react'
-import { Link, withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {changeSideBar} from "../../redux/actions/index";
-import {Menu, Icon, Sticky, Header} from 'semantic-ui-react'
+import {Header, Icon, Menu, Sticky} from 'semantic-ui-react'
 
-class TopMenuBar extends React.Component{
+class TopMenuBar extends React.Component {
 
     handleHideClick = () => this.props.changeSideBar("Hide");
     handleShowClick = () => this.props.changeSideBar("Show");
 
     //Function to display title of page based on pathname in react router dom
-    getDisplayTitle = (pathname) =>{
+    getDisplayTitle = (pathname) => {
         switch (pathname) {
             case "/":
                 return "Main Menu";
@@ -28,21 +28,22 @@ class TopMenuBar extends React.Component{
         }
     };
 
-    render(){
+    render() {
 
-        return(
+        return (
             //Make TopMenuBar Sticky
             <Sticky>
                 <Menu color="blue" inverted widths={3}>
 
                     {/*TODO: Change back button to side menu as web already has back button*/}
-                    <Menu.Item disabled={this.props.sideBarVisible} onClick={this.props.sideBarVisible?this.handleHideClick:this.handleShowClick}>
+                    <Menu.Item disabled={this.props.sideBarVisible}
+                               onClick={this.props.sideBarVisible ? this.handleHideClick : this.handleShowClick}>
                         <Icon name="bars"/>
                     </Menu.Item>
 
-                    <Menu.Item >
+                    <Menu.Item>
                         <Header as='h4' inverted>
-                            { this.getDisplayTitle(this.props.location.pathname) }
+                            {this.getDisplayTitle(this.props.location.pathname)}
                         </Header>
                     </Menu.Item>
 
@@ -62,10 +63,10 @@ class TopMenuBar extends React.Component{
 
 
 const mapStateToProps = (state) => {
-    return { sideBarVisible: state.ui.sideBarVisible }
+    return {sideBarVisible: state.ui.sideBarVisible}
 };
 
 export default withRouter(connect(
     mapStateToProps,
-    { changeSideBar }
+    {changeSideBar}
 )(TopMenuBar));
