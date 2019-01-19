@@ -3,13 +3,28 @@ import {withRouter, Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {Menu, Icon, Sidebar} from 'semantic-ui-react'
 
-import {changeSideBar} from "../redux/actions";
+import {changeSideBar} from "../../redux/actions/index";
 
 
 const SideBarContent = (props) =>{
 
-    const handleSidebarHide = () => props.changeSideBar("Hide");
+    const renderLinks = Object.values(props.links).map((key, index) => {
+        return(
+            <div key={index}>
+                <Link to={key.link}>
+                    <Menu.Item >
+                        <Icon name={key.icon} />
+                        {key.name}
 
+                    </Menu.Item>
+                </Link>
+            </div>
+
+        )
+    })
+
+    const handleSidebarHide = () => props.changeSideBar("Hide");
+    {/*TODO: Review content of Sidebar and use map*/}
         return(
             <Sidebar
                 as={Menu}
@@ -23,28 +38,9 @@ const SideBarContent = (props) =>{
                 width='thin'
                 color = "blue"
             >
-                <Link to="/">
-                    <Menu.Item>
 
-                            <Icon name='bicycle' />
-                            Main Menu
+                {renderLinks}
 
-                    </Menu.Item>
-                </Link>
-
-                <Link to="/map">
-                    <Menu.Item >
-                        <Icon name='map' />
-                        Map
-                    </Menu.Item>
-                </Link>
-
-                <Link to="/editaccount">
-                    <Menu.Item >
-                        <Icon name='user circle' />
-                        Account
-                    </Menu.Item>
-                </Link>
             </Sidebar>
 
         )

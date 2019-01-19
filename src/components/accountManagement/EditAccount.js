@@ -2,14 +2,14 @@ import React from 'react'
 import {Divider} from 'semantic-ui-react'
 
 import AccountForm from "./AccountHandlingForm";
-import AccountPageContainer from "../PageContainer";
+import PageContainer from "../PageContainer";
 
 
-//Component that passes relevant fields to AccountPageContainer for editing account details
+//Component that passes relevant fields to PageContainer for editing accountManagement details
 const EditAccount = () => {
-
+//TODO: Make fields display current users details
     return(
-        <AccountPageContainer>
+        <PageContainer>
             <Divider horizontal>Edit Account Details</Divider>
 
             {/*Sign Up Form*/}
@@ -49,7 +49,7 @@ const EditAccount = () => {
 
             />
 
-        </AccountPageContainer>
+        </PageContainer>
     )
 
 };

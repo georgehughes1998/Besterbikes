@@ -6,9 +6,10 @@ import { Message } from 'semantic-ui-react'
 const FirebaseError = (error) =>  {
     return(
         //Render firebase errors
-        <Message>
+        <Message
             error
-            message={error.error}
+            header ={error.error}
+        >
         </Message>
     )
 };

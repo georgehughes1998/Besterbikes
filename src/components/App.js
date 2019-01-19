@@ -3,16 +3,24 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import {connect} from "react-redux";
 import {Segment, Sidebar} from "semantic-ui-react";
 
-import MainMenu from './MainMenu'
-import SignIn from './account/SignIn'
-import SignUp from './account/SignUp'
-import EditAccount from "./account/EditAccount";
-import SideBarContent from "./SideBarContent";
+import SideBarContent from "./naviagtion/SideBarContent";
 import {changeSideBar} from "../redux/actions";
+
+import Header from "./naviagtion/TopMenuBar";
+
+import MainMenu from './MainMenu'
+
+import SignIn from './accountManagement/SignIn'
+import SignUp from './accountManagement/SignUp'
+import EditAccount from "./accountManagement/EditAccount";
+
+import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
+import MapContainer from "./MapContainer";
 
 
 class App extends React.Component{
 //TODO: Add prop types
+// TODO: Move UI props over to firestore
 
     render(){
         return(
@@ -21,13 +29,45 @@ class App extends React.Component{
                 <BrowserRouter>
                     <div style={{height: '100vh'}}>
                         <Sidebar.Pushable as={Segment}>
-                            <SideBarContent/>
+                            <SideBarContent
+                                links={{
+                                    Main: {
+                                        name: 'Menu',
+                                        icon: 'bicycle',
+                                        link: '/'
+                                    },
+                                    Map: {
+                                        name: 'Map',
+                                        icon: 'map',
+                                        link: '/map'
+                                    },
+                                    Reserve: {
+                                        name: 'Reserve',
+                                        icon: 'calendar',
+                                        link: '/reservebike'
+                                    },
+                                    Account: {
+                                        name: 'Account',
+                                        icon: 'user circle',
+                                        link: '/editaccount'
+                                    }
+                                }}
+                            />
 
                             <Sidebar.Pusher>
+
+                                <Header/>
+
                                 <Route path="/" exact component={MainMenu}/>
+                                <Route path="/map" exact component={MapContainer}/>
+
+                                {/*Account Management Routes*/}
                                 <Route path="/signin" exact component={SignIn}/>
                                 <Route path="/signup" exact component={SignUp}/>
                                 <Route path="/editaccount" exact component={EditAccount}/>
+
+                                {/*Reserving a bike Routes*/}
+                                <Route path="/reservebike" component={ReserveBikeContainer}/>
 
                             </Sidebar.Pusher>
 

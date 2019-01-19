@@ -7,8 +7,8 @@ Connected to root div in index.html. Uses Browser router to assign components to
 ## FirebaseError
 Used to display an error returned from firebase
 
-## Header
-Header menu bar displayed at the top of pages within the app
+## TopMenuBar
+TopMenuBar menu bar displayed at the top of pages within the app
 
 ## Main menu
 Component user is directed to upon successful sign in
