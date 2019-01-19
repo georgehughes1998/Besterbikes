@@ -27,8 +27,7 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
         .then(user => {
 
             auth.signInWithEmailAndPassword(email,password);
-            addUserDetails({forename,surname,dateOfBirth});
-            console.log(getUserDetails());
+            setUserDetails({forename,surname,dateOfBirth});
 
             return user;
         })
@@ -88,7 +87,7 @@ export const getUserDetails = async () => {
 
 };
 
-export const addUserDetails = ({forename, surname, dateOfBirth}) => {
+export const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
