@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import SignOut from "./accountManagement/SignOut";
-import {authenticate} from "../firebase/authentication";
+import {getUser} from "../firebase/authentication";
 import {Grid, Icon, Header, Segment, Container} from "semantic-ui-react";
 
 //TODO: Display message for each each user: Hello *Users first name*
@@ -9,7 +9,7 @@ class MainMenu extends React.Component{
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () =>{
-        const user = await authenticate();
+        const user = await getUser();
         if(user === null)
             this.props.history.push("signin");
         return user

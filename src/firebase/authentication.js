@@ -26,7 +26,9 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
     return promise
         .then(user => {
 
+            auth.signInWithEmailAndPassword(email,password);
             addUserDetails({forename,surname,dateOfBirth});
+            console.log(getUserDetails());
 
             return user;
         })
@@ -67,12 +69,22 @@ export const getUserDetails = async () => {
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
-    const db = firebase.database();
-    const dbRef = db.ref().child('users').child(uid);
+    const db = firebase.firestore();
 
-    const userDetails = dbRef.valueOf();
+    const usersCollection = db.collection('users');
+    const usersDoc = usersCollection.doc(uid);
 
-    return await userDetails;
+    const userDetails = usersDoc.get();
+
+    return userDetails
+        .then(doc => {
+            if (doc.exists) {
+                return doc.data();
+            } else {
+                throw new Error("Document doesn't exist");
+            }
+        })
+        .catch(err => {return err});
 
 };
 
@@ -81,23 +93,23 @@ export const addUserDetails = ({forename, surname, dateOfBirth}) => {
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
-    const db = firebase.database();
-    const dbRef = db.ref().child('users');
+    const db = firebase.firestore();
+    const usersCollection = db.collection('users');
+    const usersDoc = usersCollection.doc(uid);
+
 
     const userDetails = {
-        uid : {
             name : {
-                first : forename,
-                last : surname
+                firstName : forename,
+                lastName : surname
             },
-            dob : dateOfBirth
-        }
-    }
+            dateOfBirth : dateOfBirth
+    };
 
-    const promise = dbRef.set(userDetails);
+    const promise = usersDoc.set(userDetails);
 
     return promise
-        .then(result => {return result})
-        .catch(async err => {return err});
+        .then(result => {return "success"})
+        .catch(err => {return err});
 
 };
