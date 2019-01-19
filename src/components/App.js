@@ -15,15 +15,15 @@ import SignUp from './accountManagement/SignUp'
 import EditAccount from "./accountManagement/EditAccount";
 
 import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
-import MapContainer from "./MapContainer";
+import MapContainer from "./map/MapContainer";
 
 
-class App extends React.Component{
+class App extends React.Component {
 //TODO: Add prop types
 // TODO: Move UI props over to firestore
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 {/*BrowserRouter handles the pages and their associated URLs for the entire App*/}
                 <BrowserRouter>
@@ -81,10 +81,10 @@ class App extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    return { sideBarHidden: state.ui.sideBarHidden }
+    return {sideBarHidden: state.ui.sideBarHidden}
 };
 
 export default connect(
     mapStateToProps,
-    { changeSideBar }
+    {changeSideBar}
 )(App);

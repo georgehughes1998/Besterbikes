@@ -8,7 +8,7 @@ import PageContainer from "../PageContainer";
 //Component that passes relevant fields to PageContainer for editing accountManagement details
 const EditAccount = () => {
 //TODO: Make fields display current users details
-    return(
+    return (
         <PageContainer>
             <Divider horizontal>Edit Account Details</Divider>
 
@@ -30,12 +30,12 @@ const EditAccount = () => {
                         label: 'First Name',
                         type: 'text'
                     },
-                    Surname:{
+                    Surname: {
                         name: 'surname',
                         label: 'Surname',
                         type: 'text'
                     },
-                    DateOfBirth:{
+                    DateOfBirth: {
                         name: 'dateOfBirth',
                         label: 'Date of Birth',
                         type: 'date'

@@ -1,10 +1,10 @@
 import React from 'react'
-import { reduxForm } from 'redux-form'
+import {reduxForm} from 'redux-form'
 import validate from './validate'
-import {Button, Form, Progress, Segment, Dropdown, Icon, Header, Container} from "semantic-ui-react";
+import {Button, Container, Dropdown, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
 
 const Payment = (props) => {
-    const { handleSubmit, pristine, previousPage, submitting } = props;
+    const {handleSubmit, pristine, previousPage, submitting} = props;
 
     return (
         <Segment attached='top'>
@@ -13,7 +13,7 @@ const Payment = (props) => {
             <Form onSubmit={handleSubmit}>
 
                 <Header as='h2'>
-                    <Icon name='payment' />
+                    <Icon name='payment'/>
                     <Header.Content>
                         Payment
                         <Header.Subheader>Select your payment method and pay for you trip</Header.Subheader>

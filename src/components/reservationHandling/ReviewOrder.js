@@ -1,22 +1,22 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import {reduxForm} from 'redux-form'
 import validate from './validate'
-import {Form, Progress, Segment, Button, Icon, Header, Container} from "semantic-ui-react";
+import {Button, Container, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
 
 
-const ReviewOrder = (props) =>{
+const ReviewOrder = (props) => {
 
-    const { handleSubmit, previousPage } = props;
+    const {handleSubmit, previousPage} = props;
 
-    return(
+    return (
         <Segment attached='top'>
 
             <Progress percent="70" attached="top" indicating/>
             <Form onSubmit={handleSubmit}>
                 <Header as='h2'>
-                    <Icon name='check' />
+                    <Icon name='check'/>
                     <Header.Content>
-                       Review Order
+                        Review Order
                         <Header.Subheader>Check over your orders details before paying</Header.Subheader>
                     </Header.Content>
                 </Header>

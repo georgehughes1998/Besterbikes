@@ -5,11 +5,11 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, {type, payload}) => {
-    switch (type){
+    switch (type) {
         case CHANGE_SIDEBAR_STATUS:
-            if (payload === "Show"){
+            if (payload === "Show") {
                 return {...state, sideBarVisible: true}
-            }else if(payload === "Hide"){
+            } else if (payload === "Hide") {
                 return {...state, sideBarVisible: false}
             }
             break;

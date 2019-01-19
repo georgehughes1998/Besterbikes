@@ -1,19 +1,19 @@
 import React from 'react'
-import {withRouter, Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {Menu, Icon, Sidebar} from 'semantic-ui-react'
+import {Icon, Menu, Sidebar} from 'semantic-ui-react'
 
 import {changeSideBar} from "../../redux/actions/index";
 
 
-const SideBarContent = (props) =>{
+const SideBarContent = (props) => {
 
     const renderLinks = Object.values(props.links).map((key, index) => {
-        return(
+        return (
             <div key={index}>
                 <Link to={key.link}>
-                    <Menu.Item >
-                        <Icon name={key.icon} />
+                    <Menu.Item>
+                        <Icon name={key.icon}/>
                         {key.name}
 
                     </Menu.Item>
@@ -24,34 +24,35 @@ const SideBarContent = (props) =>{
     })
 
     const handleSidebarHide = () => props.changeSideBar("Hide");
-    {/*TODO: Review content of Sidebar and use map*/}
-        return(
-            <Sidebar
-                as={Menu}
-                animation='overlay'
-                icon='labeled'
-                inverted
-                vertical
-                onHide={handleSidebarHide}
-                onClick={handleSidebarHide}
-                visible = {props.sideBarVisible}
-                width='thin'
-                color = "blue"
-            >
+    {/*TODO: Review content of Sidebar and use map*/
+    }
+    return (
+        <Sidebar
+            as={Menu}
+            animation='overlay'
+            icon='labeled'
+            inverted
+            vertical
+            onHide={handleSidebarHide}
+            onClick={handleSidebarHide}
+            visible={props.sideBarVisible}
+            width='thin'
+            color="blue"
+        >
 
-                {renderLinks}
+            {renderLinks}
 
-            </Sidebar>
+        </Sidebar>
 
-        )
+    )
 
 };
 
 const mapStateToProps = (state) => {
-    return { sideBarVisible: state.ui.sideBarVisible }
+    return {sideBarVisible: state.ui.sideBarVisible}
 };
 
 export default withRouter(connect(
     mapStateToProps,
-    { changeSideBar }
+    {changeSideBar}
 )(SideBarContent));

@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, compose } from 'redux'
-import Firebase, { FirebaseContext } from './firebase/index'
+import {Provider} from 'react-redux'
+import {applyMiddleware, compose, createStore} from 'redux'
+import Firebase, {FirebaseContext} from './firebase/index'
 
 import App from "./components/App";
 import reducers from "./redux/reducers";

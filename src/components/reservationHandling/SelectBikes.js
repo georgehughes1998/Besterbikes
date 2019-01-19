@@ -1,61 +1,51 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
-import {Form, Button, Dropdown, Container, Progress, Segment, Label, Icon, Header} from 'semantic-ui-react'
+import {reduxForm} from 'redux-form'
 
 import validate from './validate'
-import Map from "../Map";
+import Map from "../map/Map";
+import ReservationHandlingForm from "./ReservationHandlingForm";
 
 
-const SelectBikes =(props) =>{
+const SelectBikes = (props) => {
 
-        const { handleSubmit } = props;
+    return (
+        <div>
+            <Map/>
 
-        return(
-            <Segment attached='top'>
+            <ReservationHandlingForm
+                header={{
+                    title: "Select Bikes",
+                    description: "Choose your start station and number of bikes",
+                    progress: 20,
+                    icon: "bicycle"
+                }}
 
-                    <Progress percent="20" attached="top" indicating/>
+                fields={{
+                    station: {
+                        name: 'station',
+                        label: 'Station',
+                        type: 'dropdown',
+                    },
+                    bikes: {
+                        name: 'bikes',
+                        label: 'Bikes',
+                        type: 'dropdown',
+                        dropdownParams: "multiple"
+                    },
 
-                    {/*Implment search to display stations by Category*/}
-                    <Form onSubmit={handleSubmit}>
+                }}
 
-                        <Header as='h2'>
-                            <Icon name='bicycle' />
-                            <Header.Content>
-                                Select Bikes
-                                <Header.Subheader>Choose your start station and number of bikes</Header.Subheader>
-                            </Header.Content>
-                        </Header>
+                operation={{
+                    link: props.handleSubmit,
+                    type: 'submit',
+                    className: 'next',
+                    color: 'green',
+                    text: 'Next'
+                }}
+            />
 
-                        <Map/>
-
-                        <Form.Field>
-                            <label>Station</label>
-                            {/*TODO: Implment search to display stations by Category*/}
-                            <Dropdown
-                                search
-                                fluid
-                                selection
-                            />
-                        </Form.Field>
-
-                        <Form.Field>
-                            <label>Bikes</label>
-                            {/*TODO: Implment search to display stations by Category*/}
-                            <Dropdown
-                                search
-                                fluid
-                                selection
-                                multiple
-                            />
-                        </Form.Field>
-
-                        <Container textAlign='center'>
-                            <Button type="submit" className="next" color="green">Next</Button>
-                        </Container>
-                    </Form>
-
-                </Segment>
-        )
+        </div>
+    )
 
 };
 

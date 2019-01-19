@@ -5,23 +5,23 @@ import PageContainer from "../PageContainer";
 
 
 //Component that passes relevant fields to PageContainer for a sign out
-const SignOut =() =>{
+const SignOut = () => {
 
-        return(
-            <PageContainer>
+    return (
+        <PageContainer>
 
-                {/*Sign Out Form*/}
-                <AccountForm
-                    fields={""}
+            {/*Sign Out Form*/}
+            <AccountForm
+                fields={""}
 
-                    operation={{
-                        text: "Sign Out",
-                        link: "/signin"
-                    }}
+                operation={{
+                    text: "Sign Out",
+                    link: "/signin"
+                }}
 
-                />
-            </PageContainer>
-        )
+            />
+        </PageContainer>
+    )
 };
 
 export default SignOut
