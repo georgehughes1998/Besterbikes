@@ -24,14 +24,13 @@ class ReservationHandlingFormWizard extends Component {
     }
 
     render() {
-        const {onSubmit} = this.props;
         const {page} = this.state;
 
         return (<div>
                 {page === 1 && <SelectBikes onSubmit={this.nextPage}/>}
                 {page === 2 && <DateAndTime previousPage={this.previousPage} onSubmit={this.nextPage}/>}
                 {page === 3 && <Confirmation previousPage={this.previousPage} onSubmit={this.nextPage}/>}
-                {page === 4 && <Payment previousPage={this.previousPage} onSubmit={onSubmit}/>}
+                {page === 4 && <Payment previousPage={this.previousPage} onSubmit={() => this.props}/>}
             </div>
         )
     }

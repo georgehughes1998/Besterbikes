@@ -5,11 +5,12 @@ import validate from './validate'
 import Map from "../map/Map";
 import ReservationHandlingForm from "./ReservationHandlingForm";
 
-
+{/*TODO: Move map into segment*/}
 const SelectBikes = (props) => {
 
     return (
         <div>
+
             <Map/>
 
             <ReservationHandlingForm
@@ -26,21 +27,27 @@ const SelectBikes = (props) => {
                         label: 'Station',
                         type: 'dropdown',
                     },
-                    bikes: {
-                        name: 'bikes',
-                        label: 'Bikes',
-                        type: 'dropdown',
-                        dropdownParams: "multiple"
+                    mountainBikes: {
+                        name: 'mountainBikes',
+                        label: 'Mountain Bikes',
+                        type: 'number',
+                    },
+                    regularBikes: {
+                        name: 'regularBikes',
+                        label: 'Regular Bikes',
+                        type: 'number',
                     },
 
                 }}
 
-                operation={{
-                    link: props.handleSubmit,
-                    type: 'submit',
-                    className: 'next',
-                    color: 'green',
-                    text: 'Next'
+                operations={{
+                    next:{
+                        link: props.onSubmit,
+                        type: 'submit',
+                        className: 'next',
+                        color: 'green',
+                        text: 'Next'
+                    }
                 }}
             />
 

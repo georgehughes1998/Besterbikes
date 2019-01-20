@@ -2,30 +2,68 @@ import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
 import {Button, Container, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
+import ReservationHandlingForm from "./ReservationHandlingForm";
 
 
 const ReviewOrder = (props) => {
 
-    const {handleSubmit, previousPage} = props;
-
     return (
-        <Segment attached='top'>
+        <div>
+            <ReservationHandlingForm
+                header={{
+                    title: "Review Order",
+                    description: "Review your order before paying",
+                    progress: 70,
+                    icon: "check"
+                }}
 
-            <Progress percent="70" attached="top" indicating/>
-            <Form onSubmit={handleSubmit}>
-                <Header as='h2'>
-                    <Icon name='check'/>
-                    <Header.Content>
-                        Review Order
-                        <Header.Subheader>Check over your orders details before paying</Header.Subheader>
-                    </Header.Content>
-                </Header>
-                <Container textAlign='center'>
-                    <Button type="button" className="previous" onClick={previousPage} color="red">Go Back</Button>
-                    <Button type="submit" className="next" color="green">Proceed To Payment</Button>
-                </Container>
-            </Form>
-        </Segment>
+                fields={{
+                    station: {
+                    name: 'station',
+                    label: 'Station',
+                    type: 'readOnly',
+                },
+                    mountainBikes: {
+                    name: 'mountainBikes',
+                    label: 'Mountain Bikes',
+                    type: 'readOnly',
+                },
+                    regularBikes: {
+                    name: 'regularBikes',
+                    label: 'Regular Bikes',
+                    type: 'readOnly',
+                },
+                    startDate: {
+                        name: 'startDate',
+                        label: 'Start Date',
+                        type: 'readOnly',
+                    },
+                    startTime: {
+                        name: 'startTime',
+                        label: 'Start Time',
+                        type: 'readOnly',
+                    }
+
+                }}
+
+                operations={{
+                    back:{
+                        link: props.previousPage,
+                        type: 'button',
+                        className: 'previous',
+                        color: 'red',
+                        text: 'Back'
+                    },
+                    next: {
+                        link: props.onSubmit,
+                        type: 'submit',
+                        className: 'next',
+                        color: 'green',
+                        text: 'Next'
+                    }
+                }}
+            />
+        </div>
     )
 
 };
