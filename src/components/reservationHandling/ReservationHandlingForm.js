@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Container, Dropdown, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
 import {Field, reduxForm} from "redux-form";
-import {makeReservations} from "../../firebase/authentication";
+import {makeReservations} from "../../firebase/reservations";
 import validate from "./validate";
 
 
