@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
+import {Segment, Loader, Dimmer} from "semantic-ui-react"
 
+//TODO: Implement loader correctly
 /*global google*/
 export class BesterbikesMap extends Component {
     constructor(props) {
@@ -23,7 +25,13 @@ export class BesterbikesMap extends Component {
 
     render() {
         if (!this.props.google) {
-            return <div>Loading...</div>;
+            return (
+                <Segment>
+                    <Dimmer active>
+                        <Loader size='large'>Loading</Loader>
+                    </Dimmer>
+                </Segment>
+            );
         }
 
         return (

@@ -30,7 +30,7 @@ class TopMenuBar extends React.Component {
             case "/reservebike":
                 return "Reserve Bikes";
             case "/map":
-                return "BesterbikesMap";
+                return "Map";
             case "/unlockbike":
                 return "Unlock Bike";
             case "/mytrips":

@@ -13,6 +13,7 @@ import SignUp from './accountManagement/SignUp'
 import EditAccount from "./accountManagement/EditAccount";
 import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
 import MapContainer from "./map/BesterbikesMap";
+import MyTrips from "./customer/MyTrips";
 
 
 //TODO: Add prop types and typescript to app
@@ -65,8 +66,12 @@ class App extends React.Component {
 
                                 <TopMenuBar/>
 
+                                {/*TODO: Refactor to use JSON*/}
                                 <Route path="/" exact component={MainMenu}/>
                                 <Route path="/map" exact component={MapContainer}/>
+
+                                {/*Customer Routes*/}
+                                <Route path="/mytrips" exact component={MyTrips}/>
 
                                 {/*Account Management Routes*/}
                                 <Route path="/signin" exact component={SignIn}/>

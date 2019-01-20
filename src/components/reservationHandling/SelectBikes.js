@@ -3,7 +3,7 @@ import {reduxForm} from 'redux-form'
 
 import validate from './validate'
 import ReservationHandlingForm from "./ReservationHandlingForm";
-import {BesterbikesMap} from "../map/BesterbikesMap";
+import BesterbikesMap from '../map/BesterbikesMap'
 
 
 // TODO: Move map into segment and fix diaplsy issues
@@ -11,6 +11,9 @@ import {BesterbikesMap} from "../map/BesterbikesMap";
 const SelectBikes = (props) => {
     return (
         <div>
+
+            <BesterbikesMap/>
+
             <ReservationHandlingForm
                 header={{
                     title: "Select Bikes",
@@ -23,17 +26,17 @@ const SelectBikes = (props) => {
                     station: {
                         name: 'station',
                         label: 'Station',
-                        type: 'dropdown',
+                        type: 'dropdown'
                     },
                     mountainBikes: {
                         name: 'mountainBikes',
                         label: 'Mountain Bikes',
-                        type: 'number',
+                        type: 'number'
                     },
                     regularBikes: {
                         name: 'regularBikes',
                         label: 'Regular Bikes',
-                        type: 'number',
+                        type: 'number'
                     },
 
                 }}
