@@ -1,14 +1,22 @@
 import React from 'react'
 import {Button, Container, Dropdown, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
 import {Field, reduxForm} from "redux-form";
+import {makeReservations} from "../../firebase/authentication";
 import validate from "./validate";
 
 
 class ReservationHandlingForm extends React.Component {
 
-    onSubmit = (formValues) => {
-        this.props.operation.link();
-        console.log(formValues)
+    onSubmit = async (formValues) => {
+
+        if(this.props.header.title === "Payment"){
+        //TODO: Show complete screen
+            const obj = await makeReservations(formValues);
+            console.log("obj")
+        }else{
+            this.props.operations.next.link();
+        }
+
     };
 
     renderHeader = (header) => {
@@ -44,19 +52,6 @@ class ReservationHandlingForm extends React.Component {
                 return (
                     <Form.Field required>
                         <label>{label}</label>
-
-                        {this.props.fields[input.name].dropdownParams ?
-                            <Dropdown
-                                fluid
-                                multiple
-                                selection
-                                search
-                                options={[{ key: 'angular', text: 'Angular', value: 'angular' }]}
-
-                                {...input}
-                                value={input.value}
-                                onChange={(param, data) => input.onChange(data.value)}
-                            /> :
                             <Dropdown
                                 fluid
                                 selection
@@ -66,15 +61,24 @@ class ReservationHandlingForm extends React.Component {
                                 value={input.value}
                                 onChange={(param, data) => input.onChange(data.value)}
                             />
-                        }
-
                         {this.renderReduxError(meta)}
                     </Form.Field>
                 );
 
-            case "text":
+            case "readOnly":
                 return (
-                    <Form.Field required>
+                    <Form.Field>
+                        <label>{label}</label>
+                        <input
+                            {...input}
+                            readOnly
+                        />
+                    </Form.Field>
+                );
+
+            default:
+                return (
+                    <Form.Field>
                         <label>{label}</label>
                         <input
                             {...input}
@@ -84,11 +88,7 @@ class ReservationHandlingForm extends React.Component {
                     </Form.Field>
                 );
 
-            default:
-                console.log("error")
-
         }
-
     };
 
     //Renders Redux Form Fields for all the props passed in from the parent component
@@ -104,13 +104,32 @@ class ReservationHandlingForm extends React.Component {
         )
     });
 
-    renderButton = (operation) => {
-        return (
-            <Container textAlign='center'>
-                <Button type={operation.type} className="next" color="green">Next</Button>
-            </Container>
-        )
-    };
+    renderButtons = Object.values(this.props.operations).map((key, index) => {
+        switch (key.type) {
+            case "submit":
+                return <Button
+                    key={index}
+                    type={key.type}
+                    className={key.className}
+                    color={key.color}
+                >
+                    {key.text}
+                    </Button>;
+            case "button":
+                return <Button
+                    key={index}
+                    onClick={key.link}
+                    type={key.type}
+                    className={key.className}
+                    color={key.color}
+                >
+                    {key.text}
+                    </Button>;
+
+            default:
+                return;
+        }
+    });
 
 
     render() {
@@ -124,7 +143,9 @@ class ReservationHandlingForm extends React.Component {
                     <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
                         {this.renderHeader(this.props.header)}
                         {this.renderFields}
-                        {this.renderButton(this.props.operation)}
+                        <Container textAlign='center'>
+                            {this.renderButtons}
+                        </Container>
                     </Form>
                 </Segment>
             </div>
@@ -135,4 +156,5 @@ class ReservationHandlingForm extends React.Component {
 export default reduxForm({
     form: 'reservebike',  //Form name is same
     destroyOnUnmount: false,
+    validate
 })(ReservationHandlingForm)

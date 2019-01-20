@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux'
 import {reducer as formReducer} from 'redux-form'
 
-import uireducer from "./uireducer";
+import uiReducer from "./uireducer";
 
 export default combineReducers({
-    ui: uireducer,
+    ui: uiReducer,
     form: formReducer
 })

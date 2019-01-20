@@ -2,53 +2,65 @@ import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
 import {Button, Container, Dropdown, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
+import ReservationHandlingForm from "./ReservationHandlingForm";
 
 const Payment = (props) => {
     const {handleSubmit, pristine, previousPage, submitting} = props;
 
     return (
-        <Segment attached='top'>
+        <div>
+            <ReservationHandlingForm
+                header={{
+                    title: "Payment",
+                    description: "Select your payment method and pay for you trip",
+                    progress: 90,
+                    icon: "payment"
+                }}
 
-            <Progress percent="90" attached="top" indicating/>
-            <Form onSubmit={handleSubmit}>
+                fields={{
+                    cardNumber: {
+                        name: 'cardNumber',
+                        label: 'Card Number',
+                        type: 'number',
+                    },
+                    expirationDate: {
+                        name: 'expirationDate',
+                        label: 'Expiration Date',
+                        type: 'date',
+                    },
+                    CVV: {
+                        name: 'CVV',
+                        label: 'CVV',
+                        type: 'number',
+                    },
+                    country: {
+                        name: 'country',
+                        label: 'Country',
+                        type: 'dropdown',
+                    },
+                }}
 
-                <Header as='h2'>
-                    <Icon name='payment'/>
-                    <Header.Content>
-                        Payment
-                        <Header.Subheader>Select your payment method and pay for you trip</Header.Subheader>
-                    </Header.Content>
-                </Header>
+                operations={{
+                    back:{
+                        link: props.previousPage,
+                        type: 'button',
+                        className: 'previous',
+                        color: 'red',
+                        text: 'Back'
+                    },
+                    next: {
+                        link: props.onSubmit,
+                        type: 'submit',
+                        className: 'next',
+                        color: 'green',
+                        text: 'Next'
+                    },
 
-                <Form.Field>
-                    <label>Card Number</label>
-                    <input type='text'/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Expiration Date</label>
-                    <input type='date'/>
-                </Form.Field>
-                <Form.Field>
-                    <label>CVV</label>
-                    <input type='date'/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Country</label>
-                    <Dropdown
-                        search
-                        fluid
-                        selection
-                        multiple
-                    />
-                </Form.Field>
-                <Container textAlign='center'>
-                    <Button type="button" className="previous" onClick={previousPage} color="red">Go Back</Button>
-                    <Button type="submit" color="green">Submit</Button>
-                </Container>
-            </Form>
-        </Segment>
+                }}
+            />
+        </div>
     )
-}
+};
 export default reduxForm({
     form: 'reservebike', //Form name is same
     destroyOnUnmount: false,

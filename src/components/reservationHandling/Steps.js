@@ -1,6 +1,8 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
 import {Icon, Step} from "semantic-ui-react";
+import {reduxForm} from "redux-form";
+import validate from "./validate";
 
 const Steps = (props) => {
 
@@ -13,6 +15,7 @@ const Steps = (props) => {
                 key={index}
                 link
                 onClick={() => handleClick(key.link)}
+                completed = {props.station && props.mountainBikes && props.regularBikes}
             >
                 <Icon name={key.icon}/>
                 <Step.Content>
@@ -35,4 +38,8 @@ const Steps = (props) => {
     )
 }
 
-export default withRouter(Steps)
+export default withRouter(reduxForm({
+    form: 'reservebike', //Form name is same
+    destroyOnUnmount: false,
+    validate
+})(Steps))

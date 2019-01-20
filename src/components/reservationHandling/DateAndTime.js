@@ -2,42 +2,54 @@ import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
 import {Button, Container, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
+import ReservationHandlingForm from "./ReservationHandlingForm";
 
 
 const DateAndTime = (props) => {
 
-    const {handleSubmit, previousPage} = props;
-
     return (
-        <Segment attached='top'>
+        <div>
+            <ReservationHandlingForm
+                header={{
+                    title: "Date and Time",
+                    description: "Choose your start date and time",
+                    progress: 50,
+                    icon: "calendar"
+                }}
 
-            <Progress percent="50" attached="top" indicating/>
-            <Form onSubmit={handleSubmit}>
-                {/*TODO: Implment search to display stations by Category*/}
-                <Header as='h2'>
-                    <Icon name='calendar'/>
-                    <Header.Content>
-                        Date and Time
-                        <Header.Subheader>Choose your start date and time</Header.Subheader>
-                    </Header.Content>
-                </Header>
-                <Form.Field>
-                    <label>Start Date</label>
-                    <input type='date'/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Start Time</label>
-                    <input type='time'/>
-                </Form.Field>
+                fields={{
+                    startDate: {
+                        name: 'startDate',
+                        label: 'Start Date',
+                        type: 'date',
+                    },
+                    startTime: {
+                        name: 'startTime',
+                        label: 'Start Time',
+                        type: 'time',
+                    }
 
-                <Container textAlign='center'>
-                    <Button type="button" className="previous" onClick={previousPage} color="red">Go Back</Button>
-                    <Button type="submit" className="next" color="green">Next</Button>
-                </Container>
-            </Form>
-        </Segment>
+                }}
+
+                operations={{
+                    back:{
+                        link: props.previousPage,
+                        type: 'button',
+                        className: 'previous',
+                        color: 'red',
+                        text: 'Back'
+                    },
+                    next: {
+                        link: props.onSubmit,
+                        type: 'submit',
+                        className: 'next',
+                        color: 'green',
+                        text: 'Next'
+                    }
+                }}
+            />
+        </div>
     )
-
 };
 
 export default reduxForm({

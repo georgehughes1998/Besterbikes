@@ -2,8 +2,9 @@ import React from 'react'
 import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
-import {changeSideBar} from "../../redux/actions/index";
+
 import {Header, Icon, Menu, Sticky} from 'semantic-ui-react'
+import {changeSideBar} from "../../redux/actions";
 
 class TopMenuBar extends React.Component {
 
