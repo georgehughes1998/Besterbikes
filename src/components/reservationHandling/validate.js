@@ -1,3 +1,4 @@
+//TODO: Implement app wide vaidation
 const validate = values => {
     const errors = {}
     if (!values.firstName) {

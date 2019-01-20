@@ -1,16 +1,18 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
 import {Icon, Step} from "semantic-ui-react";
-import {reduxForm, formValueSelector } from "redux-form";
-import validate from "./validate";
+import {formValueSelector, reduxForm} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 
+
+//TODO: Change functionality of clicking steps to work with redux form
+//TODO: Implement with error values
+//Display semantic UI steps at bottom of form that are marked complete when relevant fields from form has values
 let Steps = (props) => {
 
-    //Change functionality of clicking steps to work with redux form
     const handleClick = (link) => props.history.push(link);
 
-    //TODO: Implment complete
+
     const isComplete = (key) => {
         console.log(props);
         switch (key.title) {
@@ -32,7 +34,7 @@ let Steps = (props) => {
                 key={index}
                 link
                 onClick={() => handleClick(key.link)}
-                completed = {isComplete(key)}
+                completed={isComplete(key)}
             >
                 <Icon name={key.icon}/>
                 <Step.Content>
@@ -61,7 +63,7 @@ Steps = reduxForm({
 })(Steps);
 
 // Decorate with connect to read form values
-const selector = formValueSelector('reservebike') ;// <-- same as form name
+const selector = formValueSelector('reservebike');// <-- same as form name
 Steps = connect(state => {
     // can select values individually
     const fields = selector(state,

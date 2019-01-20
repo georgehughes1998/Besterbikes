@@ -1,11 +1,12 @@
 import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
-import {Button, Container, Dropdown, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
 import ReservationHandlingForm from "./ReservationHandlingForm";
 
+
+//TODO: Add default payment options
+//Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 const Payment = (props) => {
-    const {handleSubmit, pristine, previousPage, submitting} = props;
 
     return (
         <div>
@@ -41,7 +42,7 @@ const Payment = (props) => {
                 }}
 
                 operations={{
-                    back:{
+                    back: {
                         link: props.previousPage,
                         type: 'button',
                         className: 'previous',

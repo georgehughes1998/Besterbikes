@@ -1,10 +1,10 @@
 import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
-import {Button, Container, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
 import ReservationHandlingForm from "./ReservationHandlingForm";
 
 
+//TODO: Implment confirmation after order
 const ReviewOrder = (props) => {
 
     return (

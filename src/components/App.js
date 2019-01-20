@@ -6,21 +6,18 @@ import {Segment, Sidebar} from "semantic-ui-react";
 import SideBarContent from "./naviagtion/SideBarContent";
 import {changeSideBar} from "../redux/actions";
 
-import Header from "./naviagtion/TopMenuBar";
-
+import TopMenuBar from "./naviagtion/TopMenuBar";
 import MainMenu from './MainMenu'
-
 import SignIn from './accountManagement/SignIn'
 import SignUp from './accountManagement/SignUp'
 import EditAccount from "./accountManagement/EditAccount";
-
 import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
-import MapContainer from "./map/MapContainer";
+import MapContainer from "./map/BesterbikesMap";
 
 
+//TODO: Add prop types and typescript to app
+//TODO: Move UI props over to JSON
 class App extends React.Component {
-//TODO: Add prop types
-// TODO: Move UI props over to firestore
 
     render() {
         return (
@@ -37,7 +34,7 @@ class App extends React.Component {
                                         link: '/'
                                     },
                                     Map: {
-                                        name: 'Map',
+                                        name: 'MapContainer',
                                         icon: 'map',
                                         link: '/map'
                                     },
@@ -45,6 +42,16 @@ class App extends React.Component {
                                         name: 'Reserve',
                                         icon: 'calendar',
                                         link: '/reservebike'
+                                    },
+                                    Unlock: {
+                                        name: 'Unlock',
+                                        icon: 'lock',
+                                        link: '/unlockbike'
+                                    },
+                                    MyTrips: {
+                                        name: 'My Trips',
+                                        icon: 'map signs',
+                                        link: '/mytrips'
                                     },
                                     Account: {
                                         name: 'Account',
@@ -54,11 +61,9 @@ class App extends React.Component {
                                 }}
                             />
 
-
-                            {/*TODO: Get sidebar to push content*/}
                             <Sidebar.Pusher animation='push'>
 
-                                <Header/>
+                                <TopMenuBar/>
 
                                 <Route path="/" exact component={MainMenu}/>
                                 <Route path="/map" exact component={MapContainer}/>

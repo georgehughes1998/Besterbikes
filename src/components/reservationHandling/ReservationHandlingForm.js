@@ -4,21 +4,23 @@ import {Field, reduxForm} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
 import validate from "./validate";
 
-
+//TODO: Implement search to display stations by Category*
+//Class to render a form related to firestore regarding reserving a bike flow and handle the submission
 class ReservationHandlingForm extends React.Component {
 
+    //Calls firebase to submit details from form and manage any errors
     onSubmit = async (formValues) => {
-
-        if(this.props.header.title === "Payment"){
-        //TODO: Show complete screen
+        //TODO: If successful then Show complete screen with order overview
+        if (this.props.header.title === "Payment") {
             const obj = await makeReservations(formValues);
             console.log("obj")
-        }else{
+        } else {
             this.props.operations.next.link();
         }
 
     };
 
+    //Renders JSX elements for the header of step in the reservation flow
     renderHeader = (header) => {
         return (
             <Header as='h2'>
@@ -52,15 +54,15 @@ class ReservationHandlingForm extends React.Component {
                 return (
                     <Form.Field required>
                         <label>{label}</label>
-                            <Dropdown
-                                fluid
-                                selection
-                                search
-                                placeholder='Select Country'
-                                options={[{ key: 'angular', text: 'Angular', value: 'angular' }]}
-                                value={input.value}
-                                onChange={(param, data) => input.onChange(data.value)}
-                            />
+                        <Dropdown
+                            fluid
+                            selection
+                            search
+                            placeholder='Select Country'
+                            options={[{key: 'angular', text: 'Angular', value: 'angular'}]}
+                            value={input.value}
+                            onChange={(param, data) => input.onChange(data.value)}
+                        />
                         {this.renderReduxError(meta)}
                     </Form.Field>
                 );
@@ -93,18 +95,18 @@ class ReservationHandlingForm extends React.Component {
 
     //Renders Redux Form Fields for all the props passed in from the parent component
     renderFields = Object.values(this.props.fields).map((key, index) => {
-
-            return (
-                <Field
-                    name={key.name}
-                    component={this.renderInput}
-                    key={index}
-                    label={key.label}
-                    type={key.type}
-                />
-            )
+        return (
+            <Field
+                name={key.name}
+                component={this.renderInput}
+                key={index}
+                label={key.label}
+                type={key.type}
+            />
+        )
     });
 
+    //Renders JSX buttons for form
     renderButtons = Object.values(this.props.operations).map((key, index) => {
         switch (key.type) {
             case "submit":
@@ -115,7 +117,7 @@ class ReservationHandlingForm extends React.Component {
                     color={key.color}
                 >
                     {key.text}
-                    </Button>;
+                </Button>;
             case "button":
                 return <Button
                     key={index}
@@ -125,14 +127,14 @@ class ReservationHandlingForm extends React.Component {
                     color={key.color}
                 >
                     {key.text}
-                    </Button>;
+                </Button>;
 
             default:
                 return;
         }
     });
 
-
+    //Renders main body of an reservationHandlingForm
     render() {
         return (
             <div>
@@ -140,7 +142,6 @@ class ReservationHandlingForm extends React.Component {
 
                     <Progress percent={this.props.header.progress} attached="top" indicating/>
 
-                    {/*Implement search to display stations by Category*/}
                     <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
                         {this.renderHeader(this.props.header)}
                         {this.renderFields}

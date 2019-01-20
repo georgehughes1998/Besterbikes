@@ -1,12 +1,11 @@
 import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
-import {Button, Container, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
 import ReservationHandlingForm from "./ReservationHandlingForm";
 
 
+//Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 const ReviewOrder = (props) => {
-
     return (
         <div>
             <ReservationHandlingForm
@@ -19,35 +18,35 @@ const ReviewOrder = (props) => {
 
                 fields={{
                     station: {
-                    name: 'station',
-                    label: 'Station',
-                    type: 'readOnly',
-                },
+                        name: 'station',
+                        label: 'Station',
+                        type: 'readOnly',
+                    },
                     mountainBikes: {
-                    name: 'mountainBikes',
-                    label: 'Mountain Bikes',
-                    type: 'readOnly',
-                },
+                        name: 'mountainBikes',
+                        label: 'Mountain Bikes',
+                        type: 'readOnly',
+                    },
                     regularBikes: {
-                    name: 'regularBikes',
-                    label: 'Regular Bikes',
-                    type: 'readOnly',
-                },
-                startDate: {
-                    name: 'startDate',
-                    label: 'Start Date',
-                    type: 'readOnly',
-                },
-                startTime: {
-                    name: 'startTime',
-                    label: 'Start Time',
-                    type: 'readOnly',
-                }
+                        name: 'regularBikes',
+                        label: 'Regular Bikes',
+                        type: 'readOnly',
+                    },
+                    startDate: {
+                        name: 'startDate',
+                        label: 'Start Date',
+                        type: 'readOnly',
+                    },
+                    startTime: {
+                        name: 'startTime',
+                        label: 'Start Time',
+                        type: 'readOnly',
+                    }
 
                 }}
 
                 operations={{
-                    back:{
+                    back: {
                         link: props.previousPage,
                         type: 'button',
                         className: 'previous',

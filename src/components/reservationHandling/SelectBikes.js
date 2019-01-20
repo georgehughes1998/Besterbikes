@@ -2,17 +2,15 @@ import React from 'react'
 import {reduxForm} from 'redux-form'
 
 import validate from './validate'
-import Map from "../map/Map";
 import ReservationHandlingForm from "./ReservationHandlingForm";
+import {BesterbikesMap} from "../map/BesterbikesMap";
 
-{/*TODO: Move map into segment*/}
+
+// TODO: Move map into segment and fix diaplsy issues
+//Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 const SelectBikes = (props) => {
-
     return (
         <div>
-
-            <Map/>
-
             <ReservationHandlingForm
                 header={{
                     title: "Select Bikes",
@@ -41,7 +39,7 @@ const SelectBikes = (props) => {
                 }}
 
                 operations={{
-                    next:{
+                    next: {
                         link: props.onSubmit,
                         type: 'submit',
                         className: 'next',

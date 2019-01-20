@@ -1,10 +1,10 @@
 import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
-import {Button, Container, Form, Header, Icon, Progress, Segment} from "semantic-ui-react";
 import ReservationHandlingForm from "./ReservationHandlingForm";
 
 
+//Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 const DateAndTime = (props) => {
 
     return (
@@ -32,7 +32,7 @@ const DateAndTime = (props) => {
                 }}
 
                 operations={{
-                    back:{
+                    back: {
                         link: props.previousPage,
                         type: 'button',
                         className: 'previous',
