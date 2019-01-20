@@ -29,7 +29,7 @@ const SideBarContent = (props) => {
     return (
         <Sidebar
             as={Menu}
-            animation='overlay'
+            animation='push'
             icon='labeled'
             inverted
             vertical

@@ -12,18 +12,16 @@ let Steps = (props) => {
 
     //TODO: Implment complete
     const isComplete = (key) => {
-        console.log(key);
+        console.log(props);
         switch (key.title) {
             case "Select Bikes":
-                return props.selectedBike.station && props.selectedBike.regularBikes && props.selectedBike.mountainBikes;
+                return props.fields.station && props.fields.regularBikes && props.fields.mountainBikes;
             case "Date and Time":
-                return props.selectedDateAndTime.startTime && props.selectedDateAndTime.startDate;
+                return props.fields.startTime && props.fields.startDate;
             case "Review Order":
-                return props.selectedBike.station;
+                return props.fields.station && props.fields.regularBikes && props.fields.mountainBikes && props.fields.startTime && props.fields.startDate;
             case "Payment":
-                return props.paid.cardNumber && props.paid.CVV && props.paid.country && props.paid.expirationDate;
-
-
+                return props.fields.cardNumber && props.fields.CVV && props.fields.country && props.fields.expirationDate;
         }
     };
 
@@ -66,16 +64,21 @@ Steps = reduxForm({
 const selector = formValueSelector('reservebike') ;// <-- same as form name
 Steps = connect(state => {
     // can select values individually
-    const selectedBike = selector(state, 'station', 'mountainBikes', 'regularBikes');
-    const selectedDateAndTime = selector(state, 'startDate', 'startTime');
+    const fields = selector(state,
+        'station',
+        'mountainBikes',
+        'regularBikes',
+        'startDate',
+        'startTime',
+        'cardNumber',
+        'CVV',
+        'expirationDate',
+        'country',
+    );
     //TODO: Add conformiation
-    const paid = selector(state, 'cardNumber', 'CVV', 'expirationDate', 'country');
-
 
     return {
-        selectedBike,
-        selectedDateAndTime,
-        paid
+        fields
     }
 })(Steps);
 

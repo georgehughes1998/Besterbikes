@@ -83,6 +83,7 @@ export const getUserDetails = async () => {
 
 };
 
+//TODO: Also update email and password
 export const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
     const auth = firebase.auth();

@@ -33,16 +33,16 @@ const ReviewOrder = (props) => {
                     label: 'Regular Bikes',
                     type: 'readOnly',
                 },
-                    startDate: {
-                        name: 'startDate',
-                        label: 'Start Date',
-                        type: 'readOnly',
-                    },
-                    startTime: {
-                        name: 'startTime',
-                        label: 'Start Time',
-                        type: 'readOnly',
-                    }
+                startDate: {
+                    name: 'startDate',
+                    label: 'Start Date',
+                    type: 'readOnly',
+                },
+                startTime: {
+                    name: 'startTime',
+                    label: 'Start Time',
+                    type: 'readOnly',
+                }
 
                 }}
 

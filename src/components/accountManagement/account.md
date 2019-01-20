@@ -9,6 +9,6 @@ The component uses redux forms to process the form and awaits a response from th
 ## PageContainer
 This component contains any authentication components including the Account Handling form and should communicate with redux to store auth states
 
-## SignIn, SignOut, SignUp
+## SignIn, SignOut, SignUp, EditAccount
 Component that passes relevant fields and information to PageContainer
 

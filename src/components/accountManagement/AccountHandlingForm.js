@@ -3,7 +3,7 @@ import {Field, reduxForm, SubmissionError} from "redux-form";
 import {withRouter} from "react-router-dom";
 import {Button, Container, Form, Message} from 'semantic-ui-react'
 
-import {signIn, signOut, signUp} from "../../firebase/authentication";
+import {setUserDetails, signIn, signOut, signUp} from "../../firebase/authentication";
 import FirebaseError from '../FirebaseError'
 
 
@@ -25,7 +25,7 @@ class AccountHandlingForm extends React.Component {
     onSubmit = async (formValues) => {
 
         //Uses operation prop to determine which firebase process to follow
-        //Await keyword ensures that firebase has time to carry out operation and return a user object or error
+        //Await ensures that firebase has time to carry out operation and return a user object or error
         switch (this.props.operation.text) {
             case "Sign In":
                 if (formValues.email && formValues.password) {
@@ -44,6 +44,11 @@ class AccountHandlingForm extends React.Component {
             case "Sign Out":
                 this.props.history.push("/signin");
                 await signOut();
+                return;
+
+            case "Save Changes":
+                this.props.history.push("/");
+                await setUserDetails(formValues);
                 return;
 
             default:
@@ -65,6 +70,7 @@ class AccountHandlingForm extends React.Component {
         }
     };
 
+    //TODO: Render SignUp with values of user already entered
     //Renders JSX elements for each field in the redux form if they exist
     renderInput = ({input, label, type, meta}) => {
 
@@ -98,8 +104,6 @@ class AccountHandlingForm extends React.Component {
         return (
 
             <Container>
-                {/*<form className="ui container middle aligned center aligned grid form error" onSubmit={this.props.handleSubmit(this.onSubmit)}>*/}
-
                 <Form onSubmit={this.props.handleSubmit(this.onSubmit)} error>
 
                     {this.renderFields}
@@ -116,7 +120,6 @@ class AccountHandlingForm extends React.Component {
                     </Container>
 
                     <br/>
-
                 </Form>
 
             </Container>
@@ -124,10 +127,10 @@ class AccountHandlingForm extends React.Component {
     }
 }
 
+// TODO: Fix validation and Use functions in Props object to validate
 //Validates inputs using redux forms
 const validate = (formValues) => {
 
-    // TODO: Fix validation and Use functions in Props object to validate
     const errors = {};
 
     if (!formValues.email) {

@@ -27,10 +27,10 @@ class ReservationHandlingFormWizard extends Component {
         const {page} = this.state;
 
         return (<div>
-                {page === 1 && <SelectBikes onSubmit={this.nextPage}/>}
-                {page === 2 && <DateAndTime previousPage={this.previousPage} onSubmit={this.nextPage}/>}
-                {page === 3 && <Confirmation previousPage={this.previousPage} onSubmit={this.nextPage}/>}
-                {page === 4 && <Payment previousPage={this.previousPage} onSubmit={() => this.props}/>}
+                {page === 1 && <SelectBikes currentPageName="SelectBikes" onSubmit={this.nextPage}/>}
+                {page === 2 && <DateAndTime currentPageName="DateAndTime" previousPage={this.previousPage} onSubmit={this.nextPage}/>}
+                {page === 3 && <Confirmation currentPageName="Confirmation" previousPage={this.previousPage} onSubmit={this.nextPage}/>}
+                {page === 4 && <Payment currentPageName="Payment" previousPage={this.previousPage} onSubmit={() => this.props}/>}
             </div>
         )
     }

@@ -18,7 +18,8 @@ const EditAccount = () => {
                     Email: {
                         name: 'email',
                         label: 'Email',
-                        type: 'text'
+                        type: 'text',
+                        value: 'Hello'
                     },
                     Password: {
                         name: 'password',

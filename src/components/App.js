@@ -54,7 +54,9 @@ class App extends React.Component {
                                 }}
                             />
 
-                            <Sidebar.Pusher>
+
+                            {/*TODO: Get sidebar to push content*/}
+                            <Sidebar.Pusher animation='push'>
 
                                 <Header/>
 
