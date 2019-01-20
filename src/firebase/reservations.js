@@ -22,7 +22,6 @@ export const makeReservations = async ({startDate,startTime, startStation, numbe
 
         const promise = getNestedPromise({promiseFunction : makeSingleReservation({reservationsCollection,reservationDocument}),counter : 0, max : numberOfBikes});
 
-
         return promise.then (() => {
             const newNumberOfAvailableBikes = numberOfAvailableBikes - numberOfBikes;
             return setNumberOfAvailableBikes({station : startStation,numberOfAvailableBikes : newNumberOfAvailableBikes});
