@@ -14,7 +14,7 @@ let Steps = (props) => {
 
 
     const isComplete = (key) => {
-        console.log(props);
+        //console.log(props);
         switch (key.title) {
             case "Select Bikes":
                 return props.fields.station && props.fields.regularBikes && props.fields.mountainBikes;

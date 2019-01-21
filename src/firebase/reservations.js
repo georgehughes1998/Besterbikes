@@ -1,12 +1,16 @@
 import * as firebase from "firebase";
 
-export const makeReservations = async ({startDate,startTime, startStation, numberOfBikes}) => {
+export const makeReservations = async ({startDate,startTime, station, mountainBikes, regularBikes}) => {
 
-    const numberOfAvailableBikes = getNumberOfAvailableBikes(startStation);
+    const numberOfAvailableBikes = getNumberOfAvailableBikes(station,"road");
 
-    if (numberOfAvailableBikes > numberOfBikes) {
+    //TODO check regular and mountain bikes are valid
+    if (numberOfAvailableBikes > regularBikes) {
 
         const db = firebase.firestore();
+
+        const auth = firebase.auth();
+        const uid = auth.currentUser.uid;
 
         const reservationsCollection = db.collection('reservations');
 
@@ -16,15 +20,16 @@ export const makeReservations = async ({startDate,startTime, startStation, numbe
                     date: startDate,
                     time: startTime
                 },
-                station: startStation
-            }
+                station: station
+            },
+            user: uid
         };
 
-        const promise = getNestedPromise({promiseFunction : makeSingleReservation({reservationsCollection,reservationDocument}),counter : 0, max : numberOfBikes});
+        const promise = getNestedPromise({promiseFunction : makeSingleReservation(reservationsCollection,reservationDocument),counter : 0, max : regularBikes});
 
         return promise.then (() => {
-            const newNumberOfAvailableBikes = numberOfAvailableBikes - numberOfBikes;
-            return setNumberOfAvailableBikes({station : startStation,numberOfAvailableBikes : newNumberOfAvailableBikes});
+            const newNumberOfAvailableBikes = numberOfAvailableBikes - regularBikes;
+            return setNumberOfAvailableBikes(station,newNumberOfAvailableBikes,"road");
         })
         .then(() => {
             return "success"
@@ -40,7 +45,7 @@ export const makeReservations = async ({startDate,startTime, startStation, numbe
 };
 
 
-export const getNumberOfAvailableBikes = async ({station,bikeType}) =>
+export const getNumberOfAvailableBikes = async (station,bikeType) =>
 {
     const db = firebase.firestore();
 
@@ -48,27 +53,39 @@ export const getNumberOfAvailableBikes = async ({station,bikeType}) =>
     const thisStationDocument = stationsCollection.doc(station);
 
 
-    const thisStationData = thisStationDocument.get()
-        .then (doc => {return doc.data()})
+    return thisStationDocument.get()
+        .then (doc => {
+
+            const thisStationData = doc.data();
+
+
+            console.log("thisStationData:");
+            console.log(thisStationData);
+
+
+            const bikes = thisStationData['bikes'][bikeType];
+            const numberOfAvailableBikes = bikes['numberOfAvailableBikes'];
+
+            console.log("Number of available bikes is " + numberOfAvailableBikes);
+
+            return numberOfAvailableBikes;
+
+        })
         .catch(err => {return err});
-
-    const bikes = thisStationData[bikeType];
-    const numberOfAvailableBikes = bikes['numberOfAvailableBikes'];
-
-    console.log("Number of available bikes is " + numberOfAvailableBikes.toString());
-
-    return numberOfAvailableBikes;
 
 };
 
-export const setNumberOfAvailableBikes = async ({station,numberOfAvailableBikes}) => {
+export const setNumberOfAvailableBikes = async (station,numberOfAvailableBikes,bikeType) => {
 
     const db = firebase.firestore();
 
     const stationsCollection = db.collection('stations');
     const thisStationDocument = stationsCollection.doc(station);
 
-    const promise = thisStationDocument.update({numberOfAvailableBikes : numberOfAvailableBikes});
+    let bikesObject = {};
+    bikesObject["bikes"][bikeType] = {numberOfAvailableBikes : numberOfAvailableBikes};
+
+    const promise = thisStationDocument.update(bikesObject);
 
     return promise
         .then(() => {return "success"})
@@ -86,30 +103,43 @@ export const appendUserReservationsArray = async (reservationReference) =>
     const usersCollection = db.collection('users');
     const currentUserDocument = usersCollection.doc(uid);
 
-    const currentUserData = currentUserDocument.get()
-        .then (doc => {return doc.data()})
-        .catch(err => {return err});
+    return currentUserDocument.get()
+        .then (doc => {
 
-    const reservationsArray = currentUserData['reservationsArray'];
-    reservationsArray.push(reservationReference);
+            const currentUserData = doc.data();
 
-    const promise = currentUserDocument.update({reservationsArray : reservationsArray});
+            let reservationsArray = currentUserData['reservationsArray'];
 
-    return promise
-        .then(() => {return "success"})
+            if (reservationsArray)
+            {
+                reservationsArray.push(reservationReference);
+            } else {
+                reservationsArray = [reservationReference];
+            }
+
+            console.log(reservationsArray);
+
+            const promise = currentUserDocument.update({reservationsArray : reservationsArray});
+
+            return promise
+                .then(() => {return "success"})
+                .catch(err => {return err});
+        })
         .catch(err => {return err});
 
 };
 
-export const makeSingleReservation = async ({reservationsCollection,reservationDocument}) => {
+export const makeSingleReservation = async (reservationsCollection,reservationDocument) => {
 
     const addPromise = reservationsCollection.add(reservationDocument);
 
     addPromise
         .then(ref => {
+            console.log("Single Reservation Added!")
+
             const appendPromise = appendUserReservationsArray(ref.id);
 
-            appendPromise
+            return appendPromise
                 .then(() => {return "success"})
                 .catch(err => {return err});
         })

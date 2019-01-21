@@ -58,8 +58,8 @@ class ReservationHandlingForm extends React.Component {
                             fluid
                             selection
                             search
-                            placeholder='Select Country'
-                            options={[{key: 'angular', text: 'Angular', value: 'angular'}]}
+                            placeholder='Select Station'
+                            options={[{key: 'stationHeriotWattUniversity', text: 'Heriot-Watt University', value: 'stationHeriotWattUniversity'}]}
                             value={input.value}
                             onChange={(param, data) => input.onChange(data.value)}
                         />
