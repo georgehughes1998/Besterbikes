@@ -4,15 +4,22 @@ import {reduxForm} from 'redux-form'
 import validate from './validate'
 import ReservationHandlingForm from "./ReservationHandlingForm";
 import BesterbikesMap from '../map/BesterbikesMap'
+import {Container, Segment} from "semantic-ui-react";
 
 
 // TODO: Move map into segment and fix diaplsy issues
 //Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 const SelectBikes = (props) => {
     return (
-        <div>
+        <Segment.Group>
 
-            <BesterbikesMap/>
+            <Segment style={{minHeight:"300px"}}>
+
+                    <div>
+                        <BesterbikesMap/>
+                    </div>
+
+            </Segment>
 
             <ReservationHandlingForm
                 header={{
@@ -52,7 +59,7 @@ const SelectBikes = (props) => {
                 }}
             />
 
-        </div>
+        </Segment.Group>
     )
 
 };

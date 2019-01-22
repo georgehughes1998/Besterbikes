@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
-import {Segment, Loader, Dimmer} from "semantic-ui-react"
+import {Segment, Loader, Dimmer, Container} from "semantic-ui-react"
 
 //TODO: Implement loader correctly
+//TODO: pass styling in as props
+//TODO: map JSON to markers
 /*global google*/
 export class BesterbikesMap extends Component {
     constructor(props) {
@@ -35,11 +37,16 @@ export class BesterbikesMap extends Component {
         }
 
         return (
-            <div>
+
                 <Map
                     style={{
-                        minWidth: "200px",
-                        minHeight: "200px"
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        marginRight: "14px",
+                        marginLeft: "-14px",
+                        marginTop: "-14px",
+                        marginBottom: "20px",
+                        position: "absolute"
                     }}
                     initialCenter={{
                         lat: 55.9533,
@@ -48,6 +55,9 @@ export class BesterbikesMap extends Component {
                     google={this.props.google}
                     zoom={14}
                     streetViewControl={false}
+                    mapTypeControl = {false}
+                    fullscreenControl = {false}
+
                 >
                     <Marker position={{lat: 55.953053, lng: -3.190277}}
                             onClick={this.onMarkerClick}
@@ -92,7 +102,7 @@ export class BesterbikesMap extends Component {
                         </div>
                     </InfoWindow>
                 </Map>
-            </div>
+
         );
     }
 }
