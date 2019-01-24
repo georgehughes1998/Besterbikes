@@ -35,7 +35,7 @@ class App extends React.Component {
                                         link: '/'
                                     },
                                     Map: {
-                                        name: 'MapContainer',
+                                        name: 'Map',
                                         icon: 'map',
                                         link: '/map'
                                     },

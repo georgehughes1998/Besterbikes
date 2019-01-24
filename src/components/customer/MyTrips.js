@@ -4,7 +4,6 @@ import {SubmissionError} from "redux-form";
 import BesterbikesMap from '../map/BesterbikesMap'
 // import {getTrips} from "../../firebase/authentication";
 
-
 //TODO: Implement retriveTrips to pull trips from firebase
 //TODO: Show google maps on active trips
 //TODO: Review columns and mobile compatability
