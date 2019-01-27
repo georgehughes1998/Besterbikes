@@ -1,4 +1,5 @@
-[{
+{
+  "stationHeriotWattUniversity" : {
     "name": "Heriot-Watt University",
     "description": "HWU Main Reception",
     "location": {
@@ -7,12 +8,13 @@
     },
     "type": "Bespoke",
     "capacity": {
-      "regular": "30",
+      "road": "30",
       "mountain": "6"
     },
     "notes": "Student hotspot && Canal route access"
   },
-  {
+
+  "stationWaverley" : {
     "name": "Waverley Station",
     "description": "Waverley - Princes Street",
     "location": {
@@ -21,12 +23,13 @@
     },
     "type": "Regular",
     "capacity": {
-      "regular": "20",
+      "road": "20",
       "mountain": "0"
     },
     "notes": "Major tourist hotspot && Direct connection to other Bester stations"
   },
-  {
+
+  "stationHaymarket" : {
     "name": "Haymarket Station",
     "description": "Haymarket Bike Rack",
     "location": {
@@ -35,26 +38,28 @@
     },
     "type": "Regular",
     "capacity": {
-      "regular": "20",
+      "road": "20",
       "mountain": "0"
     },
     "notes": ""
   },
-  {
+
+  "stationNationalMuseumOfScotland" : {
     "name": "National Museum of Scotland",
-    "description": "Greyfriar's Bobby entrance",
+    "description": "Greyfriars' Bobby entrance",
     "location": {
       "postcode": "EH1 1JF",
       "geoPoint": "55°56'49.8\"N 3°11'27.0\"W"
     },
     "type": "Regular",
     "capacity": {
-      "regular": "20",
+      "road": "20",
       "mountain": "0"
     },
     "notes": "Busy city area"
   },
-  {
+
+  "stationEdinburghZoo" : {
     "name": "Edinburgh Zoo",
     "description": "Zoo Main Entrance",
     "location": {
@@ -63,12 +68,13 @@
     },
     "type": "Regular",
     "capacity": {
-      "regular": "30",
+      "road": "30",
       "mountain": "0"
     },
     "notes": ""
   },
-  {
+
+  "stationEdinburghUniversityLibrary" : {
     "name": "Edinburgh University Library",
     "description": "Edinburgh Uni - The Meadows",
     "location": {
@@ -77,12 +83,13 @@
     },
     "type": "Regular",
     "capacity": {
-      "regular": "20",
+      "road": "20",
       "mountain": "0"
     },
     "notes": "Footfall hotspot - large park and green spaces alongside major student hub"
   },
-  {
+
+  "stationScottishParliament" : {
     "name": "Scottish Parliament",
     "description": "Royal Mile",
     "location": {
@@ -91,12 +98,13 @@
     },
     "type": "Bespoke",
     "capacity": {
-      "regular": "30",
+      "road": "30",
       "mountain": "6"
     },
     "notes": "Arthur's seat area access"
   },
-  {
+
+  "stationMerchistonCrossroads" : {
     "name": "Merchiston Crossroads",
     "description": "Napier University Computing School",
     "location": {
@@ -105,12 +113,13 @@
     },
     "type": "Regular",
     "capacity": {
-      "regular": "16",
+      "road": "16",
       "mountain": "0"
     },
     "notes": ""
   },
-  {
+
+  "stationRoyalBotanicGarden" : {
     "name": "Royal Botanic Garden",
     "description": "West Entrance - Arboretum Place",
     "location": {
@@ -119,12 +128,13 @@
     },
     "type": "Bespoke",
     "capacity": {
-      "regular": "30",
+      "road": "30",
       "mountain": "6"
     },
     "notes": "Peak bike location"
   },
-  {
+
+  "stationPortobelloBeachNorth" : {
     "name": "Portobello Beach North",
     "description": "Lothian Buses marine depot",
     "location": {
@@ -133,12 +143,13 @@
     },
     "type": "Regular",
     "capacity": {
-      "regular": "16",
+      "road": "16",
       "mountain": "0"
     },
     "notes": "Straight line from Princes + Queen Street"
   },
-  {
+
+  "stationPortobelloBeachEast" : {
     "name": "Portobello Beach East",
     "description": "Promenade path",
     "location": {
@@ -147,8 +158,9 @@
     },
     "type": "Bespoke",
     "capacity": {
-      "regular": "30",
+      "road": "30",
       "mountain": "6"
     },
     "notes": "Key cycling path"
-  }]
+  }
+}

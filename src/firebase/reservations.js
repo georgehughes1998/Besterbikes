@@ -25,7 +25,7 @@ export const makeReservations = async ({startDate,startTime, station, mountainBi
             user: uid
         };
 
-        const promise = getNestedPromise({promiseFunction : makeSingleReservation(reservationsCollection,reservationDocument),counter : 0, max : regularBikes});
+        const promise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument},0,regularBikes);
 
         return promise.then (() => {
             const newNumberOfAvailableBikes = numberOfAvailableBikes - regularBikes;
@@ -129,7 +129,7 @@ export const appendUserReservationsArray = async (reservationReference) =>
 
 };
 
-export const makeSingleReservation = async (reservationsCollection,reservationDocument) => {
+export const makeSingleReservation = async ({reservationsCollection,reservationDocument}) => {
 
     const addPromise = reservationsCollection.add(reservationDocument);
 
@@ -147,13 +147,13 @@ export const makeSingleReservation = async (reservationsCollection,reservationDo
 
 };
 
-export const getNestedPromise = async ({promiseFunction,counter,max}) =>
+export const getNestedPromise = async (promiseFunction,args,counter,max) =>
 {
     counter++;
     if (counter<=max)
     {
-        return promiseFunction
-            .then(() => {return getNestedPromise({promiseFunction,counter,max})})
+        return promiseFunction(args)
+            .then(() => {return getNestedPromise(promiseFunction,args,counter,max)})
             .catch(err => {return err});
     }
 
