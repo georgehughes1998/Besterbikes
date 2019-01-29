@@ -3,7 +3,10 @@
     "description": "HWU Main Reception",
     "location": {
       "postcode": "EH14 4AS",
-      "geoPoint": "55°54'33.3\"N 3°19'11.7\"W"
+      "geoPoint": {
+        "lat": "55.54333",
+        "long": "-3.19117"
+      }
     },
     "type": "Bespoke",
     "capacity": {

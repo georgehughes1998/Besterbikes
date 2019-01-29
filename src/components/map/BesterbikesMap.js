@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import {Segment, Loader, Dimmer, Container} from "semantic-ui-react"
 
+import {getJSONFromFile} from '../../handleJSON.js'
+
 //TODO: Implement loader correctly
 //TODO: pass styling in as props
 //TODO: map JSON to markers
@@ -13,7 +15,8 @@ export class BesterbikesMap extends Component {
         this.state = {
             showingInfoWindow: true,
             activeMarker: {},
-            selectedPlace: {}
+            selectedPlace: {},
+            mapJSON:{}
         };
     }
 
@@ -23,6 +26,41 @@ export class BesterbikesMap extends Component {
             activeMarker: marker,
             showingInfoWindow: true
         });
+    }
+
+
+    componentDidMount(){
+        //TODO: Only re-render once
+        if (!(this.state.mapJSON === {})) {
+            this.getMapJSON()
+        }
+    }
+
+    async getMapJSON(){
+        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+        console.log("MAP JSON RETRIVED");
+        console.log(stations);
+        this.setState({mapJSON: stations})
+    }
+
+
+    renderMarkers(){
+        const stations = this.state.mapJSON;
+
+        console.log("Rendering markers");
+        console.log(stations);
+
+        if (!(stations === {})){
+            return Object.values(stations).map(station => {
+                return(
+                    <Marker position={{lat: 55.953053, lng: -3.190277}}
+                            onClick={this.onMarkerClick}
+                            name={station.name}
+                    />
+                )
+            })
+        }
+
     }
 
     render() {
@@ -57,8 +95,11 @@ export class BesterbikesMap extends Component {
                     streetViewControl={false}
                     mapTypeControl = {false}
                     fullscreenControl = {false}
-
                 >
+
+                    {this.renderMarkers()}
+
+                    {/*TODO: Extract correct co-ordinates and place in JSON file*/}
                     <Marker position={{lat: 55.953053, lng: -3.190277}}
                             onClick={this.onMarkerClick}
                             name={"Waverley Station"}/>
