@@ -100,7 +100,6 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
                 lastName : surname
             },
             dateOfBirth : dateOfBirth,
-            reservationsArray : []
     };
 
     const promise = usersDoc.set(userDetails);

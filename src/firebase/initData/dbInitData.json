@@ -1,0 +1,321 @@
+{
+
+
+  "bikes" : {
+
+
+    "bikeRoad0" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad1" : {
+
+        "type" : "road",
+        "status" : "available"
+
+    },
+
+    "bikeRoad2" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad3" : {
+
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad4" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad5" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad6" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad7" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad8" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad9" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad10" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad11" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad12" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad13" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+    "bikeRoad14" : {
+        "type" : "road",
+        "status" : "available"
+    },
+
+
+
+
+    "bikeMountain0" : {
+        "type" : "mountain",
+        "status" : "available"
+    },
+
+    "bikeMountain1" : {
+        "type" : "mountain",
+        "status" : "available"
+    },
+
+    "bikeMountain2" : {
+        "type" : "mountain",
+        "status" : "available"
+    },
+
+    "bikeMountain3" : {
+        "type" : "mountain",
+        "status" : "available"
+    },
+
+    "bikeMountain4" : {
+        "type" : "mountain",
+        "status" : "available"
+    },
+
+    "bikeMountain5" : {
+        "type" : "mountain",
+        "status" : "available"
+    },
+
+    "bikeMountain6" : {
+        "type" : "mountain",
+        "status" : "available"
+    }
+
+  },
+
+
+
+
+
+  "stations" : {
+
+
+    "stationHeriotWattUniversity" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 2,
+          "bikesArray" : [
+            "bikeRoad0",
+            "bikeRoad1"
+          ]
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 3,
+          "bikesArray" : [
+            "bikeMountain0",
+            "bikeMountain1",
+            "bikeMountain2"
+          ]
+        }
+      }
+    },
+
+    "stationEdinburghUniversity" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 2,
+          "bikesArray" : [
+            "bikeRoad2",
+            "bikeRoad3"
+          ]
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 2,
+          "bikesArray" : [
+            "bikeMountain3",
+            "bikeMountain4"
+          ]
+        }
+      }
+    },
+
+    "stationEdinburghZoo" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 4,
+          "bikesArray" : [
+            "bikeRoad4",
+            "bikeRoad5",
+            "bikeRoad6",
+            "bikeRoad7"
+          ]
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 2,
+          "bikesArray" : [
+            "bikeMountain5",
+            "bikeMountain6"
+          ]
+        }
+      }
+    },
+
+    "stationHaymarket" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 7,
+          "bikesArray" : [
+            "bikeRoad8",
+            "bikeRoad9",
+            "bikeRoad10",
+            "bikeRoad11",
+            "bikeRoad12",
+            "bikeRoad13",
+            "bikeRoad14"
+          ]
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationEdinburghUniversityLibrary" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationMerchistonCrossroads" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationNationalMuseumOfScotland" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationScottishParliament" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationWaverley" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationRoyalBotanicGarden" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationPortobelloBeachNorth" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    },
+
+    "stationPortobelloBeachEast" : {
+      "bikes" : {
+        "road" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        },
+        "mountain" : {
+          "numberOfAvailableBikes" : 0,
+          "bikesArray" : []
+        }
+      }
+    }
+
+  }
+
+
+
+}
