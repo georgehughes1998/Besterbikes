@@ -22,7 +22,8 @@ export const makeReservations = async ({startDate,startTime, station, mountainBi
                 },
                 station: station
             },
-            user: uid
+            user: uid,
+            status: 'inactive'
         };
 
         const promise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument},0,regularBikes);
@@ -78,6 +79,7 @@ export const getNumberOfAvailableBikes = async (station,bikeType) =>
 export const setNumberOfAvailableBikes = async (station,numberOfAvailableBikes,bikeType) => {
 
     const db = firebase.firestore();
+    console.log("Setting number of available bikes...");
 
     const stationsCollection = db.collection('stations');
     const thisStationDocument = stationsCollection.doc(station);
@@ -117,8 +119,6 @@ export const appendUserReservationsArray = async (reservationReference) =>
                 reservationsArray = [reservationReference];
             }
 
-            console.log(reservationsArray);
-
             const promise = currentUserDocument.update({reservationsArray : reservationsArray});
 
             return promise
@@ -157,5 +157,66 @@ export const getNestedPromise = async (promiseFunction,args,counter,max) =>
             .catch(err => {return err});
     }
 
+
+};
+
+
+
+
+export const getTrip = async () =>
+{
+
+    const db = firebase.firestore();
+
+    const auth = firebase.auth();
+
+    if (!auth){
+        throw new Error("No user is logged in");
+    }
+
+    const uid = auth.currentUser.uid;
+
+    const usersCollection = db.collection('users');
+
+    const currentUserDocument = usersCollection.doc(uid);
+
+    return currentUserDocument.get()
+        .then (async doc => {
+
+            const currentUserData = doc.data();
+
+            const reservationsArray = currentUserData['reservationsArray'];
+
+            let fullReservationsArray = [];
+
+            for (let r in reservationsArray)
+            {
+                const reservationData = await getReservation(r);
+                fullReservationsArray.push(reservationData);
+            }
+
+            return fullReservationsArray;
+
+        })
+        .catch(err => {return err});
+
+};
+
+
+export const getReservation = async (reservationID) =>
+{
+    const db = firebase.firestore();
+    const reservationsCollection = db.collection('reservations');
+
+    const reservationDocument = reservationsCollection.doc(reservationID);
+
+    return reservationDocument.get()
+        .then(doc => {
+
+            const reservationData = doc.data();
+            return reservationData;
+
+        })
+        .catch(err => {return err});
 
 };
