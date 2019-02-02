@@ -22,7 +22,8 @@ export const makeReservations = async ({startDate,startTime, station, mountainBi
                 },
                 station: station
             },
-            user: uid
+            user: uid,
+            status: 'inactive'
         };
 
         const promise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument},0,regularBikes);
