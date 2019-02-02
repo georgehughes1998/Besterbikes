@@ -2,46 +2,56 @@ import * as firebase from "firebase";
 
 export const makeReservations = async ({startDate,startTime, station, mountainBikes, regularBikes}) => {
 
-    const numberOfAvailableBikes = getNumberOfAvailableBikes(station,"road");
+    const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station,"road");
+    const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station,"mountain");
 
-    //TODO check regular and mountain bikes are valid
-    if (numberOfAvailableBikes > regularBikes) {
-
-        const db = firebase.firestore();
-
-        const auth = firebase.auth();
-        const uid = auth.currentUser.uid;
-
-        const reservationsCollection = db.collection('reservations');
-
-        const reservationDocument = {
-            start: {
-                time: {
-                    date: startDate,
-                    time: startTime
-                },
-                station: station
-            },
-            user: uid,
-            status: 'inactive'
-        };
-
-        const promise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument},0,regularBikes);
-
-        return promise.then (() => {
-            const newNumberOfAvailableBikes = numberOfAvailableBikes - regularBikes;
-            return setNumberOfAvailableBikes(station,newNumberOfAvailableBikes,"road");
-        })
-        .then(() => {
-            return "success"
-        })
-        .catch(err => {
-            return err
-        });
-
+    if (numberOfAvailableRoadBikes < regularBikes)
+    {
+        throw new Error("Not enough road bikes available at selected station");
+    }
+    if (numberOfAvailableMountainBikes < mountainBikes) {
+        throw new Error("Not enough mountain bikes available at selected station");
     }
 
-    throw new Error("Not enough bikes available at selected station");
+    const db = firebase.firestore();
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    const reservationsCollection = db.collection('reservations');
+
+    const reservationDocument = {
+        start: {
+            time: {
+                date: startDate,
+                time: startTime
+            },
+            station: station
+        },
+        user: uid,
+        status: 'inactive',
+    };
+
+    const roadPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikType:'road'},0,regularBikes);
+    const mountainPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikeType:'mountain'},0,mountainBikes);
+
+    return roadPromise.then (() => {
+        console.log("Done road");
+        return mountainPromise.then(() => {
+                console.log("Done mountain");
+                const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
+                return setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road")
+                    .then(() => {
+                        const newNumberOfAvailableMountainBikes = numberOfAvailableMountainBikes - mountainBikes;
+                        return setNumberOfAvailableBikes(station, newNumberOfAvailableMountainBikes, "mountain")
+                            .then(() => {return "success"})
+                            .catch(err => {return err})
+                    })
+                    .catch(err => {return err});
+        })
+    })
+
+
 
 };
 
@@ -84,8 +94,9 @@ export const setNumberOfAvailableBikes = async (station,numberOfAvailableBikes,b
     const stationsCollection = db.collection('stations');
     const thisStationDocument = stationsCollection.doc(station);
 
+
     let bikesObject = {};
-    bikesObject["bikes"][bikeType] = {numberOfAvailableBikes : numberOfAvailableBikes};
+    bikesObject[`bikes.${bikeType}.numberOfAvailableBikes`] = numberOfAvailableBikes;
 
     const promise = thisStationDocument.update(bikesObject);
 
@@ -119,7 +130,7 @@ export const appendUserReservationsArray = async (reservationReference) =>
                 reservationsArray = [reservationReference];
             }
 
-            const promise = currentUserDocument.update({reservationsArray : reservationsArray});
+            const promise = currentUserDocument.update({reservationsArray: reservationsArray});
 
             return promise
                 .then(() => {return "success"})
@@ -129,7 +140,9 @@ export const appendUserReservationsArray = async (reservationReference) =>
 
 };
 
-export const makeSingleReservation = async ({reservationsCollection,reservationDocument}) => {
+export const makeSingleReservation = async ({reservationsCollection,reservationDocument,bikeType}) => {
+
+    reservationDocument['bikeType'] = bikeType;
 
     const addPromise = reservationsCollection.add(reservationDocument);
 
@@ -163,7 +176,7 @@ export const getNestedPromise = async (promiseFunction,args,counter,max) =>
 
 
 
-export const getTrip = async () =>
+export const getTrips = async () =>
 {
 
     const db = firebase.firestore();
@@ -218,5 +231,42 @@ export const getReservation = async (reservationID) =>
 
         })
         .catch(err => {return err});
+
+};
+
+
+export const cancelReservation = async (reservationID) =>
+{
+
+    const db = firebase.firestore();
+
+    const reservationsCollection = db.collection('reservations');
+    const reservationDocument = reservationsCollection.doc(reservationID);
+
+    return reservationDocument.get()
+        .then(async doc => {
+
+            const reservationData = doc.data();
+            const stationID = reservationData['start']['station'];
+            const bikeType = reservationData['bikeType'];
+
+            const numberOfAvailableBikes = await getNumberOfAvailableBikes(stationID,bikeType);
+            const newNumberOfAvailableBikes = numberOfAvailableBikes + 1;
+
+            return setNumberOfAvailableBikes(stationID,newNumberOfAvailableBikes,bikeType)
+                .then(() => {
+
+                    return reservationDocument.update({status: "cancelled"})
+                        .then(() =>{return "success"})
+                        .catch(err => {return err})
+
+                })
+                .catch(err => {return err});
+
+
+
+        })
+        .catch(err => {return err});
+
 
 };
