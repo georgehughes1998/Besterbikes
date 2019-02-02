@@ -1,3 +1,5 @@
+//This file is to be run for the sake of preparing the firestore for INITIAL testing/use.
+
 const firebaseAdmin = require("firebase-admin");
 
 
