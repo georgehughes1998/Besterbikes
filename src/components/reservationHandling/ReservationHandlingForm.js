@@ -3,6 +3,7 @@ import {Button, Container, Dropdown, Form, Header, Icon, Message, Progress, Segm
 import {Field, reduxForm} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
 import validate from "./validate";
+import {getJSONFromFile} from "../../handleJSON";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
@@ -53,13 +54,17 @@ class ReservationHandlingForm extends React.Component {
             case "dropdown":
                 return (
                     <Form.Field required>
+
+                        {console.log(this.props.fields.station.values)}
+
                         <label>{label}</label>
                         <Dropdown
                             fluid
                             selection
                             search
                             placeholder='Select Station'
-                            options={[{key: 'stationHeriotWattUniversity', text: 'Heriot-Watt University', value: 'stationHeriotWattUniversity'}]}
+                            options={this.props.fields.station.values}
+                            // options={[{"key" : 1, "text" : 1, "value" : 1}, {"key" : 1, "text" : 1, "value" : 1}]}
                             value={input.value}
                             onChange={(param, data) => input.onChange(data.value)}
                         />

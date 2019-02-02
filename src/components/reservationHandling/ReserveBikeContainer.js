@@ -4,6 +4,7 @@ import PageContainer from "../PageContainer";
 import Steps from "./Steps";
 import ReservationHandlingFormWizard from "./ReservationHandlingFormWizard";
 import {Segment} from "semantic-ui-react";
+import {getJSONFromFile} from "../../handleJSON";
 
 
 // TODO: Review content of steps and consider using JSON file to store*/
