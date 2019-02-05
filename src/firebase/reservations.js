@@ -36,26 +36,41 @@ export const makeReservations = async ({startDate,startTime, station, mountainBi
         status: 'inactive',
     };
 
-    const roadPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikType:'road'},0,regularBikes);
-    const mountainPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikeType:'mountain'},0,mountainBikes);
+    // const roadPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikeType:'road'},0,regularBikes);
+    // const mountainPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikeType:'mountain'},0,mountainBikes);
 
-    return roadPromise.then (() => {
-        console.log("Done road");
-        return mountainPromise.then(() => {
-                console.log("Done mountain");
-                const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
-                return setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road")
-                    .then(() => {
-                        const newNumberOfAvailableMountainBikes = numberOfAvailableMountainBikes - mountainBikes;
-                        return setNumberOfAvailableBikes(station, newNumberOfAvailableMountainBikes, "mountain")
-                            .then(() => {return "success"})
-                            .catch(err => {return err})
-                    })
-                    .catch(err => {return err});
-        })
-    })
+    for (let i=0; i<regularBikes; i++)
+    {
+      await makeSingleReservation(reservationsCollection,reservationDocument,'road');
+    }
 
+    const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
+    await setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road");
 
+    for (let i=0; i<mountainBikes; i++)
+    {
+      await makeSingleReservation(reservationsCollection,reservationDocument,'mountain');
+    }
+
+    const newNumberOfAvailableMountainBikes = numberOfAvailableMountainBikes - mountainBikes;
+    await setNumberOfAvailableBikes(station, newNumberOfAvailableMountainBikes, "mountain");
+
+    return "success";
+    // return roadPromise.then (() => {
+    //     console.log("Done road");
+    //     return mountainPromise.then(() => {
+    //             console.log("Done mountain");
+    //             const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
+    //             return setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road")
+    //                 .then(() => {
+    //                     const newNumberOfAvailableMountainBikes = numberOfAvailableMountainBikes - mountainBikes;
+    //                     return setNumberOfAvailableBikes(station, newNumberOfAvailableMountainBikes, "mountain")
+    //                         .then(() => {return "success"})
+    //                         .catch(err => {return err})
+    //                 })
+    //                 .catch(err => {return err});
+    //     })
+    // })
 
 };
 
@@ -74,14 +89,14 @@ export const getNumberOfAvailableBikes = async (station,bikeType) =>
             const thisStationData = doc.data();
 
 
-            console.log("thisStationData:");
-            console.log(thisStationData);
+            // console.log("thisStationData:");
+            // console.log(thisStationData);
 
 
             const bikes = thisStationData['bikes'][bikeType];
             const numberOfAvailableBikes = bikes['numberOfAvailableBikes'];
 
-            console.log("Number of available bikes is " + numberOfAvailableBikes);
+            // console.log("Number of available bikes is " + numberOfAvailableBikes);
 
             return numberOfAvailableBikes;
 
@@ -93,7 +108,7 @@ export const getNumberOfAvailableBikes = async (station,bikeType) =>
 export const setNumberOfAvailableBikes = async (station,numberOfAvailableBikes,bikeType) => {
 
     const db = firebase.firestore();
-    console.log("Setting number of available bikes...");
+    console.log("Setting number of available " + bikeType + " bikes at station " + station);
 
     const stationsCollection = db.collection('stations');
     const thisStationDocument = stationsCollection.doc(station);
@@ -101,6 +116,8 @@ export const setNumberOfAvailableBikes = async (station,numberOfAvailableBikes,b
 
     let bikesObject = {};
     bikesObject[`bikes.${bikeType}.numberOfAvailableBikes`] = numberOfAvailableBikes;
+
+    // console.log(bikesObject);
 
     const promise = thisStationDocument.update(bikesObject);
 
@@ -112,6 +129,7 @@ export const setNumberOfAvailableBikes = async (station,numberOfAvailableBikes,b
 
 export const appendUserReservationsArray = async (reservationReference) =>
 {
+    //TODO Make a function to append them all at once. This current method causes issues of overwriting in the firestore.
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
@@ -144,7 +162,7 @@ export const appendUserReservationsArray = async (reservationReference) =>
 
 };
 
-export const makeSingleReservation = async ({reservationsCollection,reservationDocument,bikeType}) => {
+export const makeSingleReservation = async (reservationsCollection,reservationDocument,bikeType) => {
 
     reservationDocument['bikeType'] = bikeType;
 
@@ -152,7 +170,7 @@ export const makeSingleReservation = async ({reservationsCollection,reservationD
 
     addPromise
         .then(ref => {
-            console.log("Single Reservation Added!")
+            console.log("Single Reservation of " + bikeType + " bike Added!")
 
             const appendPromise = appendUserReservationsArray(ref.id);
 
@@ -215,6 +233,7 @@ export const getTrips = async () =>
                 fullReservationsCollection[currentReservation] = reservationData;
             }
 
+            console.log(fullReservationsCollection);
             return fullReservationsCollection;
 
         })
