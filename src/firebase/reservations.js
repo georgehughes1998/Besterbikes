@@ -129,6 +129,7 @@ export const setNumberOfAvailableBikes = async (station,numberOfAvailableBikes,b
 
 export const appendUserReservationsArray = async (reservationReference) =>
 {
+    //TODO Make a function to append them all at once. This current method causes issues of overwriting in the firestore.
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
