@@ -14,7 +14,7 @@ class ReservationHandlingForm extends React.Component {
         //TODO: If successful then Show complete screen with order overview
         if (this.props.header.title === "Payment") {
             const obj = await makeReservations(formValues);
-            console.log("obj")
+            // console.log("obj")
         } else {
             this.props.operations.next.link();
         }
@@ -55,7 +55,7 @@ class ReservationHandlingForm extends React.Component {
                 return (
                     <Form.Field required>
 
-                        {console.log(this.props.fields.station.values)}
+                        {/*{console.log(this.props.fields.station.values)}*/}
 
                         <label>{label}</label>
                         <Dropdown

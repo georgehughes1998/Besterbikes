@@ -30,8 +30,8 @@ class App extends React.Component {
 
         async getMapJSON() {
             const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-            console.log("MAP JSON RETRIVED");
-            console.log(stations);
+            // console.log("MAP JSON RETRIVED");
+            // console.log(stations);
             this.props.loadStations(stations)
         }
 

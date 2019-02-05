@@ -30,7 +30,7 @@ class SelectBikes extends React.Component{
         // console.log("MAP JSON RETRIVED");
         const options =  Object.values(stations).map((key, index) => ({key: index, value: index, text : key.name}));
         this.setState({options});
-        console.log(this.state.options);
+        // console.log(this.state.options);
     };
 
     render(){

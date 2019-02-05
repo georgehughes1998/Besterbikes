@@ -1,8 +1,7 @@
 import React from 'react'
 import {BesterbikesMap} from "./BesterbikesMap";
 import connect from "react-redux/es/connect/connect";
-import {retrieveStations} from "../../redux/actions";
-import {getUser} from "../../firebase/authentication";
+import {loadStations} from "../../redux/actions";
 
 
 class MapContainer extends React.Component {
@@ -22,5 +21,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps,
-    {retrieveStations}
+    {loadStations}
 )(MapContainer);

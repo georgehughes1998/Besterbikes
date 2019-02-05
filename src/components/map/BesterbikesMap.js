@@ -3,7 +3,6 @@ import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import {Dimmer, Header, List, Loader, Segment} from "semantic-ui-react"
 
 import connect from "react-redux/es/connect/connect";
-import {retrieveStations} from "../../redux/actions";
 import {getUser} from "../../firebase/authentication";
 
 //TODO: Implement loader correctly
@@ -34,7 +33,7 @@ export class BesterbikesMap extends Component {
 
     renderMarkers() {
         const stations = this.props.stations;
-        console.log(this.props)
+        // console.log(this.props)
         // if (!(stations === {})) {
         //     return Object.values(stations).map(station => {
         //         return (
