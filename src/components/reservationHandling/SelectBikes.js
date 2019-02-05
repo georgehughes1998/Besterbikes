@@ -6,7 +6,7 @@ import ReservationHandlingForm from "./ReservationHandlingForm";
 import {Segment} from "semantic-ui-react";
 import {getJSONFromFile} from "../../handleJSON";
 import MapContainer from "../map/MapContainer";
-import {BesterbikesMap} from "../map/BesterbikesMap";
+import BesterbikesMap from "../map/BesterbikesMap";
 
 //TODO: Render values in dropdown
 // TODO: Move map into segment and fix diaplsy issues

@@ -5,7 +5,7 @@ import Confirmation from "./ReviewOrder";
 import Payment from "./Payment";
 import {getUser} from "../../firebase/authentication";
 
-
+//TODO: Navigate to complete page after submitting form
 //Adpated code from redux form that builds multistep form
 class ReservationHandlingFormWizard extends Component {
 
