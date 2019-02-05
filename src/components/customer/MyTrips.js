@@ -3,10 +3,13 @@ import {Dropdown, Input, Placeholder, Container, Icon, Segment, Header, Grid} fr
 import {getUser, signIn} from "../../firebase/authentication";
 import {getTrips} from "../../firebase/reservations";
 import {SubmissionError} from "redux-form";
+import connect from "react-redux/es/connect/connect";
+import {loadTrips, retrieveTrips} from "../../redux/actions";
 
-//TODO: Implement retriveTrips to pull trips from firebase
+
 //TODO: Show google maps on active trips
 //TODO: Review columns and mobile compatability
+//TODO: Complete loading in trips for all reservation types
 class MyTrips extends React.Component{
 
     //Checks if user is logged in and redirects to sign in if not
@@ -22,18 +25,36 @@ class MyTrips extends React.Component{
     async componentDidMount() {
 
         const user = await this.authenticateUser();
-        console.log(user);
 
         if(user){
-            console.log("2");
-            this.retrieveTrips();
+            this.retrieveFirebaseTrips();
         }
 
     }
-    renderTrip = (color, iconName, iconColor, headerContent, headerSub, status) => {
+
+
+    renderTrips = () => {
+
+        if(this.props.trips){
+            console.log(this.props);
+           return this.props.trips.map((trip) => {
+                return(
+                    <div>
+                        {console.log(trip['status'])}
+                        {this.getTripTypeValues(trip)}
+                    </div>
+
+                )
+            })
+        }
+    };
+
+
+    renderTrip = (color, iconName, iconColor, status, headerContent, headerSub) => {
         return(
             <Segment color={color} fluid>
-                <Grid >
+                {console.log(color)}
+                <Grid>
                     <Grid.Row>
                         <Grid.Column width={13}>
                             <Header
@@ -65,11 +86,24 @@ class MyTrips extends React.Component{
                 </Grid>
             </Segment>
         )
-    }
+    };
 
-    // const renderTrips = Object.values(TRIPS).map((key, index) => {
-    renderTrips = (status) => {
-        switch(status){
+    retrieveFirebaseTrips = async () => {
+        const obj = await getTrips();
+        if (obj) {
+            this.props.loadTrips(obj);
+        } else {
+            throw new SubmissionError({
+                _error: obj.message
+            });
+        }
+    };
+
+
+    // const getTripTypeValues = Object.values(TRIPS).map((key, index) => {
+    getTripTypeValues = (trip) => {
+
+        switch(trip['status']){
             case "active":
                 return this.renderTrip(
                     "purple",
@@ -80,13 +114,14 @@ class MyTrips extends React.Component{
                     "Reserved"
                 );
             case "inactive":
+                console.log("inactive here");
                 return this.renderTrip(
                     "yellow",
                     "cancel",
                     "red",
-                    "Haymarket Stationn",
-                    "Bike available until 16:15",
-                    "Ready to unlock"
+                    "Ready to unlock",
+                    trip["start"]["station"],
+                    `Bike available until ${trip["start"]["time"]["time"]}`
                 );
             case "unlocked":
                 return this.renderTrip(
@@ -118,19 +153,7 @@ class MyTrips extends React.Component{
             default:
                 return (<div>No more trips to display</div>)
         }};
-    // });
 
-    retrieveTrips = async () => {
-        const obj = await getTrips();
-
-        if (obj) {
-            console.log(obj)
-        } else {
-            throw new SubmissionError({
-                _error: obj.message
-            });
-        }
-    };
 
     render(){
         return (
@@ -141,16 +164,18 @@ class MyTrips extends React.Component{
                     </Dropdown.Menu>
                 </Dropdown>
 
-                {this.renderTrips("active")}
-                {this.renderTrips("inactive")}
-                {this.renderTrips("unlocked")}
-                {this.renderTrips("complete")}
-                {this.renderTrips("cancelled")}
+                <div>
+                    {this.renderTrips()}
+                </div>
+
 
             </div>
         )
     }
-
 };
 
-export default MyTrips
+const mapStateToProps = (state) => {
+    return { trips: state.JSON.trips };
+};
+
+export default connect(mapStateToProps, { loadTrips })(MyTrips);

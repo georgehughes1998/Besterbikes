@@ -1,19 +1,24 @@
-import {LOAD_STATIONS, RETRIEVE_STATIONS} from "../actions/types";
+import {LOAD_STATIONS, LOAD_TRIPS,} from "../actions/types";
 
 const INITIAL_STATE = {
-    stations: {}
+    stations: {},
+    trips: []
 };
 
 export default (state = INITIAL_STATE, {type, payload}) => {
+
     switch (type) {
-        case LOAD_STATIONS:
+        case 'LOAD_STATIONS':
             if (!(payload === {})) {
                 return {...state, stations: payload}
             }
             break;
 
-        case RETRIEVE_STATIONS:
-            return state;
+        case 'LOAD_TRIPS':
+            if (!(payload === [])) {
+                return {...state, trips: payload}
+            }
+            break;
 
         default:
             return state

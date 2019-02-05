@@ -17,7 +17,7 @@ class MainMenu extends React.Component {
     };
 
     componentDidMount() {
-        this.authenticateUser().then((user) => console.log(user));
+        this.authenticateUser().then((user) => null);
     }
 
     render() {

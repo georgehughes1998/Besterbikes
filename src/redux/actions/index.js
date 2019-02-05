@@ -1,8 +1,8 @@
-import {CHANGE_SIDEBAR_STATUS, LOAD_STATIONS, RETRIEVE_STATIONS} from './types'
+import {CHANGE_SIDEBAR_STATUS, LOAD_STATIONS, LOAD_TRIPS} from './types'
 
 export const changeSideBar = (tap) => {
         return {
-            type: CHANGE_SIDEBAR_STATUS,
+            type: 'CHANGE_SIDEBAR_STATUS',
             payload: tap
         }
     }
@@ -10,13 +10,14 @@ export const changeSideBar = (tap) => {
 
 export const loadStations = (stations) => {
     return {
-        type: LOAD_STATIONS,
+        type: 'LOAD_STATIONS',
         payload: stations
     }
 };
 
-export const retrieveStations = () => {
+export const loadTrips = (trips) => {
     return {
-        type: RETRIEVE_STATIONS
+        type: 'LOAD_TRIPS',
+        payload: trips
     }
-}
+};
