@@ -2,7 +2,6 @@ import * as firebase from "firebase";
 
 
 //TODO: Update trips status
-//TODO: Make reservation ID key
 
 export const makeReservations = async ({startDate,startTime, station, mountainBikes, regularBikes}) => {
 
@@ -15,6 +14,10 @@ export const makeReservations = async ({startDate,startTime, station, mountainBi
     }
     if (numberOfAvailableMountainBikes < mountainBikes) {
         throw new Error("Not enough mountain bikes available at selected station");
+    }
+    if (mountainBikes < 0 || regularBikes < 0)
+    {
+        throw new Error("Number of bikes selected cannot be less than zero");
     }
 
     const db = firebase.firestore();
@@ -44,16 +47,20 @@ export const makeReservations = async ({startDate,startTime, station, mountainBi
       await makeSingleReservation(reservationsCollection,reservationDocument,'road');
     }
 
-    const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
-    await setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road");
+    if (regularBikes > 0) {
+        const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
+        await setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road");
+    }
 
     for (let i=0; i<mountainBikes; i++)
     {
       await makeSingleReservation(reservationsCollection,reservationDocument,'mountain');
     }
 
-    const newNumberOfAvailableMountainBikes = numberOfAvailableMountainBikes - mountainBikes;
-    await setNumberOfAvailableBikes(station, newNumberOfAvailableMountainBikes, "mountain");
+    if (mountainBikes > 0) {
+        const newNumberOfAvailableMountainBikes = numberOfAvailableMountainBikes - mountainBikes;
+        await setNumberOfAvailableBikes(station, newNumberOfAvailableMountainBikes, "mountain");
+    }
 
     return "success";
     // return roadPromise.then (() => {
