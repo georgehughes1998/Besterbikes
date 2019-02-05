@@ -49,14 +49,20 @@ export const signOut = () => {
 
 //Function to Edit users accountManagement details on firebase
 export const editDetails = () => {
-    //TODO: Complete function to return promise with user if successful or error if not
+    //TODO:  Complete function to return promise with user if successful or error if not
 };
 
 
 //Function to return current user
 export const getUser = async () => {
   const auth = firebase.auth();
-  return await auth.currentUser;
+  if (auth)
+  {
+    return await auth.currentUser;
+  }
+  else {
+    return null;
+  }
 };
 
 export const getUserDetails = async () => {
