@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Container, Dropdown, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
-import {Field, reduxForm} from "redux-form";
+import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
 import validate from "./validate";
 import {getJSONFromFile} from "../../handleJSON";
@@ -14,8 +14,14 @@ class ReservationHandlingForm extends React.Component {
     onSubmit = async (formValues) => {
         //TODO: If successful then Show complete screen with order overview
         if (this.props.header.title === "Payment") {
-            const obj = await makeReservations(formValues);
-            // console.log("obj")
+            return makeReservations(formValues)
+                .then((obj) => console.log(obj))
+                .catch((err) => {
+                    console.log(err);
+                    throw new SubmissionError({
+                        _error: err.message
+                })
+            })
         } else {
             this.props.operations.next.link();
         }
@@ -136,7 +142,7 @@ class ReservationHandlingForm extends React.Component {
 
                     <Progress percent={this.props.header.progress} attached="top" indicating/>
 
-                    <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                    <Form onSubmit={this.props.handleSubmit(this.onSubmit)} error>
                         {this.renderHeader(this.props.header)}
                         {this.renderFields}
                         <Container textAlign='center'>

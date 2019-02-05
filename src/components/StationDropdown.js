@@ -9,9 +9,10 @@ const StationDropdown = (props) => {
     const createDropdownObject = () => {
 
         let DropdownArray = [];
+        let keys = Object.keys(props.stations);
 
          Object.values(props.stations).map((key, index) => {
-            DropdownArray.push({key: key.name, value: index, text : key.name});
+            DropdownArray.push({key: keys[index], value: keys[index], text : key.name});
         });
 
         return DropdownArray

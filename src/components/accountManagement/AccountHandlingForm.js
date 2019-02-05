@@ -114,7 +114,7 @@ class AccountHandlingForm extends React.Component {
                     <br/>
 
                     <Container textAlign='center'>
-                        <Button size="big" primary>
+                        <Button size="big" primary color='red'>
                             {this.props.operation.text}
                         </Button>
                     </Container>
@@ -150,7 +150,6 @@ const validate = (formValues) => {
     if (!formValues.dateOfBirth) {
         errors.dateOfBirth = "You must enter a valid Date Of Birth"
     }
-
 
     return errors;
 

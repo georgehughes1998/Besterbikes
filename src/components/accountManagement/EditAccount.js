@@ -3,6 +3,7 @@ import {Divider} from 'semantic-ui-react'
 
 import AccountForm from "./AccountHandlingForm";
 import PageContainer from "../PageContainer";
+import SignOut from "./SignOut";
 
 
 //Component that passes relevant fields to PageContainer for editing accountManagement details
@@ -15,17 +16,18 @@ const EditAccount = () => {
             {/*Sign Up Form*/}
             <AccountForm
                 fields={{
-                    Email: {
-                        name: 'email',
-                        label: 'Email',
-                        type: 'text',
-                        value: 'Hello'
-                    },
-                    Password: {
-                        name: 'password',
-                        label: 'Password',
-                        type: 'password'
-                    },
+                    //TODO: Implement so these can be changed
+                    // Email: {
+                    //     name: 'email',
+                    //     label: 'Email',
+                    //     type: 'text',
+                    //     value: 'Hello'
+                    // },
+                    // Password: {
+                    //     name: 'password',
+                    //     label: 'Password',
+                    //     type: 'password'
+                    // },
                     Forename: {
                         name: 'forename',
                         label: 'First Name',
@@ -49,6 +51,8 @@ const EditAccount = () => {
                 }}
 
             />
+
+            <SignOut/>
 
         </PageContainer>
     )
