@@ -181,25 +181,78 @@ export const getNestedPromise = async (promiseFunction,args,counter,max) =>
 export const getBikesAt = async (stationID) => {
 
   const db = firebase.firestore();
+
   const reservationsCollection = db.collection('stations');
+  const bikesCollection = db.collection('bikes');
+
   const stationDocument = reservationsCollection.doc(stationID);
 
-  const bikesArray = {
-      road: [],
-      mountain: []
-  };
-
   return stationDocument.get()
-      .then (doc => {
+      .then (async doc => {
+
+        console.log("Boooo1");
 
         const stationData = doc.data();
-        const bikesArrayDocument = stationData['bikesArray'];
+
         console.log("Station Data:");
         console.log(stationData);
+        const roadBikesArray = stationData['bikes']['road']['bikesArray'];
+        const mountainBikesArray = stationData['bikes']['mountain']['bikesArray'];
+
+        const bikesArray = { road: {} , mountain: {} };
+
+        console.log("Boooo2");
+
+        for (let b in roadBikesArray)
+        {
+          const currentBike = roadBikesArray[b];
+          const bikeData = await getBike(currentBike);
+
+          bikesArray['road'][currentBike] = bikeData;
+
+        }
+
+
+        for (let b in mountainBikesArray)
+        {
+          const currentBike = mountainBikesArray[b];
+          const bikeData = await getBike(currentBike);
+
+          bikesArray['mountain'][currentBike] = bikeData;
+
+        }
+
+        console.log("Boooo3");
+        console.log(bikesArray);
+        return bikesArray;
+
+
+
+
 
       });
 
 };
+
+
+export const getBike = async (bikeID) =>
+{
+    const db = firebase.firestore();
+    const bikesCollection = db.collection('bikes');
+
+    const bikeDocument = bikesCollection.doc(bikeID);
+
+    return bikeDocument.get()
+        .then(doc => {
+
+            const bikeData = doc.data();
+            return bikeData;
+
+        })
+        .catch(err => {return err});
+
+};
+
 // ======================================================
 
 
