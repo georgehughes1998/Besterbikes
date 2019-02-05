@@ -1,25 +1,19 @@
 import React from 'react'
 import {BesterbikesMap} from "./BesterbikesMap";
-import connect from "react-redux/es/connect/connect";
-import {loadStations} from "../../redux/actions";
+import {Container, Segment} from "semantic-ui-react";
 
 
 class MapContainer extends React.Component {
 
     render() {
         return (
-            <BesterbikesMap styleAndStations = {{styleAndStations: this.props.stations}}/>
+            <Container>
+                <Segment>
+                    <BesterbikesMap/>
+                </Segment>
+            </Container>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        stations: state.stations,
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    {loadStations}
-)(MapContainer);
+export default MapContainer

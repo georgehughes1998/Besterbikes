@@ -6,6 +6,7 @@ import ReservationHandlingForm from "./ReservationHandlingForm";
 import {Segment} from "semantic-ui-react";
 import {getJSONFromFile} from "../../handleJSON";
 import MapContainer from "../map/MapContainer";
+import {BesterbikesMap} from "../map/BesterbikesMap";
 
 //TODO: Render values in dropdown
 // TODO: Move map into segment and fix diaplsy issues
@@ -39,7 +40,7 @@ class SelectBikes extends React.Component{
 
                 <Segment style={{minHeight:"300px"}}>
                     <div>
-                        <MapContainer style={{
+                        <BesterbikesMap style={{
                             maxWidth: "100%",
                             maxHeight: "100%",
                             marginRight: "14px",
