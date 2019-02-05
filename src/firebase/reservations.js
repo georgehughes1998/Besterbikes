@@ -173,11 +173,36 @@ export const getNestedPromise = async (promiseFunction,args,counter,max) =>
 
 };
 
+// ======================For Maps=========================
+export const getBikesAt = async (stationID) => {
 
+  const db = firebase.firestore();
+  const reservationsCollection = db.collection('stations');
+  const stationDocument = reservationsCollection.doc(stationID);
+
+  const bikesArray = {
+      road: [],
+      mountain: []
+  };
+
+  return stationDocument.get()
+      .then (doc => {
+
+        const stationData = doc.data();
+        const bikesArrayDocument = stationData['bikesArray'];
+        console.log("Boo");
+        console.log(stationData);
+
+      });
+
+};
+// ======================================================
 
 
 export const getTrips = async () =>
 {
+
+    const a = getBikesAt("stationHeriotWattUniversity");
 
     const db = firebase.firestore();
 
@@ -186,6 +211,8 @@ export const getTrips = async () =>
     if (!auth){
         throw new Error("No user is logged in");
     }
+
+    //Run a function here to update any reservations who's start time have passed
 
     const uid = auth.currentUser.uid;
 
@@ -200,15 +227,17 @@ export const getTrips = async () =>
 
             const reservationsArray = currentUserData['reservationsArray'];
 
-            let fullReservationsArray = [];
+            let fullReservationsCollection = {};
 
             for (let r in reservationsArray)
             {
-                const reservationData = await getReservation(reservationsArray[r]);
-                fullReservationsArray.push(reservationData);
+                const currentReservation = reservationsArray[r];
+                const reservationData = await getReservation(currentReservation);
+
+                fullReservationsCollection[currentReservation] = reservationData;
             }
 
-            return fullReservationsArray;
+            return fullReservationsCollection;
 
         })
         .catch(err => {return err});
