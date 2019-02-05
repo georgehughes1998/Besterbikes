@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {Segment, Sidebar} from "semantic-ui-react";
 
 import SideBarContent from "./naviagtion/SideBarContent";
-import {changeSideBar} from "../redux/actions";
+import {changeSideBar, loadStations} from "../redux/actions";
 
 import TopMenuBar from "./naviagtion/TopMenuBar";
 import MainMenu from './MainMenu'
@@ -14,11 +14,26 @@ import EditAccount from "./accountManagement/EditAccount";
 import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
 import MapContainer from "./map/BesterbikesMap";
 import MyTrips from "./customer/MyTrips";
+import {getJSONFromFile} from "../handleJSON";
 
 
 //TODO: Add prop types and typescript to app
 //TODO: Move UI props over to JSON
 class App extends React.Component {
+
+        componentDidMount(){
+            //TODO: Move to Redux
+            if (!(this.props.stations === {})) {
+                this.getMapJSON()
+            }
+        }
+
+        async getMapJSON() {
+            const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+            console.log("MAP JSON RETRIVED");
+            console.log(stations);
+            this.props.loadStations(stations)
+        }
 
     render() {
         return (
@@ -93,10 +108,13 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {sideBarHidden: state.ui.sideBarHidden}
+    return {
+        stations: state.stations,
+        sideBarHidden: state.ui.sideBarHidden
+    }
 };
 
 export default connect(
     mapStateToProps,
-    {changeSideBar}
+    {loadStations, changeSideBar}
 )(App);

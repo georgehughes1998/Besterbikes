@@ -100,17 +100,17 @@ const MyTrips = (props) => {
         }};
     // });
 
-    const retriveTrips = async () => {
-        const obj = await getTrips();
-
-        if (obj.trips) {
-            this.props.history.push("/")
-        } else {
-            throw new SubmissionError({
-                _error: obj.message
-            });
-        }
-    };
+    // const retriveTrips = async () => {
+    //     const obj = await getTrips();
+    //
+    //     if (obj.trips) {
+    //         this.props.history.push("/")
+    //     } else {
+    //         throw new SubmissionError({
+    //             _error: obj.message
+    //         });
+    //     }
+    // };
 
     return (
         <div>

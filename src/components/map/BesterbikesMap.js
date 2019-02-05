@@ -2,12 +2,14 @@ import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import {Dimmer, Header, List, Loader, Segment} from "semantic-ui-react"
 
-import {getJSONFromFile} from '../../handleJSON.js'
+import connect from "react-redux/es/connect/connect";
+import {retrieveStations} from "../../redux/actions";
 
 //TODO: Implement loader correctly
 //TODO: Render markers red or green bikes depending on spaces available
 /*global google*/
 export class BesterbikesMap extends Component {
+
     constructor(props) {
         super(props);
         this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -15,7 +17,6 @@ export class BesterbikesMap extends Component {
             showingInfoWindow: true,
             activeMarker: {},
             selectedPlace: {},
-            mapJSON: {}
         };
     }
 
@@ -28,38 +29,20 @@ export class BesterbikesMap extends Component {
     }
 
 
-    componentDidMount() {
-        //TODO: Move to Redux
-        if (!(this.state.mapJSON === {})) {
-            this.getMapJSON()
-        }
-    }
-
-    async getMapJSON() {
-        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-        // console.log("MAP JSON RETRIVED");
-        // console.log(stations);
-        this.setState({mapJSON: stations})
-    }
-
-
     renderMarkers() {
-        const stations = this.state.mapJSON;
-
-        // console.log("Rendering markers");
-        // console.log(stations);
-
-        if (!(stations === {})) {
-            return Object.values(stations).map(station => {
-                return (
-                    <Marker position={station.location.geoPoint}
-                            onClick={this.onMarkerClick}
-                            name={station.name}
-                            stationDetails={station}
-                    />
-                )
-            })
-        }
+        const stations = this.props.stations;
+        console.log(this.props)
+        // if (!(stations === {})) {
+        //     return Object.values(stations).map(station => {
+        //         return (
+        //             <Marker position={station.location.geoPoint}
+        //                     onClick={this.onMarkerClick}
+        //                     name={station.name}
+        //                     stationDetails={station}
+        //             />
+        //         )
+        //     })
+        // }
 
     }
 
@@ -75,7 +58,6 @@ export class BesterbikesMap extends Component {
         }
 
         return (
-
             <Map
                 style={this.props.style}
                 initialCenter={{
@@ -131,3 +113,5 @@ export default GoogleApiWrapper({
     apiKey: "AIzaSyB_13gY5K5zg1RoAEzwSxHzPIyBv0Atjcc",
     v: "3"
 })(BesterbikesMap);
+
+
