@@ -190,7 +190,7 @@ export const getBikesAt = async (stationID) => {
 
         const stationData = doc.data();
         const bikesArrayDocument = stationData['bikesArray'];
-        console.log("Boo");
+        console.log("Station Data:");
         console.log(stationData);
 
       });
@@ -203,6 +203,7 @@ export const getTrips = async () =>
 {
 
     const a = getBikesAt("stationHeriotWattUniversity");
+    console.log(a);
 
     const db = firebase.firestore();
 
