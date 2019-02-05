@@ -63,8 +63,8 @@ class ReservationHandlingForm extends React.Component {
                             selection
                             search
                             placeholder='Select Station'
-                            options={this.props.fields.station.values}
-                            // options={[{"key" : 1, "text" : 1, "value" : 1}, {"key" : 1, "text" : 1, "value" : 1}]}
+                            // options={this.props.fields.station.values}
+                            options={[{key: "Heriot Watt Univeristy", value: "Heriot Watt Univeristy", text : "Heriot Watt Univeristy"}]}
                             value={input.value}
                             onChange={(param, data) => input.onChange(data.value)}
                         />

@@ -4,11 +4,14 @@ import {Dimmer, Header, List, Loader, Segment} from "semantic-ui-react"
 
 import connect from "react-redux/es/connect/connect";
 import {retrieveStations} from "../../redux/actions";
+import {getUser} from "../../firebase/authentication";
 
 //TODO: Implement loader correctly
 //TODO: Render markers red or green bikes depending on spaces available
 /*global google*/
 export class BesterbikesMap extends Component {
+
+    //TODO: Fix map so that it displays using redux and authenticates user
 
     constructor(props) {
         super(props);

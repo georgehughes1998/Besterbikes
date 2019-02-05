@@ -208,7 +208,7 @@ export const getTrips = async () =>
                 fullReservationsArray.push(reservationData);
             }
 
-            return fullReservationsArray;
+            return reservationsArray;
 
         })
         .catch(err => {return err});

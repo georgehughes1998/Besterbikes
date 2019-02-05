@@ -1,8 +1,8 @@
 import React from 'react'
 import {BesterbikesMap} from "./BesterbikesMap";
-import {Container, Segment} from "semantic-ui-react";
 import connect from "react-redux/es/connect/connect";
 import {retrieveStations} from "../../redux/actions";
+import {getUser} from "../../firebase/authentication";
 
 
 class MapContainer extends React.Component {

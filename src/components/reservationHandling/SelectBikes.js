@@ -3,8 +3,7 @@ import {reduxForm} from 'redux-form'
 
 import validate from './validate'
 import ReservationHandlingForm from "./ReservationHandlingForm";
-import BesterbikesMap from '../map/BesterbikesMap'
-import {Container, Segment} from "semantic-ui-react";
+import {Segment} from "semantic-ui-react";
 import {getJSONFromFile} from "../../handleJSON";
 import MapContainer from "../map/MapContainer";
 

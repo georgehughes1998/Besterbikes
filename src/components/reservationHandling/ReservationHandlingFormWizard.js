@@ -3,10 +3,12 @@ import SelectBikes from './SelectBikes'
 import DateAndTime from './DateAndTime'
 import Confirmation from "./ReviewOrder";
 import Payment from "./Payment";
+import {getUser} from "../../firebase/authentication";
 
 
 //Adpated code from redux form that builds multistep form
 class ReservationHandlingFormWizard extends Component {
+
     constructor(props) {
         super(props);
         this.nextPage = this.nextPage.bind(this);

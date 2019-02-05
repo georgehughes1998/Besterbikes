@@ -33,12 +33,12 @@ const Payment = (props) => {
                         name: 'CVV',
                         label: 'CVV',
                         type: 'number',
-                    },
-                    country: {
-                        name: 'country',
-                        label: 'Country',
-                        type: 'dropdown',
-                    },
+                    }
+                    // country: {
+                    //     name: 'country',
+                    //     label: 'Country',
+                    //     type: 'dropdown',
+                    // },
                 }}
 
                 operations={{

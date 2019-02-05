@@ -1,16 +1,36 @@
 import React from 'react'
 import {Dropdown, Input, Placeholder, Container, Icon, Segment, Header, Grid} from "semantic-ui-react";
+import {getUser, signIn} from "../../firebase/authentication";
+import {getTrips} from "../../firebase/reservations";
 import {SubmissionError} from "redux-form";
-import BesterbikesMap from '../map/BesterbikesMap'
-// import {getTrips} from "../../firebase/authentication";
 
 //TODO: Implement retriveTrips to pull trips from firebase
 //TODO: Show google maps on active trips
 //TODO: Review columns and mobile compatability
-const MyTrips = (props) => {
+class MyTrips extends React.Component{
 
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = () => {
+        return getUser()
+            .then(user => {
+                if (user === null)
+                    this.props.history.push("signin");
+                return user
+            });
+    };
 
-    const renderTrip = (color, iconName, iconColor, headerContent, headerSub, status) => {
+    async componentDidMount() {
+
+        const user = await this.authenticateUser();
+        console.log(user);
+
+        if(user){
+            console.log("2");
+            this.retrieveTrips();
+        }
+
+    }
+    renderTrip = (color, iconName, iconColor, headerContent, headerSub, status) => {
         return(
             <Segment color={color} fluid>
                 <Grid >
@@ -28,7 +48,7 @@ const MyTrips = (props) => {
                         </Grid.Column>
 
                         <Grid.Column width={1} verticalAlign='middle'>
-                                <Icon name={iconName} color={iconColor} size ="big  "/>
+                                <Icon name={iconName} color={iconColor} size ="big"/>
                         </Grid.Column>
                     </Grid.Row>
 
@@ -48,10 +68,10 @@ const MyTrips = (props) => {
     }
 
     // const renderTrips = Object.values(TRIPS).map((key, index) => {
-    const renderTrips = (status) => {
+    renderTrips = (status) => {
         switch(status){
             case "active":
-                return renderTrip(
+                return this.renderTrip(
                     "purple",
                     "cancel",
                     "red",
@@ -60,7 +80,7 @@ const MyTrips = (props) => {
                     "Reserved"
                 );
             case "inactive":
-                return renderTrip(
+                return this.renderTrip(
                     "yellow",
                     "cancel",
                     "red",
@@ -69,7 +89,7 @@ const MyTrips = (props) => {
                     "Ready to unlock"
                 );
             case "unlocked":
-                return renderTrip(
+                return this.renderTrip(
                     "green",
                     "exclamation circle",
                     "red",
@@ -78,7 +98,7 @@ const MyTrips = (props) => {
                     "In Progress"
                 );
             case "complete":
-                return renderTrip(
+                return this.renderTrip(
                     "grey",
                     "exclamation circle",
                     "red",
@@ -87,7 +107,7 @@ const MyTrips = (props) => {
                     "Complete"
                 );
             case "cancelled":
-                return renderTrip(
+                return this.renderTrip(
                     "red",
                     "exclamation circle",
                     "red",
@@ -100,35 +120,37 @@ const MyTrips = (props) => {
         }};
     // });
 
-    // const retriveTrips = async () => {
-    //     const obj = await getTrips();
-    //
-    //     if (obj.trips) {
-    //         this.props.history.push("/")
-    //     } else {
-    //         throw new SubmissionError({
-    //             _error: obj.message
-    //         });
-    //     }
-    // };
+    retrieveTrips = async () => {
+        const obj = await getTrips();
 
-    return (
-        <div>
-            <Dropdown text='Filter Posts' icon='filter' floating labeled fluid button className='icon'>
-                <Dropdown.Menu>
-                    <Input icon='search' iconPosition='left' className='search'/>
-                </Dropdown.Menu>
-            </Dropdown>
+        if (obj) {
+            console.log(obj)
+        } else {
+            throw new SubmissionError({
+                _error: obj.message
+            });
+        }
+    };
 
-                {renderTrips("active")}
-                {renderTrips("inactive")}
-                {renderTrips("unlocked")}
-                {renderTrips("complete")}
-                {renderTrips("cancelled")}
+    render(){
+        return (
+            <div>
+                <Dropdown text='Filter Posts' icon='filter' floating labeled fluid button className='icon'>
+                    <Dropdown.Menu>
+                        <Input icon='search' iconPosition='left' className='search'/>
+                    </Dropdown.Menu>
+                </Dropdown>
 
+                {this.renderTrips("active")}
+                {this.renderTrips("inactive")}
+                {this.renderTrips("unlocked")}
+                {this.renderTrips("complete")}
+                {this.renderTrips("cancelled")}
 
-        </div>
-    )
+            </div>
+        )
+    }
+
 };
 
 export default MyTrips
