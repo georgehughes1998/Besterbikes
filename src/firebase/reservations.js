@@ -1,5 +1,9 @@
 import * as firebase from "firebase";
 
+
+//TODO: Update trips status
+//TODO: Make reservation ID key
+
 export const makeReservations = async ({startDate,startTime, station, mountainBikes, regularBikes}) => {
 
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station,"road");

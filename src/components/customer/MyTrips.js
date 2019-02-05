@@ -7,6 +7,7 @@ import connect from "react-redux/es/connect/connect";
 import {loadTrips, retrieveTrips} from "../../redux/actions";
 
 
+//TODO: Implement cancel a trip
 //TODO: Show google maps on active trips
 //TODO: Review columns and mobile compatability
 //TODO: Complete loading in trips for all reservation types
