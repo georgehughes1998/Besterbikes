@@ -204,11 +204,11 @@ export const getTrips = async () =>
 
             for (let r in reservationsArray)
             {
-                const reservationData = await getReservation(r);
+                const reservationData = await getReservation(reservationsArray[r]);
                 fullReservationsArray.push(reservationData);
             }
 
-            return reservationsArray;
+            return fullReservationsArray;
 
         })
         .catch(err => {return err});
