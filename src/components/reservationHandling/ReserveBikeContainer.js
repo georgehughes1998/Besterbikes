@@ -5,6 +5,8 @@ import Steps from "./Steps";
 import ReservationHandlingFormWizard from "./ReservationHandlingFormWizard";
 import {Segment} from "semantic-ui-react";
 import {getJSONFromFile} from "../../handleJSON";
+import connect from "react-redux/es/connect/connect";
+import {loadStations} from "../../redux/actions";
 
 
 // TODO: Review content of steps and consider using JSON file to store*/

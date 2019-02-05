@@ -7,32 +7,13 @@ import {Segment} from "semantic-ui-react";
 import {getJSONFromFile} from "../../handleJSON";
 import MapContainer from "../map/MapContainer";
 import BesterbikesMap from "../map/BesterbikesMap";
+import {Form} from "semantic-ui-react/dist/commonjs/collections/Form/Form";
 
 //TODO: Render values in dropdown
 // TODO: Move map into segment and fix diaplsy issues
 //Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 class SelectBikes extends React.Component{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            options: ""
-        }
-    }
-
-    componentDidMount(){
-        if((this.state.options === "")){
-            this.getStations()
-        }
-    }
-
-    getStations = async () =>{
-        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-        // console.log("MAP JSON RETRIVED");
-        const options =  Object.values(stations).map((key, index) => ({key: index, value: index, text : key.name}));
-        this.setState({options});
-        // console.log(this.state.options);
-    };
 
     render(){
         return (
@@ -65,7 +46,6 @@ class SelectBikes extends React.Component{
                             name: 'station',
                             label: 'Station',
                             type: 'dropdown',
-                            values: this.state.options
                         },
                         mountainBikes: {
                             name: 'mountainBikes',
@@ -94,8 +74,6 @@ class SelectBikes extends React.Component{
             </Segment.Group>
         )
     }
-
-
 };
 
 export default reduxForm({
