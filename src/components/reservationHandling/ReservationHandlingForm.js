@@ -1,9 +1,7 @@
 import React from 'react'
-import {Button, Container, Dropdown, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
+import {Button, Container, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
 import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
-// import validate from "./validate";
-import {getJSONFromFile} from "../../handleJSON";
 import StationDropdown from "../StationDropdown";
 import FirebaseError from "../FirebaseError";
 
@@ -23,8 +21,8 @@ class ReservationHandlingForm extends React.Component {
                     console.log(err);
                     throw new SubmissionError({
                         _error: err.message
+                    })
                 })
-            })
         } else {
             this.props.operations.next.link();
         }
@@ -134,9 +132,12 @@ class ReservationHandlingForm extends React.Component {
                 </Button>;
 
             default:
-                return;
+                return null;
         }
-    });
+
+    }
+
+    );
 
     //Renders main body of an reservationHandlingForm
     render() {
@@ -166,7 +167,7 @@ const validate = (formValues) => {
     const errors = {};
 
     if (/([0-2][1-9])|10|20|30|31\/([0][1-9])|10|11|12\/(19[0-9][0-9])|(200[0-9])/.test(formValues.expirationDate)) {
-        errors.expirationDate = 'Invalid Date of Birth'
+        errors.expirationDate = 'Invalid date'
     }
 
     return errors;

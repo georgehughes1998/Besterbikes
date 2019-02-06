@@ -1,13 +1,11 @@
 import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
-import {Dimmer, Header, List, Loader, Segment} from "semantic-ui-react"
+import {Header, List} from "semantic-ui-react"
 
 import {getJSONFromFile} from '../../handleJSON.js'
 
 //TODO: Implement loader correctly
 //TODO: Render markers red or green bikes depending on spaces available
-/*global google*/
-
 
 export class BesterbikesMap extends Component {
 

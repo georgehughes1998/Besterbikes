@@ -22,10 +22,9 @@ const SideBarContent = (props) => {
             </div>
 
         )
-    })
+    });
 
-    {/*TODO: Review content of Sidebar */
-    }
+    // TODO: Review content of Sidebar
     const handleSidebarHide = () => props.changeSideBar("Hide");
 
     return (

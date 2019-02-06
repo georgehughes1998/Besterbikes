@@ -6,14 +6,14 @@ export const signIn = async ({email, password}) => {
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(email, password);
 
-        return promise
-            .then(user => {
-                return user;
-            })
-            //TODO: Return and display any error messages
-            .catch(async err => {
-                return err;
-            });
+    return promise
+        .then(user => {
+            return user;
+        })
+        //TODO: Return and display any error messages
+        .catch(async err => {
+            return err;
+        });
 
 };
 
@@ -26,13 +26,15 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
     return promise
         .then(user => {
 
-            auth.signInWithEmailAndPassword(email,password);
-            setUserDetails({forename,surname,dateOfBirth});
+            auth.signInWithEmailAndPassword(email, password);
+            setUserDetails({forename, surname, dateOfBirth});
 
             return user;
         })
         //TODO: Return and display any error messages
-        .catch(async err => {return err});
+        .catch(async err => {
+            return err
+        });
 };
 
 //Function to sign out of firebase
@@ -40,7 +42,9 @@ export const signOut = () => {
     const promise = firebase.auth().signOut();
 
     return promise
-        .then(() => {return "success";})
+        .then(() => {
+            return "success";
+        })
         //TODO: Return and display any error messages
         .catch(async err => {
             return err;
@@ -55,14 +59,13 @@ export const editDetails = () => {
 
 //Function to return current user
 export const getUser = async () => {
-  const auth = firebase.auth();
-  if (auth)
-  {
-    return await auth.currentUser;
-  }
-  else {
-    return null;
-  }
+    const auth = firebase.auth();
+    if (auth) {
+        return await auth.currentUser;
+    }
+    else {
+        return null;
+    }
 };
 
 export const getUserDetails = async () => {
@@ -85,7 +88,9 @@ export const getUserDetails = async () => {
                 throw new Error("Document doesn't exist");
             }
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 
 };
 
@@ -101,17 +106,21 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
 
     const userDetails = {
-            name : {
-                firstName : forename,
-                lastName : surname
-            },
-            dateOfBirth : dateOfBirth,
+        name: {
+            firstName: forename,
+            lastName: surname
+        },
+        dateOfBirth: dateOfBirth,
     };
 
     const promise = usersDoc.set(userDetails);
 
     return promise
-        .then(() => {return "success"})
-        .catch(err => {return err});
+        .then(() => {
+            return "success"
+        })
+        .catch(err => {
+            return err
+        });
 
 };

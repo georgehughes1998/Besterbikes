@@ -7,7 +7,7 @@ import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown"
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 
 export const UnlockBike = () => {
-    return(
+    return (
         <PageContainer>
             <Container textAlign='center'>
 
@@ -33,7 +33,7 @@ export const UnlockBike = () => {
 
                 <br/>
 
-                <Dropdown fluid selection options = {[{key : "HDKW8273HD", value: "HDKW8273HD", text: "HDKW8273HD"}]}/>
+                <Dropdown fluid selection options={[{key: "HDKW8273HD", value: "HDKW8273HD", text: "HDKW8273HD"}]}/>
 
                 <br/>
 

@@ -1,5 +1,5 @@
 {
-  "stationHeriotWattUniversity" : {
+  "stationHeriotWattUniversity": {
     "name": "Heriot-Watt University",
     "description": "HWU Main Reception",
     "location": {
@@ -16,8 +16,7 @@
     },
     "notes": "Student hotspot && Canal route access"
   },
-
-  "stationWaverley" : {
+  "stationWaverley": {
     "name": "Waverley Station",
     "description": "Waverley - Princes Street",
     "location": {
@@ -34,8 +33,7 @@
     },
     "notes": "Major tourist hotspot && Direct connection to other Bester stations"
   },
-
-  "stationHaymarket" : {
+  "stationHaymarket": {
     "name": "Haymarket Station",
     "description": "Haymarket Bike Rack",
     "location": {
@@ -52,8 +50,7 @@
     },
     "notes": ""
   },
-
-  "stationNationalMuseumOfScotland" : {
+  "stationNationalMuseumOfScotland": {
     "name": "National Museum of Scotland",
     "description": "Greyfriars' Bobby entrance",
     "location": {
@@ -70,8 +67,7 @@
     },
     "notes": "Busy city area"
   },
-
-  "stationEdinburghZoo" : {
+  "stationEdinburghZoo": {
     "name": "Edinburgh Zoo",
     "description": "Zoo Main Entrance",
     "location": {
@@ -88,8 +84,7 @@
     },
     "notes": ""
   },
-
-  "stationEdinburghUniversityLibrary" : {
+  "stationEdinburghUniversityLibrary": {
     "name": "Edinburgh University Library",
     "description": "Edinburgh Uni - The Meadows",
     "location": {
@@ -106,8 +101,7 @@
     },
     "notes": "Footfall hotspot - large park and green spaces alngside major student hub"
   },
-
-  "stationScottishParliament" : {
+  "stationScottishParliament": {
     "name": "Scottish Parliament",
     "description": "Royal Mile",
     "location": {
@@ -124,8 +118,7 @@
     },
     "notes": "Arthur's seat area access"
   },
-
-  "stationMerchistonCrossroads" : {
+  "stationMerchistonCrossroads": {
     "name": "Merchiston Crossroads",
     "description": "Napier University Computing School",
     "location": {
@@ -142,8 +135,7 @@
     },
     "notes": ""
   },
-
-  "stationRoyalBotanicGarden" : {
+  "stationRoyalBotanicGarden": {
     "name": "Royal Botanic Garden",
     "description": "West Entrance - Arboretum Place",
     "location": {
@@ -160,8 +152,7 @@
     },
     "notes": "Peak bike location"
   },
-
-  "stationPortobelloBeachNorth" : {
+  "stationPortobelloBeachNorth": {
     "name": "Portobello Beach North",
     "description": "Lothian Buses marine depot",
     "location": {
@@ -178,8 +169,7 @@
     },
     "notes": "Straight line from Princes + Queen Street"
   },
-
-  "stationPortobelloBeachEast" : {
+  "stationPortobelloBeachEast": {
     "name": "Portobello Beach East",
     "description": "Promenade path",
     "location": {

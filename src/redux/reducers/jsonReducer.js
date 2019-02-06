@@ -1,5 +1,3 @@
-import {LOAD_STATIONS, LOAD_TRIPS,} from "../actions/types";
-
 const INITIAL_STATE = {
     stations: {},
     trips: []

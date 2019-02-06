@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import SignOut from "./accountManagement/SignOut";
 import {getUser} from "../firebase/authentication";
-import {Container, Grid, Header, Icon, Segment} from "semantic-ui-react";
+import {Container, Grid, Header, Icon} from "semantic-ui-react";
 
 //TODO: Display message for each each user: Hello *Users first name*
 //TODO: Refactor main menu and make pretty

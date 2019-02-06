@@ -1,12 +1,8 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import SelectBikes from './SelectBikes'
 import DateAndTime from './DateAndTime'
 import Confirmation from "./ReviewOrder";
 import Payment from "./Payment";
-import {getUser} from "../../firebase/authentication";
-import connect from "react-redux/es/connect/connect";
-import {loadStations} from "../../redux/actions";
-import {Segment} from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 
 //TODO: Navigate to complete page after submitting form
 //Adpated code from redux form that builds multistep form
@@ -34,7 +30,7 @@ class ReservationHandlingFormWizard extends Component {
 
         return (<div>
 
-                {page === 1 && <SelectBikes onSubmit={this.nextPage} />}
+                {page === 1 && <SelectBikes onSubmit={this.nextPage}/>}
                 {page === 2 && <DateAndTime previousPage={this.previousPage} onSubmit={this.nextPage}/>}
                 {page === 3 && <Confirmation previousPage={this.previousPage} onSubmit={this.nextPage}/>}
                 {page === 4 && <Payment previousPage={this.previousPage} onSubmit={() => this.props}/>}

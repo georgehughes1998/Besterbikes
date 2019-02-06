@@ -1,6 +1,6 @@
 //TODO: Implement app wide vaidation
 const validate = values => {
-    const errors = {}
+    const errors = {};
     if (!values.firstName) {
         errors.firstName = 'Required'
     }
@@ -16,6 +16,6 @@ const validate = values => {
         errors.station = 'Required'
     }
     return errors
-}
+};
 
 export default validate

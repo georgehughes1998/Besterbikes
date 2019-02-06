@@ -24,6 +24,8 @@ let Steps = (props) => {
                 return props.fields.station && props.fields.regularBikes && props.fields.mountainBikes && props.fields.startTime && props.fields.startDate;
             case "Payment":
                 return props.fields.cardNumber && props.fields.CVV && props.fields.country && props.fields.expirationDate;
+            default:
+                return;
         }
     };
 
