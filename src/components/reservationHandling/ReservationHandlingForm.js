@@ -2,9 +2,10 @@ import React from 'react'
 import {Button, Container, Dropdown, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
 import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
-import validate from "./validate";
+// import validate from "./validate";
 import {getJSONFromFile} from "../../handleJSON";
 import StationDropdown from "../StationDropdown";
+import FirebaseError from "../FirebaseError";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
@@ -15,7 +16,11 @@ class ReservationHandlingForm extends React.Component {
         //TODO: If successful then Show complete screen with order overview
         if (this.props.header.title === "Payment") {
             return makeReservations(formValues)
-                .then((obj) => console.log(obj))
+                .then((obj) => {
+                    throw new SubmissionError({
+                        _success: obj
+                    })
+                })
                 .catch((err) => {
                     console.log(err);
                     throw new SubmissionError({
@@ -69,6 +74,7 @@ class ReservationHandlingForm extends React.Component {
 
             case "readOnly":
                 return (
+                    //TODO: Display station text not value
                     <Form.Field>
                         <label>{label}</label>
                         <input
@@ -145,6 +151,7 @@ class ReservationHandlingForm extends React.Component {
                     <Form onSubmit={this.props.handleSubmit(this.onSubmit)} error>
                         {this.renderHeader(this.props.header)}
                         {this.renderFields}
+                        {this.props.error ? <FirebaseError error={this.props.error}/> : null}
                         <Container textAlign='center'>
                             {this.renderButtons}
                         </Container>
@@ -154,6 +161,19 @@ class ReservationHandlingForm extends React.Component {
         )
     }
 }
+
+//TODO: Validate using regex and stop negative bikes
+const validate = (formValues) => {
+
+    const errors = {};
+
+    if (/([0-2][1-9])|10|20|30|31\/([0][1-9])|10|11|12\/(19[0-9][0-9])|(200[0-9])/.test(formValues.expirationDate)) {
+        errors.expirationDate = 'Invalid Date of Birth'
+    }
+
+    return errors;
+
+};
 
 export default reduxForm({
     form: 'reservebike',  //Form name is same

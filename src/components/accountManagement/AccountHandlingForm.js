@@ -149,6 +149,8 @@ const validate = (formValues) => {
     }
     if (!formValues.dateOfBirth) {
         errors.dateOfBirth = "You must enter a valid Date Of Birth"
+    } else if (/([0-2][1-9])|10|20|30|31\/([0][1-9])|10|11|12\/(19[0-9][0-9])|(200[0-9])/.test(formValues.dateOfBirth)) {
+        errors.dateOfBirth = 'Invalid Date of Birth'
     }
 
     return errors;
