@@ -140,7 +140,7 @@ class MyTrips extends React.Component {
         let keys = Object.keys(this.props.trips);
 
         switch (trip['status']) {
-            case "active":
+            case "inactive":
                 return this.renderTrip(
                     "purple",
                     "cancel",
@@ -151,7 +151,7 @@ class MyTrips extends React.Component {
                     keys[index],
                     image
                 );
-            case "inactive":
+            case "active":
                 return this.renderTrip(
                     "yellow",
                     "cancel",
