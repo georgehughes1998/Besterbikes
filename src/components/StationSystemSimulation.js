@@ -1,7 +1,6 @@
 import React from 'react'
 import {Button, Container, Dropdown, Form, Header} from "semantic-ui-react";
 import {connect} from "react-redux";
-import {SubmissionError} from "redux-form";
 import PageContainer from "./PageContainer";
 import {loadStations, loadTrips} from "../redux/actions";
 import {unlockBike} from "../firebase/stationSystem";
@@ -62,9 +61,6 @@ class StationSystemSimulation extends React.Component {
             })
             .catch((err) => {
                 console.log(err);
-                throw new SubmissionError({
-                    _error: err.message
-                })
             })
     };
 
