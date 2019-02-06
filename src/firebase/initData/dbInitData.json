@@ -93,6 +93,9 @@
       "status": "available"
     }
   },
+
+
+
   "stations": {
     "sampleStation": {
       "bikes": {
@@ -109,7 +112,7 @@
     "stationHeriotWattUniversity": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 2,
+          "numberOfAvailableBikes": 50,
           "bikesArray": [
             "bikeRoad0",
             "bikeRoad1"
@@ -186,11 +189,11 @@
     "stationEdinburghUniversityLibrary": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 25,
           "bikesArray": []
         },
         "mountain": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 5,
           "bikesArray": []
         }
       }
@@ -198,7 +201,7 @@
     "stationMerchistonCrossroads": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 30,
           "bikesArray": []
         },
         "mountain": {
@@ -210,7 +213,7 @@
     "stationNationalMuseumOfScotland": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 20,
           "bikesArray": []
         },
         "mountain": {
@@ -222,11 +225,11 @@
     "stationScottishParliament": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 25,
           "bikesArray": []
         },
         "mountain": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 15,
           "bikesArray": []
         }
       }
@@ -234,11 +237,11 @@
     "stationWaverley": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 30,
           "bikesArray": []
         },
         "mountain": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 10,
           "bikesArray": []
         }
       }
@@ -246,11 +249,11 @@
     "stationRoyalBotanicGarden": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 20,
           "bikesArray": []
         },
         "mountain": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 5,
           "bikesArray": []
         }
       }
@@ -258,7 +261,7 @@
     "stationPortobelloBeachNorth": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 20,
           "bikesArray": []
         },
         "mountain": {
@@ -270,7 +273,7 @@
     "stationPortobelloBeachEast": {
       "bikes": {
         "road": {
-          "numberOfAvailableBikes": 0,
+          "numberOfAvailableBikes": 20,
           "bikesArray": []
         },
         "mountain": {
@@ -279,5 +282,9 @@
         }
       }
     }
-  }
+  },
+
+  "users" : {},
+  "reservations": {}
+
 }

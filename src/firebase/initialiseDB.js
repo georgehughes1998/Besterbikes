@@ -1,13 +1,14 @@
 //This file is to be run for the sake of preparing the firestore for INITIAL testing/use.
 
-const firebaseAdmin = require("firebase-admin");
 
+const firebaseAdmin = require("firebase-admin");
 
 const serviceAccount = require("./initData/serviceKey.json");
 
 const data = require("./initData/dbInitData");
 
 const databaseURL = "https://bettersome-a5c8e.firebaseio.com";
+
 
 firebaseAdmin.initializeApp(
     {
