@@ -344,7 +344,7 @@ export const updateTrips = async () =>
                 const singleDocUser = singleDocData['user'];
 
                 //Only update documents for this user (this could save overwriting changes because of local copies not matching the firestore)
-                if (uid == singleDocUser) {
+                if (uid === singleDocUser) {
 
                     const singleDocDate = singleDocData['start']['time']['date'];
                     const singleDocTime = singleDocData['start']['time']['time'];
@@ -365,7 +365,7 @@ export const updateTrips = async () =>
                     if ((singleDocDate <= currentDate) && (singleDocTime <= currentTime)) {
                         const reservationDocument = reservationsCollection.doc(singleDocID);
 
-                        await reservationDocument.update('status', 'pending');
+                        await reservationDocument.update('status', 'inactive');
                     }
 
                     // console.log(singleDocDate + "   " + currentDate);
