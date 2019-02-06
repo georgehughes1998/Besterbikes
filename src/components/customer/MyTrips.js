@@ -6,6 +6,7 @@ import {SubmissionError} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions";
 import PageContainer from "../PageContainer";
+import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 
 
 //TODO: Implement loader
@@ -13,6 +14,7 @@ import PageContainer from "../PageContainer";
 //TODO: Show google maps on active trips
 //TODO: Review columns and mobile compatability
 //TODO: Complete loading in trips for all reservation types
+//TODO: Display cancelled image
 class MyTrips extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
@@ -61,7 +63,7 @@ class MyTrips extends React.Component {
             })
         }
     };
-    renderTrip = (color, iconName, iconColor, status, headerContent, headerSub, tripId) => {
+    renderTrip = (color, iconName, iconColor, status, headerContent, headerSub, tripId, image) => {
         return (
             //TODO: Make this into own prop
             <Segment color={color} fluid>
@@ -83,16 +85,15 @@ class MyTrips extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
 
-                    {/*<Grid.Row>*/}
-                    {/*<Grid.Column>*/}
-                    {/*<Segment>*/}
-                    {/*/!*<BesterbikesMap/>*!/*/}
-                    {/*<Placeholder fluid>*/}
-                    {/*<Placeholder.Image />*/}
-                    {/*</Placeholder>*/}
-                    {/*</Segment>*/}
-                    {/*</Grid.Column>*/}
-                    {/*</Grid.Row>*/}
+                    <Grid.Row>
+                    <Grid.Column>
+                    <Segment>
+                    {/*<BesterbikesMap/>*/}
+                        {console.log(image)}
+                        <Image src={image}/>
+                    </Segment>
+                    </Grid.Column>
+                    </Grid.Row>
                 </Grid>
             </Segment>
         )
@@ -110,12 +111,15 @@ class MyTrips extends React.Component {
     // const getTripTypeValues = Object.values(TRIPS).map((key, index) => {
     getTripTypeValues = (trip, index) => {
 
+        console.log(trip);
+
         const stationKey = trip["start"]["station"];
         const stationName = this.props.stations[stationKey]["name"];
         const startTime = trip["start"]["time"]["time"];
+        const image = this.props.stations[stationKey]["url"];
+        console.log(image);
 
         let keys = Object.keys(this.props.trips);
-
 
         switch (trip['status']) {
             case "active":
@@ -126,7 +130,8 @@ class MyTrips extends React.Component {
                     "Reserved",
                     "Waverley Station",
                     "Available from 16:00 to 16:30",
-                    keys[index]
+                    keys[index],
+                    image
                 );
             case "inactive":
                 return this.renderTrip(
@@ -136,7 +141,8 @@ class MyTrips extends React.Component {
                     "Ready to unlock",
                     stationName,
                     `Bike available until ${startTime}`,
-                    keys[index]
+                    keys[index],
+                    image
                 );
             case "unlocked":
                 return this.renderTrip(
@@ -147,7 +153,8 @@ class MyTrips extends React.Component {
                     stationName,
                     //TODO: Implement current duration calculator
                     // "Current duration: 4hrs 3mins"
-                    ""
+                    "",
+                    image
                 );
 
             case "complete":
@@ -159,7 +166,8 @@ class MyTrips extends React.Component {
                     stationName,
                     //TODO: Implement end station and total duration calculator
                     // "To Edinburgh University Library lasting 4hrs 3mins",
-                    ""
+                    "",
+                    image
                 );
             case "cancelled":
                 return this.renderTrip(
@@ -168,7 +176,8 @@ class MyTrips extends React.Component {
                     "red",
                     "Cancelled",
                     stationName,
-                    ""
+                    "",
+                    image
                 );
             default:
                 return (<div>No more trips to display</div>)

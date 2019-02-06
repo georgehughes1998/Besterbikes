@@ -108,11 +108,15 @@ export class BesterbikesMap extends Component {
 
                         {this.state.activeMarker.stationDetails ?
                             <div>
-                                <Header.Subheader>{this.state.activeMarker.stationDetails["description"]}</Header.Subheader>
+                                <Header.Subheader>{this.state.activeMarker.stationDetails["notes"]}</Header.Subheader>
                                 <List>
                                     <List.Item>Mountain: {this.state.activeMarker.stationDetails["capacity"]["mountain"]} </List.Item>
                                     <List.Item>Road: {this.state.activeMarker.stationDetails["capacity"]["road"]} </List.Item>
-
+                                    {/*<List.item>*/}
+                                        {/*<Link To={"/reserveabike"}>*/}
+                                            {/*Book Trip*/}
+                                        {/*</Link>*/}
+                                    {/*</List.item>*/}
                                 </List>
                                 <img src={this.state.activeMarker.stationDetails["url"]}  alt={'new'} style={{maxWidth:"200px"}}/>
                             </div>
