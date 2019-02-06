@@ -39,23 +39,36 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     // const roadPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikeType:'road'},0,regularBikes);
     // const mountainPromise = getNestedPromise(makeSingleReservation,{reservationsCollection,reservationDocument,bikeType:'mountain'},0,mountainBikes);
 
-    for (let i = 0; i < regularBikes; i++) {
-        await makeSingleReservation(reservationsCollection, reservationDocument, 'road');
-    }
+    const reservationsIDArray = [];
+
 
     if (regularBikes > 0) {
+
+        for (let i = 0; i < regularBikes; i++) {
+            const reservationID = await makeSingleReservation(reservationsCollection, reservationDocument, 'road');
+            // console.log(reservationID);
+            reservationsIDArray.push(reservationID);
+        }
+
         const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
         await setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road");
     }
 
-    for (let i = 0; i < mountainBikes; i++) {
-        await makeSingleReservation(reservationsCollection, reservationDocument, 'mountain');
-    }
-
     if (mountainBikes > 0) {
+
+        for (let i = 0; i < mountainBikes; i++) {
+            const reservationID = await makeSingleReservation(reservationsCollection, reservationDocument, 'mountain');
+            reservationsIDArray.push(reservationID);
+        }
+
         const newNumberOfAvailableMountainBikes = numberOfAvailableMountainBikes - mountainBikes;
         await setNumberOfAvailableBikes(station, newNumberOfAvailableMountainBikes, "mountain");
     }
+
+    await appendUserReservationsArray(reservationsIDArray);
+
+    console.log("Reservations to be added to user:");
+    console.log(reservationsIDArray);
 
     return "success";
     // return roadPromise.then (() => {
@@ -133,7 +146,7 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
 
 };
 
-export const appendUserReservationsArray = async (reservationReference) => {
+export const appendUserReservationsArray = async (reservationReferences) => {
     //TODO Make a function to append them all at once. This current method causes issues of overwriting in the firestore.
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -151,9 +164,10 @@ export const appendUserReservationsArray = async (reservationReference) => {
             let reservationsArray = currentUserData['reservationsArray'];
 
             if (reservationsArray) {
-                reservationsArray.push(reservationReference);
+                reservationsArray = reservationsArray.concat(reservationReferences);
+                // reservationsArray.push(reservationReference);
             } else {
-                reservationsArray = [reservationReference];
+                reservationsArray = reservationReferences;
             }
 
             const promise = currentUserDocument.update({reservationsArray: reservationsArray});
@@ -178,19 +192,20 @@ export const makeSingleReservation = async (reservationsCollection, reservationD
 
     const addPromise = reservationsCollection.add(reservationDocument);
 
-    addPromise
+    return addPromise
         .then(ref => {
             console.log("Single Reservation of " + bikeType + " bike Added!");
 
-            const appendPromise = appendUserReservationsArray(ref.id);
+            // const appendPromise = appendUserReservationsArray(ref.id);
 
-            return appendPromise
-                .then(() => {
-                    return "success"
-                })
-                .catch(err => {
-                    return err
-                });
+            // return appendPromise
+            //     .then(() => {
+            // console.log(ref.id);
+            return ref.id;
+                // })
+                // .catch(err => {
+                //     return err
+                // });
         })
         .catch(err => {
             return err
@@ -216,6 +231,7 @@ export const getNestedPromise = async (promiseFunction, args, counter, max) => {
 
 export const getTrips = async () => {
 
+    //This ensures that all trips that should be active will be marked as active.
     await updateTrips();
 
     const db = firebase.firestore();
