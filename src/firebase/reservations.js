@@ -1,7 +1,6 @@
 import * as firebase from "firebase";
 
 
-//TODO: Update trips status
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
 
@@ -217,6 +216,8 @@ export const getNestedPromise = async (promiseFunction, args, counter, max) => {
 
 export const getTrips = async () => {
 
+    await updateTrips();
+
     const db = firebase.firestore();
 
     const auth = firebase.auth();
@@ -316,6 +317,77 @@ export const cancelReservation = async (reservationID) => {
         .catch(err => {
             return err
         });
+};
 
+
+export const updateTrips = async () =>
+{
+    const db = firebase.firestore();
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    const usersCollection = db.collection('users');
+    const reservationsCollection = db.collection('reservations');
+
+
+    const query = reservationsCollection.where('status','==','inactive');
+    console.log(query);
+
+    return query.get()
+        .then(async queryDoc => {
+
+            queryDoc.forEach(async singleDoc => {
+
+                const singleDocID = singleDoc.id;
+                const singleDocData = singleDoc.data();
+                const singleDocUser = singleDocData['user'];
+
+                //Only update documents for this user (this could save overwriting changes because of local copies not matching the firestore)
+                if (uid == singleDocUser) {
+
+                    const singleDocDate = singleDocData['start']['time']['date'];
+                    const singleDocTime = singleDocData['start']['time']['time'];
+
+                    const time = new Date();
+
+                    const currentDate = time.getFullYear() + "-" +
+                        ("0" + time.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
+                        + "-" +
+                        ("0" + time.getDay()).slice(-2);
+
+                    const currentTime = ("0" +
+                        time.getHours()).slice(-2)
+                        + ":" +
+                        ("0" + time.getMinutes()).slice(-2);
+
+
+                    if ((singleDocDate <= currentDate) && (singleDocTime <= currentTime)) {
+                        const reservationDocument = reservationsCollection.doc(singleDocID);
+
+                        await reservationDocument.update('status', 'pending');
+                    }
+
+                    // console.log(singleDocDate + "   " + currentDate);
+                    // console.log(singleDocTime + "   " + currentTime);
+                    // console.log("\n");
+
+                    // if (singleDocData > currentDate) {
+                    //     console.log(singleDocDate + " > " + currentDate);
+                    // } else {
+                    //     console.log(singleDocDate + " <= " + currentDate);
+                    // }
+                    //
+                    // if (singleDocTime > currentTime) {
+                    //     console.log(singleDocTime + " > " + currentTime);
+                    // } else {
+                    //     console.log(singleDocTime + " <= " + currentTime);
+                    // }
+
+                }
+
+            });
+
+        });
 
 };
