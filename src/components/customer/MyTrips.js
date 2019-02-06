@@ -146,7 +146,7 @@ class MyTrips extends React.Component {
                     "cancel",
                     "red",
                     "Reserved",
-                    "Waverley Station",
+                    stationName,
                     "Available from 16:00 to 16:30",
                     keys[index],
                     image
