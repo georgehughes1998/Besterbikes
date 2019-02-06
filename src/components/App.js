@@ -96,6 +96,7 @@ class App extends React.Component {
 
                                 {/*Reserving a bike Routes*/}
                                 <Route path="/reservebike" component={ReserveBikeContainer}/>
+
                                 {/*TODO: Remove station simulation once implemnted properly*/}
                                 <Route path="/stationsim" exact component={StationSystemSimulation}/>
 

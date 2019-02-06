@@ -1,8 +1,9 @@
 import React from 'react'
 import {Grid, Header, Icon, Image, Segment} from "semantic-ui-react";
 import {SubmissionError} from "redux-form";
-
 import {connect} from "react-redux";
+import {Link} from 'react-router-dom';
+
 import {loadStations, loadTrips} from "../../redux/actions";
 import PageContainer from "../PageContainer";
 import {getUser} from "../../firebase/authentication";
@@ -221,6 +222,11 @@ class MyTrips extends React.Component {
                     {this.renderTrips()}
                 </div>
                 {/*TODO: Implement filter*/}
+
+                <Link to={"/stationsim"}>
+                    Link to stationSim
+                </Link>
+
             </PageContainer>
 
         )
