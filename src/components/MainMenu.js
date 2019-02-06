@@ -58,7 +58,7 @@ class MainMenu extends React.Component {
                         </Grid.Column>
 
                         <Grid.Column>
-                            <Link to="/unlock">
+                            <Link to="/unlockbike">
                                 <Container textAlign='center'>
                                     <Icon name="unlock" size="big" center color="black"/>
                                     <Header as="h3" textAlign='center' color="blue">Unlock</Header>

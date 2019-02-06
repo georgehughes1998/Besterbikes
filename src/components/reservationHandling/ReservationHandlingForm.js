@@ -4,10 +4,18 @@ import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
 import StationDropdown from "../StationDropdown";
 import FirebaseError from "../FirebaseError";
+import ReservationComplete from "./ReservationComplete";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
 class ReservationHandlingForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            success: null
+        };
+    }
 
     //Calls firebase to submit details from form and manage any errors
     onSubmit = async (formValues) => {
@@ -15,7 +23,7 @@ class ReservationHandlingForm extends React.Component {
         if (this.props.header.title === "Payment") {
             return makeReservations(formValues)
                 .then((obj) => {
-                    window.alert("Success")
+                    this.setState({success: "success"})
                 })
                 .catch((err) => {
                     console.log(err);
@@ -82,7 +90,7 @@ class ReservationHandlingForm extends React.Component {
 
             default:
                 return (
-                    <Form.Field>
+                    <Form.Field required>
                         <label>{label}</label>
                         <input
                             {...input}
@@ -154,6 +162,9 @@ class ReservationHandlingForm extends React.Component {
                         <Container textAlign='center'>
                             {this.renderButtons}
                         </Container>
+
+                        {this.state.success?<ReservationComplete/>:null}
+
                     </Form>
                 </Segment>
             </div>

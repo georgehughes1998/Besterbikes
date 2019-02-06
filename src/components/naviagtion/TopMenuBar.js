@@ -12,7 +12,6 @@ class TopMenuBar extends React.Component {
     handleHideClick = () => this.props.changeSideBar("Hide");
     handleShowClick = () => this.props.changeSideBar("Show");
 
-
     //Function to display title of page based on pathname in react router dom
     getDisplayTitle = (pathname) => {
         switch (pathname) {

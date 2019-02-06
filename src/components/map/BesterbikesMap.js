@@ -6,6 +6,7 @@ import {getJSONFromFile} from '../../handleJSON.js'
 
 //TODO: Implement loader correctly
 //TODO: Render markers red or green bikes depending on spaces available
+//TODO: List of stations displayed beside bike
 
 export class BesterbikesMap extends Component {
 

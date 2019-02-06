@@ -16,7 +16,6 @@ const SideBarContent = (props) => {
                     <Menu.Item>
                         <Icon name={key.icon}/>
                         {key.name}
-
                     </Menu.Item>
                 </Link>
             </div>
@@ -24,7 +23,6 @@ const SideBarContent = (props) => {
         )
     });
 
-    // TODO: Review content of Sidebar
     const handleSidebarHide = () => props.changeSideBar("Hide");
 
     return (
