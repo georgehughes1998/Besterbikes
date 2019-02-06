@@ -4,7 +4,7 @@ import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
 import StationDropdown from "../StationDropdown";
 import FirebaseError from "../FirebaseError";
-import ReservationComplete from "./ReservationComplete";
+import ReservationComplete from "./ReservationConfirmation";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
