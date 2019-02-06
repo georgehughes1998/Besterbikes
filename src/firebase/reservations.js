@@ -182,11 +182,13 @@ export const getTrips = async (maxNumberOfTrips=10) => {
             const currentUserData = doc.data();
             const reservationsArray = currentUserData['reservationsArray'];
 
+            const reservationsArrayReversed = reservationsArray.reverse();
+
             let fullReservationsCollection = {};
 
             let counter = 0;
 
-            for (let r in reservationsArray) {
+            for (let r in reservationsArrayReversed) {
 
                 counter++;
 
@@ -194,7 +196,7 @@ export const getTrips = async (maxNumberOfTrips=10) => {
                     break;
                 }
 
-                const currentReservation = reservationsArray[r];
+                const currentReservation = reservationsArrayReversed[r];
 
                 fullReservationsCollection[currentReservation] = await getReservation(currentReservation);
             }
