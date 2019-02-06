@@ -19,7 +19,7 @@ export const unlockBike = async (reservationID) => {
     }
 
     const bikeType = reservationData['bikeType'];
-    const station = reservationData['start']['station'];
+    const stationID = reservationData['start']['station'];
 
     const bikeID = await selectBike(bikeType);
     const bikesCollection = db.collection('bikes');
@@ -70,6 +70,7 @@ export const removeBike = async (stationID,bikeID,bikeType) =>
     return await stationDocument.update('bikes.bikeType.bikesArray',newBikesArray);
 
 };
+
 
 export const selectBike = async (stationID, bikeType) => {
     //Used by unlockBike to select a bike and get its bikeID from the given station
