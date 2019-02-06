@@ -6,9 +6,6 @@ export const unlockBike = async (stationID, reservationID) => {
 
     const db = firebase.firestore();
 
-    const stationsCollection = db.collection('station');
-    const stationDocument = stationsCollection.doc(stationID);
-
     const reservationsCollection = db.collection('reservations');
     const reservationDocument = reservationsCollection.doc(reservationID);
 
@@ -33,6 +30,9 @@ export const unlockBike = async (stationID, reservationID) => {
     await reservationDocument.update('start.station',stationID);
     await reservationDocument.update('bike',bikeID);
 
+
+    await removeBike(stationID,bikeID,bikeType);
+
     await bikeDocument.update('status','unlocked');
     await bikeDocument.update('reservation',reservationID);
 
@@ -47,14 +47,40 @@ export const validateReservation = (reservationData) =>
     return true;
 };
 
-export const removeBike = (stationID,bikeID) =>
+export const removeBike = async (stationID,bikeID,bikeType) =>
 {
+    const db = firebase.firestore();
+
+    const stationsCollection = db.collection('station');
+    const stationDocument = stationsCollection.doc(stationID);
+
+    const stationDoc = await stationDocument.get();
+    const stationData = stationDoc.data();
+
+    const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
+    const newBikesArray = bikesArray.filter(tempBikeID =>
+    {
+        return bikeID !== tempBikeID
+    });
+
+    return await stationDocument.update('bikes.bikeType.bikesArray',newBikesArray);
 
 };
 
 export const selectBike = async (stationID, bikeType) => {
-    //TODO pick any bike of the appropriate bike type from the given station, return bikeID
-    return "";
+    const db = firebase.firestore();
+
+    const stationsCollection = db.collection('station');
+    const stationDocument = stationsCollection.doc(stationID);
+
+    const stationDoc = await stationDocument.get();
+    const stationData = stationDoc.data();
+
+    const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
+    const bikeID = bikesArray[0];
+
+    return bikeID;
+
 };
 
 export const returnBike = async (bikeID, stationID) => {
