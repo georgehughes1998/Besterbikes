@@ -56,7 +56,7 @@ class StationSystemSimulation extends React.Component {
 
     handleUnlock = async () => {
         console.log(this.state);
-        unlockBike(this.state.unlockStation, this.state.unlockTrip)
+        unlockBike(this.state.unlockTrip)
             .then((obj) => {
                 console.log(obj)
             })
