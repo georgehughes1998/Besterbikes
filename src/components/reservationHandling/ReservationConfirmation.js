@@ -1,141 +1,40 @@
-import React, {Component} from "react";
-import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
-import {Header, List} from "semantic-ui-react"
+import React from 'react'
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
+import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
+import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 
-import {getJSONFromFile} from '../../handleJSON.js'
+class ReservationComplete extends React.Component{
 
-//TODO: Implement loader correctly
-//TODO: Render markers red or green bikes depending on spaces available
-//TODO: List of stations displayed beside bike
+    state = { modalOpen: true }
 
-export class BesterbikesMap extends Component {
+    handleOpen = () => this.setState({ modalOpen: true })
 
-    constructor(props) {
-        super(props);
-        this.onMarkerClick = this.onMarkerClick.bind(this);
-        this.state = {
-            showingInfoWindow: true,
-            activeMarker: {},
-            selectedPlace: {},
-            mapJSON: {}
-        };
-    }
-
-    onMarkerClick(props, marker, e) {
-        this.setState({
-            selectedPlace: props,
-            activeMarker: marker,
-            showingInfoWindow: true
-        });
-    }
-
-    componentDidMount() {
-        //TODO: Move to Redux
-        if (!(this.state.mapJSON === {})) {
-            this.getMapJSON()
-        }
-    }
-
-    async getMapJSON() {
-        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-        // console.log("MAP JSON RETRIVED");
-        // console.log(stations);
-        this.setState({mapJSON: stations})
-    }
+    handleClose = () => this.setState({ modalOpen: false })
 
 
-    renderMarkers() {
-        const stations = this.state.mapJSON;
+    render(){
+        return(
+            <Modal
 
-        // console.log("Rendering markers");
-        // console.log(stations);
-
-        if (!(stations === {})) {
-            return Object.values(stations).map(station => {
-                return (
-                    <Marker position={station.location.geoPoint}
-                            onClick={this.onMarkerClick}
-                            name={station.name}
-                            stationDetails={station}
-
-                    />
-                )
-            })
-        }
-
-    }
-
-    render() {
-        // if (!this.props.stations) {
-        //     return (
-        //         <Segment>
-        //             <Dimmer active>
-        //                 <Loader size='large'>Loading</Loader>
-        //             </Dimmer>
-        //         </Segment>
-        //     );
-        // }
-
-        return (
-
-            <Map
-                style={this.props.style}
-                initialCenter={{
-                    lat: 55.9533,
-                    lng: -3.1883
-                }}
-                google={this.props.google}
-                zoom={14}
-                streetViewControl={false}
-                mapTypeControl={false}
-                fullscreenControl={false}
+                open={this.state.modalOpen}
+                onClose={this.handleClose}
+                basic
+                size='small'
             >
-
-                {this.renderMarkers()}
-
-                {/*TODO: Extract correct co-ordinates and place in JSON file*/}
-
-
-                <InfoWindow
-                    marker={this.state.activeMarker}
-                    visible={this.state.showingInfoWindow}
-                >
-                    <div>
-                        {/*TODO: Try load customComponent as JSX*/}
-                        {/*<CustomMapIcon activeMaker = {this.state.activeMarker}/>*/}
-
-                        <Header as='h4'>{this.state.activeMarker.name}</Header>
-
-                        {this.state.activeMarker.stationDetails ?
-                            <div>
-                                <Header.Subheader>{this.state.activeMarker.stationDetails["notes"]}</Header.Subheader>
-                                <List>
-                                    <List.Item>Mountain: {this.state.activeMarker.stationDetails["capacity"]["mountain"]} </List.Item>
-                                    <List.Item>Road: {this.state.activeMarker.stationDetails["capacity"]["road"]} </List.Item>
-                                    {/*<List.item>*/}
-                                    {/*<Link To={"/reserveabike"}>*/}
-                                    {/*Book Trip*/}
-                                    {/*</Link>*/}
-                                    {/*</List.item>*/}
-                                </List>
-                                <img src={this.state.activeMarker.stationDetails["url"]}  alt={'new'} style={{maxWidth:"200px"}}/>
-                            </div>
-
-                            :
-                            //TODO: Display error
-                            null
-                        }
-
-                    </div>
-
-                </InfoWindow>
-            </Map>
-
-        );
+                <Header icon='browser' content='Cookies policy' />
+                <Modal.Content>
+                    <h3>Reservation Complete</h3>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button color='green' onClick={this.handleClose} inverted>
+                        <Icon name='checkmark' /> Got it
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+        )
     }
-}
 
-export default GoogleApiWrapper({
-    apiKey: "AIzaSyB_13gY5K5zg1RoAEzwSxHzPIyBv0Atjcc",
-    v: "3"
-})(BesterbikesMap);
+};
+
+export default ReservationComplete
