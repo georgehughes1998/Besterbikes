@@ -265,8 +265,9 @@ export const getTrips = async () => {
                 fullReservationsCollection[currentReservation] = await getReservation(currentReservation);
             }
 
-            console.log(fullReservationsCollection);
-            return fullReservationsCollection;
+            // console.log(fullReservationsCollection);
+
+            return fullReservationsCollection.reverse();
 
         })
         .catch(err => {
