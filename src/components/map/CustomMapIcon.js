@@ -1,5 +1,4 @@
 import React from 'react'
-import {Header, Icon} from "semantic-ui-react";
 
 const CustomMapIcon = (props) => {
 
@@ -22,7 +21,7 @@ const CustomMapIcon = (props) => {
     //     }
     // };
 
-    return(
+    return (
         <div>
             {/*{console.log(props)}*/}
         </div>

@@ -4,48 +4,43 @@ import * as reservations from 'reservations';
 
 export const getBikesAt = async (stationID) => {
 
-  const db = firebase.firestore();
+    const db = firebase.firestore();
 
-  const reservationsCollection = db.collection('stations');
-  const bikesCollection = db.collection('bikes');
+    const reservationsCollection = db.collection('stations');
+    const bikesCollection = db.collection('bikes');
 
-  const stationDocument = reservationsCollection.doc(stationID);
+    const stationDocument = reservationsCollection.doc(stationID);
 
-  return stationDocument.get()
-      .then (async doc => {
+    return stationDocument.get()
+        .then(async doc => {
 
-        const stationData = doc.data();
+            const stationData = doc.data();
 
-        console.log("Station Data:");
-        console.log(stationData);
-        const roadBikesArray = stationData['bikes']['road']['bikesArray'];
-        const mountainBikesArray = stationData['bikes']['mountain']['bikesArray'];
+            console.log("Station Data:");
+            console.log(stationData);
+            const roadBikesArray = stationData['bikes']['road']['bikesArray'];
+            const mountainBikesArray = stationData['bikes']['mountain']['bikesArray'];
 
-        const bikesArray = { road: {} , mountain: {} };
+            const bikesArray = {road: {}, mountain: {}};
 
-        for (let b in roadBikesArray)
-        {
-          const currentBike = roadBikesArray[b];
-          const bikeData = await getBike(currentBike);
+            for (let b in roadBikesArray) {
+                const currentBike = roadBikesArray[b];
 
-          bikesArray['road'][currentBike] = bikeData;
-        }
+                bikesArray['road'][currentBike] =  await getBike(currentBike);;
+            }
 
-        for (let b in mountainBikesArray)
-        {
-          const currentBike = mountainBikesArray[b];
-          const bikeData = await getBike(currentBike);
+            for (let b in mountainBikesArray) {
+                const currentBike = mountainBikesArray[b];
 
-          bikesArray['mountain'][currentBike] = bikeData;
-        }
+                bikesArray['mountain'][currentBike] = await getBike(currentBike);
+            }
 
-        return bikesArray;
-      });
+            return bikesArray;
+        });
 };
 
 
-export const getBike = async (bikeID) =>
-{
+export const getBike = async (bikeID) => {
     const db = firebase.firestore();
     const bikesCollection = db.collection('bikes');
 
@@ -54,23 +49,23 @@ export const getBike = async (bikeID) =>
     return bikeDocument.get()
         .then(doc => {
 
-            const bikeData = doc.data();
-            return bikeData;
+            return doc.data();;
 
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 
 };
 
 export const getNumberOfBikesAt = async (stationID) => {
 
-    const numberOfRoadBikes = await reservations.getNumberOfAvailableBikes(stationID,"road");
-    const numberOfMountainBikes = await reservations.getNumberOfAvailableBikes(stationID,"mountain")
+    const numberOfRoadBikes = await reservations.getNumberOfAvailableBikes(stationID, "road");
+    const numberOfMountainBikes = await reservations.getNumberOfAvailableBikes(stationID, "mountain");
 
-    const numberOfBikes = {
+    return {
         road: numberOfRoadBikes,
         mountain: numberOfMountainBikes
     };
 
-    return numberOfBikes;
 };

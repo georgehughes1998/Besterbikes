@@ -1,5 +1,3 @@
-import {CHANGE_SIDEBAR_STATUS, LOAD_STATIONS, LOAD_TRIPS} from './types'
-
 export const changeSideBar = (tap) => {
         return {
             type: 'CHANGE_SIDEBAR_STATUS',

@@ -1,5 +1,5 @@
 {
-  "stationHeriotWattUniversity" : {
+  "stationHeriotWattUniversity": {
     "name": "Heriot-Watt University",
     "description": "HWU Main Reception",
     "location": {
@@ -17,8 +17,7 @@
     "notes": "Student hotspot && Canal route access",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Heriot-Watt%20University.jpg"
   },
-
-  "stationWaverley" : {
+  "stationWaverley": {
     "name": "Waverley Station",
     "description": "Waverley - Princes Street",
     "location": {
@@ -36,8 +35,7 @@
     "notes": "Major tourist hotspot && Direct connection to other Bester stations",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Waverley.jpg"
   },
-
-  "stationHaymarket" : {
+  "stationHaymarket": {
     "name": "Haymarket Station",
     "description": "Haymarket Bike Rack",
     "location": {
@@ -55,8 +53,7 @@
     "notes": "",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Haymarket.jpg"
   },
-
-  "stationNationalMuseumOfScotland" : {
+  "stationNationalMuseumOfScotland": {
     "name": "National Museum of Scotland",
     "description": "Greyfriars' Bobby entrance",
     "location": {
@@ -74,8 +71,7 @@
     "notes": "Busy city area",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/NationalMuseum.jpg"
   },
-
-  "stationEdinburghZoo" : {
+  "stationEdinburghZoo": {
     "name": "Edinburgh Zoo",
     "description": "Zoo Main Entrance",
     "location": {
@@ -93,8 +89,7 @@
     "notes": "",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Zoo.jpg"
   },
-
-  "stationEdinburghUniversityLibrary" : {
+  "stationEdinburghUniversityLibrary": {
     "name": "Edinburgh University Library",
     "description": "Edinburgh Uni - The Meadows",
     "location": {
@@ -112,8 +107,7 @@
     "notes": "Footfall hotspot - large park and green spaces alngside major student hub",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Uni%20Library.jpg"
   },
-
-  "stationScottishParliament" : {
+  "stationScottishParliament": {
     "name": "Scottish Parliament",
     "description": "Royal Mile",
     "location": {
@@ -131,8 +125,7 @@
     "notes": "Arthur's seat area access",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Scottish%20Parliament.jpg"
   },
-
-  "stationMerchistonCrossroads" : {
+  "stationMerchistonCrossroads": {
     "name": "Merchiston Crossroads",
     "description": "Napier University Computing School",
     "location": {
@@ -150,8 +143,7 @@
     "notes": "",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Merchiston%20Crossroads.jpg"
   },
-
-  "stationRoyalBotanicGarden" : {
+  "stationRoyalBotanicGarden": {
     "name": "Royal Botanic Garden",
     "description": "West Entrance - Arboretum Place",
     "location": {
@@ -169,8 +161,7 @@
     "notes": "Peak bike location",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Royal%20Botanic%20Gardens.jpg"
   },
-
-  "stationPortobelloBeachNorth" : {
+  "stationPortobelloBeachNorth": {
     "name": "Portobello Beach North",
     "description": "Lothian Buses marine depot",
     "location": {
@@ -188,8 +179,7 @@
     "notes": "Straight line from Princes + Queen Street",
     "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Portobello%20Beach%20North.jpg"
   },
-
-  "stationPortobelloBeachEast" : {
+  "stationPortobelloBeachEast": {
     "name": "Portobello Beach East",
     "description": "Promenade path",
     "location": {

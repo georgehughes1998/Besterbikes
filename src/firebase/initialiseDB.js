@@ -11,8 +11,8 @@ const databaseURL = "https://bettersome-a5c8e.firebaseio.com";
 
 firebaseAdmin.initializeApp(
     {
-        credential : firebaseAdmin.credential.cert(serviceAccount),
-        databaseURL : databaseURL
+        credential: firebaseAdmin.credential.cert(serviceAccount),
+        databaseURL: databaseURL
     }
 );
 

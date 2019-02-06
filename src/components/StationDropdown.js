@@ -11,14 +11,15 @@ const StationDropdown = (props) => {
         let DropdownArray = [];
         let keys = Object.keys(props.stations);
 
-         Object.values(props.stations).map((key, index) => {
-            DropdownArray.push({key: keys[index], value: keys[index], text : key.name});
+        Object.values(props.stations).map((key, index) => {
+            DropdownArray.push({key: keys[index], value: keys[index], text: key.name});
+            return DropdownArray;
         });
 
         return DropdownArray
     };
 
-    return(
+    return (
         <Dropdown
             fluid
             selection
@@ -32,10 +33,7 @@ const StationDropdown = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    return { stations: state.JSON.stations };
+    return {stations: state.JSON.stations};
 };
 
-export default connect(
-    mapStateToProps,
-    { loadStations })
-(StationDropdown);
+export default connect(mapStateToProps, {loadStations})(StationDropdown);

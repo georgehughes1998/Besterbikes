@@ -22,19 +22,17 @@ import UnlockBike from "./UnlockBike";
 //TODO: Move UI props over to JSON
 class App extends React.Component {
 
-        componentDidMount(){
-            //TODO: Move to Redux
-            if (!(this.props.stations === {})) {
-                this.getMapJSON()
-            }
+    componentDidMount() {
+        //TODO: Move to Redux
+        if (!(this.props.stations === {})) {
+            this.getMapJSON()
         }
+    }
 
-        async getMapJSON() {
-            const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-            // console.log("MAP JSON RETRIVED");
-            // console.log(stations);
-            this.props.loadStations(stations)
-        }
+    async getMapJSON() {
+        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+        this.props.loadStations(stations)
+    }
 
     render() {
         return (

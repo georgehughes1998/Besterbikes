@@ -1,15 +1,21 @@
 import React from 'react'
-import {Button, Container, Dropdown, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
+import {Button, Container, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
 import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
-// import validate from "./validate";
-import {getJSONFromFile} from "../../handleJSON";
 import StationDropdown from "../StationDropdown";
 import FirebaseError from "../FirebaseError";
+import ReservationComplete from "./ReservationComplete";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
 class ReservationHandlingForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            success: null
+        };
+    }
 
     //Calls firebase to submit details from form and manage any errors
     onSubmit = async (formValues) => {
@@ -17,14 +23,14 @@ class ReservationHandlingForm extends React.Component {
         if (this.props.header.title === "Payment") {
             return makeReservations(formValues)
                 .then((obj) => {
-                    window.alert("Success")
+                    this.setState({success: "success"})
                 })
                 .catch((err) => {
                     console.log(err);
                     throw new SubmissionError({
                         _error: err.message
+                    })
                 })
-            })
         } else {
             this.props.operations.next.link();
         }
@@ -84,7 +90,7 @@ class ReservationHandlingForm extends React.Component {
 
             default:
                 return (
-                    <Form.Field>
+                    <Form.Field required>
                         <label>{label}</label>
                         <input
                             {...input}
@@ -134,9 +140,12 @@ class ReservationHandlingForm extends React.Component {
                 </Button>;
 
             default:
-                return;
+                return null;
         }
-    });
+
+    }
+
+    );
 
     //Renders main body of an reservationHandlingForm
     render() {
@@ -153,6 +162,9 @@ class ReservationHandlingForm extends React.Component {
                         <Container textAlign='center'>
                             {this.renderButtons}
                         </Container>
+
+                        {this.state.success?<ReservationComplete/>:null}
+
                     </Form>
                 </Segment>
             </div>
@@ -166,7 +178,7 @@ const validate = (formValues) => {
     const errors = {};
 
     if (/([0-2][1-9])|10|20|30|31\/([0][1-9])|10|11|12\/(19[0-9][0-9])|(200[0-9])/.test(formValues.expirationDate)) {
-        errors.expirationDate = 'Invalid Date of Birth'
+        errors.expirationDate = 'Invalid date'
     }
 
     return errors;

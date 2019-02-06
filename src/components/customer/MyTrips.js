@@ -1,10 +1,10 @@
 import React from 'react'
-import {Dropdown, Input, Placeholder, Container, Icon, Segment, Header, Grid, Dimmer, Loader} from "semantic-ui-react";
-import {getUser, signIn} from "../../firebase/authentication";
-import {cancelReservation, getTrips, makeReservations} from "../../firebase/reservations";
+import {Grid, Header, Icon, Segment} from "semantic-ui-react";
+import {getUser} from "../../firebase/authentication";
+import {cancelReservation, getTrips} from "../../firebase/reservations";
 import {SubmissionError} from "redux-form";
 import connect from "react-redux/es/connect/connect";
-import {loadStations, loadTrips, retrieveTrips} from "../../redux/actions";
+import {loadStations, loadTrips} from "../../redux/actions";
 import PageContainer from "../PageContainer";
 
 
@@ -13,7 +13,7 @@ import PageContainer from "../PageContainer";
 //TODO: Show google maps on active trips
 //TODO: Review columns and mobile compatability
 //TODO: Complete loading in trips for all reservation types
-class MyTrips extends React.Component{
+class MyTrips extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = () => {
@@ -24,17 +24,6 @@ class MyTrips extends React.Component{
                 return user
             });
     };
-
-
-    async componentDidMount() {
-
-        const user = await this.authenticateUser();
-
-        if(user){
-            this.retrieveFirebaseTrips();
-        }
-    }
-
     handleCancelTrip = (tripId) => {
         return cancelReservation(tripId)
             .then((obj) => {
@@ -48,21 +37,22 @@ class MyTrips extends React.Component{
                 })
             })
     };
-
     handleIconClick = (status, tripId) => {
         console.log(status);
 
         switch (status) {
             case "Ready to unlock":
-                this.handleCancelTrip(tripId)
+                this.handleCancelTrip(tripId);
+                return;
+            default:
+                return;
         }
     };
-
     renderTrips = () => {
 
-        if(this.props.trips){
-           return Object.values(this.props.trips).map((key, index) => {
-                return(
+        if (this.props.trips) {
+            return Object.values(this.props.trips).map((key, index) => {
+                return (
                     <div>
                         {this.getTripTypeValues(key, index)}
                     </div>
@@ -71,10 +61,8 @@ class MyTrips extends React.Component{
             })
         }
     };
-
-
     renderTrip = (color, iconName, iconColor, status, headerContent, headerSub, tripId) => {
-        return(
+        return (
             //TODO: Make this into own prop
             <Segment color={color} fluid>
                 <Grid>
@@ -83,32 +71,32 @@ class MyTrips extends React.Component{
                             <Header
                                 as='h1'
                                 content={headerContent}
-                                subheader = {headerSub}
+                                subheader={headerSub}
                             />
 
                             <Header as="h4" color={color}>{status}</Header>
                         </Grid.Column>
 
-                        <Grid.Column width={1} verticalAlign='middle' onClick = {() => this.handleIconClick(status, tripId)}>
-                                <Icon name={iconName} color={iconColor} size ="big"/>
+                        <Grid.Column width={1} verticalAlign='middle'
+                                     onClick={() => this.handleIconClick(status, tripId)}>
+                            <Icon name={iconName} color={iconColor} size="big"/>
                         </Grid.Column>
                     </Grid.Row>
 
                     {/*<Grid.Row>*/}
-                        {/*<Grid.Column>*/}
-                            {/*<Segment>*/}
-                                {/*/!*<BesterbikesMap/>*!/*/}
-                                {/*<Placeholder fluid>*/}
-                                    {/*<Placeholder.Image />*/}
-                                {/*</Placeholder>*/}
-                            {/*</Segment>*/}
-                        {/*</Grid.Column>*/}
+                    {/*<Grid.Column>*/}
+                    {/*<Segment>*/}
+                    {/*/!*<BesterbikesMap/>*!/*/}
+                    {/*<Placeholder fluid>*/}
+                    {/*<Placeholder.Image />*/}
+                    {/*</Placeholder>*/}
+                    {/*</Segment>*/}
+                    {/*</Grid.Column>*/}
                     {/*</Grid.Row>*/}
                 </Grid>
             </Segment>
         )
     };
-
     retrieveFirebaseTrips = async () => {
         const obj = await getTrips();
         if (obj) {
@@ -119,8 +107,6 @@ class MyTrips extends React.Component{
             });
         }
     };
-
-
     // const getTripTypeValues = Object.values(TRIPS).map((key, index) => {
     getTripTypeValues = (trip, index) => {
 
@@ -131,7 +117,7 @@ class MyTrips extends React.Component{
         let keys = Object.keys(this.props.trips);
 
 
-        switch(trip['status']){
+        switch (trip['status']) {
             case "active":
                 return this.renderTrip(
                     "purple",
@@ -174,7 +160,6 @@ class MyTrips extends React.Component{
                     //TODO: Implement end station and total duration calculator
                     // "To Edinburgh University Library lasting 4hrs 3mins",
                     ""
-
                 );
             case "cancelled":
                 return this.renderTrip(
@@ -187,10 +172,19 @@ class MyTrips extends React.Component{
                 );
             default:
                 return (<div>No more trips to display</div>)
-        }};
+        }
+    };
 
+    async componentDidMount() {
 
-    render(){
+        const user = await this.authenticateUser();
+
+        if (user) {
+            this.retrieveFirebaseTrips();
+        }
+    }
+
+    render() {
 
         // if (this.props.trips === {}) {
         //     {console.log("loaidng")}
@@ -211,15 +205,15 @@ class MyTrips extends React.Component{
                 </div>
 
                 {/*<Dropdown text='Filter Posts' icon='filter' floating labeled fluid button className='icon'>*/}
-                    {/*<Dropdown.Menu>*/}
-                        {/*<Input icon='search' iconPosition='left' className='search'/>*/}
-                    {/*</Dropdown.Menu>*/}
+                {/*<Dropdown.Menu>*/}
+                {/*<Input icon='search' iconPosition='left' className='search'/>*/}
+                {/*</Dropdown.Menu>*/}
                 {/*</Dropdown>*/}
 
             </PageContainer>
         )
     }
-};
+}
 
 const mapStateToProps = (state) => {
     return {
@@ -228,7 +222,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    { loadTrips, loadStations })
-(MyTrips);
+export default connect(mapStateToProps, {loadTrips, loadStations})(MyTrips);

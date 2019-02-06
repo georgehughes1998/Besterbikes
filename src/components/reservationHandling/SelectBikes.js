@@ -4,22 +4,19 @@ import {reduxForm} from 'redux-form'
 import validate from './validate'
 import ReservationHandlingForm from "./ReservationHandlingForm";
 import {Segment} from "semantic-ui-react";
-import {getJSONFromFile} from "../../handleJSON";
-import MapContainer from "../map/MapContainer";
 import BesterbikesMap from "../map/BesterbikesMap";
-import {Form} from "semantic-ui-react/dist/commonjs/collections/Form/Form";
 
 //TODO: Render values in dropdown
 // TODO: Move map into segment and fix diaplsy issues
 //Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
-class SelectBikes extends React.Component{
+class SelectBikes extends React.Component {
 
 
-    render(){
+    render() {
         return (
             <Segment.Group>
 
-                <Segment style={{minHeight:"300px"}}>
+                <Segment style={{minHeight: "300px"}}>
                     <div>
                         <BesterbikesMap style={{
                             maxWidth: "100%",
@@ -74,7 +71,7 @@ class SelectBikes extends React.Component{
             </Segment.Group>
         )
     }
-};
+}
 
 export default reduxForm({
     form: 'reservebike',              // <------ same form name
