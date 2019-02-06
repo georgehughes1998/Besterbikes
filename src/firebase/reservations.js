@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
+    //Function to make reservations with the given data
 
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station, "road");
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
@@ -72,6 +73,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
 
 
 export const getNumberOfAvailableBikes = async (station, bikeType) => {
+    //Returns the number of available bikes at a station
+
     const db = firebase.firestore();
 
     const stationsCollection = db.collection('stations');
@@ -91,6 +94,7 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
 };
 
 export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes, bikeType) => {
+    //Sets the number of available bikes at a station to the provided number
 
     const db = firebase.firestore();
     console.log("Setting number of available " + bikeType + " bikes at station " + station);
@@ -110,6 +114,7 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
 };
 
 export const appendUserReservationsArray = async (reservationReferences) => {
+    //Add the given list to the user's reservation array.
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -144,6 +149,7 @@ export const appendUserReservationsArray = async (reservationReferences) => {
 
 
 export const makeSingleReservation = async (reservationsCollection, reservationDocument, bikeType) => {
+    //Used by makeReservations to make a single reservation
 
     reservationDocument['bikeType'] = bikeType;
 
@@ -159,6 +165,8 @@ export const makeSingleReservation = async (reservationsCollection, reservationD
 
 
 export const getTrips = async (maxNumberOfTrips=10) => {
+    //Returns a collection of objects containing data about the user's trips
+
 
     //This ensures that all trips that should be active will be marked as active.
     await updateTrips();
@@ -208,6 +216,8 @@ export const getTrips = async (maxNumberOfTrips=10) => {
 
 
 export const getReservation = async (reservationID) => {
+    //Used by getTrips to get a single reservation
+
     const db = firebase.firestore();
     const reservationsCollection = db.collection('reservations');
 
@@ -221,6 +231,7 @@ export const getReservation = async (reservationID) => {
 
 
 export const cancelReservation = async (reservationID) => {
+    //Cancels the given reservation
 
     const db = firebase.firestore();
 
@@ -251,8 +262,9 @@ export const cancelReservation = async (reservationID) => {
 
 
 
-export const updateTrips = async () =>
-{
+export const updateTrips = async () => {
+    //Ensures that all inactive trips whose time have passed are set to active
+
     const db = firebase.firestore();
 
     const auth = firebase.auth();

@@ -68,6 +68,7 @@ export const getUser = async () => {
     }
 };
 
+//Function to get an object containing the current user's details from the firestore
 export const getUserDetails = async () => {
 
     const auth = firebase.auth();
@@ -95,6 +96,7 @@ export const getUserDetails = async () => {
 };
 
 //TODO: Also update email and password
+//Set the current user's details in the firestore
 export const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
     const auth = firebase.auth();

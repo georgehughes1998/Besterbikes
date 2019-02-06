@@ -2,7 +2,8 @@ import * as firebase from "firebase";
 
 
 
-export const unlockBike = async (stationID, reservationID) => {
+export const unlockBike = async (reservationID) => {
+    //Unlocks a bike at the given station and the given reservation
 
     const db = firebase.firestore();
 
@@ -18,6 +19,7 @@ export const unlockBike = async (stationID, reservationID) => {
     }
 
     const bikeType = reservationData['bikeType'];
+    const station = reservationData['start']['station'];
 
     const bikeID = await selectBike(bikeType);
     const bikesCollection = db.collection('bikes');
@@ -43,12 +45,14 @@ export const unlockBike = async (stationID, reservationID) => {
 
 export const validateReservation = (reservationData) =>
 {
+    //Used by unlockBike to validate a reservation
     console.log(reservationData);
     return true;
 };
 
 export const removeBike = async (stationID,bikeID,bikeType) =>
 {
+    //Used by unlockBike to remove a bike from the station bike array
     const db = firebase.firestore();
 
     const stationsCollection = db.collection('station');
@@ -68,6 +72,7 @@ export const removeBike = async (stationID,bikeID,bikeType) =>
 };
 
 export const selectBike = async (stationID, bikeType) => {
+    //Used by unlockBike to select a bike and get its bikeID from the given station
     const db = firebase.firestore();
 
     const stationsCollection = db.collection('station');
@@ -84,6 +89,7 @@ export const selectBike = async (stationID, bikeType) => {
 };
 
 export const returnBike = async (bikeID, stationID) => {
+    //Return the given bike to the given station
     //TODO return the given bike to the given station and mark the reservation as complete
     return 0;
 };
