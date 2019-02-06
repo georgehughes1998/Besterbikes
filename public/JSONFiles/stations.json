@@ -14,7 +14,8 @@
       "road": "30",
       "mountain": "6"
     },
-    "notes": "Student hotspot && Canal route access"
+    "notes": "Student hotspot && Canal route access",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Heriot-Watt%20University.jpg"
   },
 
   "stationWaverley" : {
@@ -32,7 +33,8 @@
       "road": "20",
       "mountain": "0"
     },
-    "notes": "Major tourist hotspot && Direct connection to other Bester stations"
+    "notes": "Major tourist hotspot && Direct connection to other Bester stations",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Waverley.jpg"
   },
 
   "stationHaymarket" : {
@@ -50,7 +52,8 @@
       "road": "20",
       "mountain": "0"
     },
-    "notes": ""
+    "notes": "",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Haymarket.jpg"
   },
 
   "stationNationalMuseumOfScotland" : {
@@ -68,7 +71,8 @@
       "road": "20",
       "mountain": "0"
     },
-    "notes": "Busy city area"
+    "notes": "Busy city area",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/NationalMuseum.jpg"
   },
 
   "stationEdinburghZoo" : {
@@ -86,7 +90,8 @@
       "road": "30",
       "mountain": "0"
     },
-    "notes": ""
+    "notes": "",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Zoo.jpg"
   },
 
   "stationEdinburghUniversityLibrary" : {
@@ -104,7 +109,8 @@
       "road": "20",
       "mountain": "0"
     },
-    "notes": "Footfall hotspot - large park and green spaces alngside major student hub"
+    "notes": "Footfall hotspot - large park and green spaces alngside major student hub",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Uni%20Library.jpg"
   },
 
   "stationScottishParliament" : {
@@ -122,7 +128,8 @@
       "road": "30",
       "mountain": "6"
     },
-    "notes": "Arthur's seat area access"
+    "notes": "Arthur's seat area access",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Scottish%20Parliament.jpg"
   },
 
   "stationMerchistonCrossroads" : {
@@ -140,7 +147,8 @@
       "road": "16",
       "mountain": "0"
     },
-    "notes": ""
+    "notes": "",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Merchiston%20Crossroads.jpg"
   },
 
   "stationRoyalBotanicGarden" : {
@@ -158,7 +166,8 @@
       "road": "30",
       "mountain": "6"
     },
-    "notes": "Peak bike location"
+    "notes": "Peak bike location",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Royal%20Botanic%20Gardens.jpg"
   },
 
   "stationPortobelloBeachNorth" : {
@@ -176,7 +185,8 @@
       "road": "16",
       "mountain": "0"
     },
-    "notes": "Straight line from Princes + Queen Street"
+    "notes": "Straight line from Princes + Queen Street",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Portobello%20Beach%20North.jpg"
   },
 
   "stationPortobelloBeachEast" : {
@@ -194,6 +204,7 @@
       "road": "30",
       "mountain": "6"
     },
-    "notes": "Key cycling path"
+    "notes": "Key cycling path",
+    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Portobello%20Beach%20East.jpg"
   }
 }

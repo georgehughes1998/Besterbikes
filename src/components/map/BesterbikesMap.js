@@ -58,6 +58,7 @@ export class BesterbikesMap extends Component {
                             onClick={this.onMarkerClick}
                             name={station.name}
                             stationDetails={station}
+
                     />
                 )
             })
@@ -112,7 +113,9 @@ export class BesterbikesMap extends Component {
                                 <List>
                                     <List.Item>Mountain: {this.state.activeMarker.stationDetails["capacity"]["mountain"]} </List.Item>
                                     <List.Item>Road: {this.state.activeMarker.stationDetails["capacity"]["road"]} </List.Item>
+
                                 </List>
+                                <img src={this.state.activeMarker.stationDetails["imgurl"]}  alt={'new'} style={{maxWidth:"200px"}}/>
                             </div>
 
                             :
