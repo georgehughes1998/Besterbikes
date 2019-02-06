@@ -114,7 +114,7 @@ export class BesterbikesMap extends Component {
                                     <List.Item>Road: {this.state.activeMarker.stationDetails["capacity"]["road"]} </List.Item>
 
                                 </List>
-                                <img src={this.state.activeMarker.stationDetails["imgurl"]}  alt={'new'} style={{maxWidth:"200px"}}/>
+                                <img src={this.state.activeMarker.stationDetails["url"]}  alt={'new'} style={{maxWidth:"200px"}}/>
                             </div>
 
                             :

@@ -15,7 +15,7 @@
       "mountain": "6"
     },
     "notes": "Student hotspot && Canal route access",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Heriot-Watt%20University.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Heriot-Watt%20University.jpg"
   },
   "stationWaverley": {
     "name": "Waverley Station",
@@ -33,7 +33,7 @@
       "mountain": "0"
     },
     "notes": "Major tourist hotspot && Direct connection to other Bester stations",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Waverley.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Waverley.jpg"
   },
   "stationHaymarket": {
     "name": "Haymarket Station",
@@ -51,7 +51,7 @@
       "mountain": "0"
     },
     "notes": "",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Haymarket.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Haymarket.jpg"
   },
   "stationNationalMuseumOfScotland": {
     "name": "National Museum of Scotland",
@@ -69,7 +69,7 @@
       "mountain": "0"
     },
     "notes": "Busy city area",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/NationalMuseum.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/NationalMuseum.jpg"
   },
   "stationEdinburghZoo": {
     "name": "Edinburgh Zoo",
@@ -87,7 +87,7 @@
       "mountain": "0"
     },
     "notes": "",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Zoo.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Zoo.jpg"
   },
   "stationEdinburghUniversityLibrary": {
     "name": "Edinburgh University Library",
@@ -105,7 +105,7 @@
       "mountain": "0"
     },
     "notes": "Footfall hotspot - large park and green spaces alngside major student hub",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Uni%20Library.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Edinburgh%20Uni%20Library.jpg"
   },
   "stationScottishParliament": {
     "name": "Scottish Parliament",
@@ -123,7 +123,7 @@
       "mountain": "6"
     },
     "notes": "Arthur's seat area access",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Scottish%20Parliament.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Scottish%20Parliament.jpg"
   },
   "stationMerchistonCrossroads": {
     "name": "Merchiston Crossroads",
@@ -141,7 +141,7 @@
       "mountain": "0"
     },
     "notes": "",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Merchiston%20Crossroads.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Merchiston%20Crossroads.jpg"
   },
   "stationRoyalBotanicGarden": {
     "name": "Royal Botanic Garden",
@@ -159,7 +159,7 @@
       "mountain": "6"
     },
     "notes": "Peak bike location",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Royal%20Botanic%20Gardens.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Royal%20Botanic%20Gardens.jpg"
   },
   "stationPortobelloBeachNorth": {
     "name": "Portobello Beach North",
@@ -177,7 +177,7 @@
       "mountain": "0"
     },
     "notes": "Straight line from Princes + Queen Street",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Portobello%20Beach%20North.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Portobello%20Beach%20North.jpg"
   },
   "stationPortobelloBeachEast": {
     "name": "Portobello Beach East",
@@ -195,6 +195,6 @@
       "mountain": "6"
     },
     "notes": "Key cycling path",
-    "imgurl": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Portobello%20Beach%20East.jpg"
+    "url": "http://www2.macs.hw.ac.uk/~nes1/Besterbikes/Stations/Portobello%20Beach%20East.jpg"
   }
 }
