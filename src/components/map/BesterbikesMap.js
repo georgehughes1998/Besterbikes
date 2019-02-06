@@ -38,17 +38,12 @@ export class BesterbikesMap extends Component {
 
     async getMapJSON() {
         const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-        // console.log("MAP JSON RETRIVED");
-        // console.log(stations);
         this.setState({mapJSON: stations})
     }
 
 
     renderMarkers() {
         const stations = this.state.mapJSON;
-
-        // console.log("Rendering markers");
-        // console.log(stations);
 
         if (!(stations === {})) {
             return Object.values(stations).map(station => {
@@ -93,16 +88,11 @@ export class BesterbikesMap extends Component {
 
                 {this.renderMarkers()}
 
-                {/*TODO: Extract correct co-ordinates and place in JSON file*/}
-
-
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                 >
                     <div>
-                        {/*TODO: Try load customComponent as JSX*/}
-                        {/*<CustomMapIcon activeMaker = {this.state.activeMarker}/>*/}
 
                         <Header as='h4'>{this.state.activeMarker.name}</Header>
 
@@ -112,13 +102,15 @@ export class BesterbikesMap extends Component {
                                 <List>
                                     <List.Item>Mountain: {this.state.activeMarker.stationDetails["capacity"]["mountain"]} </List.Item>
                                     <List.Item>Road: {this.state.activeMarker.stationDetails["capacity"]["road"]} </List.Item>
+                                    {/*TODO: Implement book trip link to reservations page*/}
                                     {/*<List.item>*/}
                                     {/*<Link To={"/reserveabike"}>*/}
                                     {/*Book Trip*/}
                                     {/*</Link>*/}
                                     {/*</List.item>*/}
                                 </List>
-                                <img src={this.state.activeMarker.stationDetails["url"]}  alt={'new'} style={{maxWidth:"200px"}}/>
+                                <img src={this.state.activeMarker.stationDetails["url"]} alt={'new'}
+                                     style={{maxWidth: "200px"}}/>
                             </div>
 
                             :

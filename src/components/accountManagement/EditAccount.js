@@ -16,7 +16,7 @@ const EditAccount = () => {
             {/*Sign Up Form*/}
             <AccountForm
                 fields={{
-                    //TODO: Implement so these can be changed
+                    //TODO: Implement so these fields can be changed
                     // Email: {
                     //     name: 'email',
                     //     label: 'Email',

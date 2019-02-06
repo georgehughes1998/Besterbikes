@@ -1,11 +1,11 @@
 import React from 'react'
-import PageContainer from "./PageContainer";
-import {Container} from "semantic-ui-react";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
-import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
+import {Container, Dropdown, Header, Icon, Segment} from "semantic-ui-react";
 
+import PageContainer from "./PageContainer";
+
+
+//TODO: Implement web api NFC features
+//Component to unlock a bike
 export const UnlockBike = () => {
     return (
         <PageContainer>

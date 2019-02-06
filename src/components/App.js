@@ -16,6 +16,7 @@ import MapContainer from "./map/BesterbikesMap";
 import MyTrips from "./customer/MyTrips";
 import {getJSONFromFile} from "../handleJSON";
 import UnlockBike from "./UnlockBike";
+import StationSystemSimulation from "./StationSystemSimulation";
 
 
 //TODO: Add prop types and typescript to app
@@ -95,6 +96,8 @@ class App extends React.Component {
 
                                 {/*Reserving a bike Routes*/}
                                 <Route path="/reservebike" component={ReserveBikeContainer}/>
+                                {/*TODO: Remove station simulation once implemnted properly*/}
+                                <Route path="/stationsim" exact component={StationSystemSimulation}/>
 
                             </Sidebar.Pusher>
 

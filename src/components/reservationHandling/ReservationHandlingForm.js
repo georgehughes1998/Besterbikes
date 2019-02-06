@@ -10,12 +10,6 @@ import ReservationComplete from "./ReservationConfirmation";
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
 class ReservationHandlingForm extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
-
     //Calls firebase to submit details from form and manage any errors
     onSubmit = async (formValues) => {
         //TODO: If successful then Show complete screen with order overview
@@ -35,7 +29,6 @@ class ReservationHandlingForm extends React.Component {
         }
 
     };
-
     //Renders JSX elements for the header of step in the reservation flow
     renderHeader = (header) => {
         return (
@@ -48,7 +41,6 @@ class ReservationHandlingForm extends React.Component {
             </Header>
         )
     };
-
     //Renders Error for individual fields if they're invalid using semantic UI and redux forms
     renderReduxError = ({error, touched}) => {
 
@@ -61,7 +53,6 @@ class ReservationHandlingForm extends React.Component {
             )
         }
     };
-
     //Renders JSX elements for each field in the redux form if they exist
     renderInput = ({input, label, type, meta}) => {
 
@@ -101,7 +92,6 @@ class ReservationHandlingForm extends React.Component {
 
         }
     };
-
     //Renders Redux Form Fields for all the props passed in from the parent component
     renderFields = Object.values(this.props.fields).map((key, index) => {
         return (
@@ -114,37 +104,40 @@ class ReservationHandlingForm extends React.Component {
             />
         )
     });
-
     //Renders JSX buttons for form
     renderButtons = Object.values(this.props.operations).map((key, index) => {
-        switch (key.type) {
-            case "submit":
-                return <Button
-                    key={index}
-                    type={key.type}
-                    className={key.className}
-                    color={key.color}
-                >
-                    {key.text}
-                </Button>;
-            case "button":
-                return <Button
-                    key={index}
-                    onClick={key.link}
-                    type={key.type}
-                    className={key.className}
-                    color={key.color}
-                >
-                    {key.text}
-                </Button>;
+            switch (key.type) {
+                case "submit":
+                    return <Button
+                        key={index}
+                        type={key.type}
+                        className={key.className}
+                        color={key.color}
+                    >
+                        {key.text}
+                    </Button>;
+                case "button":
+                    return <Button
+                        key={index}
+                        onClick={key.link}
+                        type={key.type}
+                        className={key.className}
+                        color={key.color}
+                    >
+                        {key.text}
+                    </Button>;
 
-            default:
-                return null;
+                default:
+                    return null;
+            }
+
         }
-
-    }
-
     );
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
     //Renders main body of an reservationHandlingForm
     render() {
@@ -162,7 +155,7 @@ class ReservationHandlingForm extends React.Component {
                             {this.renderButtons}
                         </Container>
 
-                        {this.state.success?<ReservationComplete/>:null}
+                        {this.state.success ? <ReservationComplete/> : null}
 
                     </Form>
                 </Segment>

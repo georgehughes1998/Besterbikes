@@ -1,7 +1,6 @@
 import * as firebase from "firebase";
 
 
-
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
 
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station, "road");
@@ -86,7 +85,9 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
             return bikes['numberOfAvailableBikes'];
 
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 
 };
 
@@ -104,8 +105,12 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
     const promise = thisStationDocument.update(bikesObject);
 
     return promise
-        .then(() => {return "success"})
-        .catch(err => {return err});
+        .then(() => {
+            return "success"
+        })
+        .catch(err => {
+            return err
+        });
 
 };
 
@@ -136,10 +141,16 @@ export const appendUserReservationsArray = async (reservationReferences) => {
             const promise = currentUserDocument.update({reservationsArray: reservationsArray});
 
             return promise
-                .then(() => {return "success"})
-                .catch(err => {return err});
+                .then(() => {
+                    return "success"
+                })
+                .catch(err => {
+                    return err
+                });
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
 
 
@@ -154,11 +165,13 @@ export const makeSingleReservation = async (reservationsCollection, reservationD
             console.log("Single Reservation of " + bikeType + " bike Added!");
             return ref.id;
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
 
 
-export const getTrips = async (maxNumberOfTrips=10) => {
+export const getTrips = async (maxNumberOfTrips = 10) => {
 
     //This ensures that all trips that should be active will be marked as active.
     await updateTrips();
@@ -203,7 +216,9 @@ export const getTrips = async (maxNumberOfTrips=10) => {
 
             return fullReservationsCollection;
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
 
 
@@ -214,10 +229,13 @@ export const getReservation = async (reservationID) => {
     const reservationDocument = reservationsCollection.doc(reservationID);
 
     return reservationDocument.get()
-        .then(doc => {return doc.data();})
-        .catch(err => {return err});
+        .then(doc => {
+            return doc.data();
+        })
+        .catch(err => {
+            return err
+        });
 };
-
 
 
 export const cancelReservation = async (reservationID) => {
@@ -241,18 +259,24 @@ export const cancelReservation = async (reservationID) => {
                 .then(() => {
 
                     return reservationDocument.update({status: "cancelled"})
-                        .then(() => {return "success"})
-                        .catch(err => {return err})
+                        .then(() => {
+                            return "success"
+                        })
+                        .catch(err => {
+                            return err
+                        })
                 })
-                .catch(err => {return err});
+                .catch(err => {
+                    return err
+                });
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
 
 
-
-export const updateTrips = async () =>
-{
+export const updateTrips = async () => {
     const db = firebase.firestore();
 
     const auth = firebase.auth();
@@ -260,7 +284,7 @@ export const updateTrips = async () =>
 
     const reservationsCollection = db.collection('reservations');
 
-    const query = reservationsCollection.where('status','==','inactive');
+    const query = reservationsCollection.where('status', '==', 'inactive');
 
     return query.get()
         .then(async queryDoc => {
@@ -314,13 +338,10 @@ export const updateTrips = async () =>
 
             });
 
-        }).catch(err => {return err});
+        }).catch(err => {
+            return err
+        });
 };
-
-
-
-
-
 
 
 // export const getNestedPromise = async (promiseFunction, args, counter, max) => {

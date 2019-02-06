@@ -1,10 +1,12 @@
 import React from 'react'
+import {connect} from "react-redux";
 import {Dropdown} from "semantic-ui-react";
+
 import {loadStations} from "../redux/actions";
-import connect from "react-redux/es/connect/connect";
 
+//TODO: Add more detail to dropdown
+//Component that loads a dropdown box with all station details
 const StationDropdown = (props) => {
-
 
     const createDropdownObject = () => {
 

@@ -26,7 +26,8 @@ export const getBikesAt = async (stationID) => {
             for (let b in roadBikesArray) {
                 const currentBike = roadBikesArray[b];
 
-                bikesArray['road'][currentBike] =  await getBike(currentBike);;
+                bikesArray['road'][currentBike] = await getBike(currentBike);
+                ;
             }
 
             for (let b in mountainBikesArray) {
@@ -49,7 +50,8 @@ export const getBike = async (bikeID) => {
     return bikeDocument.get()
         .then(doc => {
 
-            return doc.data();;
+            return doc.data();
+            ;
 
         })
         .catch(err => {

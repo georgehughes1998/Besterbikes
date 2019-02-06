@@ -1,21 +1,29 @@
 import React from 'react'
-import {Grid, Header, Icon, Segment} from "semantic-ui-react";
-import {getUser} from "../../firebase/authentication";
-import {cancelReservation, getTrips} from "../../firebase/reservations";
+import {Grid, Header, Icon, Image, Segment} from "semantic-ui-react";
 import {SubmissionError} from "redux-form";
-import connect from "react-redux/es/connect/connect";
+
+import {connect} from "react-redux";
 import {loadStations, loadTrips} from "../../redux/actions";
 import PageContainer from "../PageContainer";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
+import {getUser} from "../../firebase/authentication";
+import {cancelReservation, getTrips} from "../../firebase/reservations";
 
 
 //TODO: Implement loader
-//TODO: Implement cancel a trip
 //TODO: Show google maps on active trips
-//TODO: Review columns and mobile compatability
-//TODO: Complete loading in trips for all reservation types
+//TODO: Review columns and desktop/mobile compatability
 //TODO: Display cancelled image
+//TODO: Make cancel icon a button
+//TODO: Render 5 trips at a time
 class MyTrips extends React.Component {
+
+    //Loads trips if user logged in
+    async componentDidMount() {
+        const user = await this.authenticateUser();
+        if (user) {
+            this.retrieveFirebaseTrips();
+        }
+    }
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = () => {
@@ -26,6 +34,8 @@ class MyTrips extends React.Component {
                 return user
             });
     };
+
+    //Cancels a trip using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {
         return cancelReservation(tripId)
             .then((obj) => {
@@ -39,6 +49,8 @@ class MyTrips extends React.Component {
                 })
             })
     };
+
+    //Function to handle click of an icon depending on it's functionality
     handleIconClick = (status, tripId) => {
         console.log(status);
 
@@ -50,8 +62,21 @@ class MyTrips extends React.Component {
                 return;
         }
     };
-    renderTrips = () => {
 
+    //Communicates with firebase to load in all trips
+    retrieveFirebaseTrips = async () => {
+        const obj = await getTrips();
+        if (obj) {
+            this.props.loadTrips(obj);
+        } else {
+            throw new SubmissionError({
+                _error: obj.message
+            });
+        }
+    };
+
+    //Displays all trips by mapping over returned trips
+    renderTrips = () => {
         if (this.props.trips) {
             return Object.values(this.props.trips).map((key, index) => {
                 return (
@@ -63,6 +88,8 @@ class MyTrips extends React.Component {
             })
         }
     };
+
+    //Render single trip with provided paramters
     renderTrip = (color, iconName, iconColor, status, headerContent, headerSub, tripId, image) => {
         return (
             //TODO: Make this into own prop
@@ -86,28 +113,19 @@ class MyTrips extends React.Component {
                     </Grid.Row>
 
                     <Grid.Row>
-                    <Grid.Column>
-                    <Segment>
-                    {/*<BesterbikesMap/>*/}
-                        {console.log(image)}
-                        <Image src={image}/>
-                    </Segment>
-                    </Grid.Column>
+                        <Grid.Column>
+                            <Segment>
+                                {/*<BesterbikesMap/>*/}
+                                {console.log(image)}
+                                <Image src={image}/>
+                            </Segment>
+                        </Grid.Column>
                     </Grid.Row>
                 </Grid>
             </Segment>
         )
     };
-    retrieveFirebaseTrips = async () => {
-        const obj = await getTrips();
-        if (obj) {
-            this.props.loadTrips(obj);
-        } else {
-            throw new SubmissionError({
-                _error: obj.message
-            });
-        }
-    };
+
     // const getTripTypeValues = Object.values(TRIPS).map((key, index) => {
     getTripTypeValues = (trip, index) => {
 
@@ -117,7 +135,6 @@ class MyTrips extends React.Component {
         const stationName = this.props.stations[stationKey]["name"];
         const startTime = trip["start"]["time"]["time"];
         const image = this.props.stations[stationKey]["url"];
-        console.log(image);
 
         let keys = Object.keys(this.props.trips);
 
@@ -184,15 +201,6 @@ class MyTrips extends React.Component {
         }
     };
 
-    async componentDidMount() {
-
-        const user = await this.authenticateUser();
-
-        if (user) {
-            this.retrieveFirebaseTrips();
-        }
-    }
-
     render() {
 
         // if (this.props.trips === {}) {
@@ -212,14 +220,9 @@ class MyTrips extends React.Component {
                 <div>
                     {this.renderTrips()}
                 </div>
-
-                {/*<Dropdown text='Filter Posts' icon='filter' floating labeled fluid button className='icon'>*/}
-                {/*<Dropdown.Menu>*/}
-                {/*<Input icon='search' iconPosition='left' className='search'/>*/}
-                {/*</Dropdown.Menu>*/}
-                {/*</Dropdown>*/}
-
+                {/*TODO: Implement filter*/}
             </PageContainer>
+
         )
     }
 }
