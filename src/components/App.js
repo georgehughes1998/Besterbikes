@@ -15,6 +15,7 @@ import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
 import MapContainer from "./map/BesterbikesMap";
 import MyTrips from "./customer/MyTrips";
 import {getJSONFromFile} from "../handleJSON";
+import UnlockBike from "./UnlockBike";
 
 
 //TODO: Add prop types and typescript to app
@@ -84,6 +85,7 @@ class App extends React.Component {
                                 {/*TODO: Refactor to use JSON*/}
                                 <Route path="/" exact component={MainMenu}/>
                                 <Route path="/map" exact component={MapContainer}/>
+                                <Route path="/unlockbike" exact component={UnlockBike}/>
 
                                 {/*Customer Routes*/}
                                 <Route path="/mytrips" exact component={MyTrips}/>

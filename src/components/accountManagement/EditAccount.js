@@ -52,6 +52,7 @@ const EditAccount = () => {
 
             />
 
+            {/*TODO: Fix so signs out and naviagtes to home page*/}
             <SignOut/>
 
         </PageContainer>

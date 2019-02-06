@@ -66,15 +66,15 @@ export class BesterbikesMap extends Component {
     }
 
     render() {
-        if (!this.props.google) {
-            return (
-                <Segment>
-                    <Dimmer active>
-                        <Loader size='large'>Loading</Loader>
-                    </Dimmer>
-                </Segment>
-            );
-        }
+        // if (!this.props.stations) {
+        //     return (
+        //         <Segment>
+        //             <Dimmer active>
+        //                 <Loader size='large'>Loading</Loader>
+        //             </Dimmer>
+        //         </Segment>
+        //     );
+        // }
 
         return (
 

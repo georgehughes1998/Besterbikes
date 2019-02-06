@@ -1,10 +1,11 @@
 import React from 'react'
-import {Dropdown, Input, Placeholder, Container, Icon, Segment, Header, Grid} from "semantic-ui-react";
+import {Dropdown, Input, Placeholder, Container, Icon, Segment, Header, Grid, Dimmer, Loader} from "semantic-ui-react";
 import {getUser, signIn} from "../../firebase/authentication";
 import {cancelReservation, getTrips, makeReservations} from "../../firebase/reservations";
 import {SubmissionError} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips, retrieveTrips} from "../../redux/actions";
+import PageContainer from "../PageContainer";
 
 
 //TODO: Implement loader
@@ -74,6 +75,7 @@ class MyTrips extends React.Component{
 
     renderTrip = (color, iconName, iconColor, status, headerContent, headerSub, tripId) => {
         return(
+            //TODO: Make this into own prop
             <Segment color={color} fluid>
                 <Grid>
                     <Grid.Row>
@@ -83,9 +85,7 @@ class MyTrips extends React.Component{
                                 content={headerContent}
                                 subheader = {headerSub}
                             />
-                        </Grid.Column>
 
-                        <Grid.Column width={2} verticalAlign='middle'>
                             <Header as="h4" color={color}>{status}</Header>
                         </Grid.Column>
 
@@ -94,16 +94,16 @@ class MyTrips extends React.Component{
                         </Grid.Column>
                     </Grid.Row>
 
-                    <Grid.Row>
-                        <Grid.Column>
-                            <Segment>
-                                {/*<BesterbikesMap/>*/}
-                                <Placeholder fluid>
-                                    <Placeholder.Image />
-                                </Placeholder>
-                            </Segment>
-                        </Grid.Column>
-                    </Grid.Row>
+                    {/*<Grid.Row>*/}
+                        {/*<Grid.Column>*/}
+                            {/*<Segment>*/}
+                                {/*/!*<BesterbikesMap/>*!/*/}
+                                {/*<Placeholder fluid>*/}
+                                    {/*<Placeholder.Image />*/}
+                                {/*</Placeholder>*/}
+                            {/*</Segment>*/}
+                        {/*</Grid.Column>*/}
+                    {/*</Grid.Row>*/}
                 </Grid>
             </Segment>
         )
@@ -191,20 +191,32 @@ class MyTrips extends React.Component{
 
 
     render(){
-        return (
-            <div>
-                <Dropdown text='Filter Posts' icon='filter' floating labeled fluid button className='icon'>
-                    <Dropdown.Menu>
-                        <Input icon='search' iconPosition='left' className='search'/>
-                    </Dropdown.Menu>
-                </Dropdown>
 
+        // if (this.props.trips === {}) {
+        //     {console.log("loaidng")}
+        //     return (
+        //         <Segment>
+        //             {console.log("loaidng")}
+        //             <Dimmer active>
+        //                 <Loader size='large'>Loading</Loader>
+        //             </Dimmer>
+        //         </Segment>
+        //     );
+        // }
+
+        return (
+            <PageContainer>
                 <div>
                     {this.renderTrips()}
                 </div>
 
+                {/*<Dropdown text='Filter Posts' icon='filter' floating labeled fluid button className='icon'>*/}
+                    {/*<Dropdown.Menu>*/}
+                        {/*<Input icon='search' iconPosition='left' className='search'/>*/}
+                    {/*</Dropdown.Menu>*/}
+                {/*</Dropdown>*/}
 
-            </div>
+            </PageContainer>
         )
     }
 };

@@ -24,48 +24,62 @@ class MainMenu extends React.Component {
         return (
             <Container>
                 <br/>
+                <br/>
+
                 <Container textAlign='center'>
-                    <Header as="h1">
+                    <Header as="h1" color="blue">
                         Welcome Back
                     </Header>
                 </Container>
 
-                <Segment placeholder>
-                    <Grid doubling columns={4}>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+
+                <Container>
+                    <Grid stackable columns={4}>
                         <Grid.Column>
                             <Link to="/map">
                                 <Container textAlign='center'>
-                                    <Icon name="map" size="massive" center color="blue"/>
-                                    <Header as="h2" textAlign='center'>Map</Header>
+                                    <Icon name="map" size="big" center color="black"/>
+                                    <Header as="h3" textAlign='center' color="blue">Map</Header>
                                 </Container>
                             </Link>
                         </Grid.Column>
+
                         <Grid.Column>
                             <Link to="/reservebike">
                                 <Container textAlign='center'>
-                                    <Icon name="calendar" size="massive" center color="blue"/>
-                                    <Header as="h2" textAlign='center'>Reserve</Header>
+                                    <Icon name="calendar" size="big" center color="black"/>
+                                    <Header as="h3" textAlign='center' color="blue">Reserve</Header>
                                 </Container>
                             </Link>
                         </Grid.Column>
+
                         <Grid.Column>
                             <Link to="/unlock">
                                 <Container textAlign='center'>
-                                    <Icon name="unlock" size="massive" center color="blue"/>
-                                    <Header as="h2" textAlign='center'>Unlock</Header>
+                                    <Icon name="unlock" size="big" center color="black"/>
+                                    <Header as="h3" textAlign='center' color="blue">Unlock</Header>
                                 </Container>
                             </Link>
                         </Grid.Column>
+
                         <Grid.Column>
                             <Link to="/mytrips">
                                 <Container textAlign='center'>
-                                    <Icon name="map signs" size="massive" center color="blue"/>
-                                    <Header as="h2" textAlign='center'>My Trips</Header>
+                                    <Icon name="map signs" size="big" center color="black"/>
+                                    <Header as="h3" textAlign='center' color="blue">My Trips</Header>
                                 </Container>
                             </Link>
                         </Grid.Column>
                     </Grid>
-                </Segment>
+                </Container>
+
+                <br/>
+                <br/>
+                <br/>
 
                 <SignOut/>
             </Container>

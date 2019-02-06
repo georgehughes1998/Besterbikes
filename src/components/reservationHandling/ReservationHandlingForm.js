@@ -17,9 +17,7 @@ class ReservationHandlingForm extends React.Component {
         if (this.props.header.title === "Payment") {
             return makeReservations(formValues)
                 .then((obj) => {
-                    throw new SubmissionError({
-                        _success: obj
-                    })
+                    window.alert("Success")
                 })
                 .catch((err) => {
                     console.log(err);
