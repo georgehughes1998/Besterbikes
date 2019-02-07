@@ -1,7 +1,6 @@
 import * as firebase from "firebase";
 
 
-
 export const unlockBike = async (reservationID) => {
     //Unlocks a bike at the given station and the given reservation
 

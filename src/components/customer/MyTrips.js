@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, Header, Icon, Image, Segment} from "semantic-ui-react";
+import {Grid, Header, Icon, Segment} from "semantic-ui-react";
 import {SubmissionError} from "redux-form";
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
@@ -18,23 +18,20 @@ import {cancelReservation, getTrips} from "../../firebase/reservations";
 //TODO: Render 5 trips at a time
 class MyTrips extends React.Component {
 
-    //Loads trips if user logged in
-    async componentDidMount() {
-        const user = await this.authenticateUser();
-        if (user) {
-            this.retrieveFirebaseTrips();
-        }
-    }
-
     //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = () => {
-        return getUser()
-            .then(user => {
-                if (user === null)
-                    this.props.history.push("signin");
-                return user
-            });
+    authenticateUser = async () => {
+        const user = await getUser();
+        if (user === null)
+            this.props.history.push("signin");
+        return user
     };
+
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) =>  {
+                if(user)
+                    this.retrieveFirebaseTrips();
+            })};
 
     //Cancels a trip using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {
@@ -57,6 +54,9 @@ class MyTrips extends React.Component {
 
         switch (status) {
             case "Ready to unlock":
+                this.handleCancelTrip(tripId);
+                return;
+            case "Reserved":
                 this.handleCancelTrip(tripId);
                 return;
             default:
@@ -101,7 +101,7 @@ class MyTrips extends React.Component {
                             <Header
                                 as='h1'
                                 content={headerContent}
-                                subheader={headerSub}
+                                subheader={`Trip ID: ${tripId}`}
                             />
 
                             <Header as="h4" color={color}>{status}</Header>
@@ -115,11 +115,11 @@ class MyTrips extends React.Component {
 
                     <Grid.Row>
                         <Grid.Column>
-                            <Segment>
-                                {/*<BesterbikesMap/>*/}
-                                {console.log(image)}
-                                <Image src={image}/>
-                            </Segment>
+                            {/*<Segment>*/}
+                                {/*/!*<BesterbikesMap/>*!/*/}
+                                {/*{console.log(image)}*/}
+                                {/*<Image src={image}/>*/}
+                            {/*</Segment>*/}
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
@@ -147,7 +147,8 @@ class MyTrips extends React.Component {
                     "red",
                     "Reserved",
                     stationName,
-                    "Available from 16:00 to 16:30",
+                    // `Bike available from ${startTime}`,
+                    "",
                     keys[index],
                     image
                 );
@@ -158,7 +159,8 @@ class MyTrips extends React.Component {
                     "red",
                     "Ready to unlock",
                     stationName,
-                    `Bike available until ${startTime}`,
+                    // `Bike available until ${startTime}`,
+                    "",
                     keys[index],
                     image
                 );
@@ -172,6 +174,7 @@ class MyTrips extends React.Component {
                     //TODO: Implement current duration calculator
                     // "Current duration: 4hrs 3mins"
                     "",
+                    keys[index],
                     image
                 );
 
@@ -185,6 +188,7 @@ class MyTrips extends React.Component {
                     //TODO: Implement end station and total duration calculator
                     // "To Edinburgh University Library lasting 4hrs 3mins",
                     "",
+                    keys[index],
                     image
                 );
             case "cancelled":
@@ -195,6 +199,7 @@ class MyTrips extends React.Component {
                     "Cancelled",
                     stationName,
                     "",
+                    keys[index],
                     image
                 );
             default:

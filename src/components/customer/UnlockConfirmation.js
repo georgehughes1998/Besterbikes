@@ -18,26 +18,24 @@ class ReservationComplete extends React.Component{
     render(){
         return(
             <Modal
-
                 open={this.state.modalOpen}
                 onClose={this.handleClose}
                 basic
                 size='small'
             >
-                {console.log(this.props._reduxForm.values)}
-                <Header icon='calendar' content='Reservation Complete' />
+                <Header icon='lock open' content='Bike Unlocked' />
                 <Modal.Content>
                     {/*TODO: Display station name*/}
                     <h3>
-                        {`You're all booked for your trip on
-                        ${this.props._reduxForm.values.startDate} at
-                        ${this.props._reduxForm.values.startTime} starting from
-                        ${this.props._reduxForm.values.station}`}
+                        Enjoy the ride!
                     </h3>
+                    <Header.Subheader>
+                        {`Your bike ID reference number is ${this.props.activeBikeID}`}
+                    </Header.Subheader>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='green' onClick={() => this.props.history.push("/mytrips")} inverted>
-                        <Icon name='checkmark' /> View my trips
+                    <Button color='green' onClick={() => this.props.history.push("/")} inverted>
+                        <Icon name='checkmark' /> Return to main menu
                     </Button>
                 </Modal.Actions>
             </Modal>

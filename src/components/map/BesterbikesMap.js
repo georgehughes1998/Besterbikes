@@ -3,12 +3,36 @@ import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import {Header, List} from "semantic-ui-react"
 
 import {getJSONFromFile} from '../../handleJSON.js'
+import {getUser} from "../../firebase/authentication";
+import {withRouter} from "react-router";
 
 //TODO: Implement loader correctly
 //TODO: Render markers red or green bikes depending on spaces available
 //TODO: List of stations displayed beside bike
 
 export class BesterbikesMap extends Component {
+
+    //Loads trips if user logged in
+    async componentDidMount() {
+        const user = await this.authenticateUser();
+        if (user) {
+            //TODO: Move to Redux
+            if (!(this.state.mapJSON === {})) {
+                this.getMapJSON()
+            }
+        }
+    }
+
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = () => {
+        return getUser()
+            .then(user => {
+                if (user === null)
+                    this.props.history.push("signin");
+                return user
+            });
+    };
+
 
     constructor(props) {
         super(props);
@@ -29,12 +53,6 @@ export class BesterbikesMap extends Component {
         });
     }
 
-    componentDidMount() {
-        //TODO: Move to Redux
-        if (!(this.state.mapJSON === {})) {
-            this.getMapJSON()
-        }
-    }
 
     async getMapJSON() {
         const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
@@ -127,7 +145,7 @@ export class BesterbikesMap extends Component {
     }
 }
 
-export default GoogleApiWrapper({
+export default withRouter(GoogleApiWrapper({
     apiKey: "AIzaSyB_13gY5K5zg1RoAEzwSxHzPIyBv0Atjcc",
     v: "3"
-})(BesterbikesMap);
+})(BesterbikesMap));
