@@ -77,6 +77,8 @@ const addBike = async (stationID,bikeID,bikeType) =>
     const stationDoc = await stationDocument.get();
     const stationData = stationDoc.data();
 
+    console.log("Attempting to push bike to station array...");
+
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
     bikesArray.push(bikeID);
 
