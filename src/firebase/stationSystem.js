@@ -28,9 +28,6 @@ export const unlockBike = async (reservationID) => {
     await reservationDocument.update('status','unlocked');
     await reservationDocument.update('bike',bikeID);
 
-
-    await removeBike(stationID,bikeID,bikeType);
-
     await bikeDocument.update('status','unlocked');
     await bikeDocument.update('reservation',reservationID);
 
@@ -84,7 +81,7 @@ const removeBike = async (stationID,bikeID,bikeType) =>
         return bikeID !== tempBikeID
     });
 
-    return await stationDocument.update('bikes.bikeType.bikesArray',newBikesArray);
+    return await stationDocument.update(`bikes.${bikeType}.bikesArray`,newBikesArray);
 
 };
 
@@ -121,8 +118,11 @@ const selectBike = async (stationID, bikeType) =>
     const stationData = stationDoc.data();
 
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
-    const bikeID = bikesArray[0];
+    const bikeID = bikesArray.pop();
 
+    console.log(bikeID);
+
+    await removeBike(stationID,bikeID,bikeType);
 
     return bikeID;
 

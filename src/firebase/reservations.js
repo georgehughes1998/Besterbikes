@@ -303,13 +303,10 @@ export const updateTrips = async () => {
 
                     const singleDocDateDate = Date.parse(singleDocDate+" "+singleDocTime);
 
-                    console.log(singleDocDateDate);
-                    console.log(time);
-
 
                     if (singleDocDateDate <= time) {
                         const reservationDocument = reservationsCollection.doc(singleDocID);
-                        console.log("Changing status to active");
+                        // console.log("Changing status to active");
 
                         await reservationDocument.update('status', 'active');
                     }
