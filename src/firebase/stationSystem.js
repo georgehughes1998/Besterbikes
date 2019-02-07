@@ -45,7 +45,7 @@ export const validateReservation = (reservationData) =>
     return true;
 };
 
-export const removeBike = async (stationID,bikeID,bikeType) =>
+const removeBike = async (stationID,bikeID,bikeType) =>
 {
     //Used by unlockBike to remove a bike from the station bike array
     const db = firebase.firestore();
@@ -66,8 +66,27 @@ export const removeBike = async (stationID,bikeID,bikeType) =>
 
 };
 
+const addBike = async (stationID,bikeID,bikeType) =>
+{
+    //Used by return bike to add the given bike to the appropriate bike array of the given station
+    const db = firebase.firestore();
 
-export const selectBike = async (stationID, bikeType) => {
+    const stationsCollection = db.collection('stations');
+    const stationDocument = stationsCollection.doc(stationID);
+
+    const stationDoc = await stationDocument.get();
+    const stationData = stationDoc.data();
+
+    const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
+    bikesArray.push(bikeID);
+
+    return await stationDocument.update('bikes.bikeType.bikesArray',bikesArray);
+
+};
+
+
+const selectBike = async (stationID, bikeType) =>
+{
     //Used by unlockBike to select a bike and get its bikeID from the given station
     const db = firebase.firestore();
 
@@ -91,38 +110,29 @@ export const returnBike = async (bikeID, stationID) => {
     const db = firebase.firestore();
 
     const bikesCollection = db.collection('bikes');
-    const stationsCollection = db.collection('stations');
     const reservationsCollection = db.collection('reservations');
 
-
     const bikeDocument = bikesCollection.doc(bikeID);
-    const stationDocument = stationsCollection.doc(stationID);
 
     const bikeDoc = await bikeDocument.get();
     const bikeData = bikeDoc.data();
 
+    const bikeType = bikeData['bikeType'];
     const reservationID = bikeData['reservation'];
+
     const reservationDocument = reservationsCollection.doc(reservationID);
 
     await reservationDocument.update('status','complete');
     await reservationDocument.update('end.time.date',getCurrentDateString());
     await reservationDocument.update('end.time.time',getCurrentTimeString());
+    await reservationDocument.update('end.station',stationID);
 
     await bikeDocument.update('reservation','');
-    //TODO clear the reservation associated with the bike
+    await bikeDocument.update('status','available');
 
-    //TODO set reservation end date, time and station
+    await addBike(stationID,bikeID,bikeType);
 
-    //TODO set bike status to available
-
-    //TODO get bike type
-    //TODO add bike to station bike array
-
-
-
-
-    //TODO return the given bike to the given station and mark the reservation as complete
-    return 0;
+    return "success";
 };
 
 
