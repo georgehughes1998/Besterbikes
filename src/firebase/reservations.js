@@ -291,36 +291,41 @@ export const updateTrips = async () => {
 
                     const time = new Date();
 
-                    const currentDate = time.getFullYear() + "-" +
-                        ("0" + time.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
-                        + "-" +
-                        ("0" + time.getDay()).slice(-2);
+                    // const currentDate = time.getFullYear() + "-" +
+                    //     ("0" + time.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
+                    //     + "-" +
+                    //     ("0" + time.getDay()).slice(-2);
+                    //
+                    // const currentTime =
+                    //     ("0" + time.getHours()).slice(-2)
+                    //     + ":" +
+                    //     ("0" + time.getMinutes()).slice(-2);
 
-                    const currentTime =
-                        ("0" + time.getHours()).slice(-2)
-                        + ":" +
-                        ("0" + time.getMinutes()).slice(-2);
+                    const singleDocDateDate = Date.parse(singleDocDate+" "+singleDocTime);
+
+                    console.log(singleDocDateDate);
+                    console.log(time);
 
 
-                    if ((singleDocDate <= currentDate) && (singleDocTime >= currentTime)) {
+                    if (singleDocDateDate <= time) {
                         const reservationDocument = reservationsCollection.doc(singleDocID);
-                        // console.log("Changing status to active because " + singleDocDate + " " + singleDocTime + " >= " + currentDate + " " + currentTime);
+                        console.log("Changing status to active");
 
                         await reservationDocument.update('status', 'active');
                     }
 
 
-                    if (singleDocData < currentDate) {
-                        console.log(singleDocDate + " > " + currentDate);
-                    } else {
-                        console.log(singleDocDate + " <= " + currentDate);
-                    }
-
-                    if (singleDocTime > currentTime) {
-                        console.log(singleDocTime + " > " + currentTime);
-                    } else {
-                        console.log(singleDocTime + " <= " + currentTime);
-                    }
+                    // if (singleDocData > currentDate) {
+                    //     console.log(singleDocDate + " > " + currentDate);
+                    // } else {
+                    //     console.log(singleDocDate + " <= " + currentDate);
+                    // }
+                    //
+                    // if (singleDocTime > currentTime) {
+                    //     console.log(singleDocTime + " > " + currentTime);
+                    // } else {
+                    //     console.log(singleDocTime + " <= " + currentTime);
+                    // }
 
                 }
 

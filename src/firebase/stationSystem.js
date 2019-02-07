@@ -21,7 +21,7 @@ export const unlockBike = async (reservationID) => {
     const bikeType = reservationData['bikeType'];
     const stationID = reservationData['start']['station'];
 
-    const bikeID = await selectBike(bikeType);
+    const bikeID = await selectBike(stationID,bikeType);
     const bikesCollection = db.collection('bikes');
     const bikeDocument = bikesCollection.doc(bikeID);
 
@@ -29,7 +29,6 @@ export const unlockBike = async (reservationID) => {
     // reservationObject[`start.station`] = stationID;
 
     await reservationDocument.update('status','unlocked');
-    await reservationDocument.update('start.station',stationID);
     await reservationDocument.update('bike',bikeID);
 
 
@@ -38,7 +37,7 @@ export const unlockBike = async (reservationID) => {
     await bikeDocument.update('status','unlocked');
     await bikeDocument.update('reservation',reservationID);
 
-
+    console.log("Success");
     return "success";
 };
 
@@ -46,7 +45,6 @@ export const unlockBike = async (reservationID) => {
 export const validateReservation = (reservationData) =>
 {
     //Used by unlockBike to validate a reservation
-    console.log(reservationData);
     return true;
 };
 
@@ -55,7 +53,7 @@ export const removeBike = async (stationID,bikeID,bikeType) =>
     //Used by unlockBike to remove a bike from the station bike array
     const db = firebase.firestore();
 
-    const stationsCollection = db.collection('station');
+    const stationsCollection = db.collection('stations');
     const stationDocument = stationsCollection.doc(stationID);
 
     const stationDoc = await stationDocument.get();
@@ -76,7 +74,7 @@ export const selectBike = async (stationID, bikeType) => {
     //Used by unlockBike to select a bike and get its bikeID from the given station
     const db = firebase.firestore();
 
-    const stationsCollection = db.collection('station');
+    const stationsCollection = db.collection('stations');
     const stationDocument = stationsCollection.doc(stationID);
 
     const stationDoc = await stationDocument.get();
@@ -85,12 +83,27 @@ export const selectBike = async (stationID, bikeType) => {
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
     const bikeID = bikesArray[0];
 
+
     return bikeID;
 
 };
 
 export const returnBike = async (bikeID, stationID) => {
     //Return the given bike to the given station
+
+    //TODO get the reservation associated with the bike
+    //TODO clear the reservation associated with the bike
+
+    //TODO set reservation status to complete
+
+    //TODO set bike status to available
+
+    //TODO get bike type
+    //TODO add bike to station bike array
+
+
+
+
     //TODO return the given bike to the given station and mark the reservation as complete
     return 0;
 };
