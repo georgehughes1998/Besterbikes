@@ -2,48 +2,134 @@ import React from 'react'
 import {Container, Dropdown, Header, Icon, Segment} from "semantic-ui-react";
 
 import PageContainer from "./PageContainer";
+import {getUser} from "../firebase/authentication";
+import connect from "react-redux/es/connect/connect";
+import {loadStations, loadTrips} from "../redux/actions";
+import {getTrips} from "../firebase/reservations";
+import {unlockBike} from "../firebase/stationSystem";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 
 
 //TODO: Implement web api NFC features
 //Component to unlock a bike
-export const UnlockBike = () => {
-    return (
-        <PageContainer>
-            <Container textAlign='center'>
+export class UnlockBike extends React.Component {
 
-                <br/>
-                <br/>
-                <Icon name="wifi" size="massive"/>
+    constructor() {
+        super();
+        this.state = {
+            unlockTrip: ""
+        };
+    }
 
-                <Header as="h1">
-                    Unlock Bike
-                </Header>
 
-                <Header.Subheader>
-                    Place your mobile device against the reader at one of our bike stands.
-                </Header.Subheader>
 
-                <br/>
+    async componentDidMount() {
+        await this.authenticateUser();
+        await this.retrieveFirebaseTrips();
+        console.log(this.props.trips)
+    }
 
-                {/*<Icon name="mobile alternate" size="huge"/>*/}
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = () => {
+        return getUser()
+            .then(user => {
+                if (user === null)
+                    this.props.history.push("signin");
+                return user
+            });
+    };
 
-                <Header.Subheader>
-                    Alternatively, select your trip below and enter the displayed code
-                </Header.Subheader>
+    retrieveFirebaseTrips = async () => {
+        const obj = await getTrips();
+        if (obj) {
+            this.props.loadTrips(obj);
+        } else {
 
-                <br/>
+        }
+    };
 
-                <Dropdown fluid selection options={[{key: "HDKW8273HD", value: "HDKW8273HD", text: "HDKW8273HD"}]}/>
+    renderTrips = () => {
+        let DropdownArray = [];
 
-                <br/>
+        if (this.props.trips){
+            let keys = Object.keys(this.props.trips);
 
-                <Segment>
-                    <Header as="h1">HDKW8273HD</Header>
-                </Segment>
+            Object.values(this.props.trips).map((key, index) => {
+                DropdownArray.push({key: keys[index], value: keys[index], text: keys[index]});
+                return DropdownArray;
+            });
 
-            </Container>
-        </PageContainer>
-    )
+            return DropdownArray;
+        }
+    };
+
+    handleUnlock = async () => {
+        console.log(this.state);
+        unlockBike(this.state.unlockTrip)
+            .then((obj) => {
+                console.log(obj)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    };
+
+    render(){
+        return (
+            <PageContainer>
+                <Container textAlign='center'>
+
+                    <br/>
+                    <br/>
+                    <Icon name="wifi" size="massive"/>
+
+                    <Header as="h1">
+                        Unlock Bike
+                    </Header>
+
+                    <Header.Subheader>
+                        Place your mobile device against the reader at one of our bike stands.
+                    </Header.Subheader>
+
+                    <br/>
+
+                    {/*<Icon name="mobile alternate" size="huge"/>*/}
+
+                    <Header.Subheader>
+                        Alternatively, select your trip below and enter the displayed code
+                    </Header.Subheader>
+
+                    <br/>
+
+                    <Dropdown
+                        fluid
+                        selection
+                        options={this.renderTrips()}
+                        // value={ this.state.unlockTrip }
+                        onChange={(param, data) => this.setState({unlockTrip: data.value}) }
+                        name="unlockTrip"
+                    />
+
+                    <br/>
+
+                    <Button onClick = {() => this.handleUnlock()}>
+                        <Segment>
+                            <Header as="h1">{this.state.unlockTrip}</Header>
+                        </Segment>
+                    </Button>
+
+
+                </Container>
+            </PageContainer>
+        )
+    }
 };
 
-export default UnlockBike
+const mapStateToProps = (state) => {
+    return {
+        trips: state.JSON.trips,
+        stations: state.JSON.stations
+    }
+};
+
+export default connect(mapStateToProps, {loadTrips, loadStations})(UnlockBike);
