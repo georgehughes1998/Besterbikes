@@ -120,7 +120,6 @@ const selectBike = async (stationID, bikeType) =>
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
     const bikeID = bikesArray.pop();
 
-    console.log(bikeID);
 
     await removeBike(stationID,bikeID,bikeType);
 
@@ -198,7 +197,6 @@ export const getUnlockedBikes = async () =>
         {
             bikesArray.push(singleDoc.id);
         }
-
 
     });
 
