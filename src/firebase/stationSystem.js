@@ -96,7 +96,7 @@ const addBike = async (stationID,bikeID,bikeType) =>
     const stationDoc = await stationDocument.get();
     const stationData = stationDoc.data();
 
-    console.log("Attempting to push bike to station array...");
+    console.log("Attempting to push bike to " + stationID + "'s " + bikeType + " array...");
 
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
     bikesArray.push(bikeID);
@@ -140,7 +140,7 @@ export const returnBike = async (bikeID, stationID) => {
     const bikeDoc = await bikeDocument.get();
     const bikeData = bikeDoc.data();
 
-    const bikeType = bikeData['bikeType'];
+    const bikeType = bikeData['type'];
     const reservationID = bikeData['reservation'];
 
     const reservationDocument = reservationsCollection.doc(reservationID);
