@@ -10,7 +10,6 @@ export const signIn = async ({email, password}) => {
         .then(user => {
             return user;
         })
-        //TODO: Return and display any error messages
         .catch(async err => {
             return err;
         });
@@ -20,7 +19,6 @@ export const signIn = async ({email, password}) => {
 //Function to sign up to firebase with auth using props from redux form
 export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
     const auth = firebase.auth();
-    //TODO: Store name and birth dates and password in firetstore, use display name for forename (Capitalise?)
     const promise = auth.createUserWithEmailAndPassword(email, password);
 
     return promise
@@ -31,7 +29,6 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
 
             return user;
         })
-        //TODO: Return and display any error messages
         .catch(async err => {
             return err
         });
@@ -45,7 +42,6 @@ export const signOut = () => {
         .then(() => {
             return "success";
         })
-        //TODO: Return and display any error messages
         .catch(async err => {
             return err;
         });
