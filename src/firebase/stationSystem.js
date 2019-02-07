@@ -12,9 +12,9 @@ export const unlockBike = async (reservationID) => {
     const reservationDoc = await reservationDocument.get();
     const reservationData = reservationDoc.data();
 
-    if ( !validateReservation(reservationData) )
+    if ( !validateUnlockReservation(reservationData) )
     {
-        throw Error("Reservation is not valid.");
+        throw Error("Invalid reservation for unlock.");
     }
 
     const bikeType = reservationData['bikeType'];
@@ -38,11 +38,34 @@ export const unlockBike = async (reservationID) => {
 };
 
 
-export const validateReservation = (reservationData) =>
+const validateUnlockReservation = (reservationData) =>
 {
     //Used by unlockBike to validate a reservation
-    return true;
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    let isValid = true;
+
+    if (!(reservationData['user'] === uid)) {isValid = false;}
+    if (!(reservationData['status'] === "active")) {isValid = false;}
+
+    return isValid;
 };
+
+
+const validateReturnReservation = (reservationData) =>
+{
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    let isValid = true;
+
+    if (!(reservationData['user'] === uid)) {isValid = false;}
+    if (!(reservationData['status'] === "unlocked")) {isValid = false;}
+
+    return isValid;
+};
+
 
 const removeBike = async (stationID,bikeID,bikeType) =>
 {
@@ -122,6 +145,13 @@ export const returnBike = async (bikeID, stationID) => {
     const reservationID = bikeData['reservation'];
 
     const reservationDocument = reservationsCollection.doc(reservationID);
+    const reservationDoc = await reservationDocument.get();
+    const reservationData = reservationDoc.data();
+
+    if (!validateReturnReservation(reservationData))
+    {
+        throw Error("Invalid reservation for return.");
+    }
 
     await reservationDocument.update('status','complete');
     await reservationDocument.update('end.time.date',getCurrentDateString());
@@ -135,6 +165,7 @@ export const returnBike = async (bikeID, stationID) => {
 
     return "success";
 };
+
 
 
 
