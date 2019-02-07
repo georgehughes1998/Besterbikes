@@ -15,7 +15,7 @@ import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
 import MapContainer from "./map/BesterbikesMap";
 import MyTrips from "./customer/MyTrips";
 import {getJSONFromFile} from "../handleJSON";
-import UnlockBike from "./UnlockBike";
+import UnlockBike from "./customer/UnlockBike";
 import StationSystemSimulation from "./StationSystemSimulation";
 
 

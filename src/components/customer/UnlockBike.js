@@ -1,13 +1,14 @@
 import React from 'react'
 import {Container, Dropdown, Header, Icon, Segment} from "semantic-ui-react";
 
-import PageContainer from "./PageContainer";
-import {getUser} from "../firebase/authentication";
+import PageContainer from "../PageContainer";
+import {getUser} from "../../firebase/authentication";
 import connect from "react-redux/es/connect/connect";
-import {loadStations, loadTrips} from "../redux/actions";
-import {getTrips} from "../firebase/reservations";
-import {unlockBike} from "../firebase/stationSystem";
+import {loadStations, loadTrips} from "../../redux/actions/index";
+import {getTrips} from "../../firebase/reservations";
+import {unlockBike} from "../../firebase/stationSystem";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
+import UnlockConfirmation from "./UnlockConfirmation";
 
 
 //TODO: Implement web api NFC features
@@ -17,27 +18,26 @@ export class UnlockBike extends React.Component {
     constructor() {
         super();
         this.state = {
-            unlockTrip: ""
+            unlockTrip: "",
+            activeBikeID: null
         };
     }
 
-
-
-    async componentDidMount() {
-        await this.authenticateUser();
-        await this.retrieveFirebaseTrips();
-        console.log(this.props.trips)
-    }
-
     //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = () => {
-        return getUser()
-            .then(user => {
-                if (user === null)
-                    this.props.history.push("signin");
-                return user
-            });
+    authenticateUser = async () => {
+        const user = await getUser();
+        if (user === null)
+            this.props.history.push("signin");
+        return user
     };
+
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) =>  {
+                if(user)
+                    this.retrieveFirebaseTrips();
+                    console.log(this.props.trips)
+            })};
 
     retrieveFirebaseTrips = async () => {
         const obj = await getTrips();
@@ -66,11 +66,17 @@ export class UnlockBike extends React.Component {
     handleUnlock = async () => {
         console.log(this.state);
         unlockBike(this.state.unlockTrip)
-            .then((obj) => {
-                console.log(obj)
+            .then((bikeID) => {
+                console.log(bikeID);
+                if(bikeID) {
+                    this.setState({activeBikeID: bikeID})
+                }
             })
             .catch((err) => {
                 console.log(err);
+                // throw new SubmissionError({
+                //     _error: err.message
+                // })
             })
     };
 
@@ -106,7 +112,7 @@ export class UnlockBike extends React.Component {
                         selection
                         options={this.renderTrips()}
                         // value={ this.state.unlockTrip }
-                        onChange={(param, data) => this.setState({unlockTrip: data.value}) }
+                        onChange={(param, data) => this.setState({unlockTrip : data.value})}
                         name="unlockTrip"
                     />
 
@@ -118,8 +124,9 @@ export class UnlockBike extends React.Component {
                         </Segment>
                     </Button>
 
+                    {this.state.activeBikeID ? <UnlockConfirmation activeBikeID = {this.state.activeBikeID}/> : null}
 
-                </Container>
+                        </Container>
             </PageContainer>
         )
     }

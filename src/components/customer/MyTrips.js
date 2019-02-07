@@ -18,23 +18,20 @@ import {cancelReservation, getTrips} from "../../firebase/reservations";
 //TODO: Render 5 trips at a time
 class MyTrips extends React.Component {
 
-    //Loads trips if user logged in
-    async componentDidMount() {
-        const user = await this.authenticateUser();
-        if (user) {
-            this.retrieveFirebaseTrips();
-        }
-    }
-
     //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = () => {
-        return getUser()
-            .then(user => {
-                if (user === null)
-                    this.props.history.push("signin");
-                return user
-            });
+    authenticateUser = async () => {
+        const user = await getUser();
+        if (user === null)
+            this.props.history.push("signin");
+        return user
     };
+
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) =>  {
+                if(user)
+                    this.retrieveFirebaseTrips();
+            })};
 
     //Cancels a trip using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {

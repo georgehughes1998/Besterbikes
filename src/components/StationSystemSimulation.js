@@ -3,7 +3,7 @@ import {Button, Container, Dropdown, Form, Header} from "semantic-ui-react";
 import {connect} from "react-redux";
 import PageContainer from "./PageContainer";
 import {loadStations, loadTrips} from "../redux/actions";
-import {unlockBike} from "../firebase/stationSystem";
+import {getUnlockedBikes, returnBike, unlockBike} from "../firebase/stationSystem";
 
 
 //Simulation for stage 1 testing purposes to unlock and return bike
@@ -15,7 +15,8 @@ class StationSystemSimulation extends React.Component {
             unlockStation: "",
             unlockTrip: "",
             returnStation: "",
-            returnTrip: ""
+            returnBikes: [],
+            returnBike: ""
         };
     }
 
@@ -47,6 +48,23 @@ class StationSystemSimulation extends React.Component {
         return DropdownArray
     };
 
+    getAvailableBikes = () => {
+        return getUnlockedBikes().
+            then((obj) => {this.setState({returnBikes: obj})});
+    };
+
+    renderAvailableBikes = () => {
+        let DropdownArray = [];
+
+        let availableBikes = this.state.returnBikes;
+
+        for (var i = 0, len = availableBikes.length; i < len; i++) {
+            DropdownArray.push({key: (availableBikes[i]), value: (availableBikes[i]), text: (availableBikes[i])});;
+        }
+
+        return DropdownArray
+    };
+
     handleChange(input, data) {
         this.setState({
             [input] : data.value
@@ -64,12 +82,22 @@ class StationSystemSimulation extends React.Component {
             })
     };
 
-    handleReturn = () => {
 
+
+    handleReturn = () => {
+        console.log(this.state);
+        returnBike(this.state.returnBike, this.state.returnStation)
+            .then((obj) => {
+                console.log(obj)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     };
 
     componentDidMount() {
         // this.retrieveFirebaseTrips()
+        this.getAvailableBikes();
     }
 
     render() {
@@ -115,24 +143,22 @@ class StationSystemSimulation extends React.Component {
                     <Container>
                         <Form onSubmit={() => this.handleReturn()}>
 
-
                             <Dropdown
-                                onChange
                                 fluid
                                 selection
                                 options={this.renderStations()}
-                                value={ this.state.returnTrip }
-                                onChange={(param, data) => this.handleChange("returnTrip", data) }
-                                name="returnTrip"
+                                value={ this.state.returnStation }
+                                onChange={(param, data) => this.handleChange("returnStation", data) }
+                                name="returnStation"
                             />
 
                             <Dropdown
                                 fluid
                                 selection
-                                options={this.renderTrips()}
-                                value={ this.state.returnStation }
-                                onChange={(param, data) => this.handleChange("returnStation", data) }
-                                name="returnStation"
+                                options={this.renderAvailableBikes()}
+                                value={ this.state.returnBike }
+                                onChange={(param, data) => this.handleChange("returnBike", data) }
+                                name="returnBike"
                             />
 
                             <Button>
