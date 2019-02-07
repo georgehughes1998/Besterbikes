@@ -108,7 +108,7 @@ export const returnBike = async (bikeID, stationID) => {
     await reservationDocument.update('end.time.date',getCurrentDateString());
     await reservationDocument.update('end.time.time',getCurrentTimeString());
 
-
+    await bikeDocument.update('reservation','');
     //TODO clear the reservation associated with the bike
 
     //TODO set reservation end date, time and station
@@ -126,7 +126,59 @@ export const returnBike = async (bikeID, stationID) => {
 };
 
 
-const getCurrentDateString= () =>
+
+export const getUnlockedBikes = async () =>
+{
+    const db = firebase.firestore();
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    const reservationsCollection = db.collection('reservations');
+    const bikesCollection = db.collection('bikes');
+    const query = bikesCollection.where('status','==','unlocked');
+
+    const bikesArray = [];
+
+    const queryDoc = await query.get();
+
+    queryDoc.forEach(async singleDoc =>
+    {
+        const singleDocData = singleDoc.data();
+
+        const reservationID = singleDocData['reservation'];
+        const reservationDocument = reservationsCollection.doc(reservationID);
+
+        const reservationDoc = await reservationDocument.get();
+        const reservationData = reservationDoc.data();
+
+        if (reservationData['user'] === uid)
+        {
+            bikesArray.push(singleDoc.id);
+        }
+
+
+    });
+
+    return bikesArray;
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const getCurrentDateString = () =>
 {
     const time = new Date();
 
@@ -138,7 +190,7 @@ const getCurrentDateString= () =>
     return currentDate;
 };
 
-const getCurrentTimeString= () =>
+const getCurrentTimeString = () =>
 {
     const time = new Date();
 
