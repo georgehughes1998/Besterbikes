@@ -25,8 +25,6 @@ export const unlockBike = async (reservationID) => {
     const bikesCollection = db.collection('bikes');
     const bikeDocument = bikesCollection.doc(bikeID);
 
-    // let reservationObject = {};
-    // reservationObject[`start.station`] = stationID;
 
     await reservationDocument.update('status','unlocked');
     await reservationDocument.update('bike',bikeID);
@@ -37,8 +35,7 @@ export const unlockBike = async (reservationID) => {
     await bikeDocument.update('status','unlocked');
     await bikeDocument.update('reservation',reservationID);
 
-    console.log("Success");
-    return "success";
+    return bikeID;
 };
 
 
@@ -91,10 +88,30 @@ export const selectBike = async (stationID, bikeType) => {
 export const returnBike = async (bikeID, stationID) => {
     //Return the given bike to the given station
 
-    //TODO get the reservation associated with the bike
+    const db = firebase.firestore();
+
+    const bikesCollection = db.collection('bikes');
+    const stationsCollection = db.collection('stations');
+    const reservationsCollection = db.collection('reservations');
+
+
+    const bikeDocument = bikesCollection.doc(bikeID);
+    const stationDocument = stationsCollection.doc(stationID);
+
+    const bikeDoc = await bikeDocument.get();
+    const bikeData = bikeDoc.data();
+
+    const reservationID = bikeData['reservation'];
+    const reservationDocument = reservationsCollection.doc(reservationID);
+
+    await reservationDocument.update('status','complete');
+    await reservationDocument.update('end.time.date',getCurrentDateString());
+    await reservationDocument.update('end.time.time',getCurrentTimeString());
+
+
     //TODO clear the reservation associated with the bike
 
-    //TODO set reservation status to complete
+    //TODO set reservation end date, time and station
 
     //TODO set bike status to available
 
@@ -106,4 +123,29 @@ export const returnBike = async (bikeID, stationID) => {
 
     //TODO return the given bike to the given station and mark the reservation as complete
     return 0;
+};
+
+
+const getCurrentDateString= () =>
+{
+    const time = new Date();
+
+    const currentDate = time.getFullYear() + "-" +
+        ("0" + time.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
+        + "-" +
+        ("0" + time.getDay()).slice(-2);
+
+    return currentDate;
+};
+
+const getCurrentTimeString= () =>
+{
+    const time = new Date();
+
+    const currentTime =
+        ("0" + time.getHours()).slice(-2)
+        + ":" +
+        ("0" + time.getMinutes()).slice(-2);
+
+    return currentTime;
 };
