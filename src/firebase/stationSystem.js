@@ -171,6 +171,7 @@ export const getUnlockedBikes = async () =>
 
     });
 
+    console.log(bikesArray);
     return bikesArray;
 
 };
