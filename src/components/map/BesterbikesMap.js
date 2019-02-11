@@ -70,7 +70,10 @@ export class BesterbikesMap extends Component {
                             onClick={this.onMarkerClick}
                             name={station.name}
                             stationDetails={station}
-
+                            icon={{url:"http://www2.macs.hw.ac.uk/~cmf2/mapicon.png"}}
+                            label={{text:station.capacity.road,
+                                    color:"white"
+                            }}
                     />
                 )
             })

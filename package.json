@@ -27,9 +27,7 @@
   },
   "eslintConfig": {
     "extends": "react-app",
-    "rules": [
-
-    ]
+    "rules": []
   },
   "browserslist": [
     ">0.2%",
