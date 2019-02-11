@@ -49,7 +49,7 @@ export class BesterbikesMap extends Component {
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
-            showingInfoWindow: true
+            showingInfoWindow: true,
         });
     }
 
@@ -74,6 +74,8 @@ export class BesterbikesMap extends Component {
                             label={{text:station.capacity.road,
                                     color:"white"
                             }}
+                            animation={this.props.google.maps.Animation.DROP}
+
                     />
                 )
             })
