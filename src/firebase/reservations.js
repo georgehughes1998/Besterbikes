@@ -1,7 +1,6 @@
 import * as firebase from "firebase";
 
 
-
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
     //Function to make reservations with the given data
 
@@ -93,7 +92,7 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
 
 };
 
-export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes, bikeType) => {
+const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes, bikeType) => {
     //Sets the number of available bikes at a station to the provided number
 
     const db = firebase.firestore();
@@ -113,7 +112,7 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
 
 };
 
-export const appendUserReservationsArray = async (reservationReferences) => {
+const appendUserReservationsArray = async (reservationReferences) => {
     //Add the given list to the user's reservation array.
 
     const auth = firebase.auth();
@@ -148,7 +147,7 @@ export const appendUserReservationsArray = async (reservationReferences) => {
 };
 
 
-export const makeSingleReservation = async (reservationsCollection, reservationDocument, bikeType) => {
+const makeSingleReservation = async (reservationsCollection, reservationDocument, bikeType) => {
     //Used by makeReservations to make a single reservation
 
     reservationDocument['bikeType'] = bikeType;
@@ -215,7 +214,7 @@ export const getTrips = async (maxNumberOfTrips=10) => {
 };
 
 
-export const getReservation = async (reservationID) => {
+const getReservation = async (reservationID) => {
     //Used by getTrips to get a single reservation
 
     const db = firebase.firestore();
