@@ -4,6 +4,7 @@ import {Header, List} from "semantic-ui-react"
 
 import {getJSONFromFile} from '../../handleJSON.js'
 import {getUser} from "../../firebase/authentication";
+import {getNumberOfAvailableBikes} from "../../firebase/reservations";
 import {withRouter} from "react-router";
 
 //TODO: Implement loader correctly
@@ -18,8 +19,25 @@ export class BesterbikesMap extends Component {
         if (user) {
             //TODO: Move to Redux
             if (!(this.state.mapJSON === {})) {
-                this.getMapJSON()
+                await this.getMapJSON();
             }
+
+            const stations = this.state.mapJSON;
+            let keys = Object.keys(stations);
+
+            const bikesAtStations = {};
+
+            Object.values(stations).map( async (station, index) => {
+                bikesAtStations[keys[index]] = await getNumberOfAvailableBikes(keys[index],"road");
+                // console.log(bikesAtStations);
+            });
+
+            // console.log(stations);
+
+            this.setState({bikesAtStations: bikesAtStations});
+            // console.log(this.state.bikesAtStations);
+
+
         }
     }
 
@@ -41,7 +59,8 @@ export class BesterbikesMap extends Component {
             showingInfoWindow: true,
             activeMarker: {},
             selectedPlace: {},
-            mapJSON: {}
+            mapJSON: {},
+            bikesAtStations: {}
         };
     }
 
@@ -60,25 +79,26 @@ export class BesterbikesMap extends Component {
     }
 
 
-    renderMarkers() {
+    renderMarkers () {
         const stations = this.state.mapJSON;
+        let keys = Object.keys(stations);
+        console.log(keys);
 
         if (!(stations === {})) {
-            return Object.values(stations).map(station => {
+            return Object.values(stations).map((station, index) => {
                 return (
                     <Marker position={station.location.geoPoint}
                             onClick={this.onMarkerClick}
                             name={station.name}
                             stationDetails={station}
                             icon={{url:"http://www2.macs.hw.ac.uk/~cmf2/mapicon.png"}}
-                            label={{text:station.capacity.road,
+                            label={{text: this.state.bikesAtStations[keys[index]],
                                     color:"white"
                             }}
-                            animation={this.props.google.maps.Animation.DROP}
 
                     />
                 )
-            })
+            });
         }
 
     }
