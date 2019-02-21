@@ -26,6 +26,9 @@ Also, read the following guide carefully to ensure you clone, push and pull to G
 ```shell
 cd besterbikes
 npm install --save react react-router redux redux-form react-redux react-router-dom firebase faker semantic-ui-react google-maps-react
+
+Or on linux machines:
+npm install --save react react-scripts react-dom react-router redux redux-form react-redux react-router-dom firebase faker semantic-ui-react google-maps-react
 ```
 
 3. Run the following command to host the project locally
@@ -35,7 +38,7 @@ npm start
 
 ### Pulling from the Remote Repository (GitHub)
 1. Open Webstorm and select:
-* Select the Git branch in the bottom right and select which branch you want to checkout as 
+* Select the Git branch in the bottom right and select which branch you want to checkout as
 * This essentially lets you make a copy another branch
 * Would recomend you create a branch called something like "JackDevelop" and push this to the develop branch
 * The main branch will be reserved for big releases decided by the entire group
