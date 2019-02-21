@@ -180,6 +180,7 @@ export const getTrips = async (maxNumberOfTrips=10) => {
     const uid = auth.currentUser.uid;
 
     const usersCollection = db.collection('users');
+    const reservationsCollection = db.collection('reservations');
 
     const currentUserDocument = usersCollection.doc(uid);
 
@@ -204,8 +205,9 @@ export const getTrips = async (maxNumberOfTrips=10) => {
                 }
 
                 const currentReservation = reservationsArrayReversed[r];
+                const reservationDocument = reservationsCollection.doc(currentReservation);
 
-                fullReservationsCollection[currentReservation] = await getReservation(currentReservation);
+                fullReservationsCollection[currentReservation] = await getReservation(currentReservation,reservationDocument);
             }
 
             return fullReservationsCollection;
@@ -214,14 +216,8 @@ export const getTrips = async (maxNumberOfTrips=10) => {
 };
 
 
-const getReservation = async (reservationID) => {
+const getReservation = async (reservationID,reservationDocument) => {
     //Used by getTrips to get a single reservation
-
-    const db = firebase.firestore();
-    const reservationsCollection = db.collection('reservations');
-
-    const reservationDocument = reservationsCollection.doc(reservationID);
-
     return reservationDocument.get()
         .then(doc => {return doc.data();})
         .catch(err => {return err});
