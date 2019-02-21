@@ -34,7 +34,7 @@ export class BesterbikesMap extends Component {
 
             // console.log(stations);
 
-            this.setState({bikesAtStations: bikesAtStations});
+            this.setState({bikesAtStations});
             // console.log(this.state.bikesAtStations);
 
 
@@ -52,7 +52,7 @@ export class BesterbikesMap extends Component {
     };
 
 
-    constructor(props) {
+constructor(props){
         super(props);
         this.onMarkerClick = this.onMarkerClick.bind(this);
         this.state = {
@@ -82,17 +82,29 @@ export class BesterbikesMap extends Component {
     renderMarkers () {
         const stations = this.state.mapJSON;
         let keys = Object.keys(stations);
-        console.log(keys);
+        // console.log(keys);
 
         if (!(stations === {})) {
             return Object.values(stations).map((station, index) => {
+              const stationName = keys[index];
+
+              const theState = this.state.bikesAtStations;
+              console.log(stationName);
+              console.log(index);
+              console.log(station);
+              console.log(Object.keys(theState));
+              console.log(theState[index]);
+              let bikesAvailable = 0;
+              if (theState[stationName])
+                bikesAvailable = this.state.bikesAtStations[stationName];
+              console.log(theState.stationEdinburghUniversityLibrary);
                 return (
                     <Marker position={station.location.geoPoint}
                             onClick={this.onMarkerClick}
                             name={station.name}
                             stationDetails={station}
                             icon={{url:"http://www2.macs.hw.ac.uk/~cmf2/mapicon.png"}}
-                            label={{text: this.state.bikesAtStations[keys[index]],
+                            label={{text: bikesAvailable.toString(10),
                                     color:"white"
                             }}
 
@@ -103,7 +115,11 @@ export class BesterbikesMap extends Component {
 
     }
 
-    render() {
+    componentDidUpdate(){
+      console.log("Updated");
+    }
+
+    render(){
         // if (!this.props.stations) {
         //     return (
         //         <Segment>
@@ -114,7 +130,7 @@ export class BesterbikesMap extends Component {
         //     );
         // }
 
-        return (
+        return(
 
             <Map
                 style={this.props.style}
@@ -137,7 +153,7 @@ export class BesterbikesMap extends Component {
                 >
                     <div>
 
-                        <Header as='h4'>{this.state.activeMarker.name}</Header>
+                        // <Header as='h4'>{this.state.activeMarker.name}</Header>
 
                         {this.state.activeMarker.stationDetails ?
                             <div>
