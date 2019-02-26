@@ -12,7 +12,7 @@ class Report extends React.Component {
         return user
     };
 
-    //TODO: Add firebase function to make report
+    //TODO: Add firebase function to create a task
     handleSubmit = async (values) => {
         // return reportIssue(this.state.category, this.state.description)
         //     .then((obj) => {
@@ -30,15 +30,15 @@ class Report extends React.Component {
     render() {
         return (
             <SimpleForm
-                title= "How can we help?"
+                title= "Create a Task"
                 dropdown={
-                [
-                    {key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
-                {key: "complaint", value: "Complaint", text: "Complaint"},
-                {key: "feedback", value: "Feedback", text: "Feedback"}
+                    [
+                        {key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
+                        {key: "complaint", value: "Complaint", text: "Complaint"},
+                        {key: "feedback", value: "Feedback", text: "Feedback"}
                     ]}
                 textArea= "Please describe your query here"
-                button= "Send Report"
+                button= "Create Task"
                 handleSubmit = {(values) => this.handleSubmit(values)}
             />
         )

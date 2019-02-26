@@ -18,6 +18,7 @@ import {getJSONFromFile} from "../handleJSON";
 import UnlockBike from "./customer/UnlockBike";
 import StationSystemSimulation from "./StationSystemSimulation";
 import Report from "./customer/Report";
+import CreateTask from "./tasks/CreateTask";
 
 
 //TODO: Add prop types and typescript to app
@@ -98,8 +99,9 @@ class App extends React.Component {
                                 {/*Reserving a bike Routes*/}
                                 <Route path="/reservebike" component={ReserveBikeContainer}/>
 
-                                {/*Reporting an issue Router*/}
+                                {/*Reporting an issue and creating a task Router*/}
                                 <Route path="/report" component={Report}/>
+                                <Route path="/createTask" component={CreateTask}/>
 
                                 {/*TODO: Remove station simulation once implemnted properly*/}
                                 <Route path="/stationsim" exact component={StationSystemSimulation}/>
