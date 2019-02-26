@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Route} from 'react-router-dom'
 import {connect} from "react-redux";
-import {Segment, Sidebar, Sticky} from "semantic-ui-react";
+import {Segment, Sidebar} from "semantic-ui-react";
 
 import SideBarContent from "./naviagtion/SideBarContent";
 import {changeSideBar, loadStations} from "../redux/actions";
@@ -19,6 +19,7 @@ import UnlockBike from "./customer/UnlockBike";
 import StationSystemSimulation from "./StationSystemSimulation";
 import Report from "./customer/Report";
 import CreateTask from "./tasks/CreateTask";
+import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 
 
 //TODO: Add prop types and typescript to app
@@ -46,84 +47,79 @@ class App extends React.Component {
 
     render() {
 
-        const { contextRef } = this.state;
-
         return (
             <div>
                 {/*BrowserRouter handles the pages and their associated URLs for the entire App*/}
                 <BrowserRouter>
                     <div style={{height: '100vh'}}>
-                        <Sidebar.Pushable as={Segment}>
+
+                        <TopMenuBar fixed='absolute'/>
+
+                        <Sidebar.Pushable as={Segment} >
                             <SideBarContent
-                                links={{
-                                    Main: {
-                                        name: 'Menu',
-                                        icon: 'bicycle',
-                                        link: '/'
-                                    },
-                                    Map: {
-                                        name: 'Map',
-                                        icon: 'map',
-                                        link: '/map'
-                                    },
-                                    Reserve: {
-                                        name: 'Reserve',
-                                        icon: 'calendar',
-                                        link: '/reservebike'
-                                    },
-                                    Unlock: {
-                                        name: 'Unlock',
-                                        icon: 'lock',
-                                        link: '/unlockbike'
-                                    },
-                                    MyTrips: {
-                                        name: 'My Trips',
-                                        icon: 'map signs',
-                                        link: '/mytrips'
-                                    }
-                                }}
+                            links={{
+                            Main: {
+                            name: 'Menu',
+                            icon: 'bicycle',
+                            link: '/'
+                            },
+                            Map: {
+                            name: 'Map',
+                            icon: 'map',
+                            link: '/map'
+                            },
+                            Reserve: {
+                            name: 'Reserve',
+                            icon: 'calendar',
+                            link: '/reservebike'
+                            },
+                            Unlock: {
+                            name: 'Unlock',
+                            icon: 'lock',
+                            link: '/unlockbike'
+                            },
+                            MyTrips: {
+                            name: 'My Trips',
+                            icon: 'map signs',
+                            link: '/mytrips'
+                            }
+                            }}
                             />
 
                             <Sidebar.Pusher animation='push'>
 
-                            <div ref={this.handleContextRef}>
-                                <div>
-                                    <Sticky>
-                                        <TopMenuBar/>
-                                    </Sticky>
+                            <div>
+                                {/*TODO: Refactor to use JSON*/}
+                                <Route path="/" exact component={MainMenu}/>
+                                <Route path="/map" exact component={MapContainer}/>
+                                <Route path="/unlockbike" exact component={UnlockBike}/>
 
-                                    {/*TODO: Refactor to use JSON*/}
-                                    <Route path="/" exact component={MainMenu}/>
-                                    <Route path="/map" exact component={MapContainer}/>
-                                    <Route path="/unlockbike" exact component={UnlockBike}/>
+                                {/*Customer Routes*/}
+                                <Route path="/mytrips" exact component={MyTrips}/>
 
-                                    {/*Customer Routes*/}
-                                    <Route path="/mytrips" exact component={MyTrips}/>
+                                {/*Account Management Routes*/}
+                                <Route path="/signin" exact component={SignIn}/>
+                                <Route path="/signup" exact component={SignUp}/>
+                                <Route path="/editaccount" exact component={EditAccount}/>
 
-                                    {/*Account Management Routes*/}
-                                    <Route path="/signin" exact component={SignIn}/>
-                                    <Route path="/signup" exact component={SignUp}/>
-                                    <Route path="/editaccount" exact component={EditAccount}/>
+                                {/*Reserving a bike Routes*/}
+                                <Route path="/reservebike" component={ReserveBikeContainer}/>
 
-                                    {/*Reserving a bike Routes*/}
-                                    <Route path="/reservebike" component={ReserveBikeContainer}/>
+                                {/*Reporting an issue and creating a task Router*/}
+                                <Route path="/report" component={Report}/>
+                                <Route path="/createTask" component={CreateTask}/>
 
-                                    {/*Reporting an issue and creating a task Router*/}
-                                    <Route path="/report" component={Report}/>
-                                    <Route path="/createTask" component={CreateTask}/>
-
-                                    {/*TODO: Remove station simulation once implemnted properly*/}
-                                    <Route path="/stationsim" exact component={StationSystemSimulation}/>
-                                </div>
-
+                                {/*TODO: Remove station simulation once implemnted properly*/}
+                                <Route path="/stationsim" exact component={StationSystemSimulation}/>
                             </div>
 
                             </Sidebar.Pusher>
-
                         </Sidebar.Pushable>
+
                     </div>
-                </BrowserRouter>
-            </div>
+
+            </BrowserRouter>
+        </div>
         )
     }
 

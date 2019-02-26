@@ -28,7 +28,7 @@ const SideBarContent = (props) => {
     return (
         <Sidebar
             as={Menu}
-            animation='push'
+            animation='overlay'
             icon='labeled'
             inverted
             vertical
@@ -38,6 +38,10 @@ const SideBarContent = (props) => {
             width='thin'
             color="blue"
         >
+            <br/>
+            <br/>
+            <br/>
+
             {renderLinks}
         </Sidebar>
 
