@@ -70,11 +70,6 @@ class App extends React.Component {
                                         name: 'My Trips',
                                         icon: 'map signs',
                                         link: '/mytrips'
-                                    },
-                                    Account: {
-                                        name: 'Account',
-                                        icon: 'user circle',
-                                        link: '/editaccount'
                                     }
                                 }}
                             />

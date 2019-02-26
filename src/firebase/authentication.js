@@ -1,7 +1,8 @@
 import * as firebase from "firebase";
 
+
 //Function to sign in to firebase using props from redux form
-export const signIn = async ({email, password}) => {
+export const signIn = async ({email, password, updateUserStatus}) => {
 
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(email, password);
@@ -122,3 +123,10 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
         });
 
 };
+
+//
+// const mapStateToProps = (state) => {
+//     return {user: state.user.status}
+// };
+//
+// export default connect(mapStateToProps, {updateUserStatus})(signIn);

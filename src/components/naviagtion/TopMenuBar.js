@@ -4,13 +4,33 @@ import {connect} from "react-redux";
 
 import {Header, Icon, Menu} from 'semantic-ui-react'
 import {changeSideBar} from "../../redux/actions";
+import {getUser, getUserDetails} from "../../firebase/authentication";
 
 
 //TODO: Make TopMenuBar Sticky
 class TopMenuBar extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: "Not signed in"
+        };
+    }
+
     handleHideClick = () => this.props.changeSideBar("Hide");
     handleShowClick = () => this.props.changeSideBar("Show");
+
+
+    authenticateUser = async () => {
+        const user = await getUser();
+        if (user !== null && this.state.currentUser === "Not signed in") {
+                const userDetails = await getUserDetails();
+                this.setState({currentUser: userDetails.name.firstName});
+        }else if (user === null && this.state.currentUser !== "Not signed in") {
+            this.setState({currentUser: "Not signed in"});
+        }
+        return user
+    };
 
     //Function to display title of page based on pathname in react router dom
     getDisplayTitle = (pathname) => {
@@ -41,7 +61,11 @@ class TopMenuBar extends React.Component {
         }
     };
 
+
     render() {
+
+        this.authenticateUser();
+
         return (
             <div>
                 <Menu color="blue" inverted widths={3}>
@@ -58,8 +82,9 @@ class TopMenuBar extends React.Component {
                     </Menu.Item>
 
                     <Menu.Item>
-                        <Link to="/" className="item">
-                            <Icon name="bicycle"/>
+                        <Link to="/editaccount" className="item">
+                            {this.state.currentUser === "Not signed in"?<div/>:<Icon name="user Circle"/>}
+                            {this.state.currentUser}
                         </Link>
                     </Menu.Item>
 
@@ -68,9 +93,7 @@ class TopMenuBar extends React.Component {
 
         )
     }
-
 }
-
 
 const mapStateToProps = (state) => {
     return {sideBarVisible: state.ui.sideBarVisible}

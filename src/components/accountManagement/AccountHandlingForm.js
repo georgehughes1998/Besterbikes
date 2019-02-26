@@ -14,6 +14,7 @@ class AccountHandlingForm extends React.Component {
     onAttemptedSignIn = (obj) => {
         if (obj.user) {
             this.props.history.push("/")
+
         } else {
             throw new SubmissionError({
                 _error: obj.message

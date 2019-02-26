@@ -19,3 +19,10 @@ export const loadTrips = (trips) => {
         payload: trips
     }
 };
+
+export const updateUserStatus = (status) => {
+    return {
+        type: 'UPDATE_USER_STATUS',
+        payload: status
+    }
+};
