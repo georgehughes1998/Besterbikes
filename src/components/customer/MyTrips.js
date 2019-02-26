@@ -60,6 +60,7 @@ class MyTrips extends React.Component {
                 this.handleCancelTrip(tripId);
                 return;
             default:
+                this.props.history.push("/report");
                 return;
         }
     };

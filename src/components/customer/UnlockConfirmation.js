@@ -1,8 +1,5 @@
 import React from 'react'
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
+import {Button, Header, Icon, Modal} from 'semantic-ui-react';
 import withRouter from "react-router/es/withRouter";
 import {reduxForm} from "redux-form";
 

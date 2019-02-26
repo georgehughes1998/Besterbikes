@@ -34,6 +34,8 @@ class TopMenuBar extends React.Component {
                 return "Unlock Bike";
             case "/mytrips":
                 return "My Trips";
+            case "/report":
+                return "Report Issue";
             default:
                 return null;
         }

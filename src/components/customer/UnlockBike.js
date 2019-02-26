@@ -9,6 +9,7 @@ import {getTrips} from "../../firebase/reservations";
 import {unlockBike} from "../../firebase/stationSystem";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import UnlockConfirmation from "./UnlockConfirmation";
+import FirebaseError from "../FirebaseError";
 
 
 //TODO: Implement web api NFC features
@@ -19,7 +20,8 @@ export class UnlockBike extends React.Component {
         super();
         this.state = {
             unlockTrip: "",
-            activeBikeID: null
+            activeBikeID: null,
+            firebaseError: null
         };
     }
 
@@ -74,9 +76,7 @@ export class UnlockBike extends React.Component {
             })
             .catch((err) => {
                 console.log(err);
-                // throw new SubmissionError({
-                //     _error: err.message
-                // })
+                this.setState({firebaseError: err.message})
             })
     };
 
@@ -123,6 +123,8 @@ export class UnlockBike extends React.Component {
                             <Header as="h1">{this.state.unlockTrip}</Header>
                         </Segment>
                     </Button>
+
+                    {this.state.firebaseError? <FirebaseError error = {this.state.firebaseError}/> : null}
 
                     {this.state.activeBikeID ? <UnlockConfirmation activeBikeID = {this.state.activeBikeID}/> : null}
 
