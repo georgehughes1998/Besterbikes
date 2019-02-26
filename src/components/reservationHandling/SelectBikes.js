@@ -12,23 +12,27 @@ import BesterbikesMap from "../map/BesterbikesMap";
 class SelectBikes extends React.Component {
 
 
+    renderMap =() => {
+        return(
+            <Segment style={{minHeight: "300px"}}>
+                <div>
+                    <BesterbikesMap style={{
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        marginRight: "14px",
+                        marginLeft: "-14px",
+                        marginTop: "-14px",
+                        marginBottom: "20px",
+                        position: "absolute"
+                    }}/>
+                </div>
+            </Segment>
+        )
+    };
+
     render() {
         return (
             <Segment.Group>
-
-                <Segment style={{minHeight: "300px"}}>
-                    <div>
-                        <BesterbikesMap style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            marginRight: "14px",
-                            marginLeft: "-14px",
-                            marginTop: "-14px",
-                            marginBottom: "20px",
-                            position: "absolute"
-                        }}/>
-                    </div>
-                </Segment>
 
                 <ReservationHandlingForm
                     header={{
@@ -37,6 +41,8 @@ class SelectBikes extends React.Component {
                         progress: 20,
                         icon: "bicycle"
                     }}
+
+                    renderMap = {() => this.renderMap()}
 
                     fields={{
                         station: {

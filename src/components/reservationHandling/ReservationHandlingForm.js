@@ -145,10 +145,24 @@ class ReservationHandlingForm extends React.Component {
             <div>
                 <Segment attached='top'>
 
-                    <Progress percent={this.props.header.progress} attached="top" indicating/>
+                    <Progress
+                        percent={this.props.header.progress}
+                        attached="top"
+                        indicating
+                        size="big"
+                    />
+                    <Progress
+                        percent={this.props.header.progress}
+                        attached="bottom"
+                        indicating
+                        size="tiny"
+                    />
 
                     <Form onSubmit={this.props.handleSubmit(this.onSubmit)} error>
                         {this.renderHeader(this.props.header)}
+
+                        {this.props.header.title === "Select Bikes"? this.props.renderMap():null }
+
                         {this.renderFields}
                         {this.props.error ? <FirebaseError error={this.props.error}/> : null}
                         <Container textAlign='center'>

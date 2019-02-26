@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Route} from 'react-router-dom'
 import {connect} from "react-redux";
-import {Segment, Sidebar} from "semantic-ui-react";
+import {Segment, Sidebar, Sticky} from "semantic-ui-react";
 
 import SideBarContent from "./naviagtion/SideBarContent";
 import {changeSideBar, loadStations} from "../redux/actions";
@@ -25,6 +25,13 @@ import CreateTask from "./tasks/CreateTask";
 //TODO: Move UI props over to JSON
 class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {}
+    };
+
+    handleContextRef = contextRef => this.setState({ contextRef });
+
     componentDidMount() {
         //TODO: Move to Redux
         if (!(this.props.stations === {})) {
@@ -38,6 +45,9 @@ class App extends React.Component {
     }
 
     render() {
+
+        const { contextRef } = this.state;
+
         return (
             <div>
                 {/*BrowserRouter handles the pages and their associated URLs for the entire App*/}
@@ -76,30 +86,37 @@ class App extends React.Component {
 
                             <Sidebar.Pusher animation='push'>
 
-                                <TopMenuBar/>
+                            <div ref={this.handleContextRef}>
+                                <div>
+                                    <Sticky>
+                                        <TopMenuBar/>
+                                    </Sticky>
 
-                                {/*TODO: Refactor to use JSON*/}
-                                <Route path="/" exact component={MainMenu}/>
-                                <Route path="/map" exact component={MapContainer}/>
-                                <Route path="/unlockbike" exact component={UnlockBike}/>
+                                    {/*TODO: Refactor to use JSON*/}
+                                    <Route path="/" exact component={MainMenu}/>
+                                    <Route path="/map" exact component={MapContainer}/>
+                                    <Route path="/unlockbike" exact component={UnlockBike}/>
 
-                                {/*Customer Routes*/}
-                                <Route path="/mytrips" exact component={MyTrips}/>
+                                    {/*Customer Routes*/}
+                                    <Route path="/mytrips" exact component={MyTrips}/>
 
-                                {/*Account Management Routes*/}
-                                <Route path="/signin" exact component={SignIn}/>
-                                <Route path="/signup" exact component={SignUp}/>
-                                <Route path="/editaccount" exact component={EditAccount}/>
+                                    {/*Account Management Routes*/}
+                                    <Route path="/signin" exact component={SignIn}/>
+                                    <Route path="/signup" exact component={SignUp}/>
+                                    <Route path="/editaccount" exact component={EditAccount}/>
 
-                                {/*Reserving a bike Routes*/}
-                                <Route path="/reservebike" component={ReserveBikeContainer}/>
+                                    {/*Reserving a bike Routes*/}
+                                    <Route path="/reservebike" component={ReserveBikeContainer}/>
 
-                                {/*Reporting an issue and creating a task Router*/}
-                                <Route path="/report" component={Report}/>
-                                <Route path="/createTask" component={CreateTask}/>
+                                    {/*Reporting an issue and creating a task Router*/}
+                                    <Route path="/report" component={Report}/>
+                                    <Route path="/createTask" component={CreateTask}/>
 
-                                {/*TODO: Remove station simulation once implemnted properly*/}
-                                <Route path="/stationsim" exact component={StationSystemSimulation}/>
+                                    {/*TODO: Remove station simulation once implemnted properly*/}
+                                    <Route path="/stationsim" exact component={StationSystemSimulation}/>
+                                </div>
+
+                            </div>
 
                             </Sidebar.Pusher>
 

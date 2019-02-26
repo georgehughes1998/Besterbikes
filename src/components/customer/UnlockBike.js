@@ -55,9 +55,19 @@ export class UnlockBike extends React.Component {
 
         if (this.props.trips){
             let keys = Object.keys(this.props.trips);
+            console.log(this.props.trips);
+            console.log(keys);
 
             Object.values(this.props.trips).map((key, index) => {
-                DropdownArray.push({key: keys[index], value: keys[index], text: keys[index]});
+                DropdownArray.push({
+                    key: keys[index],
+                    value: keys[index],
+                    text:
+                        `My ${key.status} trip from 
+                        ${key.start["station"]} on 
+                        ${key.start["time"]["date"]} at 
+                        ${key.start["time"]["time"]}`
+                });
                 return DropdownArray;
             });
 

@@ -28,6 +28,10 @@ class listOfLiveItems extends React.Component{
                             <Header
                                 as='h1'
                                 content={headerContent}
+                            />
+                            <Header
+                                as = 'h5'
+                                content={`${headerSub}`}
                                 subheader={`Trip ID: ${tripId}`}
                             />
 
@@ -63,6 +67,10 @@ class listOfLiveItems extends React.Component{
         const stationName = this.props.stations[stationKey]["name"];
         const startTime = trip["start"]["time"]["time"];
         const image = this.props.stations[stationKey]["url"];
+        const headerSub = `My ${trip.status} trip from 
+                            ${trip.start["station"]} on 
+                            ${trip.start["time"]["date"]} at 
+                            ${trip.start["time"]["time"]}`
 
         let keys = Object.keys(this.props.items);
 
@@ -75,7 +83,7 @@ class listOfLiveItems extends React.Component{
                     status: "Reserved",
                     headerContent: stationName,
                     // `Bike available from ${startTime}`,
-                    headerSub: "",
+                    headerSub,
                     tripId: keys[index],
                     image
                 });
@@ -87,7 +95,7 @@ class listOfLiveItems extends React.Component{
                     status: "Ready to unlock",
                     headerContent: stationName,
                     // `Bike available until ${startTime}`,
-                    headerSub: "",
+                    headerSub,
                     tripId: keys[index],
                     image
                 });
@@ -100,7 +108,7 @@ class listOfLiveItems extends React.Component{
                     headerContent: stationName,
                     //TODO: Implement current duration calculator
                     // "Current duration: 4hrs 3mins"
-                    headerSub: "",
+                    headerSub,
                     tripId: keys[index],
                     image
                 });
@@ -114,7 +122,7 @@ class listOfLiveItems extends React.Component{
                     headerContent: stationName,
                     //TODO: Implement end station and total duration calculator
                     // "To Edinburgh University Library lasting 4hrs 3mins",
-                    headerSub: "",
+                    headerSub,
                     tripId: keys[index],
                     image
                 });
@@ -125,7 +133,7 @@ class listOfLiveItems extends React.Component{
                     iconColor: "red",
                     status: "Cancelled",
                     headerContent: stationName,
-                    headerSub: "",
+                    headerSub,
                     tripId: keys[index],
                     image
                 });

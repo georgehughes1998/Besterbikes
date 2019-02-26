@@ -68,27 +68,28 @@ class TopMenuBar extends React.Component {
 
         return (
             <div>
-                <Menu color="blue" inverted widths={3}>
+                    <Menu color="blue" inverted widths={3}>
 
-                    <Menu.Item disabled={this.props.sideBarVisible}
-                               onClick={this.props.sideBarVisible ? this.handleHideClick : this.handleShowClick}>
-                        <Icon name="bars"/>
-                    </Menu.Item>
+                        <Menu.Item disabled={this.props.sideBarVisible || this.state.currentUser === "Not signed in"}
+                                   onClick={this.props.sideBarVisible ? this.handleHideClick : this.handleShowClick}>
+                            <Icon name="bars"/>
+                        </Menu.Item>
 
-                    <Menu.Item>
-                        <Header as='h5' inverted>
-                            {this.getDisplayTitle(this.props.location.pathname)}
-                        </Header>
-                    </Menu.Item>
+                        <Menu.Item>
+                            <Header as='h5' inverted>
+                                {this.getDisplayTitle(this.props.location.pathname)}
+                            </Header>
+                        </Menu.Item>
 
-                    <Menu.Item>
-                        <Link to="/editaccount" className="item">
-                            {this.state.currentUser === "Not signed in"?<div/>:<Icon name="user Circle"/>}
-                            {this.state.currentUser}
-                        </Link>
-                    </Menu.Item>
+                        <Menu.Item>
+                            <Link to="/editaccount" className="item">
+                                {this.state.currentUser === "Not signed in"?<div/>:<Icon name="user Circle"/>}
+                                {this.state.currentUser}
+                            </Link>
+                        </Menu.Item>
 
-                </Menu>
+                    </Menu>
+
             </div>
 
         )
