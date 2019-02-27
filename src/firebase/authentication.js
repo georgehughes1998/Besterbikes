@@ -110,6 +110,7 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
             lastName: surname
         },
         dateOfBirth: dateOfBirth,
+        type: "customer"
     };
 
     const promise = usersDoc.set(userDetails);
