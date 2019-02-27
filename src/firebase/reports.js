@@ -2,7 +2,7 @@ import * as firebase from "firebase";
 
 
 //Make a customer report and attach it to a task, assigning that task to an operator
-export const makeReport = async () => {
+export const makeReport = async (reservationID, category, comment) => {
     //TODO: implement
 
     //TODO: Create report
