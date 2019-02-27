@@ -21,17 +21,12 @@ import Report from "./customer/Report";
 import CreateTask from "./tasks/CreateTask";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 
+import './sideBarOverride.css'
+
 
 //TODO: Add prop types and typescript to app
 //TODO: Move UI props over to JSON
 class App extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {}
-    };
-
-    handleContextRef = contextRef => this.setState({ contextRef });
 
     componentDidMount() {
         //TODO: Move to Redux
@@ -55,8 +50,9 @@ class App extends React.Component {
 
                         <TopMenuBar fixed='absolute'/>
 
-                        <Sidebar.Pushable as={Segment} >
-                            <SideBarContent
+                        <Sidebar.Pushable style={{minHeight: "100vh"}}>
+                            <SideBarContent as={Segment}
+
                             links={{
                             Main: {
                             name: 'Menu',

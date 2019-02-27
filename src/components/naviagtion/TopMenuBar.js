@@ -13,7 +13,7 @@ class TopMenuBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: "Not signed in"
+            currentUser: ""
         };
     }
 
@@ -23,11 +23,11 @@ class TopMenuBar extends React.Component {
 
     authenticateUser = async () => {
         const user = await getUser();
-        if (user !== null && this.state.currentUser === "Not signed in") {
+        if (user !== null && this.state.currentUser === "") {
                 const userDetails = await getUserDetails();
                 this.setState({currentUser: userDetails.name.firstName});
-        }else if (user === null && this.state.currentUser !== "Not signed in") {
-            this.setState({currentUser: "Not signed in"});
+        }else if (user === null && this.state.currentUser !== "") {
+            this.setState({currentUser: ""});
         }
         return user
     };
@@ -69,7 +69,7 @@ class TopMenuBar extends React.Component {
         return (
             <Menu color="blue" inverted widths={3} fixed='top'>
 
-                <Menu.Item disabled={this.props.sideBarVisible || this.state.currentUser === "Not signed in"}
+                <Menu.Item disabled={this.props.sideBarVisible || this.state.currentUser === ""}
                            onClick={this.props.sideBarVisible ? this.handleHideClick : this.handleShowClick}>
                     <Icon name="bars"/>
                 </Menu.Item>
@@ -82,7 +82,7 @@ class TopMenuBar extends React.Component {
 
                 <Menu.Item>
                     <Link to="/editaccount" className="item">
-                        {this.state.currentUser === "Not signed in"?<div/>:<Icon name="user Circle"/>}
+                        {this.state.currentUser === ""?<div/>:<Icon name="user Circle"/>}
                         {this.state.currentUser}
                     </Link>
                 </Menu.Item>

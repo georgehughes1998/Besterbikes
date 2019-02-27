@@ -39,8 +39,6 @@ const SideBarContent = (props) => {
             color="blue"
         >
             <br/>
-            <br/>
-            <br/>
 
             {renderLinks}
         </Sidebar>
