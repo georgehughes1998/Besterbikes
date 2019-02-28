@@ -34,10 +34,10 @@ const getUsersOfType = async (userType) => {
 
     const customersSnapshot = await customersCollection.get();
 
-    for (let doc in customersSnapshot)
+    for (let doc in customersSnapshot.docs)
     {
-        let customerID = doc.id;
-        let customerData = doc.data();
+        const customerID = doc.id;
+        const customerData = doc.data();
 
         customersArray[customerID] = customerData;
 
