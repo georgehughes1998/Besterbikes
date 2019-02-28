@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 
+//The indexes for the arrays returned by the following functions are the user IDs.
 
 //Get list of customers
 export const getCustomers = async () => {
@@ -7,13 +8,11 @@ export const getCustomers = async () => {
     return await getUsersOfType('customer');
 };
 
-
 //Get list of operators
 export const getOperators = async () => {
     //TODO: Test
     return await getUsersOfType('operator');
 };
-
 
 //Get list of managers
 export const getManagers = async () => {
@@ -25,7 +24,7 @@ export const getManagers = async () => {
 
 
 const getUsersOfType = async (userType) => {
-    //TODO: implement
+    //TODO: Test
 
     const customersArray = [];
 
