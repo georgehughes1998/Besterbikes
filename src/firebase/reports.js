@@ -29,7 +29,9 @@ export const makeReport = async (reservationID, category, comment) => {
     const reportID = reportDocument.id;
 
 
-    await makeNewTask({reportID,category: "userReport"});
+    await makeNewTask({reportID,
+                        category: "userReport",
+                        comment:"See attached report..."});
 
 };
 
