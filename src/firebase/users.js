@@ -43,16 +43,16 @@ const getUsersOfType = async (userType) => {
 
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
-    const customersCollection = usersCollection.where('type','==',userType);
+    const usersTypeCollection = usersCollection.where('type','==',userType);
 
-    const customersSnapshot = await customersCollection.get();
+    const userSnapshot = await usersTypeCollection.get();
 
-    for (let doc in customersSnapshot.docs)
+    for (let doc in userSnapshot.docs)
     {
-        const customerID = doc.id;
-        const customerData = doc.data();
+        const userID = doc.id;
+        const userData = doc.data();
 
-        customersArray[customerID] = customerData;
+        customersArray[userID] = userData;
 
     }
 
