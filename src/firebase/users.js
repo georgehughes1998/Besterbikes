@@ -22,6 +22,19 @@ export const getManagers = async () => {
 
 
 
+export const getUser = async (userID) => {
+
+    const db = firebase.firestore();
+    const usersCollection = db.collection('users');
+    const userDocument = usersCollection.doc(userID);
+
+    const userSnapshot = await userDocument.get();
+    const userData = userSnapshot.data();
+
+    return userData
+
+};
+
 
 const getUsersOfType = async (userType) => {
     //TODO: Test
