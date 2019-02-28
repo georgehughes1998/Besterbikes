@@ -92,7 +92,7 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
 
 };
 
-const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes, bikeType) => {
+export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes, bikeType) => {
     //Sets the number of available bikes at a station to the provided number
 
     const db = firebase.firestore();

@@ -41,7 +41,7 @@ export const getBikesAt = async (stationID) => {
 };
 
 
-export const getBike = async (bikeID) => {
+const getBike = async (bikeID) => {
     const db = firebase.firestore();
     const bikesCollection = db.collection('bikes');
 

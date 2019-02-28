@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import * as reservations from "reservations";
 
 
 export const unlockBike = async (reservationID) => {
@@ -85,6 +86,7 @@ const removeBike = async (stationID,bikeID,bikeType) =>
 
 };
 
+//Add a bike to the bike array of the given station
 const addBike = async (stationID,bikeID,bikeType) =>
 {
     //Used by return bike to add the given bike to the appropriate bike array of the given station
@@ -159,6 +161,9 @@ export const returnBike = async (bikeID, stationID) => {
 
     await bikeDocument.update('reservation','');
     await bikeDocument.update('status','available');
+
+    const numberOfAvailableBikes = reservations.getNumberOfAvailableBikes(stationID,bikeType);
+    await reservations.setNumberOfAvailableBikes(stationID,numberOfAvailableBikes+1,bikeType);
 
     await addBike(stationID,bikeID,bikeType);
 
