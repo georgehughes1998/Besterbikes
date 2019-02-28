@@ -2,19 +2,48 @@ import * as firebase from "firebase";
 
 
 //Get list of customers
-export const getCustomers = async (filter) => {
-    //TODO: implement
+export const getCustomers = async () => {
+    //TODO: Test
+    return await getUsersOfType('customer');
 };
 
 
 //Get list of operators
-export const getOperators = async (filter) => {
-    //TODO: implement
+export const getOperators = async () => {
+    //TODO: Test
+    return await getUsersOfType('operator');
 };
 
 
 //Get list of managers
-export const getManagers = async (filter) => {
-    //TODO: implement
+export const getManagers = async () => {
+    //TODO: Test
+    return await getUsersOfType('manager');
 };
 
+
+
+
+const getUsersOfType = async (userType) => {
+    //TODO: implement
+
+    const customersArray = [];
+
+    const db = firebase.firestore();
+    const usersCollection = db.collection('users');
+    const customersCollection = usersCollection.where('type','==',userType);
+
+    const customersSnapshot = await customersCollection.get();
+
+    for (let doc in customersSnapshot)
+    {
+        let customerID = doc.id;
+        let customerData = doc.data();
+
+        customersArray[customerID] = customerData;
+
+    }
+
+    return customersArray;
+
+};
