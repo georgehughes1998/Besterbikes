@@ -21,3 +21,25 @@ export const getCurrentTimeString = () =>
 
     return currentTime;
 };
+
+export const getDateString = (dateObject) => {
+
+    const currentDate = dateObject.getFullYear() + "-" +
+        ("0" + dateObject.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
+        + "-" +
+        ("0" + dateObject.getDay()).slice(-2);
+
+    return currentDate;
+
+};
+
+export const getTimeString = (dateObject) => {
+
+    const currentTime =
+        ("0" + dateObject.getHours()).slice(-2)
+        + ":" +
+        ("0" + dateObject.getMinutes()).slice(-2);
+
+    return currentTime;
+
+}
