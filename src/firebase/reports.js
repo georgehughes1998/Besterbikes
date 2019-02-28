@@ -1,7 +1,7 @@
 import * as firebase from "firebase";
 
 import {getCurrentDateString, getCurrentTimeString} from "./time";
-import {makeTask} from "./tasks";
+import {makeNewTask} from "./tasks";
 
 
 //Make a customer report and attach it to a task, assigning that task to an operator
@@ -29,7 +29,7 @@ export const makeReport = async (reservationID, category, comment) => {
     const reportID = reportDocument.id;
 
 
-    await makeTask({reportID,category: "userReport"});
+    await makeNewTask({reportID,category: "userReport"});
 
 };
 

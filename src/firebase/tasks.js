@@ -1,17 +1,69 @@
 import * as firebase from "firebase";
 
+import {getDateString, getTimeString} from "./time";
+
 //Task statuses:
-//  Pending
-//  Active
-//  Complete
-//  Reassigned
+//  pending
+//  accepted
+//  complete
+//  reassigned
 
 
 
-export const makeTask = async ({operatorID, category, deadlineDate, deadlineTime, comment, reportID, bikeID, stationID}) => {
+export const makeNewTask = async ({operator, category, deadlineDate, deadlineTime, comment, report, bike, station}) => {
     //TODO: implement
 
-    //TODO: Create task and populate with the given data (not all of the inputs are guaranteed to be there)
+    const theTask = {};
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    const db = firebase.firestore();
+    const tasksCollection = db.collection('tasks');
+
+    //Assign status to the task
+    theTask['status'] = "pending";
+
+    //Assign operator to the task
+    if (operator)
+        theTask['operator'] = operator;
+    else
+        theTask['operator'] = chooseRandomOperator();
+
+    //Assign category to the task
+    if (category)
+        theTask['category'] = category;
+    else
+        throw Error("No category was specified");
+
+    //Assign deadline to the task
+    if (deadlineDate && deadlineTime)
+        theTask['deadline'] = {date: deadlineDate,
+                               time: deadlineTime};
+    else
+        theTask['deadline'] = getNextWeekDateObject();
+
+    //Assign comment to the task
+    if (comment)
+        theTask['comments'] = [{user:uid,comment:comment}];
+    else
+        theTask['comments'] = [];
+
+    //Assign report to the task
+    if (report)
+        theTask['report'] = report;
+
+    //Assign bike to the task
+    if (bike)
+        theTask['bike'] = bike;
+
+    //Assign station to the task
+    if (station)
+        theTask['station'] = station;
+
+
+    //Add task to the firestore
+    await tasksCollection.add(theTask);
 
 };
 
@@ -27,7 +79,7 @@ export const getTasks = async () => {
 
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
-    const operatorTasksCollection = tasksCollection.where('operatorID','==',uid);
+    const operatorTasksCollection = tasksCollection.where('operator','==',uid);
 
     const operatorTasksSnapshot = await operatorTasksCollection.get();
 
@@ -78,6 +130,20 @@ export const updateTaskStatus = async (taskID, newStatus) => {
 export const reassignTask = async (taskID, comment, operatorID) => {
     //TODO: implement
 
+    const db = firebase.firestore();
+    const tasksCollection = db.collection('tasks');
+
+    //Add the comment to the task
+    await addTaskComment(taskID,comment);
+
+    //Change the operator ID for the new task
+    const theTask = await getTask(taskID);
+    theTask['operator'] = operatorID;
+
+    //Add the new task to the firestore
+    await tasksCollection.add(theTask);
+
+    //Update the task status for the old task
     await updateTaskStatus(taskID,'reassigned');
 
 };
@@ -86,11 +152,14 @@ export const reassignTask = async (taskID, comment, operatorID) => {
 export const addTaskComment = async (taskID, comment) => {
     //TODO: Test
 
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
     const taskDocument = tasksCollection.doc(taskID);
 
-    await taskDocument.update({comments:db.FieldValue.arrayUnion(comment)});
+    await taskDocument.update({comments:db.FieldValue.arrayUnion({user:uid,comment:comment})});
 
 };
 
@@ -108,3 +177,24 @@ export const updateTaskDeadline = async (taskID, newDate, newTime) => {
 };
 
 
+const chooseRandomOperator = async () => {
+    //TODO: Implement
+
+};
+
+const getNextWeekDateObject = async () => {
+    //TODO: Test
+
+    const nextWeek = new Date();
+
+    nextWeek.setDate(time.getDate()+7);
+
+    const dateString = getDateString(nextWeek);
+    const timeString = getTimeString(nextWeek);
+
+    const dateObject = {date: dateString,
+                        time: timeString};
+
+    return dateObject;
+
+};
