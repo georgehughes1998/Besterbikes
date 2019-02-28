@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
-import * as reservations from "reservations";
+import {getNumberOfAvailableBikes, setNumberOfAvailableBikes} from "./reservations";
+
 
 
 export const unlockBike = async (reservationID) => {
@@ -162,8 +163,9 @@ export const returnBike = async (bikeID, stationID) => {
     await bikeDocument.update('reservation','');
     await bikeDocument.update('status','available');
 
-    const numberOfAvailableBikes = reservations.getNumberOfAvailableBikes(stationID,bikeType);
-    await reservations.setNumberOfAvailableBikes(stationID,numberOfAvailableBikes+1,bikeType);
+    const numberOfAvailableBikes = await getNumberOfAvailableBikes(stationID,bikeType);
+    const newNumberOfAvailableBikes = parseInt(numberOfAvailableBikes)+1;
+    await setNumberOfAvailableBikes(stationID,newNumberOfAvailableBikes,bikeType);
 
     await addBike(stationID,bikeID,bikeType);
 
