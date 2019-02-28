@@ -11,15 +11,19 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station, "road");
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
 
-    if (numberOfAvailableRoadBikes < regularBikes) {
+    //Prevent the user from doing anything absurd
+    if (regularBikes > 8 || mountainBikes > 8)
+        throw new Error("Cannot reserve more than 8 bikes at once.");
+
+    if (numberOfAvailableRoadBikes < regularBikes)
         throw new Error("Not enough road bikes available at selected station");
-    }
-    if (numberOfAvailableMountainBikes < mountainBikes) {
+
+    if (numberOfAvailableMountainBikes < mountainBikes)
         throw new Error("Not enough mountain bikes available at selected station");
-    }
-    if (mountainBikes < 0 || regularBikes < 0) {
+
+    if (mountainBikes < 0 || regularBikes < 0)
         throw new Error("Number of bikes selected cannot be less than zero");
-    }
+
 
     const db = firebase.firestore();
 
