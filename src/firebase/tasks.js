@@ -34,7 +34,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     if (category)
         theTask['category'] = category;
     else
-        throw Error("No category was specified");
+        throw new Error("No category was specified");
 
     //Assign deadline to the task
     if (deadlineDate && deadlineTime)
@@ -47,7 +47,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     if (comment)
         theTask['comments'] = [{user:uid,comment:comment}];
     else
-        throw Error('No comment was specified');
+        throw new Error('No comment was specified');
 
     //Assign report to the task
     if (report)
