@@ -1,5 +1,9 @@
 import * as firebase from "firebase";
 
+//TODO: washingtonRef.update({
+//   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
+// });
+
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
     //Function to make reservations with the given data
