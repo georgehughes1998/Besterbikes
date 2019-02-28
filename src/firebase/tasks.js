@@ -8,7 +8,7 @@ import * as firebase from "firebase";
 
 
 
-export const makeTask = async ({operatorID, category, deadline, comment, reportID, bikeID, stationID}) => {
+export const makeTask = async ({operatorID, category, deadlineDate, deadlineTime, comment, reportID, bikeID, stationID}) => {
     //TODO: implement
 
     //TODO: Create task and populate with the given data (not all of the inputs are guaranteed to be there)
@@ -64,7 +64,7 @@ const getTask = async (taskID) => {
 
 
 export const updateTaskStatus = async (taskID, newStatus) => {
-    //TODO: implement
+    //TODO: Test
 
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
@@ -72,22 +72,39 @@ export const updateTaskStatus = async (taskID, newStatus) => {
 
     await taskDocument.update({status:newStatus});
 
-    return 0;
 };
 
 
 export const reassignTask = async (taskID, comment, operatorID) => {
     //TODO: implement
+
+    await updateTaskStatus(taskID,'reassigned');
+
 };
 
 
 export const addTaskComment = async (taskID, comment) => {
-    //TODO: implement
+    //TODO: Test
+
+    const db = firebase.firestore();
+    const tasksCollection = db.collection('tasks');
+    const taskDocument = tasksCollection.doc(taskID);
+
+    await taskDocument.update({comments:db.FieldValue.arrayUnion(comment)});
+
 };
 
 
-export const updateTaskDeadline = async (taskID, newDate) => {
-    //TODO: implement
+export const updateTaskDeadline = async (taskID, newDate, newTime) => {
+    //TODO: Test
+
+    const db = firebase.firestore();
+    const tasksCollection = db.collection('tasks');
+    const taskDocument = tasksCollection.doc(taskID);
+
+    await taskDocument.update({'deadline.date':newDate,
+                                    'deadline.time':newTime});
+
 };
 
 
