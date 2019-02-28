@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
-import * as reservations from 'reservations';
+
+
 
 
 export const getBikesAt = async (stationID) => {
@@ -60,14 +61,27 @@ const getBike = async (bikeID) => {
 
 };
 
-export const getNumberOfBikesAt = async (stationID) => {
 
-    const numberOfRoadBikes = await reservations.getNumberOfAvailableBikes(stationID, "road");
-    const numberOfMountainBikes = await reservations.getNumberOfAvailableBikes(stationID, "mountain");
 
-    return {
-        road: numberOfRoadBikes,
-        mountain: numberOfMountainBikes
-    };
 
-};
+
+
+
+
+
+
+
+
+
+
+// export const getNumberOfAvailableBikes = async (stationID) => {
+//
+//     const numberOfRoadBikes = await reservations.getNumberOfAvailableBikes(stationID, "road");
+//     const numberOfMountainBikes = await reservations.getNumberOfAvailableBikes(stationID, "mountain");
+//
+//     return {
+//         road: numberOfRoadBikes,
+//         mountain: numberOfMountainBikes
+//     };
+//
+// };
