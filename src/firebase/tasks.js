@@ -18,12 +18,44 @@ export const makeTask = async ({operatorID, category, deadline, comment, reportI
 
 //Return a list of task objects
 export const getTasks = async () => {
-    //TODO: implement
+    //TODO: Test
+
+    const theTasks = [];
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+    const db = firebase.firestore();
+    const tasksCollection = db.collection('tasks');
+    const operatorTasksCollection = tasksCollection.where('operatorID','==',uid);
+
+    const operatorTasksSnapshot = await operatorTasksCollection.get();
+
+    for (let operatorTaskDoc in operatorTasksSnapshot.docs)
+    {
+        const operatorTaskID = operatorTaskDoc.id;
+        const operatorTaskData = operatorTaskDoc.data();
+        theTasks[operatorTaskID] = operatorTaskData;
+    }
+
+
+    return theTasks;
+
 };
 
 //Return a single task object
 const getTask = async (taskID) => {
-    //TODO: implement
+    //TODO: Test
+
+    const db = firebase.firestore();
+    const tasksCollection = db.collection('tasks');
+    const taskDocument = tasksCollection.doc(taskID);
+
+    const taskSnapshot = await taskDocument.get();
+    const taskData = taskSnapshot.data();
+
+    return taskData;
+
 };
 
 
