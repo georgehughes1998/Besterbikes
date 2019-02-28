@@ -43,7 +43,9 @@ export const getTasks = async () => {
 
 };
 
+
 //Return a single task object
+//This function may be redundant...
 const getTask = async (taskID) => {
     //TODO: Test
 
@@ -60,9 +62,17 @@ const getTask = async (taskID) => {
 
 
 
-//Update
+
 export const updateTaskStatus = async (taskID, newStatus) => {
     //TODO: implement
+
+    const db = firebase.firestore();
+    const tasksCollection = db.collection('tasks');
+    const taskDocument = tasksCollection.doc(taskID);
+
+    await taskDocument.update({status:newStatus});
+
+    return 0;
 };
 
 
