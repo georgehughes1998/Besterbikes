@@ -11,7 +11,7 @@ import {getDateString, getTimeString} from "./time";
 
 
 export const makeNewTask = async ({operator, category, deadlineDate, deadlineTime, comment, report, bike, station}) => {
-    //TODO: implement
+    //TODO: Test
 
     const theTask = {};
 
@@ -178,8 +178,16 @@ export const updateTaskDeadline = async (taskID, newDate, newTime) => {
 
 
 const chooseRandomOperator = async () => {
-    //TODO: Implement
+    //TODO: Test
 
+    const db = firebase.firestore();
+    const usersCollection = db.collection('users');
+    const operatorsCollection = usersCollection.where('type','==',"operator");
+
+    //TODO: Improve random method
+    const operatorID = operatorsCollection.doc().id;
+
+    return operatorID;
 };
 
 const getNextWeekDateObject = async () => {
