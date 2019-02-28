@@ -47,7 +47,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     if (comment)
         theTask['comments'] = [{user:uid,comment:comment}];
     else
-        theTask['comments'] = [];
+        throw Error('No comment was specified');
 
     //Assign report to the task
     if (report)
