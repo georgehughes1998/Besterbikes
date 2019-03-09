@@ -21,9 +21,9 @@ export const makeReport = async (reservationID, category, comment) => {
     theReport['reservation'] = reservationID;
     theReport['category'] = category;
     theReport['comment'] = comment;
-    theReport['time']['date'] = getCurrentDateString();
-    theReport['time']['time'] = getCurrentTimeString();
-
+    theReport['time'] = {
+        date: getCurrentDateString(),
+        time: getCurrentTimeString()};
 
     const reportDocument = await reportsCollection.add(theReport);
     const reportID = reportDocument.id;
