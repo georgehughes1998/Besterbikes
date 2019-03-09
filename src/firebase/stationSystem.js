@@ -7,6 +7,8 @@ import {getCurrentDateString, getCurrentTimeString} from "./time";
 export const unlockBike = async (reservationID) => {
     //Unlocks a bike at the given station and the given reservation
 
+    //TODO: Mountain bikes throw up an error when unlocking them. Solve this.
+
     const db = firebase.firestore();
 
     const reservationsCollection = db.collection('reservations');

@@ -28,7 +28,10 @@ export class BesterbikesMap extends Component {
             const bikesAtStations = {};
 
             Object.values(stations).map( async (station, index) => {
-                bikesAtStations[keys[index]] = await getNumberOfAvailableBikes(keys[index],"road");
+                bikesAtStations[keys[index]] = {road:0,mountain:0};
+
+                bikesAtStations[keys[index]]['road'] = await getNumberOfAvailableBikes(keys[index],"road");
+                bikesAtStations[keys[index]]['mountain'] = await getNumberOfAvailableBikes(keys[index],"mountain");
                 // console.log(bikesAtStations);
             });
 
@@ -84,20 +87,31 @@ constructor(props){
         let keys = Object.keys(stations);
         // console.log(keys);
 
+        const theState = this.state.bikesAtStations;
+
+
         if (!(stations === {})) {
             return Object.values(stations).map((station, index) => {
+
               const stationName = keys[index];
 
-              const theState = this.state.bikesAtStations;
-              console.log(stationName);
-              console.log(index);
-              console.log(station);
-              console.log(Object.keys(theState));
-              console.log(theState[index]);
               let bikesAvailable = 0;
-              if (theState[stationName])
-                bikesAvailable = this.state.bikesAtStations[stationName];
-              console.log(theState.stationEdinburghUniversityLibrary);
+
+              if (theState[stationName]) {
+                  const roadBikes = theState[stationName]['road'];
+                  const mountainBikes = theState[stationName]['mountain'];
+
+                  if (roadBikes)
+                      bikesAvailable += roadBikes;
+
+                  if (mountainBikes)
+                      bikesAvailable += mountainBikes;
+
+                  console.log("At " + stationName + ", there are " + roadBikes + " road bikes and " + mountainBikes +
+                      " mountain bikes " + " with a total of " + bikesAvailable + " available bikes.");
+
+              }
+
                 return (
                     <Marker position={station.location.geoPoint}
                             onClick={this.onMarkerClick}
