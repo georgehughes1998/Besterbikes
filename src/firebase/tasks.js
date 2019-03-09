@@ -3,10 +3,10 @@ import * as firebase from "firebase";
 import {getDateString, getTimeString} from "./time";
 
 //Task statuses:
-//  pending
-//  accepted
-//  complete
-//  reassigned
+//  pending     - Operator hasn't accepted the task yet
+//  accepted    - Operator has accepted the task and is in the process of doing it
+//  complete    - Operator has completed the task
+//  reassigned  - Operator has shifted responsibility of task to another operator
 
 
 
