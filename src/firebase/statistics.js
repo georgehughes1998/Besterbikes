@@ -7,6 +7,19 @@ import * as firebase from "firebase";
 // 3 - Year
 
 
+//Users
+
+export const getNumberOfNewUsers = async (timeScale) => {
+    //TODO: Implement
+
+};
+
+export const getNumberOfLogins = async (timeScale) => {
+    //TODO: Implement
+
+};
+
+
 //Trips
 
 export const getNumberOfTripsCreated = async (timeScale) => {
@@ -59,7 +72,6 @@ export const getNumberOfReportsCreated = async (timeScale) => {
     //TODO: Implement
 
 };
-
 
 
 //Station
