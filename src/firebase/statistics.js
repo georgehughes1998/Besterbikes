@@ -15,7 +15,7 @@ import {getDay, getMonth, getYear} from "./time";
 // {date: {day: 2, month: 9, year: 2019}
 
 
-export const incrementStatistic = async (statisticType) =>
+export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 {
 
     const db = firebase.firestore();
@@ -36,7 +36,7 @@ export const incrementStatistic = async (statisticType) =>
     if (statisticSnapshot.empty) //If there is no document with this date
     {
         const statisticObject = {date: {day,month,year}};
-        statisticObject[statisticType] = 1;
+        statisticObject[statisticType] = incrementAmount;
 
         await statisticsCollection.add(statisticObject);
 
@@ -46,7 +46,7 @@ export const incrementStatistic = async (statisticType) =>
         const statisticID = statisticSnapshot.docs[0].id;
         const statisticValue = statisticSnapshot.docs[0].data()[statisticType];
 
-        let newStatisticValue = 1;
+        let newStatisticValue = incrementAmount;
 
         if (statisticValue)
             newStatisticValue += statisticValue;
