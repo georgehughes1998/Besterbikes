@@ -127,6 +127,9 @@ export const updateTaskStatus = async (taskID, newStatus) => {
 
     await taskDocument.update({status:newStatus});
 
+    if (newStatus === "complete")
+        await incrementStatistic("completeTask");
+
 };
 
 
@@ -179,7 +182,7 @@ export const updateTaskDeadline = async (taskID, newDate, newTime) => {
     await taskDocument.update({'deadline.date':newDate,
                                     'deadline.time':newTime});
 
-    await incrementStatistic("taskExtend");
+    await incrementStatistic("extendTask");
 
 };
 
