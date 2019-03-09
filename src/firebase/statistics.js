@@ -4,9 +4,8 @@ import {getDay, getMonth, getYear} from "./time";
 
 // timeScale Argument Rules:
 // 0 - Day
-// 1 - Week
-// 2 - Month
-// 3 - Year
+// 1 - Month
+// 2 - Year
 
 
 // ----Updating Fields in statistics table----
@@ -32,6 +31,7 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 
     const statisticSingleQuery = statisticsQuery.limit(1);
     const statisticSnapshot = await statisticSingleQuery.get();
+
 
     if (statisticSnapshot.empty) //If there is no document with this date
     {
@@ -130,5 +130,45 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 
 export const getStationStatistics = async (timeScale) => {
     //TODO: Implement
+
+};
+
+
+
+const getStatistic = async (statisticType,timeScale) => {
+
+
+    const db = firebase.firestore();
+    const statisticsCollection = db.collection('statistics');
+
+    const day = getDay();
+    const month = getMonth();
+    const year = getYear();
+
+    let statisticsQuery;
+
+    if (timeScale === 0)
+    {
+        statisticsQuery = statisticsCollection
+            .where("date.day", "==", day)
+            .where("date.month", "==", month)
+            .where("date.year", "==", year);
+    }
+    else if (timeScale === 1)
+    {
+        statisticsQuery = statisticsCollection
+            .where("date.month", "==", month)
+            .where("date.year", "==", year);
+    }
+    else if (timeScale === 2)
+    {
+        statisticsQuery = statisticsCollection
+            .where("date.year", "==", year);
+    }
+    else
+        throw new Error("getStatistic takes an integer argument of either 0 (day), 1 (month), or 2 (year)");
+
+
+    await statisticsQuery.get();
 
 };
