@@ -9,6 +9,9 @@ import {incrementStatistic} from "./statistics";
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
     //Function to make reservations with the given data
 
+    regularBikes = parseInt(regularBikes);
+    mountainBikes = parseInt(mountainBikes);
+
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station, "road");
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
 
@@ -75,7 +78,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     console.log("Reservations to be added to user:");
     console.log(reservationsIDArray);
 
-    await incrementStatistic("makeReservation",mountainBikes+regularBikes);
+    await incrementStatistic("makeReservation",0+mountainBikes+regularBikes);
 
     return "success";
 
@@ -258,7 +261,12 @@ export const cancelReservation = async (reservationID) => {
                 .then(() => {
 
                     return reservationDocument.update({status: "cancelled"})
-                        .then(() => {return "success"})
+                        .then(() => {
+
+                            incrementStatistic("cancelReservation");
+
+                            return "success"
+                        })
                         .catch(err => {return err})
                 })
                 .catch(err => {return err});
