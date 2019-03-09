@@ -14,7 +14,7 @@ export const makeReport = async (reservationID, category, comment) => {
     const uid = auth.currentUser.uid;
 
     const db = firebase.firestore();
-    const reportsCollection = db.collection('reservations');
+    const reportsCollection = db.collection('reports');
 
 
     theReport['user'] = uid;
