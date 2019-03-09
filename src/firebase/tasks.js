@@ -121,6 +121,9 @@ const getTask = async (taskID) => {
 export const updateTaskStatus = async (taskID, newStatus) => {
     //TODO: Test
 
+    if (!(newStatus === "accepted" || newStatus === "complete" || newStatus === "reassigned"))
+        throw new Error("newStatus must be one of 'accepted', 'complete' or 'reassigned'.");
+
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
     const taskDocument = tasksCollection.doc(taskID);
