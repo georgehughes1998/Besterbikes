@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import {incrementStatistic} from "./statistics";
 
 //TODO: washingtonRef.update({
 //   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
@@ -73,6 +74,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
 
     console.log("Reservations to be added to user:");
     console.log(reservationsIDArray);
+
+    await incrementStatistic("makeReservation",mountainBikes+regularBikes);
 
     return "success";
 

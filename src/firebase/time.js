@@ -42,4 +42,28 @@ export const getTimeString = (dateObject) => {
 
     return currentTime;
 
-}
+};
+
+
+export const getDay = () =>
+{
+    const time = new Date();
+
+    return time.getDay();
+};
+
+
+export const getMonth = () =>
+{
+    const time = new Date();
+
+    return time.getMonth();
+};
+
+
+export const getYear = () =>
+{
+    const time = new Date();
+
+    return time.getFullYear();
+};

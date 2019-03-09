@@ -1,12 +1,13 @@
 import * as firebase from "firebase";
 // import * as time from "time";
 import {getDateString, getTimeString} from "./time";
+import {incrementStatistic} from "./statistics";
 
 //Task statuses:
-//  pending
-//  accepted
-//  complete
-//  reassigned
+//  pending     - Operator hasn't accepted the task yet
+//  accepted    - Operator has accepted the task and is in the process of doing it
+//  complete    - Operator has completed the task
+//  reassigned  - Operator has shifted responsibility of task to another operator
 
 
 
@@ -28,7 +29,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     if (operator)
         theTask['operator'] = operator;
     else
-        theTask['operator'] = chooseRandomOperator();
+        theTask['operator'] = await chooseRandomOperator();
 
     //Assign category to the task
     if (category)
@@ -64,6 +65,8 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 
     //Add task to the firestore
     await tasksCollection.add(theTask);
+
+    await incrementStatistic("makeTask");
 
 };
 
@@ -146,6 +149,8 @@ export const reassignTask = async (taskID, comment, operatorID) => {
     //Update the task status for the old task
     await updateTaskStatus(taskID,'reassigned');
 
+    await incrementStatistic("reassignTask");
+
 };
 
 
@@ -174,6 +179,8 @@ export const updateTaskDeadline = async (taskID, newDate, newTime) => {
     await taskDocument.update({'deadline.date':newDate,
                                     'deadline.time':newTime});
 
+    await incrementStatistic("taskExtend");
+
 };
 
 
@@ -183,15 +190,27 @@ const chooseRandomOperator = async () => {
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const operatorsCollection = usersCollection.where('type','==',"operator");
-    const singleOperator = operatorsCollection.limit(1);
 
-    //TODO: Improve random method
-    const operatorID = singleOperator.id;
+    const operatorsSnapshot = await operatorsCollection.get();
+    const operatorsArray = operatorsSnapshot.docs;
 
-    return operatorID;
+
+    if (operatorsArray.length > 0)
+    {
+        //Select a random operator
+        const randomNumber = Math.random() * (operatorsArray.length - 1);
+        const operatorID = operatorsArray[randomNumber].id;
+
+        return operatorID;
+    }
+    else
+    {
+        throw new Error("There are no operators.");
+    }
+
 };
 
-const getNextWeekDateObject = async () => {
+const getNextWeekDateObject = () => {
     //TODO: Test
 
     const nextWeek = new Date();
