@@ -136,7 +136,7 @@ export const getStationStatistics = async (timeScale) => {
 
 
 const getStatistic = async (statisticType,timeScale) => {
-
+    //TODO: Test
 
     const db = firebase.firestore();
     const statisticsCollection = db.collection('statistics');
@@ -169,6 +169,20 @@ const getStatistic = async (statisticType,timeScale) => {
         throw new Error("getStatistic takes an integer argument of either 0 (day), 1 (month), or 2 (year)");
 
 
-    await statisticsQuery.get();
+    const statisticsSnapshot = await statisticsQuery.get();
+    const statisticsDocs = statisticsSnapshot.docs;
+
+    let statisticSum = 0;
+
+    //Sum the values
+    for (let doc in statisticsDocs)
+    {
+        const statisticData = doc.data();
+        const statisticValue = statisticData[statisticType];
+
+        statisticSum += statisticValue;
+    }
+
+    return statisticSum;
 
 };
