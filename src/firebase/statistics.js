@@ -62,12 +62,14 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 //Users
 
 export const getNumberOfNewUsers = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("signUp",timeScale);
 
 };
 
 export const getNumberOfLogins = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("signIn",timeScale);
 
 };
 
@@ -75,22 +77,26 @@ export const getNumberOfLogins = async (timeScale) => {
 //Trips
 
 export const getNumberOfTripsCreated = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("makeReservation",timeScale);
 
 };
 
 export const getNumberOfBikesUnlocked = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("unlockBike",timeScale);
 
 };
 
 export const getNumberOfTripsCompleted = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("returnBike",timeScale);
 
 };
 
 export const getNumberOfTripsCancelled = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("cancelReservation",timeScale);
 
 };
 
@@ -98,22 +104,26 @@ export const getNumberOfTripsCancelled = async (timeScale) => {
 //Tasks
 
 export const getNumberOfTasksCreated = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("makeTask",timeScale);
 
 };
 
 export const getNumberOfTasksCompleted = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("completeTask",timeScale);
 
 };
 
 export const getNumberOfTasksReassigned = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("reassignTask",timeScale);
 
 };
 
 export const getNumberOfTasksExtended = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("extendTask",timeScale);
 
 };
 
@@ -121,7 +131,8 @@ export const getNumberOfTasksExtended = async (timeScale) => {
 //Report
 
 export const getNumberOfReportsCreated = async (timeScale) => {
-    //TODO: Implement
+    //TODO: Test
+    return getStatistic("makeReport",timeScale);
 
 };
 
