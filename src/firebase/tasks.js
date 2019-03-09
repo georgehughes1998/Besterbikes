@@ -187,15 +187,20 @@ const chooseRandomOperator = async () => {
     const operatorsSnapshot = await operatorsCollection.get();
     const operatorsArray = operatorsSnapshot.docs;
 
-    let operatorID = "YerNaN";
 
     if (operatorsArray.length > 0)
     {
+        //Select a random operator
         const randomNumber = Math.random() * (operatorsArray.length - 1);
-        operatorID = operatorsArray[randomNumber].id;
+        const operatorID = operatorsArray[randomNumber].id;
+
+        return operatorID;
+    }
+    else
+    {
+        throw new Error("There are no operators.");
     }
 
-    return operatorID;
 };
 
 const getNextWeekDateObject = () => {
