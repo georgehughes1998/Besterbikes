@@ -1,8 +1,23 @@
 import React from 'react'
-import SimpleForm from "../SimpleForm";
 import {getUser} from "../../firebase/authentication";
+import {makeReport} from "../../firebase/reports";
+import {Button, Container, Dropdown, Form, Header, TextArea} from "semantic-ui-react";
+import PageContainer from "../PageContainer";
+import TripsDropdown from "../dropdowns/TripsDropdown";
+import {getTrips} from "../../firebase/reservations";
+import connect from "react-redux/es/connect/connect";
+import {loadStations, loadTrips} from "../../redux/actions";
 
 class Report extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            category: "",
+            description: "",
+            reservation: ""
+        }
+    };
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
@@ -12,40 +27,101 @@ class Report extends React.Component {
         return user
     };
 
+    retrieveFirebaseTrips = async () => {
+        const obj = await getTrips();
+        if (obj) {
+            this.props.loadTrips(obj);
+        } else {
+
+        }
+    };
+
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) =>  {
+                if(user)
+                    this.retrieveFirebaseTrips();
+                console.log(this.props.trips)
+            })};
+
     //TODO: Add firebase function to make report
     handleSubmit = async (values) => {
-        // return reportIssue(this.state.category, this.state.description)
-        //     .then((obj) => {
-        //
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         throw new SubmissionError({
-        //             _error: err.message
-        //         })
-        //     })
+        return makeReport(this.state.reservation, this.state.category, this.state.description)
+            .then((obj) => {
+
+            })
+            .catch((err) => {
+                console.log(err);
+                // throw new SubmissionError({
+                //     _error: err.message
+                // })
+            })
         console.log(values)
     };
 
     render() {
         return (
-            <SimpleForm
-                title= "How can we help?"
-                dropdown={
-                [
-                    {key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
-                {key: "complaint", value: "Complaint", text: "Complaint"},
-                {key: "feedback", value: "Feedback", text: "Feedback"}
-                    ]}
-                textArea= "Please describe your query here"
-                button= "Send Report"
-                handleSubmit = {(values) => this.handleSubmit(values)}
-            />
+
+            <PageContainer>
+                <br/>
+                <Container textAlign='center'>
+                    <Form>
+
+                        <Header as="h1">How can we help?</Header>
+
+                        <br/>
+                        <Dropdown
+                            selection
+                            search
+                            placeholder='Select Category'
+                            options={[  {key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
+                                {key: "stationFault", value: "Station Fault", text: "Station Fault"},
+                                {key: "feedback", value: "Feedback", text: "Feedback"}
+                            ]}
+                            onChange={(param, data) => this.setState({"category": data.value})}
+                        />
+
+                        <br/>
+                        <br/>
+
+
+                        <TripsDropdown
+                            placeholder = 'Select Reservation'
+                            trips = {this.props.trips}
+                            handleSubmit = {(param, data) => this.setState({"reservation": data.value})}
+                        />
+
+                        <br/>
+                        <br/>
+                        <TextArea
+                            autoHeight
+                            placeholder = "Please describe your query here"
+                            rows={10}
+                            onChange={(param, data) => this.setState({"description": data.value})}
+                        />
+
+                        <br/>
+                        <br/>
+                        <Button
+                            content= "Send Report"
+                            onClick={() => this.handleSubmit(this.state)}
+                        />
+
+                    </Form>
+                </Container>
+            </PageContainer>
         )
     }
 }
 
-export default Report
+const mapStateToProps = (state) => {
+    return {
+        trips: state.JSON.trips,
+        stations: state.JSON.stations
+    }
+};
+
+export default connect(mapStateToProps, {loadTrips, loadStations})(Report);
 
 
 

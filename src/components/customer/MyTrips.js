@@ -33,7 +33,7 @@ class MyTrips extends React.Component {
                     this.retrieveFirebaseTrips();
             })};
 
-    //Cancels a trip using firebase and updates displayed trips
+    //Cancels a reservation using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {
         return cancelReservation(tripId)
             .then((obj) => {

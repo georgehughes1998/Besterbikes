@@ -13,7 +13,9 @@ const SignIn = ({error}) => {
 
     return (
         <PageContainer>
+
             {/*Use procedure to show image from: https://support.awesome-table.com/hc/en-us/articles/115002196665-Display-images-from-Google-Drive*/}
+
             <Image
                 src={"https://drive.google.com/thumbnail?id=1DWfv569MmvtLipSX_vFQVihtJcbbmiTx"}
                 size='medium'
