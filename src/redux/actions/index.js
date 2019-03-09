@@ -27,6 +27,13 @@ export const loadOperators = (operators) => {
     }
 };
 
+export const loadWebPages = (webPages) => {
+    return {
+        type: 'LOAD_WEB_PAGES',
+        payload: webPages
+    }
+};
+
 export const updateUserStatus = (status) => {
     return {
         type: 'UPDATE_USER_STATUS',

@@ -75,26 +75,31 @@ export const getUser = async () => {
 export const getUserDetails = async () => {
 
     const auth = firebase.auth();
-    const uid = auth.currentUser.uid;
+    if (auth.currentUser != null) {
+        const uid = auth.currentUser.uid;
 
-    const db = firebase.firestore();
+        const db = firebase.firestore();
 
-    const usersCollection = db.collection('users');
-    const usersDoc = usersCollection.doc(uid);
+        const usersCollection = db.collection('users');
+        const usersDoc = usersCollection.doc(uid);
 
-    const userDetails = usersDoc.get();
+        const userDetails = usersDoc.get();
 
-    return userDetails
-        .then(doc => {
-            if (doc.exists) {
-                return doc.data();
-            } else {
-                throw new Error("Document doesn't exist");
-            }
-        })
-        .catch(err => {
-            return err
-        });
+        return userDetails
+            .then(doc => {
+                if (doc.exists) {
+                    return doc.data();
+                } else {
+                    throw new Error("Document doesn't exist");
+                }
+            })
+            .catch(err => {
+                return err
+            });
+    }else{
+        return null;
+    }
+
 
 };
 

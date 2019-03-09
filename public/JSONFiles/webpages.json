@@ -1,7 +1,70 @@
-//TODO: Male JSON file to store web pages with URLS, page names and icons
-[
-  {
-    "accountManagement": {
+{
+  "customer":
+  [
+    {
+      "name": "Map",
+      "icon": "map",
+      "link": "/map"
+    },
+    {
+      "name": "Reserve",
+      "icon": "calendar",
+      "link": "/reservebike"
+    },
+    {
+      "name": "Unlock",
+      "icon": "lock",
+      "link": "/unlockbike"
+    },
+    {
+      "name": "MyTrips",
+      "icon": "map signs",
+      "link": "/mytrips"
     }
-  }
-]
+  ],
+  "operator":
+  [
+    {
+      "link": "/map",
+      "icon": "map",
+      "name": "Map"
+    },
+    {"link": "/mytasks",
+      "icon": "tasks",
+      "name": "My Tasks"
+    },
+    {
+      "link": "/unlock",
+      "icon": "unlock",
+      "name": "Unlock"
+    },
+    {
+      "link": "/createtask",
+      "icon": "plus",
+      "name": "Create Task"
+    }
+  ],
+  "manager":
+  [
+    {
+      "link": "/map",
+      "icon": "map",
+      "name": "Map"
+    },
+    {"link": "/users",
+      "icon": "users",
+      "name": "Users"
+    },
+    {
+      "link": "/statistics",
+      "icon": "pie graph",
+      "name": "Statistics"
+    },
+    {
+      "link": "/tasks",
+      "icon": "tasks",
+      "name": "Tasks"
+    }
+  ]
+
+}

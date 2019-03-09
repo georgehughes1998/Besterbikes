@@ -19,7 +19,6 @@ import UnlockBike from "./customer/UnlockBike";
 import StationSystemSimulation from "./StationSystemSimulation";
 import Report from "./customer/Report";
 import CreateTask from "./tasks/CreateTask";
-import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 
 import './sideBarOverride.css'
 
@@ -40,8 +39,8 @@ class App extends React.Component {
         this.props.loadStations(stations)
     }
 
-    render() {
 
+    render() {
         return (
             <div>
                 {/*BrowserRouter handles the pages and their associated URLs for the entire App*/}
@@ -51,36 +50,7 @@ class App extends React.Component {
                         <TopMenuBar fixed='absolute'/>
 
                         <Sidebar.Pushable style={{minHeight: "100vh"}}>
-                            <SideBarContent as={Segment}
-
-                            links={{
-                            Main: {
-                            name: 'Menu',
-                            icon: 'bicycle',
-                            link: '/'
-                            },
-                            Map: {
-                            name: 'Map',
-                            icon: 'map',
-                            link: '/map'
-                            },
-                            Reserve: {
-                            name: 'Reserve',
-                            icon: 'calendar',
-                            link: '/reservebike'
-                            },
-                            Unlock: {
-                            name: 'Unlock',
-                            icon: 'lock',
-                            link: '/unlockbike'
-                            },
-                            MyTrips: {
-                            name: 'My Trips',
-                            icon: 'map signs',
-                            link: '/mytrips'
-                            }
-                            }}
-                            />
+                            <SideBarContent as={Segment}/>
 
                             <Sidebar.Pusher animation='push'>
 
