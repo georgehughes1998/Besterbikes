@@ -183,9 +183,10 @@ const chooseRandomOperator = async () => {
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const operatorsCollection = usersCollection.where('type','==',"operator");
+    const singleOperator = operatorsCollection.limit(1);
 
     //TODO: Improve random method
-    const operatorID = operatorsCollection.doc().id;
+    const operatorID = singleOperator.id;
 
     return operatorID;
 };
