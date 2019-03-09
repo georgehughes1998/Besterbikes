@@ -137,7 +137,7 @@ export const updateTaskStatus = async (taskID, newStatus) => {
 
 
 export const reassignTask = async (taskID, comment, operatorID) => {
-    //TODO: implement
+    //TODO: test
 
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
@@ -148,6 +148,7 @@ export const reassignTask = async (taskID, comment, operatorID) => {
     //Change the operator ID for the new task
     const theTask = await getTask(taskID);
     theTask['operator'] = operatorID;
+    theTask['status'] = "pending";
 
     //Add the new task to the firestore
     await tasksCollection.add(theTask);
