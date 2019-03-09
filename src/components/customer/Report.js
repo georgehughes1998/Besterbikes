@@ -7,6 +7,7 @@ import TripsDropdown from "../dropdowns/TripsDropdown";
 import {getTrips} from "../../firebase/reservations";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions";
+import FirebaseError from "../FirebaseError";
 
 class Report extends React.Component {
 
@@ -15,7 +16,8 @@ class Report extends React.Component {
         this.state = {
             category: "",
             description: "",
-            reservation: ""
+            reservation: "",
+            error: ""
         }
     };
 
@@ -51,7 +53,8 @@ class Report extends React.Component {
 
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err.message);
+                this.state.error = err.message;
                 // throw new SubmissionError({
                 //     _error: err.message
                 // })
@@ -107,7 +110,10 @@ class Report extends React.Component {
                             onClick={() => this.handleSubmit(this.state)}
                         />
 
+                        {this.state.error != ""?<FirebaseError error={this.state.error}/>:null}
+
                     </Form>
+
                 </Container>
             </PageContainer>
         )

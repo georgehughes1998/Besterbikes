@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     stations: {},
-    trips: []
+    trips: [],
+    operators: []
 };
 
 export default (state = INITIAL_STATE, {type, payload}) => {
@@ -15,6 +16,12 @@ export default (state = INITIAL_STATE, {type, payload}) => {
         case 'LOAD_TRIPS':
             if (!(payload === [])) {
                 return {...state, trips: payload}
+            }
+            break;
+
+        case 'LOAD_OPERATORS':
+            if (!(payload === [])) {
+                return {...state, operators: payload}
             }
             break;
 

@@ -20,6 +20,13 @@ export const loadTrips = (trips) => {
     }
 };
 
+export const loadOperators = (operators) => {
+    return {
+        type: 'LOAD_OPERATORS',
+        payload: operators
+    }
+};
+
 export const updateUserStatus = (status) => {
     return {
         type: 'UPDATE_USER_STATUS',
