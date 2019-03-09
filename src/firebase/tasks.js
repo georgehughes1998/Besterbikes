@@ -28,7 +28,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     if (operator)
         theTask['operator'] = operator;
     else
-        theTask['operator'] = chooseRandomOperator();
+        theTask['operator'] = await chooseRandomOperator();
 
     //Assign category to the task
     if (category)
@@ -183,15 +183,22 @@ const chooseRandomOperator = async () => {
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const operatorsCollection = usersCollection.where('type','==',"operator");
-    const singleOperator = operatorsCollection.limit(1);
 
-    //TODO: Improve random method
-    const operatorID = singleOperator.id;
+    const operatorsSnapshot = await operatorsCollection.get();
+    const operatorsArray = operatorsSnapshot.docs;
+
+    let operatorID = "YerNaN";
+
+    if (operatorsArray.length > 0)
+    {
+        const randomNumber = Math.random() * (operatorsArray.length - 1);
+        operatorID = operatorsArray[randomNumber].id;
+    }
 
     return operatorID;
 };
 
-const getNextWeekDateObject = async () => {
+const getNextWeekDateObject = () => {
     //TODO: Test
 
     const nextWeek = new Date();
