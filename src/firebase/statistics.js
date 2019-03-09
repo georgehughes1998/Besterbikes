@@ -1,10 +1,62 @@
 import * as firebase from "firebase";
+import {getDay, getMonth, getYear} from "./time";
+
 
 // timeScale Argument Rules:
 // 0 - Day
 // 1 - Week
 // 2 - Month
 // 3 - Year
+
+
+// ----Updating Fields in statistics table----
+//
+// Table contains entries with a date map like:
+// {date: {day: 2, month: 9, year: 2019}
+
+
+export const incrementStatistic = async (statisticType) =>
+{
+
+    const db = firebase.firestore();
+    const statisticsCollection = db.collection('statistics');
+
+    const day = getDay();
+    const month = getMonth();
+    const year = getYear();
+
+    const statisticsQuery = statisticsCollection
+        .where("date.day","==",day)
+        .where("date.month","==",month)
+        .where("date.year","==",year);
+
+    const statisticSingleQuery = statisticsQuery.limit(1);
+    const statisticSnapshot = await statisticSingleQuery.get();
+
+    if (statisticSnapshot.empty) //If there is no document with this date
+    {
+        const statisticObject = {date: {day,month,year}};
+        statisticObject[statisticType] = 1;
+
+        await statisticsCollection.add(statisticObject);
+
+    }
+    else //If there exists a document with this date
+    {
+        const statisticID = statisticSnapshot.docs[0].id;
+        const statisticValue = statisticSnapshot.docs[0].data()[statisticType];
+
+        let newStatisticValue = 1;
+
+        if (statisticValue)
+            newStatisticValue += statisticValue;
+
+        const statisticDocument = statisticsCollection.doc(statisticID);
+        await statisticDocument.update(statisticType,newStatisticValue);
+    }
+
+
+};
 
 
 //Users
