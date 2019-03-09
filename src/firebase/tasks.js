@@ -1,5 +1,5 @@
 import * as firebase from "firebase";
-
+// import * as time from "time";
 import {getDateString, getTimeString} from "./time";
 
 //Task statuses:
@@ -195,7 +195,7 @@ const getNextWeekDateObject = async () => {
 
     const nextWeek = new Date();
 
-    nextWeek.setDate(time.getDate()+7);
+    nextWeek.setDate(nextWeek.getDate()+7);
 
     const dateString = getDateString(nextWeek);
     const timeString = getTimeString(nextWeek);

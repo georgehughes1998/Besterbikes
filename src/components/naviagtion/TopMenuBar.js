@@ -25,6 +25,7 @@ class TopMenuBar extends React.Component {
         const user = await getUser();
         if (user !== null && this.state.currentUser === "") {
                 const userDetails = await getUserDetails();
+                console.log(userDetails);
                 this.setState({currentUser: userDetails.name.firstName});
         }else if (user === null && this.state.currentUser !== "") {
             this.setState({currentUser: ""});

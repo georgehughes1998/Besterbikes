@@ -10,6 +10,7 @@ import {unlockBike} from "../../firebase/stationSystem";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import UnlockConfirmation from "./UnlockConfirmation";
 import FirebaseError from "../FirebaseError";
+import {Form} from "semantic-ui-react/dist/commonjs/collections/Form/Form";
 
 
 //TODO: Implement web api NFC features

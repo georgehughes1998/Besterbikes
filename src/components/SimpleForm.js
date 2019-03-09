@@ -26,6 +26,14 @@ class SimpleForm extends React.Component {
                             selection
                             search
                             placeholder='Select Category'
+                            options={this.props.dropdown[0]}
+                            onChange={(param, data) => this.setState({"category": data.value[0]})}
+                        />
+
+                        <Dropdown
+                            selection
+                            search
+                            placeholder='Select Reservation'
                             options={this.props.dropdown}
                             onChange={(param, data) => this.setState({"category": data.value})}
                         />

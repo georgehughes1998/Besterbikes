@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Container, Form, Header, Icon, Message, Progress, Segment} from "semantic-ui-react";
 import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
-import StationDropdown from "../StationDropdown";
+import StationDropdown from "../dropdowns/StationDropdown";
 import FirebaseError from "../FirebaseError";
 import ReservationComplete from "./ReservationConfirmation";
 

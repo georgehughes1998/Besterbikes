@@ -17,7 +17,7 @@ class listOfLiveItems extends React.Component{
         }
     };
 
-    //Render single trip with provided paramters
+    //Render single reservation with provided paramters
     renderItem = ({color, iconName, iconColor, status, headerContent, headerSub, tripId, image}) => {
         return (
             //TODO: Make this into own prop
