@@ -2,6 +2,7 @@ import * as firebase from "firebase";
 
 import {getNumberOfAvailableBikes, setNumberOfAvailableBikes} from "./reservations";
 import {getCurrentDateString, getCurrentTimeString} from "./time";
+import {incrementStatistic} from "./statistics";
 
 
 export const unlockBike = async (reservationID) => {
@@ -35,6 +36,8 @@ export const unlockBike = async (reservationID) => {
 
     await bikeDocument.update('status','unlocked');
     await bikeDocument.update('reservation',reservationID);
+
+    await incrementStatistic("unlockBike");
 
     return bikeID;
 };
@@ -171,6 +174,8 @@ export const returnBike = async (bikeID, stationID) => {
     await setNumberOfAvailableBikes(stationID,newNumberOfAvailableBikes,bikeType);
 
     await addBike(stationID,bikeID,bikeType);
+
+    await incrementStatistic("returnBike");
 
     return "success";
 };

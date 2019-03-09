@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 // import * as time from "time";
 import {getDateString, getTimeString} from "./time";
+import {incrementStatistic} from "./statistics";
 
 //Task statuses:
 //  pending     - Operator hasn't accepted the task yet
@@ -64,6 +65,8 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 
     //Add task to the firestore
     await tasksCollection.add(theTask);
+
+    await incrementStatistic("makeTask");
 
 };
 
@@ -146,6 +149,8 @@ export const reassignTask = async (taskID, comment, operatorID) => {
     //Update the task status for the old task
     await updateTaskStatus(taskID,'reassigned');
 
+    await incrementStatistic("reassignTask");
+
 };
 
 
@@ -173,6 +178,8 @@ export const updateTaskDeadline = async (taskID, newDate, newTime) => {
 
     await taskDocument.update({'deadline.date':newDate,
                                     'deadline.time':newTime});
+
+    await incrementStatistic("taskExtend");
 
 };
 

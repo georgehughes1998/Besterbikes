@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import {incrementStatistic} from "./statistics";
 
 
 //Function to sign in to firebase using props from redux form
@@ -8,7 +9,10 @@ export const signIn = async ({email, password, updateUserStatus}) => {
     const promise = auth.signInWithEmailAndPassword(email, password);
 
     return promise
-        .then(user => {
+        .then(async user => {
+
+            await incrementStatistic("signIn");
+
             return user;
         })
         .catch(async err => {
@@ -23,10 +27,12 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
     const promise = auth.createUserWithEmailAndPassword(email, password);
 
     return promise
-        .then(user => {
+        .then(async user => {
 
-            auth.signInWithEmailAndPassword(email, password);
+            await auth.signInWithEmailAndPassword(email, password);
             setUserDetails({forename, surname, dateOfBirth});
+
+            await incrementStatistic("signUp");
 
             return user;
         })
