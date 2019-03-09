@@ -4,54 +4,81 @@ import {connect} from "react-redux";
 import {Icon, Menu, Sidebar} from 'semantic-ui-react'
 
 import {changeSideBar} from "../../redux/actions/index";
+import {loadWebPages} from "../../redux/actions";
 
 //Component that displays all content within Side Bar
-const SideBarContent = (props) => {
+class SideBarContent extends React.Component{
 
-    //Renders all links in sidebar from props object
-    const renderLinks = Object.values(props.links).map((key, index) => {
+    renderLinks = () => {
+        if(this.props.webPages.length > 1){
+            console.log(this.props.webPages);
+            var icons = [];
+
+            icons.push(
+                <div key={0}>
+                    <Link to={"/"}>
+                        <Menu.Item>
+                            <Icon name={"home"}/>
+                            Home
+                        </Menu.Item>
+                    </Link>
+                </div>
+            )
+
+            for (let i = 0; i < 4; i++) {
+                icons.push(
+                    <div key={i+1}>
+                        <Link to={this.props.webPages[i].link}>
+                            <Menu.Item>
+                                <Icon name={this.props.webPages[i].icon}/>
+                                {this.props.webPages[i].name}
+                            </Menu.Item>
+                        </Link>
+                    </div>
+                )
+            }
+        }
+
+        return icons;
+    }
+
+    handleSidebarHide = () => this.props.changeSideBar("Hide");
+
+    render(){
         return (
-            <div key={index}>
-                <Link to={key.link}>
-                    <Menu.Item>
-                        <Icon name={key.icon}/>
-                        {key.name}
-                    </Menu.Item>
-                </Link>
-            </div>
+            <Sidebar
+                as={Menu}
+                animation='overlay'
+                icon='labeled'
+                inverted
+                vertical
+                onHide={this.handleSidebarHide}
+                onClick={this.handleSidebarHide}
+                visible={this.props.sideBarVisible}
+                width='thin'
+                color="blue"
+            >
+                <br/>
 
-        )
-    });
+                {console.log(this.state)}
+                {console.log("HELLO")}
+                {this.renderLinks()}
+            </Sidebar>
 
-    const handleSidebarHide = () => props.changeSideBar("Hide");
+        );
+    }
 
-    return (
-        <Sidebar
-            as={Menu}
-            animation='overlay'
-            icon='labeled'
-            inverted
-            vertical
-            onHide={handleSidebarHide}
-            onClick={handleSidebarHide}
-            visible={props.sideBarVisible}
-            width='thin'
-            color="blue"
-        >
-            <br/>
-
-            {renderLinks}
-        </Sidebar>
-
-    )
-
-};
+    }
+;
 
 const mapStateToProps = (state) => {
-    return {sideBarVisible: state.ui.sideBarVisible}
+    return {
+        sideBarVisible: state.ui.sideBarVisible,
+        webPages: state.user.webPages
+    }
 };
 
 export default withRouter(connect(
     mapStateToProps,
-    {changeSideBar}
+    {changeSideBar, loadWebPages}
 )(SideBarContent));

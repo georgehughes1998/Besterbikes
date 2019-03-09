@@ -3,7 +3,7 @@ import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import {Header, List} from "semantic-ui-react"
 
 import {getJSONFromFile} from '../../handleJSON.js'
-import {getUser} from "../../firebase/authentication";
+import {getUserDetails} from "../../firebase/authentication";
 import {getNumberOfAvailableBikes} from "../../firebase/reservations";
 import {withRouter} from "react-router";
 
@@ -46,7 +46,8 @@ export class BesterbikesMap extends Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = () => {
-        return getUser()
+
+        return getUserDetails()
             .then(user => {
                 if (user === null)
                     this.props.history.push("signin");

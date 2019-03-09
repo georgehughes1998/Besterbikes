@@ -3,3 +3,4 @@ export const LOAD_STATIONS = 'LOAD_STATIONS';
 export const LOAD_TRIPS = 'LOAD_TRIPS';
 export const LOAD_OPERATORS = 'LOAD_OPERATORS';
 export const UPDATE_USER_STATUS = 'UPDATE_USER_STATUS';
+export const LOAD_WEB_PAGES = 'LOAD_WEB_PAGES';
