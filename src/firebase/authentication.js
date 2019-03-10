@@ -11,7 +11,7 @@ export const signIn = async ({email, password, updateUserStatus}) => {
     return promise
         .then(async user => {
 
-            await incrementStatistic("signIn");
+            await incrementStatistic("authentication.signIn");
 
             return user;
         })
@@ -32,7 +32,7 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
             await auth.signInWithEmailAndPassword(email, password);
             setUserDetails({forename, surname, dateOfBirth});
 
-            await incrementStatistic("signUp");
+            await incrementStatistic("authentication.signUp");
 
             return user;
         })

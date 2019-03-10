@@ -78,7 +78,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     console.log("Reservations to be added to user:");
     console.log(reservationsIDArray);
 
-    await incrementStatistic("makeReservation",0+mountainBikes+regularBikes);
+    await incrementStatistic("reservation." + station + ".road.make",regularBikes);
+    await incrementStatistic("reservation." + station + ".mountain.make",mountainBikes);
 
     return "success";
 
@@ -263,7 +264,7 @@ export const cancelReservation = async (reservationID) => {
                     return reservationDocument.update({status: "cancelled"})
                         .then(() => {
 
-                            incrementStatistic("cancelReservation");
+                            incrementStatistic("reservation.cancel");
 
                             return "success"
                         })

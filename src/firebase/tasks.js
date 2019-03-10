@@ -66,7 +66,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     //Add task to the firestore
     await tasksCollection.add(theTask);
 
-    await incrementStatistic("makeTask");
+    await incrementStatistic("task.make");
 
 };
 
@@ -131,7 +131,7 @@ export const updateTaskStatus = async (taskID, newStatus) => {
     await taskDocument.update({status:newStatus});
 
     if (newStatus === "complete")
-        await incrementStatistic("completeTask");
+        await incrementStatistic("task.complete");
 
 };
 
@@ -156,7 +156,7 @@ export const reassignTask = async (taskID, comment, operatorID) => {
     //Update the task status for the old task
     await updateTaskStatus(taskID,'reassigned');
 
-    await incrementStatistic("reassignTask");
+    await incrementStatistic("task.reassign");
 
 };
 
@@ -186,7 +186,7 @@ export const updateTaskDeadline = async (taskID, newDate, newTime) => {
     await taskDocument.update({'deadline.date':newDate,
                                     'deadline.time':newTime});
 
-    await incrementStatistic("extendTask");
+    await incrementStatistic("task.extend");
 
 };
 

@@ -37,7 +37,7 @@ export const unlockBike = async (reservationID) => {
     await bikeDocument.update('status','unlocked');
     await bikeDocument.update('reservation',reservationID);
 
-    await incrementStatistic("unlockBike");
+    await incrementStatistic("station." + stationID + ".unlock");
 
     return bikeID;
 };
@@ -175,7 +175,7 @@ export const returnBike = async (bikeID, stationID) => {
 
     await addBike(stationID,bikeID,bikeType);
 
-    await incrementStatistic("returnBike");
+    await incrementStatistic("station." + stationID + ".return");
 
     return "success";
 };
