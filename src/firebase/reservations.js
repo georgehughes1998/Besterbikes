@@ -78,7 +78,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     console.log("Reservations to be added to user:");
     console.log(reservationsIDArray);
 
-    await incrementStatistic("reservation.make",0+mountainBikes+regularBikes);
+    await incrementStatistic("reservation." + station + ".road.make",regularBikes);
+    await incrementStatistic("reservation." + station + ".mountain.make",mountainBikes);
 
     return "success";
 
