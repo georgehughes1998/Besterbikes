@@ -34,7 +34,7 @@ export const makeReport = async (reservationID, category, comment) => {
                         category: "userReport",
                         comment:"See attached report..."});
 
-    await incrementStatistic("makeReport");
+    await incrementStatistic("reports.makeReport");
 
 };
 

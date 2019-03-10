@@ -63,13 +63,13 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 
 export const getNumberOfNewUsers = async (timeScale) => {
     //TODO: Test
-    return getStatistic("signUp",timeScale);
+    return getStatistic("authentication.signUp",timeScale);
 
 };
 
 export const getNumberOfLogins = async (timeScale) => {
     //TODO: Test
-    return getStatistic("signIn",timeScale);
+    return getStatistic("authentication.signIn",timeScale);
 
 };
 
@@ -78,25 +78,25 @@ export const getNumberOfLogins = async (timeScale) => {
 
 export const getNumberOfTripsCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("makeReservation",timeScale);
+    return getStatistic("reservation.make",timeScale);
 
 };
 
 export const getNumberOfBikesUnlocked = async (timeScale) => {
     //TODO: Test
-    return getStatistic("unlockBike",timeScale);
+    return getStatistic("station.unlock",timeScale);
 
 };
 
 export const getNumberOfTripsCompleted = async (timeScale) => {
     //TODO: Test
-    return getStatistic("returnBike",timeScale);
+    return getStatistic("station.return",timeScale);
 
 };
 
 export const getNumberOfTripsCancelled = async (timeScale) => {
     //TODO: Test
-    return getStatistic("cancelReservation",timeScale);
+    return getStatistic("reservation.cancel",timeScale);
 
 };
 
@@ -105,25 +105,25 @@ export const getNumberOfTripsCancelled = async (timeScale) => {
 
 export const getNumberOfTasksCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("makeTask",timeScale);
+    return getStatistic("task.make",timeScale);
 
 };
 
 export const getNumberOfTasksCompleted = async (timeScale) => {
     //TODO: Test
-    return getStatistic("completeTask",timeScale);
+    return getStatistic("task.complete",timeScale);
 
 };
 
 export const getNumberOfTasksReassigned = async (timeScale) => {
     //TODO: Test
-    return getStatistic("reassignTask",timeScale);
+    return getStatistic("task.reassign",timeScale);
 
 };
 
 export const getNumberOfTasksExtended = async (timeScale) => {
     //TODO: Test
-    return getStatistic("extendTask",timeScale);
+    return getStatistic("task.extend",timeScale);
 
 };
 
@@ -132,7 +132,7 @@ export const getNumberOfTasksExtended = async (timeScale) => {
 
 export const getNumberOfReportsCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("makeReport",timeScale);
+    return getStatistic("report.make",timeScale);
 
 };
 
