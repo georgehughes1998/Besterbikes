@@ -47,10 +47,15 @@ const getUsersOfType = async (userType) => {
 
     const userSnapshot = await usersTypeCollection.get();
 
+
     for (let doc in userSnapshot.docs)
     {
-        const userID = doc.id;
-        const userData = doc.data();
+        console.log(doc);
+        const singleUserSnapshot = userSnapshot.docs[doc];
+
+
+        const userID = singleUserSnapshot.id;
+        const userData = singleUserSnapshot.data();
 
         customersArray[userID] = userData;
 
