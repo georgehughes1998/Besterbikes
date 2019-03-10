@@ -22,6 +22,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
 
+
     //Assign status to the task
     theTask['status'] = "pending";
 
@@ -31,11 +32,13 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     else
         theTask['operator'] = await chooseRandomOperator();
 
+
     //Assign category to the task
     if (category)
         theTask['category'] = category;
     else
         throw new Error("No category was specified");
+
 
     //Assign deadline to the task
     if (deadlineDate && deadlineTime)
@@ -44,11 +47,13 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     else
         theTask['deadline'] = getNextWeekDateObject();
 
+
     //Assign comment to the task
     if (comment)
         theTask['comments'] = [{user:uid,comment:comment}];
     else
         throw new Error('No comment was specified');
+
 
     //Assign report to the task
     if (report)
@@ -63,8 +68,11 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
         theTask['station'] = station;
 
 
+
     //Add task to the firestore
     await tasksCollection.add(theTask);
+
+    console.log(theTask);
 
     await incrementStatistic("task.make");
 
@@ -205,7 +213,8 @@ const chooseRandomOperator = async () => {
     if (operatorsArray.length > 0)
     {
         //Select a random operator
-        const randomNumber = Math.random() * (operatorsArray.length - 1);
+        const randomNumber = Math.round(Math.random() * (operatorsArray.length - 1));
+
         const operatorID = operatorsArray[randomNumber].id;
 
         return operatorID;
