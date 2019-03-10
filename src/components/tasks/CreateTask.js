@@ -50,6 +50,8 @@ class CreateTask extends React.Component {
 
     //TODO: Add firebase function to create a task
     handleSubmit = async () => {
+        console.log("this.state");
+        console.log(this.state);
         return makeNewTask({category: this.state.category, operator: this.state.operator, comment: this.state.description})
             .then((obj) => {
                 console.log(obj)
@@ -86,7 +88,7 @@ class CreateTask extends React.Component {
                             <OperatorDropdown
                                 placeholder = 'Select Operator'
                                 operators = {this.props.operators}
-                                handleSubmit = {(param, data) => this.setState({"operator": data.value})}
+                                onChange = {(param, data) => this.setState({"operator": data.value})}
                             />
 
 
