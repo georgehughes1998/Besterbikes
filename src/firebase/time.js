@@ -49,7 +49,7 @@ export const getDay = () =>
 {
     const time = new Date();
 
-    return time.getDay();
+    return time.getDate();
 };
 
 
