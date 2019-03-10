@@ -10,37 +10,39 @@ import {loadWebPages} from "../../redux/actions";
 class SideBarContent extends React.Component{
 
     renderLinks = () => {
-        if(this.props.webPages.length > 1){
-            console.log(this.props.webPages);
-            var icons = [];
+        if(this.props.webPages){
+            if(this.props.webPages[0]){
+                console.log(this.props.webPages);
+                var icons = [];
 
-            icons.push(
-                <div key={0}>
-                    <Link to={"/"}>
-                        <Menu.Item>
-                            <Icon name={"home"}/>
-                            Home
-                        </Menu.Item>
-                    </Link>
-                </div>
-            )
-
-            for (let i = 0; i < 4; i++) {
                 icons.push(
-                    <div key={i+1}>
-                        <Link to={this.props.webPages[i].link}>
+                    <div key={0}>
+                        <Link to={"/"}>
                             <Menu.Item>
-                                <Icon name={this.props.webPages[i].icon}/>
-                                {this.props.webPages[i].name}
+                                <Icon name={"home"}/>
+                                Home
                             </Menu.Item>
                         </Link>
                     </div>
                 )
+
+                for (let i = 0; i < 4; i++) {
+                    icons.push(
+                        <div key={i+1}>
+                            <Link to={this.props.webPages[i].link}>
+                                <Menu.Item>
+                                    <Icon name={this.props.webPages[i].icon}/>
+                                    {this.props.webPages[i].name}
+                                </Menu.Item>
+                            </Link>
+                        </div>
+                    )
+                }
             }
         }
 
         return icons;
-    }
+    };
 
     handleSidebarHide = () => this.props.changeSideBar("Hide");
 

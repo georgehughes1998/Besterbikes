@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Dropdown, Header, Icon, Segment} from "semantic-ui-react";
+import {Container, Dropdown, Header, Icon} from "semantic-ui-react";
 
 import PageContainer from "../PageContainer";
 import {getUser} from "../../firebase/authentication";
@@ -130,9 +130,7 @@ export class UnlockBike extends React.Component {
                     <br/>
 
                     <Button onClick = {() => this.handleUnlock()}>
-                        <Segment>
-                            <Header as="h1">{this.state.unlockTrip}</Header>
-                        </Segment>
+                        Unlock bike
                     </Button>
 
                     {this.state.firebaseError? <FirebaseError error = {this.state.firebaseError}/> : null}

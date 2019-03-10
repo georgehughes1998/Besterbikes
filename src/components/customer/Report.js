@@ -54,7 +54,8 @@ class Report extends React.Component {
             })
             .catch((err) => {
                 console.log(err.message);
-                this.state.error = err.message;
+                this.setState({error: err.message});
+                console.log(this.state);
                 // throw new SubmissionError({
                 //     _error: err.message
                 // })

@@ -1,12 +1,14 @@
 import React from 'react'
 
-import {getUser} from "../../firebase/authentication";
+import {getUserDetails} from "../../firebase/authentication";
 import PageContainer from "../PageContainer";
 import {Button, Container, Dropdown, Form, Header, TextArea} from "semantic-ui-react";
 import {getOperators} from "../../firebase/users";
 import connect from "react-redux/es/connect/connect";
 import {loadOperators} from "../../redux/actions";
 import OperatorDropdown from "../dropdowns/OperatorDropdown";
+import {makeNewTask} from "../../firebase/tasks";
+import FirebaseError from "../FirebaseError";
 
 class CreateTask extends React.Component {
 
@@ -21,7 +23,7 @@ class CreateTask extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
-        const user = await getUser();
+        const user = await getUserDetails();
         if (user === null)
             this.props.history.push("signin");
         return user
@@ -31,6 +33,9 @@ class CreateTask extends React.Component {
         const obj = await getOperators();
         if (obj) {
             this.props.loadOperators(obj);
+            this.setState({"operators": obj});
+            console.log(obj);
+            console.log(this.state)
         } else {
 
         }
@@ -41,22 +46,18 @@ class CreateTask extends React.Component {
             .then((user) =>  {
                 if(user)
                     this.retrieveOperators();
-                console.log(this.props.trips)
             })};
 
     //TODO: Add firebase function to create a task
-    handleSubmit = async (values) => {
-        // return reportIssue(this.state.category, this.state.description)
-        //     .then((obj) => {
-        //
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         throw new SubmissionError({
-        //             _error: err.message
-        //         })
-        //     })
-        console.log(values)
+    handleSubmit = async () => {
+        return makeNewTask({category: this.state.category, operator: this.state.operator, comment: this.state.description})
+            .then((obj) => {
+                console.log(obj)
+            })
+            .catch((err) => {
+                console.log(err);
+                // this.serState = err.message;
+            })
     };
 
         render() {
@@ -84,10 +85,9 @@ class CreateTask extends React.Component {
 
                             <OperatorDropdown
                                 placeholder = 'Select Operator'
-                                trips = {this.props.trips}
+                                operators = {this.props.operators}
                                 handleSubmit = {(param, data) => this.setState({"operator": data.value})}
                             />
-
 
 
                             <br/>
@@ -101,9 +101,10 @@ class CreateTask extends React.Component {
 
                             <br/>
                             <br/>
+                            {this.state.error != ""?<FirebaseError error={this.state.error}/>:null}
                             <Button
-                                content={this.props.button}
-                                onClick={() => this.props.handleSubmit(this.state)}
+                                content="Create Task"
+                                onClick={() => this.handleSubmit(this.state)}
                             />
 
                         </Form>

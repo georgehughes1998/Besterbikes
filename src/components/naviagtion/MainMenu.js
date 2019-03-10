@@ -1,12 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import SignOut from "./accountManagement/SignOut";
-import {getUserDetails} from "../firebase/authentication";
+import SignOut from "../accountManagement/SignOut";
+import {getUserDetails} from "../../firebase/authentication";
 import {Container, Grid, Header, Icon} from "semantic-ui-react";
-import PageContainer from "./PageContainer";
-import {getJSONFromFile} from "../handleJSON";
+import PageContainer from "../PageContainer";
+import {getJSONFromFile} from "../../handleJSON";
 import connect from "react-redux/es/connect/connect";
-import {loadWebPages} from "../redux/actions";
+import {loadWebPages} from "../../redux/actions/index";
 
 //TODO: Display message for each each user: Hello *Users first name*
 //TODO: Refactor main menu and make pretty
@@ -72,7 +72,7 @@ class MainMenu extends React.Component {
     renderMenuIcons(){
         var icons = [];
 
-        if(this.state.menuItems.length) {
+        if(this.state.menuItems) {
             for (let i = 0; i < 4; i++) {
                 icons.push(
                     <Grid.Column>

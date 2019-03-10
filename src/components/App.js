@@ -7,7 +7,7 @@ import SideBarContent from "./naviagtion/SideBarContent";
 import {changeSideBar, loadStations} from "../redux/actions";
 
 import TopMenuBar from "./naviagtion/TopMenuBar";
-import MainMenu from './MainMenu'
+import MainMenu from './naviagtion/MainMenu'
 import SignIn from './accountManagement/SignIn'
 import SignUp from './accountManagement/SignUp'
 import EditAccount from "./accountManagement/EditAccount";
@@ -20,7 +20,7 @@ import StationSystemSimulation from "./StationSystemSimulation";
 import Report from "./customer/Report";
 import CreateTask from "./tasks/CreateTask";
 
-import './sideBarOverride.css'
+import './naviagtion/sideBarOverride.css'
 
 
 //TODO: Add prop types and typescript to app

@@ -4,26 +4,24 @@ import withRouter from "react-router/es/withRouter";
 
 class OperatorDropdown extends React.Component {
 
-    renderTrips = () => {
+    renderOperators = () => {
         let DropdownArray = [];
 
-        if (this.props.operators) {
+        console.log(this.props.operators);
+
+        if (this.props.operators !== []) {
             let keys = Object.keys(this.props.operators);
 
             console.log(this.props.operators);
 
-            // Object.values(this.props.trips).map((key, index) => {
-            //     DropdownArray.push({
-            //         key: keys[index],
-            //         value: keys[index],
-            //         text:
-            //             `My ${key.name[firstName]} trip from
-            //             ${key.start["station"]} on
-            //             ${key.start["time"]["date"]} at
-            //             ${key.start["time"]["time"]}`
-            //     });
-            //     return DropdownArray;
-            // });
+            Object.values(this.props.operators).map((key, index) => {
+                DropdownArray.push({
+                    key: keys[index],
+                    value: keys[index],
+                    text: `${key.name.firstName} ${key.name.lastName}`
+                });
+                return DropdownArray;
+            });
 
             return DropdownArray;
         }
@@ -36,7 +34,7 @@ class OperatorDropdown extends React.Component {
                 selection
                 search
                 placeholder={this.props.placeholder}
-                options={this.renderTrips()}
+                options={this.renderOperators()}
                 onChange={this.props.onChange}
             />
         )
