@@ -50,9 +50,8 @@ const getUsersOfType = async (userType) => {
 
     for (let doc in userSnapshot.docs)
     {
-        console.log(doc);
-        const singleUserSnapshot = userSnapshot.docs[doc];
 
+        const singleUserSnapshot = userSnapshot.docs[doc];
 
         const userID = singleUserSnapshot.id;
         const userData = singleUserSnapshot.data();
