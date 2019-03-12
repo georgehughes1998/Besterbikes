@@ -137,6 +137,7 @@ const appendUserReservationsArray = async (reservationReferences) => {
     const usersCollection = db.collection('users');
     const currentUserDocument = usersCollection.doc(uid);
 
+    //TODO: Test
     await currentUserDocument.update({reservationsArray: FieldValue.arrayUnion(reservationReferences)});
 
 };
