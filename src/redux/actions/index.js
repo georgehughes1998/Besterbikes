@@ -41,6 +41,13 @@ export const loadWebPages = (webPages) => {
     }
 };
 
+export const loadCustomers = (customers) => {
+    return {
+        type: 'LOAD_CUSTOMERS',
+        payload: customers
+    }
+};
+
 export const updateUserStatus = (status) => {
     return {
         type: 'UPDATE_USER_STATUS',

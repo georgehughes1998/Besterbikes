@@ -7,7 +7,7 @@ import {loadStations, loadTrips} from "../../redux/actions";
 import PageContainer from "../PageContainer";
 import {getUser} from "../../firebase/authentication";
 import {cancelReservation, getTrips} from "../../firebase/reservations";
-import ListOfLiveItems from "../ListOfLiveItems";
+import ListOfLiveItems from "../ListOfLiveTrips";
 
 
 //TODO: Implement loader

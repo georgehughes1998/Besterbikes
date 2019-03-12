@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect} from "react-redux";
 
-import {loadStations, loadTasks} from "../../redux/actions";
+import {loadStations, loadTasks} from "../../redux/actions/index";
 import PageContainer from "../PageContainer";
 import {getUserDetails} from "../../firebase/authentication";
-import ListOfLiveItems from "../ListOfLiveItems";
+import ListOfLiveItems from "../ListOfLiveTrips";
 import {SubmissionError} from "redux-form";
 import {getTasks} from "../../firebase/tasks";
 

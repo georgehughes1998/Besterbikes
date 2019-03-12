@@ -5,3 +5,4 @@ export const LOAD_OPERATORS = 'LOAD_OPERATORS';
 export const UPDATE_USER_STATUS = 'UPDATE_USER_STATUS';
 export const LOAD_WEB_PAGES = 'LOAD_WEB_PAGES';
 export const LOAD_TASKS = 'LOAD_TASKS';
+export const LOAD_CUSTOMERS = 'LOAD_CUSTOMERS';

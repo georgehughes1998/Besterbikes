@@ -4,7 +4,7 @@ class OperatorUnlockBike extends React.Component{
     render(){
         return(
             <div>
-                //TODO: Display all bikes available to unlock
+                {/*TODO: Display all bikes available to unlock*/}
                 Operator Unlock
             </div>
         )

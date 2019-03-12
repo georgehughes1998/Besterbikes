@@ -26,6 +26,12 @@ export default (state = INITIAL_STATE, {type, payload}) => {
             }
             break;
 
+        case 'LOAD_CUSTOMERS':
+            if (!(payload === [])) {
+                return {...state, customers: payload}
+            }
+            break;
+
         case 'LOAD_TASKS':
             if (!(payload === [])) {
                 return {...state, tasks: payload}
