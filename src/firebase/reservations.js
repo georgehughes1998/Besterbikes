@@ -1,9 +1,6 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
-
-//TODO: washingtonRef.update({
-//   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
-// });
+import {FieldValue} from "firebase";
 
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
@@ -130,6 +127,10 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
 const appendUserReservationsArray = async (reservationReferences) => {
     //Add the given list to the user's reservation array.
 
+    //TODO: washingtonRef.update({
+    //   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
+    // });
+
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
@@ -138,27 +139,8 @@ const appendUserReservationsArray = async (reservationReferences) => {
     const usersCollection = db.collection('users');
     const currentUserDocument = usersCollection.doc(uid);
 
-    return currentUserDocument.get()
-        .then(doc => {
+    await currentUserDocument.update({reservationsArray: FieldValue.arrayUnion(reservationReferences)});
 
-            const currentUserData = doc.data();
-
-            let reservationsArray = currentUserData['reservationsArray'];
-
-            if (reservationsArray) {
-                reservationsArray = reservationsArray.concat(reservationReferences);
-                // reservationsArray.push(reservationReference);
-            } else {
-                reservationsArray = reservationReferences;
-            }
-
-            const promise = currentUserDocument.update({reservationsArray: reservationsArray});
-
-            return promise
-                .then(() => {return "success"})
-                .catch(err => {return err});
-        })
-        .catch(err => {return err});
 };
 
 
