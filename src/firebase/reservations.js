@@ -128,9 +128,6 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
 const appendUserReservationsArray = async (reservationReferences) => {
     //Add the given list to the user's reservation array.
 
-    //TODO: washingtonRef.update({
-    //   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
-    // });
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
