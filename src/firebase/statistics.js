@@ -14,6 +14,9 @@ import {getDay, getMonth, getYear} from "./time";
 // {date: {day: 2, month: 9, year: 2019}
 
 
+
+
+
 export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 {
 
@@ -77,6 +80,29 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 
 
 };
+
+
+
+const getStatistics = async (statisticType, year=-1, month=-1, day=-1) =>
+{
+    //TODO: Implement
+
+    const statisticsObject = {
+                                2019: {
+                                    03: {11: 7, 12: 4},
+                                    02: {27: 2, 28: 3}
+                                },
+                                2020: {
+                                    03: {11: 7, 12: 4},
+                                    02: {27: 2, 28: 3}
+                                }
+                             };
+
+
+    return statisticsObject;
+};
+
+
 
 
 //Users
