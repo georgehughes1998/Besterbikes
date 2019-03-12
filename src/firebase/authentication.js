@@ -70,7 +70,7 @@ export const getUser = async (userID="noArg") => {
         if (currentUser)
             userID = currentUser.uid;
         else
-            throw new Error("No user was given and no user is logged in.");
+            return null;
     }
 
     if (userID)

@@ -168,7 +168,7 @@ export const getTrips = async (userID="noArg", maxNumberOfTrips=10) => {
         if (currentUser)
             userID = currentUser.uid;
         else
-            throw new Error("No user was given and no user is logged in.");
+            return null;
     }
 
     //This ensures that all trips that should be active will be marked as active.
