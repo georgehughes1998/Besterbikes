@@ -159,8 +159,17 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 };
 
 
-export const getTrips = async (userID=firebase.auth().currentUser.uid, maxNumberOfTrips=10) => {
+export const getTrips = async (userID="noArg", maxNumberOfTrips=10) => {
     //Returns a collection of objects containing data about the user's trips
+
+    if (userID === "noArg")
+    {
+        const auth = firebase.auth();
+        if (auth)
+            userID = auth.currentUser.uid;
+        else
+            throw new Error("No user was given and no user is logged in.");
+    }
 
     //This ensures that all trips that should be active will be marked as active.
     await updateTrips();

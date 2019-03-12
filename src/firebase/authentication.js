@@ -64,10 +64,13 @@ export const signOut = () => {
 //Function to return a user's details - without an argument it will return the logged in user's details
 export const getUser = async (userID="") => {
 
-    if (userID === "")
+    if (userID === "noArg")
     {
         const auth = firebase.auth();
-        userID = auth.currentUser.uid;
+        if (auth)
+            userID = auth.currentUser.uid;
+        else
+            throw new Error("No user was given and no user is logged in.");
     }
 
     if (userID)
