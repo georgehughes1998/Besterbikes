@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from "react-redux";
 import PageContainer from "../PageContainer";
-import {getUserDetails} from "../../firebase/authentication";
+import {getUser} from "../../firebase/authentication";
 import {getUsersOfType} from "../../firebase/users"
 import {SubmissionError} from "redux-form";
 import {loadCustomers, loadOperators} from "../../redux/actions";
@@ -75,7 +75,7 @@ class Users extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
-        const user = await getUserDetails();
+        const user = await getUser();
         if (user == null){
             this.props.history.push("/signin");
         }else if(user.type !== "manager"){

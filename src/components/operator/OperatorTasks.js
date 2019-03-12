@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import {loadStations, loadTasks} from "../../redux/actions/index";
 import PageContainer from "../PageContainer";
-import {getUserDetails} from "../../firebase/authentication";
+import {getUser} from "../../firebase/authentication";
 import ListOfLiveItems from "../ListOfLiveTrips";
 import {SubmissionError} from "redux-form";
 import {getTasks} from "../../firebase/tasks";
@@ -13,7 +13,7 @@ class OperatorTasks extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
-        const user = await getUserDetails();
+        const user = await getUser();
         if (user == null){
             this.props.history.push("/signin");
         }else if(user.type !== "operator"){
