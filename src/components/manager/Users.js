@@ -9,10 +9,10 @@ import List from "semantic-ui-react/dist/commonjs/elements/List/List";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
+import withRouter from "react-router/es/withRouter";
 
 
 class Users extends React.Component {
-
 
     constructor(props){
         super(props);
@@ -21,6 +21,15 @@ class Users extends React.Component {
         };
     }
 
+    handleUserClick = (customerID) => {
+        if(this.state.userType==="customer"){
+            this.props.history.push({
+                pathname: '/customerdetails',
+                state: { customerID: customerID }
+            })
+        }
+    };
+
     renderListItems = () => {
         if(this.state.userType==="customer" && this.props.customers){
             return Object.values(this.props.customers).map((key, index) => {
@@ -28,14 +37,14 @@ class Users extends React.Component {
                 let keys = Object.keys(this.props.customers);
 
                 return (
-                    <List.Item>
-                        <List.Icon name='bicycle' size='large' verticalAlign='middle' />
+                    <List.Item onClick={() => this.handleUserClick(keys[index])}>
+                        <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
                         <List.Content>
                             <List.Header>
                                 {`${key.name["firstName"]} ${key.name["lastName"]}`}
                             </List.Header>
 
-                            <Header as={"h4"}>
+                            <Header as={"h5"}>
                                 ID: {keys[index]}
                             </Header>
                         </List.Content>
@@ -49,7 +58,7 @@ class Users extends React.Component {
                 let keys = Object.keys(this.props.operators);
 
                 return (
-                    <List.Item>
+                    <List.Item onClick={() => this.handleUserClick(keys[index])}>
                         <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
                         <List.Content>
                             <List.Header>
@@ -143,4 +152,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {loadCustomers, loadOperators})(Users);
+export default withRouter(connect(mapStateToProps, {loadCustomers, loadOperators})(Users));
