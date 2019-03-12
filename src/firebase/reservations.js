@@ -178,29 +178,25 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 };
 
 
-export const getTrips = async (maxNumberOfTrips=10) => {
+export const getTrips = async (userID=firebase.auth().currentUser.uid, maxNumberOfTrips=10) => {
     //Returns a collection of objects containing data about the user's trips
-
 
     //This ensures that all trips that should be active will be marked as active.
     await updateTrips();
 
     const db = firebase.firestore();
-    const auth = firebase.auth();
 
-    if (!auth) {
-        throw new Error("No user is logged in");
-    }
-
-    const uid = auth.currentUser.uid;
 
     const usersCollection = db.collection('users');
     const reservationsCollection = db.collection('reservations');
 
-    const currentUserDocument = usersCollection.doc(uid);
+    const currentUserDocument = usersCollection.doc(userID);
+
 
     return currentUserDocument.get()
         .then(async doc => {
+
+            if (!doc.exists) {throw new Error("Document '" + userID + "' doesn't exist")}
 
             const currentUserData = doc.data();
             const reservationsArray = currentUserData['reservationsArray'];
