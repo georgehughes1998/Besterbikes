@@ -9,7 +9,6 @@ class TripsDropdown extends React.Component {
 
         if (this.props.trips) {
             let keys = Object.keys(this.props.trips);
-            console.log(this.props.trips);
             console.log(keys);
 
             Object.values(this.props.trips).map((key, index) => {

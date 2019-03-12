@@ -12,7 +12,6 @@ class SideBarContent extends React.Component{
     renderLinks = () => {
         if(this.props.webPages){
             if(this.props.webPages[0]){
-                console.log(this.props.webPages);
                 var icons = [];
 
                 icons.push(
@@ -62,8 +61,6 @@ class SideBarContent extends React.Component{
             >
                 <br/>
 
-                {console.log(this.state)}
-                {console.log("HELLO")}
                 {this.renderLinks()}
             </Sidebar>
 

@@ -7,8 +7,6 @@ class OperatorDropdown extends React.Component {
     renderOperators = () => {
         let DropdownArray = [];
 
-        console.log(this.props.operators);
-
         if (this.props.operators !== []) {
             let keys = Object.keys(this.props.operators);
 

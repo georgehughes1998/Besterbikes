@@ -20,6 +20,13 @@ export const loadTrips = (trips) => {
     }
 };
 
+export const loadTasks = (tasks) => {
+    return {
+        type: 'LOAD_TASKS',
+        payload: tasks
+    }
+};
+
 export const loadOperators = (operators) => {
     return {
         type: 'LOAD_OPERATORS',
@@ -31,6 +38,13 @@ export const loadWebPages = (webPages) => {
     return {
         type: 'LOAD_WEB_PAGES',
         payload: webPages
+    }
+};
+
+export const loadCustomers = (customers) => {
+    return {
+        type: 'LOAD_CUSTOMERS',
+        payload: customers
     }
 };
 

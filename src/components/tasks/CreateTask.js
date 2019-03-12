@@ -34,8 +34,6 @@ class CreateTask extends React.Component {
         if (obj) {
             this.props.loadOperators(obj);
             this.setState({"operators": obj});
-            console.log(obj);
-            console.log(this.state)
         } else {
 
         }
@@ -51,7 +49,6 @@ class CreateTask extends React.Component {
     //TODO: Add firebase function to create a task
     handleSubmit = async () => {
         console.log("this.state");
-        console.log(this.state);
         return makeNewTask({category: this.state.category, operator: this.state.operator, comment: this.state.description})
             .then((obj) => {
                 console.log(obj)

@@ -2,7 +2,7 @@
 import {Grid, Header, Icon, Segment} from "semantic-ui-react";
 import React from "react";
 
-class listOfLiveItems extends React.Component{
+class listOfLiveTrips extends React.Component{
 
     renderItems = () => {
         if (this.props.items) {
@@ -60,8 +60,6 @@ class listOfLiveItems extends React.Component{
 
 
     getItemValues = (trip, index) => {
-
-        console.log(trip);
 
         const stationKey = trip["start"]["station"];
         const stationName = this.props.stations[stationKey]["name"];
@@ -168,4 +166,4 @@ class listOfLiveItems extends React.Component{
     }
 }
 
-export default listOfLiveItems;
+export default listOfLiveTrips;

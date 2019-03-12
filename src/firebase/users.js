@@ -36,7 +36,7 @@ export const getUser = async (userID) => {
 };
 
 
-const getUsersOfType = async (userType) => {
+export const getUsersOfType = async (userType) => {
     //TODO: Test
 
     const customersArray = [];
