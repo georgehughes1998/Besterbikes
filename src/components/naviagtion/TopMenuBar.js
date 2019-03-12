@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 
 import {Header, Icon, Menu} from 'semantic-ui-react'
 import {changeSideBar} from "../../redux/actions";
-import {getUser, getUserDetails} from "../../firebase/authentication";
+import {getUser} from "../../firebase/authentication";
 
 
 //TODO: Make TopMenuBar Sticky
@@ -24,7 +24,7 @@ class TopMenuBar extends React.Component {
     authenticateUser = async () => {
         const user = await getUser();
         if (user !== null && this.state.currentUser === "") {
-                const userDetails = await getUserDetails();
+                const userDetails = await getUser();
                 this.setState({currentUser: userDetails.name.firstName});
         }else if (user === null && this.state.currentUser !== "") {
             this.setState({currentUser: ""});

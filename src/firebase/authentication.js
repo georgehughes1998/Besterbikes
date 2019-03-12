@@ -41,6 +41,7 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
         });
 };
 
+
 //Function to sign out of firebase
 export const signOut = () => {
     const promise = firebase.auth().signOut();
@@ -54,54 +55,35 @@ export const signOut = () => {
         });
 };
 
-//Function to Edit users accountManagement details on firebase
-export const editDetails = () => {
-    //TODO:  Complete function to return promise with user if successful or error if not
-};
+// //Function to Edit users accountManagement details on firebase
+// export const editDetails = () => {
+//     //TODO:  Complete function to return promise with user if successful or error if not
+// };
 
 
-//Function to return current user
-export const getUser = async () => {
-    const auth = firebase.auth();
-    if (auth) {
-        return await auth.currentUser;
-    }
-    else {
-        return null;
-    }
-};
+//Function to return a user's details - without an argument it will return the logged in user's details
+export const getUser = async (userID=firebase.auth().currentUser.uid) => {
 
-//Function to get an object containing the current user's details from the firestore
-export const getUserDetails = async () => {
-
-    const auth = firebase.auth();
-    if (auth.currentUser != null) {
-        const uid = auth.currentUser.uid;
-
+    if (userID)
+    {
         const db = firebase.firestore();
 
         const usersCollection = db.collection('users');
-        const usersDoc = usersCollection.doc(uid);
+        const usersDoc = usersCollection.doc(userID);
 
-        const userDetails = usersDoc.get();
+        const userDetails = await usersDoc.get();
 
-        return userDetails
-            .then(doc => {
-                if (doc.exists) {
-                    return doc.data();
-                } else {
-                    throw new Error("Document doesn't exist");
-                }
-            })
-            .catch(err => {
-                return err
-            });
-    }else{
-        return null;
+        if (userDetails.exists)
+            {return userDetails.data()}
+        else
+            {throw new Error("Document '" + userID + "' doesn't exist")}
+
     }
-
+    else {throw new Error("UserID was null");}
 
 };
+
+
 
 //TODO: Also update email and password
 //Set the current user's details in the firestore
@@ -109,6 +91,7 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
+
 
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
@@ -128,6 +111,7 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
     return promise
         .then(() => {
+            incrementStatistic("authentication.updateDetails");
             return "success"
         })
         .catch(err => {

@@ -4,6 +4,9 @@ import {getNumberOfAvailableBikes, setNumberOfAvailableBikes} from "./reservatio
 import {getCurrentDateString, getCurrentTimeString} from "./time";
 import {incrementStatistic} from "./statistics";
 
+const FieldValue = firebase.firestore.FieldValue;
+
+
 
 export const unlockBike = async (reservationID) => {
     //Unlocks a bike at the given station and the given reservation
@@ -80,16 +83,7 @@ const removeBike = async (stationID,bikeID,bikeType) =>
     const stationsCollection = db.collection('stations');
     const stationDocument = stationsCollection.doc(stationID);
 
-    const stationDoc = await stationDocument.get();
-    const stationData = stationDoc.data();
-
-    const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
-    const newBikesArray = bikesArray.filter(tempBikeID =>
-    {
-        return bikeID !== tempBikeID
-    });
-
-    return await stationDocument.update(`bikes.${bikeType}.bikesArray`,newBikesArray);
+    return await stationDocument.update(`bikes.${bikeType}.bikesArray`,FieldValue.arrayRemove(bikeID));
 
 };
 
@@ -102,15 +96,7 @@ const addBike = async (stationID,bikeID,bikeType) =>
     const stationsCollection = db.collection('stations');
     const stationDocument = stationsCollection.doc(stationID);
 
-    const stationDoc = await stationDocument.get();
-    const stationData = stationDoc.data();
-
-    console.log("Attempting to push bike to " + stationID + "'s " + bikeType + " array...");
-
-    const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
-    bikesArray.push(bikeID);
-
-    return await stationDocument.update('bikes.bikeType.bikesArray',bikesArray);
+    return await stationDocument.update(`bikes.${bikeType}.bikesArray`, FieldValue.arrayUnion(bikeID));
 
 };
 

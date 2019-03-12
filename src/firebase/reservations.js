@@ -1,9 +1,7 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
 
-//TODO: washingtonRef.update({
-//   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
-// });
+const FieldValue = firebase.firestore.FieldValue;
 
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
@@ -130,6 +128,7 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
 const appendUserReservationsArray = async (reservationReferences) => {
     //Add the given list to the user's reservation array.
 
+
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
@@ -138,27 +137,9 @@ const appendUserReservationsArray = async (reservationReferences) => {
     const usersCollection = db.collection('users');
     const currentUserDocument = usersCollection.doc(uid);
 
-    return currentUserDocument.get()
-        .then(doc => {
+    //TODO: Test
+    await currentUserDocument.update({reservationsArray: FieldValue.arrayUnion(reservationReferences)});
 
-            const currentUserData = doc.data();
-
-            let reservationsArray = currentUserData['reservationsArray'];
-
-            if (reservationsArray) {
-                reservationsArray = reservationsArray.concat(reservationReferences);
-                // reservationsArray.push(reservationReference);
-            } else {
-                reservationsArray = reservationReferences;
-            }
-
-            const promise = currentUserDocument.update({reservationsArray: reservationsArray});
-
-            return promise
-                .then(() => {return "success"})
-                .catch(err => {return err});
-        })
-        .catch(err => {return err});
 };
 
 
@@ -178,29 +159,25 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 };
 
 
-export const getTrips = async (maxNumberOfTrips=10) => {
+export const getTrips = async (userID=firebase.auth().currentUser.uid, maxNumberOfTrips=10) => {
     //Returns a collection of objects containing data about the user's trips
-
 
     //This ensures that all trips that should be active will be marked as active.
     await updateTrips();
 
     const db = firebase.firestore();
-    const auth = firebase.auth();
 
-    if (!auth) {
-        throw new Error("No user is logged in");
-    }
-
-    const uid = auth.currentUser.uid;
 
     const usersCollection = db.collection('users');
     const reservationsCollection = db.collection('reservations');
 
-    const currentUserDocument = usersCollection.doc(uid);
+    const currentUserDocument = usersCollection.doc(userID);
+
 
     return currentUserDocument.get()
         .then(async doc => {
+
+            if (!doc.exists) {throw new Error("Document '" + userID + "' doesn't exist")}
 
             const currentUserData = doc.data();
             const reservationsArray = currentUserData['reservationsArray'];

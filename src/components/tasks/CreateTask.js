@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {getUserDetails} from "../../firebase/authentication";
+import {getUser} from "../../firebase/authentication";
 import PageContainer from "../PageContainer";
 import {Button, Container, Dropdown, Form, Header, TextArea} from "semantic-ui-react";
 import {getOperators} from "../../firebase/users";
@@ -23,7 +23,7 @@ class CreateTask extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
-        const user = await getUserDetails();
+        const user = await getUser();
         if (user === null)
             this.props.history.push("signin");
         return user

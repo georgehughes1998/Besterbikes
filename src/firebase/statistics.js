@@ -14,6 +14,27 @@ import {getDay, getMonth, getYear} from "./time";
 // {date: {day: 2, month: 9, year: 2019}
 
 
+// ---Types of statistics---
+//
+// authentication.signUp
+// authentication.signIn
+//
+// reservation.[stationID].[bikeType].make
+// reservation.[stationID].[bikeType].cancel
+//
+// station.[stationID].unlock
+// station.[stationID].return
+//
+// task.make
+// task.complete
+// task.reassign
+// task.extend
+//
+// report.make
+
+
+
+
 export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 {
 
@@ -75,8 +96,9 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 
     }
 
-
 };
+
+
 
 
 //Users
@@ -164,6 +186,59 @@ export const getStationStatistics = async (timeScale) => {
 
 };
 
+
+const getStatistics = async (statisticType, year=-1, month=-1, day=-1) =>
+{
+    //TODO: Test
+
+    const db = firebase.firestore();
+    const statisticsCollection = db.collection('statistics');
+
+    const statisticsObject = {};
+
+    let statisticsQuery;
+
+    if (day !== -1)
+    {
+        statisticsQuery = statisticsCollection
+            .where("date.day", "==", day)
+            .where("date.month", "==", month)
+            .where("date.year", "==", year);
+    }
+    else if (month !== -1)
+    {
+        statisticsQuery = statisticsCollection
+            .where("date.month", "==", month)
+            .where("date.year", "==", year);
+    }
+    else if (year !== -1)
+    {
+        statisticsQuery = statisticsCollection
+            .where("date.year", "==", year);
+    }
+    else
+    {
+        statisticsQuery = statisticsCollection;
+    }
+
+    const statisticsSnapshot = await statisticsQuery.get();
+    const statisticsDocs = statisticsSnapshot.docs;
+
+
+    for (let doc in statisticsDocs)
+    {
+        const statisticData = statisticsDocs[doc].data();
+
+        const day = statisticData.date.day;
+        const month = statisticData.date.month;
+        const year = statisticData.date.year;
+        const statistic = statisticData[statisticType];
+
+        statisticsObject[year][month][day] = statistic;
+    }
+
+    return statisticsObject;
+};
 
 
 const getStatistic = async (statisticType,timeScale) => {

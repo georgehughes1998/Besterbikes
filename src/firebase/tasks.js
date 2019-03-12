@@ -93,11 +93,15 @@ export const getTasks = async () => {
     const operatorTasksCollection = tasksCollection.where('operator','==',uid);
 
     const operatorTasksSnapshot = await operatorTasksCollection.get();
+    const operatorTasksDocs = operatorTasksSnapshot.docs;
 
-    for (let operatorTaskDoc in operatorTasksSnapshot.docs)
+    for (let doc in operatorTasksDocs)
     {
+        const operatorTaskDoc = operatorTasksDocs[doc];
+
         const operatorTaskID = operatorTaskDoc.id;
         const operatorTaskData = operatorTaskDoc.data();
+
         theTasks[operatorTaskID] = operatorTaskData;
     }
 
@@ -117,9 +121,7 @@ const getTask = async (taskID) => {
     const taskDocument = tasksCollection.doc(taskID);
 
     const taskSnapshot = await taskDocument.get();
-    const taskData = taskSnapshot.data();
-
-    return taskData;
+    return taskSnapshot.data();
 
 };
 
