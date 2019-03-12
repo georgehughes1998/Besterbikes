@@ -164,9 +164,9 @@ export const getTrips = async (userID="noArg", maxNumberOfTrips=10) => {
 
     if (userID === "noArg")
     {
-        const auth = firebase.auth();
-        if (auth)
-            userID = auth.currentUser.uid;
+        const currentUser = firebase.auth().currentUser;
+        if (currentUser)
+            userID = currentUser.uid;
         else
             throw new Error("No user was given and no user is logged in.");
     }
