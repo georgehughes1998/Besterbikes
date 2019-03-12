@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
-import {FieldValue} from "firebase";
+
+const FieldValue = firebase.firestore.FieldValue;
 
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
