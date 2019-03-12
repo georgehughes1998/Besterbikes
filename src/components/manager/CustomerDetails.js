@@ -2,7 +2,7 @@ import React from 'react'
 import withRouter from "react-router/es/withRouter";
 import PageContainer from "../PageContainer";
 import ListOfLiveTrips from "../ListOfLiveTrips";
-import {getUserDetails} from "../../firebase/authentication";
+import {getUser} from "../../firebase/authentication";
 
 class CustomerDetails extends React.Component{
 
@@ -12,7 +12,7 @@ class CustomerDetails extends React.Component{
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
-        const user = await getUserDetails();
+        const user = await getUser();
         if (user == null){
             this.props.history.push("/signin");
         }else if(user.type !== "manager"){
