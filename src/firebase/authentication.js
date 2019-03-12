@@ -92,6 +92,7 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
+
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
