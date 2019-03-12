@@ -1,7 +1,5 @@
 import React from 'react'
-import {Container, Dropdown, Header, Icon} from "semantic-ui-react";
-
-import PageContainer from "../PageContainer";
+import {Dropdown} from "semantic-ui-react";
 import {getUser} from "../../firebase/authentication";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions/index";
@@ -39,7 +37,6 @@ export class UnlockBike extends React.Component {
             .then((user) =>  {
                 if(user)
                     this.retrieveFirebaseTrips();
-                    console.log(this.props.trips)
             })};
 
     retrieveFirebaseTrips = async () => {
@@ -57,7 +54,6 @@ export class UnlockBike extends React.Component {
         if (this.props.trips){
             let keys = Object.keys(this.props.trips);
             console.log(this.props.trips);
-            console.log(keys);
 
             Object.values(this.props.trips).map((key, index) => {
                 DropdownArray.push({
@@ -80,7 +76,6 @@ export class UnlockBike extends React.Component {
         console.log(this.state);
         unlockBike(this.state.unlockTrip)
             .then((bikeID) => {
-                console.log(bikeID);
                 if(bikeID) {
                     this.setState({activeBikeID: bikeID})
                 }
@@ -93,31 +88,8 @@ export class UnlockBike extends React.Component {
 
     render(){
         return (
-            <PageContainer>
-                <Container textAlign='center'>
 
-                    <br/>
-                    <br/>
-                    <Icon name="wifi" size="massive"/>
-
-                    <Header as="h1">
-                        Unlock Bike
-                    </Header>
-
-                    <Header.Subheader>
-                        Place your mobile device against the reader at one of our bike stands.
-                    </Header.Subheader>
-
-                    <br/>
-
-                    {/*<Icon name="mobile alternate" size="huge"/>*/}
-
-                    <Header.Subheader>
-                        Alternatively, select your trip below and enter the displayed code
-                    </Header.Subheader>
-
-                    <br/>
-
+            <div>
                     <Dropdown
                         fluid
                         selection
@@ -137,8 +109,7 @@ export class UnlockBike extends React.Component {
 
                     {this.state.activeBikeID ? <UnlockConfirmation activeBikeID = {this.state.activeBikeID}/> : null}
 
-                        </Container>
-            </PageContainer>
+            </div>
         )
     }
 };

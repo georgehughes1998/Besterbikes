@@ -61,8 +61,6 @@ class listOfLiveItems extends React.Component{
 
     getItemValues = (trip, index) => {
 
-        console.log(trip);
-
         const stationKey = trip["start"]["station"];
         const stationName = this.props.stations[stationKey]["name"];
         const startTime = trip["start"]["time"]["time"];

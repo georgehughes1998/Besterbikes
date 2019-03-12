@@ -20,6 +20,13 @@ export const loadTrips = (trips) => {
     }
 };
 
+export const loadTasks = (tasks) => {
+    return {
+        type: 'LOAD_TASKS',
+        payload: tasks
+    }
+};
+
 export const loadOperators = (operators) => {
     return {
         type: 'LOAD_OPERATORS',

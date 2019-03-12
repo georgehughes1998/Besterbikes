@@ -43,7 +43,6 @@ class Report extends React.Component {
             .then((user) =>  {
                 if(user)
                     this.retrieveFirebaseTrips();
-                console.log(this.props.trips)
             })};
 
     //TODO: Add firebase function to make report
@@ -55,7 +54,6 @@ class Report extends React.Component {
             .catch((err) => {
                 console.log(err.message);
                 this.setState({error: err.message});
-                console.log(this.state);
                 // throw new SubmissionError({
                 //     _error: err.message
                 // })

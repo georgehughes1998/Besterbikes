@@ -29,7 +29,7 @@
       "icon": "map",
       "name": "Map"
     },
-    {"link": "/mytasks",
+    {"link": "/operatorTasks",
       "icon": "tasks",
       "name": "My Tasks"
     },

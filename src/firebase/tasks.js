@@ -72,7 +72,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     //Add task to the firestore
     await tasksCollection.add(theTask);
 
-    console.log(theTask);
+    // console.log(theTask);
 
     await incrementStatistic("task.make");
 
