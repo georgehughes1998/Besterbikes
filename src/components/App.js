@@ -23,6 +23,7 @@ import CreateTask from "./tasks/CreateTask";
 import './naviagtion/sideBarOverride.css'
 import OperatorTasks from "./operator/OperatorTasks";
 import Users from "./manager/Users";
+import CustomerDetails from "./manager/CustomerDetails";
 
 
 //TODO: Add prop types and typescript to app
@@ -82,6 +83,7 @@ class App extends React.Component {
 
                                 {/*Manager Routes*/}
                                 <Route path="/users" component={Users}/>
+                                <Route path="/customerdetails" component={CustomerDetails}/>
 
                                 {/*TODO: Remove station simulation once implemnted properly*/}
                                 <Route path="/stationsim" exact component={StationSystemSimulation}/>

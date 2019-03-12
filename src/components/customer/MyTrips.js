@@ -7,7 +7,7 @@ import {loadStations, loadTrips} from "../../redux/actions";
 import PageContainer from "../PageContainer";
 import {getUser} from "../../firebase/authentication";
 import {cancelReservation, getTrips} from "../../firebase/reservations";
-import ListOfLiveItems from "../ListOfLiveTrips";
+import ListOfLiveTrips from "../ListOfLiveTrips";
 
 
 //TODO: Implement loader
@@ -81,7 +81,7 @@ class MyTrips extends React.Component {
 
         return (
             <PageContainer>
-                <ListOfLiveItems
+                <ListOfLiveTrips
                     items={this.props.trips}
                     stations={this.props.stations}
                     handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
