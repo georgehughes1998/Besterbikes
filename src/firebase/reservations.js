@@ -264,7 +264,7 @@ export const cancelReservation = async (reservationID) => {
                     return reservationDocument.update({status: "cancelled"})
                         .then(() => {
 
-                            incrementStatistic("reservation.cancel");
+                            incrementStatistic("reservation." + stationID + "." + bikeType + ".cancel");
 
                             return "success"
                         })

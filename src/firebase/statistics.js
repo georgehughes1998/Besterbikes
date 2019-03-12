@@ -32,6 +32,8 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
     const statisticSingleQuery = statisticsQuery.limit(1);
     const statisticSnapshot = await statisticSingleQuery.get();
 
+    let statisticID;
+    let statisticValue;
 
     if (statisticSnapshot.empty) //If there is no document with this date
     {
@@ -43,16 +45,34 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
     }
     else //If there exists a document with this date
     {
-        const statisticID = statisticSnapshot.docs[0].id;
-        const statisticValue = statisticSnapshot.docs[0].data()[statisticType];
+        statisticID = statisticSnapshot.docs[0].id;
+        let statisticValue = statisticSnapshot.docs[0].data();
+        let doesExist = true;
+
+        //Loop through the string path to get the data at that location
+        const statisticSplit = statisticType.split(".");
+        for (let s in statisticSplit) {
+            if (statisticValue)
+                statisticValue = statisticValue[statisticSplit[s]];
+            else {
+                doesExist = false;
+                break;
+            }
+        }
 
         let newStatisticValue = incrementAmount;
 
-        if (statisticValue)
-            newStatisticValue += statisticValue;
+        if (doesExist) {
+
+            if (statisticValue && ((typeof statisticValue) == "number"))
+                newStatisticValue += statisticValue;
+        }
+
+        console.log("Old value: " + statisticValue + ", New value:" + newStatisticValue);
 
         const statisticDocument = statisticsCollection.doc(statisticID);
         await statisticDocument.update(statisticType,newStatisticValue);
+
     }
 
 
