@@ -1,13 +1,14 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
-import {getCurrentDateString, getCurrentTimeString} from "./time";
+import {getCurrentDateString, getCurrentTimeString, getTimeString} from "./time";
 import {makeReport} from "./reports";
 import {makeNewTask} from "./tasks";
 
 const FieldValue = firebase.firestore.FieldValue;
 
 const maxNumberOfBikesCanReserve = 8;
-const maxHoursLimit = 3;
+const maxReserveHoursLimit = 3;
+const maxActiveHoursLimit = 1;
 const stationCapacity = 35;
 const maxCapacityPercentage = 0.7;
 const minCapacityPercentage = 0.3;
@@ -19,7 +20,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     const startTimeString = startDate + " " + startTime;
     const startTimeDate = Date.parse(startTimeString);
     const currentTime = new Date();
-    const futureLimitTime = (new Date).setHours(currentTime.getHours() + maxHoursLimit);
+    const futureLimitTime = (new Date).setHours(currentTime.getHours() + maxReserveHoursLimit);
 
     regularBikes = parseInt(regularBikes);
     mountainBikes = parseInt(mountainBikes);
@@ -27,7 +28,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     if (startTimeDate < currentTime)
         throw new Error("Cannot book a reservation in the past");
     if (startTimeDate > futureLimitTime)
-        throw new Error("Cannot book a reservation more than " + maxHoursLimit.toString() + " hours ahead.");
+        throw new Error("Cannot book a reservation more than " + maxReserveHoursLimit.toString() + " hours ahead.");
 
     //In case value is blank and parseInt returns null
     if (!regularBikes)
@@ -109,8 +110,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
 
     await appendUserReservationsArray(reservationsIDArray);
 
-    console.log("Reservations to be added to user:");
-    console.log(reservationsIDArray);
+    //console.log("Reservations to be added to user:");
+    //console.log(reservationsIDArray);
 
     await incrementStatistic("reservation." + station + ".road.make", regularBikes);
     await incrementStatistic("reservation." + station + ".mountain.make", mountainBikes);
@@ -229,7 +230,7 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 
     return addPromise
         .then(ref => {
-            console.log("Single Reservation of " + bikeType + " bike Added!");
+            //console.log("Single Reservation of " + bikeType + " bike Added!");
             return ref.id;
         })
         .catch(err => {
@@ -272,7 +273,7 @@ export const getTrips = async (filterStatus = "", userID = "", maxNumberOfTrips 
 
     reservationSnapshot.docs.forEach(doc => {
 
-        console.log(doc.data());
+        //console.log(doc.data());
 
         fullReservationsArray[counter++] = {id: doc.id, data: doc.data()};
 
@@ -364,41 +365,66 @@ export const updateTrips = async () => {
 
     const reservationsCollection = db.collection('reservations');
 
-    const query = reservationsCollection.where('status', '==', 'inactive');
+    const inactiveQuery = reservationsCollection.where('status', '==', 'inactive');
+    const activeQuery = reservationsCollection.where('status', '==', 'active');
 
-    return query.get()
-        .then(async queryDoc => {
+    const inactiveSnapshot = await inactiveQuery.get();
+    const activeSnapshot = await activeQuery.get();
 
-            queryDoc.forEach(async singleDoc => {
+    inactiveSnapshot.docs.forEach(async singleDoc => {
 
-                const singleDocID = singleDoc.id;
-                const singleDocData = singleDoc.data();
-                const singleDocUser = singleDocData['user'];
+        const singleDocID = singleDoc.id;
+        const singleDocData = singleDoc.data();
+        const singleDocUser = singleDocData['user'];
 
-                //Only update documents for this user (this could save overwriting changes because of local copies not matching the firestore)
-                if (uid === singleDocUser) {
+        //Only update documents for this user (this could save race conditions)
+        if (uid === singleDocUser) {
 
-                    const singleDocDate = singleDocData['start']['time']['date'];
-                    const singleDocTime = singleDocData['start']['time']['time'];
+            const singleDocDate = singleDocData['start']['time']['date'];
+            const singleDocTime = singleDocData['start']['time']['time'];
 
-                    const time = new Date();
+            const time = new Date();
 
-                    const singleDocDateDate = Date.parse(singleDocDate + " " + singleDocTime);
+            const singleDocDateDate = Date.parse(singleDocDate + " " + singleDocTime);
 
-                    if (singleDocDateDate <= time) {
-                        const reservationDocument = reservationsCollection.doc(singleDocID);
-                        // console.log("Changing status to active");
+            if (singleDocDateDate <= time) {
+                const reservationDocument = reservationsCollection.doc(singleDocID);
+                await reservationDocument.update('status', 'active');
+            }
+        }
+    });
 
-                        await reservationDocument.update('status', 'active');
-                    }
+    activeSnapshot.docs.forEach(async singleDoc => {
 
-                    await incrementStatistic("reservation.update");
-                }
+        const singleDocID = singleDoc.id;
+        const singleDocData = singleDoc.data();
+        const singleDocUser = singleDocData['user'];
 
-            });
 
-        }).catch(err => {
-            return err
-        });
+        //Only update documents for this user (this could save race conditions)
+        if (uid === singleDocUser) {
+
+            const singleDocDate = singleDocData['start']['time']['date'];
+            const singleDocTime = singleDocData['start']['time']['time'];
+
+            const time = new Date();
+            time.setHours(time.getHours()-maxActiveHoursLimit);
+
+            const singleDocDateDate = Date.parse(singleDocDate + " " + singleDocTime);
+
+            //Cancel reservations that have been active for two hours but haven't been unlocked
+            if (singleDocDateDate < time.getTime()) {
+                console.log(singleDocDateDate);
+                const reservationDocument = reservationsCollection.doc(singleDocID);
+                await reservationDocument.update('status', 'cancelled');
+            }
+        }
+    });
+
+
+
+
+    await incrementStatistic("reservation.update");
+
 };
 
