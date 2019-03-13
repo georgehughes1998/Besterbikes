@@ -241,11 +241,25 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
         const year = statisticData.date.year;
 
         for (let s in statisticTypes) {
-            console.log(s);
+
             const statisticType = statisticTypes[s]; //Either this or it's actually just s
-            console.log(statisticType);
-            const statistic = statisticData[statisticType];
-            console.log(statistic);
+
+            // const statistic = statisticData[statisticType];
+
+            let statisticValue = statisticData;
+            let doesExist = true;
+
+            //Loop through the string path to get the data at that location
+            const statisticSplit = statisticType.split(".");
+            for (let s in statisticSplit) {
+                if (statisticValue) {
+                    statisticValue = statisticValue[statisticSplit[s]];
+                }
+                else {
+                    doesExist = false;
+                    break;
+                }
+            }
 
             const statisticTypeStringArray = statisticType.split(".");
             let statisticTypeString = "";
@@ -256,7 +270,16 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
 
             statisticTypeString = statisticTypeString.slice(0, -1); //All but last char
 
-            statisticsObject[statisticTypeString][year][month][day] = statistic;
+            if (!statisticsObject[statisticTypeString])
+                statisticsObject[statisticTypeString] = {};
+            if (!statisticsObject[statisticTypeString][year])
+                statisticsObject[statisticTypeString][year] = {};
+            if (!statisticsObject[statisticTypeString][year][month])
+                statisticsObject[statisticTypeString][year][month] = {};
+            if (!statisticsObject[statisticTypeString][year][month][day])
+                statisticsObject[statisticTypeString][year][month][day] = {};
+
+            statisticsObject[statisticTypeString][year][month][day] = statisticValue;
 
         }
     }
