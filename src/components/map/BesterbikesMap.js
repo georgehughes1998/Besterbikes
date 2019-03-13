@@ -13,6 +13,29 @@ import {withRouter} from "react-router";
 
 export class BesterbikesMap extends Component {
 
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = () => {
+
+        return getUser()
+            .then(user => {
+                if (user === null)
+                    this.props.history.push("signin");
+                return user
+            });
+    };
+
+    constructor(props) {
+        super(props);
+        this.onMarkerClick = this.onMarkerClick.bind(this);
+        this.state = {
+            showingInfoWindow: true,
+            activeMarker: {},
+            selectedPlace: {},
+            mapJSON: {},
+            bikesAtStations: {}
+        };
+    }
+
     //Loads trips if user logged in
     async componentDidMount() {
         const user = await this.authenticateUser();
@@ -27,11 +50,11 @@ export class BesterbikesMap extends Component {
 
             const bikesAtStations = {};
 
-            Object.values(stations).map( async (station, index) => {
-                bikesAtStations[keys[index]] = {road:0,mountain:0};
+            Object.values(stations).map(async (station, index) => {
+                bikesAtStations[keys[index]] = {road: 0, mountain: 0};
 
-                bikesAtStations[keys[index]]['road'] = await getNumberOfAvailableBikes(keys[index],"road");
-                bikesAtStations[keys[index]]['mountain'] = await getNumberOfAvailableBikes(keys[index],"mountain");
+                bikesAtStations[keys[index]]['road'] = await getNumberOfAvailableBikes(keys[index], "road");
+                bikesAtStations[keys[index]]['mountain'] = await getNumberOfAvailableBikes(keys[index], "mountain");
 
                 this.forceUpdate(); //Added so that markers render once the number of available bikes has loaded
                 // console.log(bikesAtStations);
@@ -44,30 +67,6 @@ export class BesterbikesMap extends Component {
 
 
         }
-    }
-
-    //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = () => {
-
-        return getUser()
-            .then(user => {
-                if (user === null)
-                    this.props.history.push("signin");
-                return user
-            });
-    };
-
-
-constructor(props){
-        super(props);
-        this.onMarkerClick = this.onMarkerClick.bind(this);
-        this.state = {
-            showingInfoWindow: true,
-            activeMarker: {},
-            selectedPlace: {},
-            mapJSON: {},
-            bikesAtStations: {}
-        };
     }
 
     onMarkerClick(props, marker, e) {
@@ -85,7 +84,7 @@ constructor(props){
     }
 
 
-    renderMarkers () {
+    renderMarkers() {
         const stations = this.state.mapJSON;
         let keys = Object.keys(stations);
         // console.log(keys);
@@ -96,33 +95,34 @@ constructor(props){
         if (!(stations === {})) {
             return Object.values(stations).map((station, index) => {
 
-              const stationName = keys[index];
+                const stationName = keys[index];
 
-              let bikesAvailable = 0;
+                let bikesAvailable = 0;
 
-              if (theState[stationName]) {
-                  const roadBikes = theState[stationName]['road'];
-                  const mountainBikes = theState[stationName]['mountain'];
+                if (theState[stationName]) {
+                    const roadBikes = theState[stationName]['road'];
+                    const mountainBikes = theState[stationName]['mountain'];
 
-                  if (roadBikes)
-                      bikesAvailable += roadBikes;
+                    if (roadBikes)
+                        bikesAvailable += roadBikes;
 
-                  if (mountainBikes)
-                      bikesAvailable += mountainBikes;
+                    if (mountainBikes)
+                        bikesAvailable += mountainBikes;
 
-                  console.log("At " + stationName + ", there are " + roadBikes + " road bikes and " + mountainBikes +
-                      " mountain bikes " + " with a total of " + bikesAvailable + " available bikes.");
+                    console.log("At " + stationName + ", there are " + roadBikes + " road bikes and " + mountainBikes +
+                        " mountain bikes " + " with a total of " + bikesAvailable + " available bikes.");
 
-              }
+                }
 
                 return (
                     <Marker position={station.location.geoPoint}
                             onClick={this.onMarkerClick}
                             name={station.name}
                             stationDetails={station}
-                            icon={{url:"http://www2.macs.hw.ac.uk/~cmf2/mapicon.png"}}
-                            label={{text: bikesAvailable.toString(10),
-                                    color:"white"
+                            icon={{url: "http://www2.macs.hw.ac.uk/~cmf2/mapicon.png"}}
+                            label={{
+                                text: bikesAvailable.toString(10),
+                                color: "white"
                             }}
 
                     />
@@ -132,11 +132,11 @@ constructor(props){
 
     }
 
-    componentDidUpdate(){
-      console.log("Updated");
+    componentDidUpdate() {
+        console.log("Updated");
     }
 
-    render(){
+    render() {
         // if (!this.props.stations) {
         //     return (
         //         <Segment>
@@ -147,7 +147,7 @@ constructor(props){
         //     );
         // }
 
-        return(
+        return (
 
             <Map
                 style={this.props.style}

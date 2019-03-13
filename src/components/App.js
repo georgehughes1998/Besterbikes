@@ -57,45 +57,45 @@ class App extends React.Component {
 
                             <Sidebar.Pusher animation='push'>
 
-                            <div>
-                                {/*TODO: Refactor to use JSON*/}
-                                <Route path="/" exact component={MainMenu}/>
-                                <Route path="/map" exact component={MapContainer}/>
-                                <Route path="/unlockbike" exact component={UnlockBike}/>
+                                <div>
+                                    {/*TODO: Refactor to use JSON*/}
+                                    <Route path="/" exact component={MainMenu}/>
+                                    <Route path="/map" exact component={MapContainer}/>
+                                    <Route path="/unlockbike" exact component={UnlockBike}/>
 
-                                {/*Customer Routes*/}
-                                <Route path="/mytrips" exact component={MyTrips}/>
+                                    {/*Customer Routes*/}
+                                    <Route path="/mytrips" exact component={MyTrips}/>
 
-                                {/*Account Management Routes*/}
-                                <Route path="/signin" exact component={SignIn}/>
-                                <Route path="/signup" exact component={SignUp}/>
-                                <Route path="/editaccount" exact component={EditAccount}/>
+                                    {/*Account Management Routes*/}
+                                    <Route path="/signin" exact component={SignIn}/>
+                                    <Route path="/signup" exact component={SignUp}/>
+                                    <Route path="/editaccount" exact component={EditAccount}/>
 
-                                {/*Reserving a bike Routes*/}
-                                <Route path="/reservebike" component={ReserveBikeContainer}/>
+                                    {/*Reserving a bike Routes*/}
+                                    <Route path="/reservebike" component={ReserveBikeContainer}/>
 
-                                {/*Reporting an issue and creating a task Router*/}
-                                <Route path="/report" component={Report}/>
-                                <Route path="/createTask" component={CreateTask}/>
+                                    {/*Reporting an issue and creating a task Router*/}
+                                    <Route path="/report" component={Report}/>
+                                    <Route path="/createTask" component={CreateTask}/>
 
-                                {/*Operator Routes*/}
-                                <Route path="/operatorTasks" component={OperatorTasks}/>
+                                    {/*Operator Routes*/}
+                                    <Route path="/operatorTasks" component={OperatorTasks}/>
 
-                                {/*Manager Routes*/}
-                                <Route path="/users" component={Users}/>
-                                <Route path="/customerdetails" component={CustomerDetails}/>
+                                    {/*Manager Routes*/}
+                                    <Route path="/users" component={Users}/>
+                                    <Route path="/customerdetails" component={CustomerDetails}/>
 
-                                {/*TODO: Remove station simulation once implemnted properly*/}
-                                <Route path="/stationsim" exact component={StationSystemSimulation}/>
-                            </div>
+                                    {/*TODO: Remove station simulation once implemnted properly*/}
+                                    <Route path="/stationsim" exact component={StationSystemSimulation}/>
+                                </div>
 
                             </Sidebar.Pusher>
                         </Sidebar.Pushable>
 
                     </div>
 
-            </BrowserRouter>
-        </div>
+                </BrowserRouter>
+            </div>
         )
     }
 

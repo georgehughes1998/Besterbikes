@@ -1,6 +1,5 @@
 {
-  "customer":
-  [
+  "customer": [
     {
       "name": "Map",
       "icon": "map",
@@ -22,14 +21,14 @@
       "link": "/mytrips"
     }
   ],
-  "operator":
-  [
+  "operator": [
     {
       "link": "/map",
       "icon": "map",
       "name": "Map"
     },
-    {"link": "/operatorTasks",
+    {
+      "link": "/operatorTasks",
       "icon": "tasks",
       "name": "My Tasks"
     },
@@ -44,14 +43,14 @@
       "name": "Create Task"
     }
   ],
-  "manager":
-  [
+  "manager": [
     {
       "link": "/map",
       "icon": "map",
       "name": "Map"
     },
-    {"link": "/users",
+    {
+      "link": "/users",
       "icon": "users",
       "name": "Users"
     },
@@ -66,5 +65,4 @@
       "name": "Tasks"
     }
   ]
-
 }

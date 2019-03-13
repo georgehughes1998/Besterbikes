@@ -3,24 +3,24 @@ import {Button, Header, Icon, Modal} from 'semantic-ui-react';
 import withRouter from "react-router/es/withRouter";
 import {reduxForm} from "redux-form";
 
-class ReservationComplete extends React.Component{
+class ReservationComplete extends React.Component {
 
-    state = { modalOpen: true };
+    state = {modalOpen: true};
 
-    handleOpen = () => this.setState({ modalOpen: true });
+    handleOpen = () => this.setState({modalOpen: true});
 
-    handleClose = () => this.setState({ modalOpen: false });
+    handleClose = () => this.setState({modalOpen: false});
 
 
-    render(){
-        return(
+    render() {
+        return (
             <Modal
                 open={this.state.modalOpen}
                 onClose={this.handleClose}
                 basic
                 size='small'
             >
-                <Header icon='lock open' content='Bike Unlocked' />
+                <Header icon='lock open' content='Bike Unlocked'/>
                 <Modal.Content>
                     {/*TODO: Display station name*/}
                     <h3>
@@ -32,7 +32,7 @@ class ReservationComplete extends React.Component{
                 </Modal.Content>
                 <Modal.Actions>
                     <Button color='green' onClick={() => this.props.history.push("/")} inverted>
-                        <Icon name='checkmark' /> Return to main menu
+                        <Icon name='checkmark'/> Return to main menu
                     </Button>
                 </Modal.Actions>
             </Modal>

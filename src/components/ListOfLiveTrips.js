@@ -1,8 +1,9 @@
 //Displays all trips by mapping over returned trips
 import {Grid, Header, Icon, Segment} from "semantic-ui-react";
 import React from "react";
+import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 
-class listOfLiveTrips extends React.Component{
+class listOfLiveTrips extends React.Component {
 
     renderItems = () => {
         if (this.props.items) {
@@ -30,7 +31,7 @@ class listOfLiveTrips extends React.Component{
                                 content={headerContent}
                             />
                             <Header
-                                as = 'h5'
+                                as='h5'
                                 content={`${headerSub}`}
                                 subheader={`Trip ID: ${tripId}`}
                             />
@@ -157,9 +158,15 @@ class listOfLiveTrips extends React.Component{
         }
     };
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
+                <br/>
+                <Container textAlign='center'>
+                    <Header as={"h1"}>Trips</Header>
+                </Container>
+                <br/>
+
                 {this.renderItems()}
             </div>
         )

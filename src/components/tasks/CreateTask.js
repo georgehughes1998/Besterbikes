@@ -12,15 +12,6 @@ import FirebaseError from "../FirebaseError";
 
 class CreateTask extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            category: "",
-            description: "",
-            operator: ""
-        }
-    };
-
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
@@ -28,7 +19,6 @@ class CreateTask extends React.Component {
             this.props.history.push("signin");
         return user
     };
-
     retrieveOperators = async () => {
         const obj = await getOperators();
         if (obj) {
@@ -38,18 +28,14 @@ class CreateTask extends React.Component {
 
         }
     };
-
-    componentDidMount() {
-        this.retrieveOperators()
-            .then((user) =>  {
-                if(user)
-                    this.retrieveOperators();
-            })};
-
     //TODO: Add firebase function to create a task
     handleSubmit = async () => {
         console.log("this.state");
-        return makeNewTask({category: this.state.category, operator: this.state.operator, comment: this.state.description})
+        return makeNewTask({
+            category: this.state.category,
+            operator: this.state.operator,
+            comment: this.state.description
+        })
             .then((obj) => {
                 console.log(obj)
             })
@@ -59,58 +45,75 @@ class CreateTask extends React.Component {
             })
     };
 
-        render() {
-            return (
-                <PageContainer>
-                    <br/>
-                    <Container textAlign='center'>
-                        <Form>
-
-                            <Header as="h1">Create a Task</Header>
-
-                            <Dropdown
-                                selection
-                                search
-                                placeholder='Select Category'
-                                options={[  {key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
-                                    {key: "stationFault", value: "Station Fault", text: "Station Fault"},
-                                    {key: "feedback", value: "Feedback", text: "Feedback"}
-                                ]}
-                                onChange={(param, data) => this.setState({"category": data.value})}
-                            />
-
-                            <br/>
-                            <br/>
-
-                            <OperatorDropdown
-                                placeholder = 'Select Operator'
-                                operators = {this.props.operators}
-                                onChange = {(param, data) => this.setState({"operator": data.value})}
-                            />
-
-
-                            <br/>
-                            <br/>
-                            <TextArea
-                                autoHeight
-                                placeholder={"Please describe your query here"}
-                                rows={10}
-                                onChange={(param, data) => this.setState({"description": data.value})}
-                            />
-
-                            <br/>
-                            <br/>
-                            {this.state.error != ""?<FirebaseError error={this.state.error}/>:null}
-                            <Button
-                                content="Create Task"
-                                onClick={() => this.handleSubmit(this.state)}
-                            />
-
-                        </Form>
-                    </Container>
-                </PageContainer>
-            )
+    constructor(props) {
+        super(props);
+        this.state = {
+            category: "",
+            description: "",
+            operator: ""
         }
+    };
+
+    componentDidMount() {
+        this.retrieveOperators()
+            .then((user) => {
+                if (user)
+                    this.retrieveOperators();
+            })
+    };
+
+    render() {
+        return (
+            <PageContainer>
+                <br/>
+                <Container textAlign='center'>
+                    <Form>
+
+                        <Header as="h1">Create a Task</Header>
+
+                        <Dropdown
+                            selection
+                            search
+                            placeholder='Select Category'
+                            options={[{key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
+                                {key: "stationFault", value: "Station Fault", text: "Station Fault"},
+                                {key: "feedback", value: "Feedback", text: "Feedback"}
+                            ]}
+                            onChange={(param, data) => this.setState({"category": data.value})}
+                        />
+
+                        <br/>
+                        <br/>
+
+                        <OperatorDropdown
+                            placeholder='Select Operator'
+                            operators={this.props.operators}
+                            onChange={(operator) => this.setState({"operator": operator})}
+                        />
+
+
+                        <br/>
+                        <br/>
+                        <TextArea
+                            autoHeight
+                            placeholder={"Please describe your query here"}
+                            rows={10}
+                            onChange={(param, data) => this.setState({"description": data.value})}
+                        />
+
+                        <br/>
+                        <br/>
+                        {this.state.error != "" ? <FirebaseError error={this.state.error}/> : null}
+                        <Button
+                            content="Create Task"
+                            onClick={() => this.handleSubmit(this.state)}
+                        />
+
+                    </Form>
+                </Container>
+            </PageContainer>
+        )
+    }
 
 }
 

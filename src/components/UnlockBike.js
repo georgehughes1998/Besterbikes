@@ -5,7 +5,20 @@ import OperatorUnlockBike from "./operator/OperatorUnlockBike";
 import PageContainer from "./PageContainer";
 import {Container, Header, Icon} from "semantic-ui-react";
 
-class UnlockBike extends React.Component{
+class UnlockBike extends React.Component {
+
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = async () => {
+        const user = await getUser();
+        if (user == null) {
+            this.props.history.push("/signin");
+        } else if (user.type === "manager") {
+            this.props.history.push("/");
+        } else {
+            this.setState({"userType": user.type})
+        }
+        return user
+    };
 
     constructor(props) {
         super(props);
@@ -14,26 +27,12 @@ class UnlockBike extends React.Component{
         };
     }
 
-    //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = async () => {
-        const user = await getUser();
-        if (user == null){
-            this.props.history.push("/signin");
-        }else if(user.type === "manager"){
-            this.props.history.push("/");
-        }else {
-            this.setState({"userType": user.type})
-        }
-        return user
-    };
-
-    renderUserSpecificContent(){
-        if (this.state.userType === "customer"){
+    renderUserSpecificContent() {
+        if (this.state.userType === "customer") {
             return <CustomerUnlockBike/>
-        }else  if (this.state.userType === "operator") {
-            console.log("Hey");
+        } else if (this.state.userType === "operator") {
             return <OperatorUnlockBike/>
-        }else{
+        } else {
             return null;
         }
     }
@@ -42,8 +41,8 @@ class UnlockBike extends React.Component{
         this.authenticateUser()
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <PageContainer>
                 <Container textAlign='center'>
 
@@ -69,7 +68,7 @@ class UnlockBike extends React.Component{
 
                     <br/>
 
-                {this.state.userType === ""?null:this.renderUserSpecificContent()}
+                    {this.state.userType === "" ? null : this.renderUserSpecificContent()}
                 </Container>
             </PageContainer>
         )

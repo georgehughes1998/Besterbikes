@@ -8,7 +8,7 @@ import {Grid} from "semantic-ui-react";
 const PageContainer = (props) => {
 
     return (
-        <div style={{ marginTop: '6em' }}>
+        <div style={{marginTop: '6em'}}>
             <Grid>
                 <Grid.Column>
                     {props.children}

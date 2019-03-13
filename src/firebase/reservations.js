@@ -1,30 +1,61 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
+import {getCurrentDateString, getCurrentTimeString, getTimeString} from "./time";
+import {makeReport} from "./reports";
+import {makeNewTask} from "./tasks";
 
 const FieldValue = firebase.firestore.FieldValue;
+
+const maxNumberOfBikesCanReserve = 8;
+const maxReserveHoursLimit = 3;
+const maxActiveHoursLimit = 1;
+const stationCapacity = 35;
+const maxCapacityPercentage = 0.7;
+const minCapacityPercentage = 0.3;
 
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
     //Function to make reservations with the given data
 
+    const startTimeString = startDate + " " + startTime;
+    const startTimeDate = Date.parse(startTimeString);
+    const currentTime = new Date();
+    const futureLimitTime = (new Date).setHours(currentTime.getHours() + maxReserveHoursLimit);
+
     regularBikes = parseInt(regularBikes);
     mountainBikes = parseInt(mountainBikes);
+
+    if (startTimeDate < currentTime)
+        throw new Error("Cannot book a reservation in the past");
+    if (startTimeDate > futureLimitTime)
+        throw new Error("Cannot book a reservation more than " + maxReserveHoursLimit.toString() + " hours ahead.");
+
+    //In case value is blank and parseInt returns null
+    if (!regularBikes)
+        regularBikes = 0;
+    if (!mountainBikes)
+        mountainBikes = 0;
+
+    if (!startDate)
+        throw new Error("No date was selected.");
+    if (!startTime)
+        throw new Error("No time was selected.");
 
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station, "road");
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
 
     //Prevent the user from doing anything absurd
-    if (regularBikes > 8 || mountainBikes > 8)
-        throw new Error("Cannot reserve more than 8 bikes at once.");
+    if (regularBikes > maxNumberOfBikesCanReserve || mountainBikes > maxNumberOfBikesCanReserve)
+        throw new Error("Cannot reserve more than " + maxNumberOfBikesCanReserve.toString() + " bikes at once.");
 
     if (numberOfAvailableRoadBikes < regularBikes)
-        throw new Error("Not enough road bikes available at selected station");
+        throw new Error("Not enough road bikes available at selected station.");
 
     if (numberOfAvailableMountainBikes < mountainBikes)
-        throw new Error("Not enough mountain bikes available at selected station");
+        throw new Error("Not enough mountain bikes available at selected station.");
 
     if (mountainBikes < 0 || regularBikes < 0)
-        throw new Error("Number of bikes selected cannot be less than zero");
+        throw new Error("Number of bikes selected cannot be less than zero.");
 
 
     const db = firebase.firestore();
@@ -42,6 +73,12 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
                 time: startTime
             },
             station: station
+        },
+        creation: {
+            time: {
+                date: getCurrentDateString(),
+                time: getCurrentTimeString()
+            }
         },
         user: uid,
         status: 'inactive',
@@ -73,11 +110,11 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
 
     await appendUserReservationsArray(reservationsIDArray);
 
-    console.log("Reservations to be added to user:");
-    console.log(reservationsIDArray);
+    //console.log("Reservations to be added to user:");
+    //console.log(reservationsIDArray);
 
-    await incrementStatistic("reservation." + station + ".road.make",regularBikes);
-    await incrementStatistic("reservation." + station + ".mountain.make",mountainBikes);
+    await incrementStatistic("reservation." + station + ".road.make", regularBikes);
+    await incrementStatistic("reservation." + station + ".mountain.make", mountainBikes);
 
     return "success";
 
@@ -101,27 +138,68 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
             return bikes['numberOfAvailableBikes'];
 
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 
 };
 
-export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes, bikeType) => {
+export const setNumberOfAvailableBikes = async (stationID, numberOfAvailableBikes, bikeType) => {
     //Sets the number of available bikes at a station to the provided number
 
     const db = firebase.firestore();
-    console.log("Setting number of available " + bikeType + " bikes at station " + station);
+    // console.log("Setting number of available " + bikeType + " bikes at station " + station);
+
+    if (numberOfAvailableBikes > stationCapacity)
+        throw new Error("Station is full");
+    if (numberOfAvailableBikes < 0)
+        throw new Error("Station is empty");
 
     const stationsCollection = db.collection('stations');
-    const thisStationDocument = stationsCollection.doc(station);
+    const thisStationDocument = stationsCollection.doc(stationID);
 
     let bikesObject = {};
     bikesObject[`bikes.${bikeType}.numberOfAvailableBikes`] = numberOfAvailableBikes;
 
-    const promise = thisStationDocument.update(bikesObject);
+    await thisStationDocument.update(bikesObject);
 
-    return promise
-        .then(() => {return "success"})
-        .catch(err => {return err});
+    //Check for station over capacity
+    if ( (numberOfAvailableBikes/stationCapacity) > maxCapacityPercentage)
+    {
+        const category = "Station Over Capacity Threshold";
+        const comment = "Alert: the attached station is over "
+            + (maxCapacityPercentage*100).toString()
+            + "% full.";
+
+        const tasksCollection = db.collection('tasks');
+        const tasksQuery = tasksCollection.where('category', '==',category)
+            .where('status','==','pending')
+            .where('station','==',stationID);
+
+        const tasksSnapshot = await tasksQuery.get();
+
+        if (tasksSnapshot.empty)
+            await makeNewTask({category, comment, station: stationID})
+    }
+
+    else if ( (numberOfAvailableBikes/stationCapacity) < minCapacityPercentage)
+    {
+        const category = "Station Under Capacity Threshold";
+        const comment = "Alert: the attached station is under "
+            + (minCapacityPercentage*100).toString()
+            + "% full.";
+
+        const tasksCollection = db.collection('tasks');
+        const tasksQuery = tasksCollection.where('category', '==',category)
+            .where('status','==','pending')
+            .where('station','==',stationID);
+
+        const tasksSnapshot = await tasksQuery.get();
+         if (tasksSnapshot.empty)
+             await makeNewTask({category, comment, station: stationID});
+    }
+
+    return "success"
 
 };
 
@@ -138,7 +216,7 @@ const appendUserReservationsArray = async (reservationReferences) => {
     const currentUserDocument = usersCollection.doc(uid);
 
     //TODO: Test
-    await currentUserDocument.update({reservationsArray: FieldValue.arrayUnion.apply(null,reservationReferences)});
+    await currentUserDocument.update({reservationsArray: FieldValue.arrayUnion.apply(null, reservationReferences)});
 
 };
 
@@ -152,18 +230,31 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 
     return addPromise
         .then(ref => {
-            console.log("Single Reservation of " + bikeType + " bike Added!");
+            //console.log("Single Reservation of " + bikeType + " bike Added!");
             return ref.id;
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
 
 
-export const getTrips = async (userID="noArg", maxNumberOfTrips=10) => {
+export const getTrips = async (filterStatus = "", userID = "", maxNumberOfTrips = 10) => {
     //Returns a collection of objects containing data about the user's trips
 
-    if (userID === "noArg")
-    {
+    const db = firebase.firestore();
+    const reservationsCollection = db.collection('reservations');
+
+
+    //This ensures that all trips that should be active will be marked as active.
+    await updateTrips();
+
+    let reservationsQuery;
+    let fullReservationsArray = [];
+    let fullReservationsCollection = {};
+    let counter = 0;
+
+    if (userID === "") {
         const currentUser = firebase.auth().currentUser;
         if (currentUser)
             userID = currentUser.uid;
@@ -171,59 +262,70 @@ export const getTrips = async (userID="noArg", maxNumberOfTrips=10) => {
             return null;
     }
 
-    //This ensures that all trips that should be active will be marked as active.
-    await updateTrips();
 
-    const db = firebase.firestore();
+    if (filterStatus !== "")
+        reservationsQuery = reservationsCollection.where('status', "==", filterStatus);
+    else
+        reservationsQuery = reservationsCollection;
+
+    reservationsQuery = reservationsQuery.where('user', '==', userID);
+    const reservationSnapshot = await reservationsQuery.get();
+
+    reservationSnapshot.docs.forEach(doc => {
+
+        //console.log(doc.data());
+
+        fullReservationsArray[counter++] = {id: doc.id, data: doc.data()};
+
+    });
+
+    //Sort the array of reservations based on the date/times
+    fullReservationsArray.sort(function (obj1, obj2) {
+
+        const status1 = obj1['data']['status'];
+        const date1 = obj1['data']['creation']['time']['date'];
+        const time1 = obj1['data']['creation']['time']['time'];
+
+        const status2 = obj2['data']['status'];
+        const date2 = obj2['data']['creation']['time']['date'];
+        const time2 = obj2['data']['creation']['time']['time'];
+
+        const theDate1 = Date.parse(date1 + " " + time1);
+        const theDate2 = Date.parse(date2 + " " + time2);
+
+        const statusPriorityMap = {
+            active: 4,
+            inactive: 3,
+            unlocked: 2,
+            complete: 1,
+            cancelled: 0
+        };
 
 
-    const usersCollection = db.collection('users');
-    const reservationsCollection = db.collection('reservations');
+        if (statusPriorityMap[status1] < statusPriorityMap[status2])
+            return 1;
+        if (statusPriorityMap[status1] > statusPriorityMap[status2])
+            return -1;
 
-    const currentUserDocument = usersCollection.doc(userID);
+        if (theDate1 < theDate2)
+            return 1;
+        if (theDate1 > theDate2)
+            return -1;
+        else
+            return 0;
+    });
 
+    fullReservationsArray.forEach(obj => {
 
-    return currentUserDocument.get()
-        .then(async doc => {
+        const id = obj['id'];
+        const data = obj['data'];
 
-            if (!doc.exists) {throw new Error("Document '" + userID + "' doesn't exist")}
+        fullReservationsCollection[id] = data;
+    });
 
-            const currentUserData = doc.data();
-            const reservationsArray = currentUserData['reservationsArray'];
+    return fullReservationsCollection;
 
-            const reservationsArrayReversed = reservationsArray.reverse();
-
-            let fullReservationsCollection = {};
-
-            let counter = 0;
-
-            for (let r in reservationsArrayReversed) {
-
-                counter++;
-
-                if (counter > maxNumberOfTrips) {
-                    break;
-                }
-
-                const currentReservation = reservationsArrayReversed[r];
-                const reservationDocument = reservationsCollection.doc(currentReservation);
-
-                fullReservationsCollection[currentReservation] = await getReservation(currentReservation,reservationDocument);
-            }
-
-            return fullReservationsCollection;
-        })
-        .catch(err => {return err});
 };
-
-
-const getReservation = async (reservationID,reservationDocument) => {
-    //Used by getTrips to get a single reservation
-    return reservationDocument.get()
-        .then(doc => {return doc.data();})
-        .catch(err => {return err});
-};
-
 
 
 export const cancelReservation = async (reservationID) => {
@@ -254,13 +356,18 @@ export const cancelReservation = async (reservationID) => {
 
                             return "success"
                         })
-                        .catch(err => {return err})
+                        .catch(err => {
+                            return err
+                        })
                 })
-                .catch(err => {return err});
+                .catch(err => {
+                    return err
+                });
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
-
 
 
 export const updateTrips = async () => {
@@ -273,82 +380,65 @@ export const updateTrips = async () => {
 
     const reservationsCollection = db.collection('reservations');
 
-    const query = reservationsCollection.where('status','==','inactive');
+    const inactiveQuery = reservationsCollection.where('status', '==', 'inactive');
+    const activeQuery = reservationsCollection.where('status', '==', 'active');
 
-    return query.get()
-        .then(async queryDoc => {
+    const inactiveSnapshot = await inactiveQuery.get();
+    const activeSnapshot = await activeQuery.get();
 
-            queryDoc.forEach(async singleDoc => {
+    inactiveSnapshot.docs.forEach(async singleDoc => {
 
-                const singleDocID = singleDoc.id;
-                const singleDocData = singleDoc.data();
-                const singleDocUser = singleDocData['user'];
+        const singleDocID = singleDoc.id;
+        const singleDocData = singleDoc.data();
+        const singleDocUser = singleDocData['user'];
 
-                //Only update documents for this user (this could save overwriting changes because of local copies not matching the firestore)
-                if (uid === singleDocUser) {
+        //Only update documents for this user (this could save race conditions)
+        if (uid === singleDocUser) {
 
-                    const singleDocDate = singleDocData['start']['time']['date'];
-                    const singleDocTime = singleDocData['start']['time']['time'];
+            const singleDocDate = singleDocData['start']['time']['date'];
+            const singleDocTime = singleDocData['start']['time']['time'];
 
-                    const time = new Date();
+            const time = new Date();
 
-                    // const currentDate = time.getFullYear() + "-" +
-                    //     ("0" + time.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
-                    //     + "-" +
-                    //     ("0" + time.getDay()).slice(-2);
-                    //
-                    // const currentTime =
-                    //     ("0" + time.getHours()).slice(-2)
-                    //     + ":" +
-                    //     ("0" + time.getMinutes()).slice(-2);
+            const singleDocDateDate = Date.parse(singleDocDate + " " + singleDocTime);
 
-                    const singleDocDateDate = Date.parse(singleDocDate+" "+singleDocTime);
+            if (singleDocDateDate <= time) {
+                const reservationDocument = reservationsCollection.doc(singleDocID);
+                await reservationDocument.update('status', 'active');
+            }
+        }
+    });
 
+    activeSnapshot.docs.forEach(async singleDoc => {
 
-                    if (singleDocDateDate <= time) {
-                        const reservationDocument = reservationsCollection.doc(singleDocID);
-                        // console.log("Changing status to active");
-
-                        await reservationDocument.update('status', 'active');
-                    }
+        const singleDocID = singleDoc.id;
+        const singleDocData = singleDoc.data();
+        const singleDocUser = singleDocData['user'];
 
 
-                    // if (singleDocData > currentDate) {
-                    //     console.log(singleDocDate + " > " + currentDate);
-                    // } else {
-                    //     console.log(singleDocDate + " <= " + currentDate);
-                    // }
-                    //
-                    // if (singleDocTime > currentTime) {
-                    //     console.log(singleDocTime + " > " + currentTime);
-                    // } else {
-                    //     console.log(singleDocTime + " <= " + currentTime);
-                    // }
+        //Only update documents for this user (this could save race conditions)
+        if (uid === singleDocUser) {
 
-                }
+            const singleDocDate = singleDocData['start']['time']['date'];
+            const singleDocTime = singleDocData['start']['time']['time'];
 
-            });
+            const time = new Date();
+            time.setHours(time.getHours()-maxActiveHoursLimit);
 
-        }).catch(err => {return err});
+            const singleDocDateDate = Date.parse(singleDocDate + " " + singleDocTime);
+
+            //Cancel reservations that have been active for two hours but haven't been unlocked
+            if (singleDocDateDate < time.getTime()) {
+                const reservationDocument = reservationsCollection.doc(singleDocID);
+                await reservationDocument.update('status', 'cancelled');
+            }
+        }
+    });
+
+
+
+
+    await incrementStatistic("reservation.update");
+
 };
 
-
-
-
-
-
-
-// export const getNestedPromise = async (promiseFunction, args, counter, max) => {
-//     counter++;
-//     if (counter <= max) {
-//         return promiseFunction(args)
-//             .then(() => {
-//                 return getNestedPromise(promiseFunction, args, counter, max)
-//             })
-//             .catch(err => {
-//                 return err
-//             });
-//     }
-//
-//
-// };

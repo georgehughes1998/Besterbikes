@@ -7,11 +7,11 @@ import {changeSideBar} from "../../redux/actions/index";
 import {loadWebPages} from "../../redux/actions";
 
 //Component that displays all content within Side Bar
-class SideBarContent extends React.Component{
+class SideBarContent extends React.Component {
 
     renderLinks = () => {
-        if(this.props.webPages){
-            if(this.props.webPages[0]){
+        if (this.props.webPages) {
+            if (this.props.webPages[0]) {
                 var icons = [];
 
                 icons.push(
@@ -27,7 +27,7 @@ class SideBarContent extends React.Component{
 
                 for (let i = 0; i < 4; i++) {
                     icons.push(
-                        <div key={i+1}>
+                        <div key={i + 1}>
                             <Link to={this.props.webPages[i].link}>
                                 <Menu.Item>
                                     <Icon name={this.props.webPages[i].icon}/>
@@ -45,7 +45,7 @@ class SideBarContent extends React.Component{
 
     handleSidebarHide = () => this.props.changeSideBar("Hide");
 
-    render(){
+    render() {
         return (
             <Sidebar
                 as={Menu}
@@ -67,7 +67,7 @@ class SideBarContent extends React.Component{
         );
     }
 
-    }
+}
 ;
 
 const mapStateToProps = (state) => {

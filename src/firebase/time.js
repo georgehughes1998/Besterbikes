@@ -1,5 +1,4 @@
-export const getCurrentDateString = () =>
-{
+export const getCurrentDateString = () => {
     const time = new Date();
 
     const currentDate = time.getFullYear() + "-" +
@@ -10,8 +9,7 @@ export const getCurrentDateString = () =>
     return currentDate;
 };
 
-export const getCurrentTimeString = () =>
-{
+export const getCurrentTimeString = () => {
     const time = new Date();
 
     const currentTime =
@@ -45,24 +43,21 @@ export const getTimeString = (dateObject) => {
 };
 
 
-export const getDay = () =>
-{
+export const getDay = () => {
     const time = new Date();
 
     return time.getDate();
 };
 
 
-export const getMonth = () =>
-{
+export const getMonth = () => {
     const time = new Date();
 
     return time.getMonth();
 };
 
 
-export const getYear = () =>
-{
+export const getYear = () => {
     const time = new Date();
 
     return time.getFullYear();

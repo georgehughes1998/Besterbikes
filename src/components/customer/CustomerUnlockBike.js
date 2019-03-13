@@ -15,15 +15,6 @@ import {Form} from "semantic-ui-react/dist/commonjs/collections/Form/Form";
 //Component to unlock a bike
 export class UnlockBike extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            unlockTrip: "",
-            activeBikeID: null,
-            firebaseError: null
-        };
-    }
-
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
@@ -31,27 +22,18 @@ export class UnlockBike extends React.Component {
             this.props.history.push("signin");
         return user
     };
-
-    componentDidMount() {
-        this.authenticateUser()
-            .then((user) =>  {
-                if(user)
-                    this.retrieveFirebaseTrips();
-            })};
-
     retrieveFirebaseTrips = async () => {
-        const obj = await getTrips();
+        const obj = await getTrips("active");
         if (obj) {
             this.props.loadTrips(obj);
         } else {
 
         }
     };
-
     renderTrips = () => {
         let DropdownArray = [];
 
-        if (this.props.trips){
+        if (this.props.trips) {
             let keys = Object.keys(this.props.trips);
             console.log(this.props.trips);
 
@@ -71,12 +53,11 @@ export class UnlockBike extends React.Component {
             return DropdownArray;
         }
     };
-
     handleUnlock = async () => {
         console.log(this.state);
         unlockBike(this.state.unlockTrip)
             .then((bikeID) => {
-                if(bikeID) {
+                if (bikeID) {
                     this.setState({activeBikeID: bikeID})
                 }
             })
@@ -86,28 +67,45 @@ export class UnlockBike extends React.Component {
             })
     };
 
-    render(){
+    constructor() {
+        super();
+        this.state = {
+            unlockTrip: "",
+            activeBikeID: null,
+            firebaseError: null
+        };
+    }
+
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) => {
+                if (user)
+                    this.retrieveFirebaseTrips();
+            })
+    };
+
+    render() {
         return (
 
             <div>
-                    <Dropdown
-                        fluid
-                        selection
-                        options={this.renderTrips()}
-                        // value={ this.state.unlockTrip }
-                        onChange={(param, data) => this.setState({unlockTrip : data.value})}
-                        name="unlockTrip"
-                    />
+                <Dropdown
+                    fluid
+                    selection
+                    options={this.renderTrips()}
+                    // value={ this.state.unlockTrip }
+                    onChange={(param, data) => this.setState({unlockTrip: data.value})}
+                    name="unlockTrip"
+                />
 
-                    <br/>
+                <br/>
 
-                    <Button onClick = {() => this.handleUnlock()}>
-                        Unlock bike
-                    </Button>
+                <Button onClick={() => this.handleUnlock()}>
+                    Unlock bike
+                </Button>
 
-                    {this.state.firebaseError? <FirebaseError error = {this.state.firebaseError}/> : null}
+                {this.state.firebaseError ? <FirebaseError error={this.state.firebaseError}/> : null}
 
-                    {this.state.activeBikeID ? <UnlockConfirmation activeBikeID = {this.state.activeBikeID}/> : null}
+                {this.state.activeBikeID ? <UnlockConfirmation activeBikeID={this.state.activeBikeID}/> : null}
 
             </div>
         )
