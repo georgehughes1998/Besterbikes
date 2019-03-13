@@ -159,7 +159,7 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 };
 
 
-export const getTrips = async (userID="", maxNumberOfTrips=10) => {
+export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) => {
     //Returns a collection of objects containing data about the user's trips
 
     if (userID === "")
@@ -179,6 +179,15 @@ export const getTrips = async (userID="", maxNumberOfTrips=10) => {
 
     const usersCollection = db.collection('users');
     const reservationsCollection = db.collection('reservations');
+
+    let reservationsQuery;
+
+    if (filterStatus !== "")
+    {
+        reservationsQuery = reservationsCollection.where('status',"==",filterStatus);
+    }
+    else
+        reservationsQuery = reservationsCollection;
 
     const currentUserDocument = usersCollection.doc(userID);
 
@@ -206,9 +215,13 @@ export const getTrips = async (userID="", maxNumberOfTrips=10) => {
                 }
 
                 const currentReservation = reservationsArrayReversed[r];
-                const reservationDocument = reservationsCollection.doc(currentReservation);
+                const reservationDocument = reservationsQuery.doc(currentReservation);
 
-                fullReservationsCollection[currentReservation] = await getReservation(currentReservation,reservationDocument);
+                const theReservation = await getReservation(currentReservation,reservationDocument);
+
+                if (theReservation)
+                    fullReservationsCollection[currentReservation];
+
             }
 
             return fullReservationsCollection;
@@ -220,7 +233,12 @@ export const getTrips = async (userID="", maxNumberOfTrips=10) => {
 const getReservation = async (reservationID,reservationDocument) => {
     //Used by getTrips to get a single reservation
     return reservationDocument.get()
-        .then(doc => {return doc.data();})
+        .then(doc => {
+            if (doc.exists())
+                return doc.data();
+            else
+                return null;
+        })
         .catch(err => {return err});
 };
 
