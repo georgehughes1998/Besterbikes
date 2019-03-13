@@ -33,7 +33,7 @@ export const makeReport = async (reservationID, category, comment) => {
 
     const operatorID = await makeNewTask({
         reportID,
-        category: "userReport",
+        category: "User Report",
         comment: "See attached report..."
     });
 
