@@ -184,11 +184,15 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 export const getStationStatistics = async (stationID,year=-1,month=-1,day=-1) => {
     //TODO: Implement
 
-    const statisticPath = `${stationID}`;
+    const statisticPaths = [
+        `station.${stationID}.unlock`,
+        `station.${stationID}.return`
+    ];
 
-    return getStatistics(statisticPath,year,month,day);
+    return getStatistics(statisticPaths,year,month,day);
 
 };
+
 
 
 
