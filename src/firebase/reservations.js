@@ -5,6 +5,7 @@ import {getCurrentDateString, getCurrentTimeString} from "./time";
 const FieldValue = firebase.firestore.FieldValue;
 
 const maxNumberOfBikesCanReserve = 8;
+const maxHoursLimit = 3;
 
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
@@ -13,12 +14,15 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     const startTimeString = startDate + " " + startTime;
     const startTimeDate = Date.parse(startTimeString);
     const currentTime = new Date();
+    const futureLimitTime = (new Date).setHours(currentTime.getHours() + maxHoursLimit);
 
     regularBikes = parseInt(regularBikes);
     mountainBikes = parseInt(mountainBikes);
 
     if (startTimeDate < currentTime)
         throw new Error("Cannot book a reservation in the past");
+    if (startTimeDate > futureLimitTime)
+        throw new Error("Cannot book a reservation more than " + maxHoursLimit.toString() + " hours ahead.");
 
     //In case value is blank and parseInt returns null
     if (!regularBikes)
