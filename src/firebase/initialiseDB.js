@@ -45,11 +45,23 @@ data && Object.keys(data).forEach(key => {
                     const email = nestedContent[docTitle]['email'];
                     const password = nestedContent[docTitle]['password'];
 
-                    firebaseAdmin.auth().deleteUser(docTitle)
-                        .then(() => {console.log("Overwriting user")})
-                        .catch(() => {console.log("There was no user")});
+
                     firebaseAdmin.auth().createUser({uid: docTitle, email,password})
-                        .then(() => {console.log("Successfully created user.")});
+                        .then(() => {console.log("Successfully created user" + docTitle + ".")})
+                        .catch(() => {
+
+                            firebaseAdmin.auth().deleteUser(docTitle)
+                                .then(() => {
+
+                                    firebaseAdmin.auth().createUser({uid: docTitle, email,password})
+                                        .then(() => {console.log("Successfully created user" + docTitle + ".")})
+                                        .catch(() => {console.log("Uh oh. Something went wrong.")})
+
+                                })
+                                .catch(() => {console.log("There was no user")});
+
+
+                        });
 
                     delete nestedContent[docTitle]['email'];
                     delete nestedContent[docTitle]['password'];
@@ -59,7 +71,7 @@ data && Object.keys(data).forEach(key => {
                         .doc(docTitle)
                         .set(nestedContent[docTitle])
                         .then((res) => {
-                            console.log("Wrote " + key + " successfully!");
+                            console.log("Wrote " + docTitle + " successfully!");
                         })
                         .catch((error) => {
                             console.error("Error writing document: ", error);
@@ -76,7 +88,7 @@ data && Object.keys(data).forEach(key => {
                 .doc(docTitle)
                 .set(nestedContent[docTitle])
                 .then((res) => {
-                    console.log("Wrote " + key + " successfully!");
+                    console.log("Wrote " + docTitle + " successfully!");
                 })
                 .catch((error) => {
                     console.error("Error writing document: ", error);
@@ -86,5 +98,3 @@ data && Object.keys(data).forEach(key => {
 
 
 });
-
-console.log("Done!");
