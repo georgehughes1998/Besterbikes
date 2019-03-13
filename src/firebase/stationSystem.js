@@ -239,9 +239,10 @@ export const unlockBikeOperator = async (bikeID) => {
     await removeBike(stationID,bikeID,bikeType);
     await bikeDocument.update('status', 'unlocked');
 
+
     await incrementStatistic("station." + stationID + ".unlockOperator");
 
-    return bikeID;
+
 
 };
 
