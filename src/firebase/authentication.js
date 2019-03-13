@@ -78,11 +78,13 @@ export const getUser = async (userID = "") => {
         const usersCollection = db.collection('users');
         const usersDoc = usersCollection.doc(userID);
 
-        const userDetails = await usersDoc.get();
+        const userDetailsSnapshot = await usersDoc.get();
 
-        if (userDetails.exists) {
-            userDetails["uid"] = userID;
-            return userDetails.data()
+        if (userDetailsSnapshot.exists) {
+            const userDetailsData = userDetailsSnapshot.data();
+            userDetailsData["uid"] = userID;
+
+            return userDetailsData;
         }
         else {
             throw new Error("Document '" + userID + "' doesn't exist")
