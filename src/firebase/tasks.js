@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 // import * as time from "time";
-import {getDateString, getTimeString} from "./time";
+import {getCurrentDateString, getCurrentTimeString, getDateString, getTimeString} from "./time";
 import {incrementStatistic} from "./statistics";
 
 const FieldValue = firebase.firestore.FieldValue;
@@ -108,6 +108,8 @@ export const getTasks = async () => {
 
         const operatorTaskID = operatorTaskDoc.id;
         const operatorTaskData = operatorTaskDoc.data();
+
+        operatorTaskData['comments'] = operatorTaskData['comments'].reverse();
 
         theTasksArray[counter++] = {id: operatorTaskID, data: operatorTaskData};
     }
@@ -235,7 +237,11 @@ export const addTaskComment = async (taskID, comment) => {
     const tasksCollection = db.collection('tasks');
     const taskDocument = tasksCollection.doc(taskID);
 
-    await taskDocument.update({comments: FieldValue.arrayUnion({user:uid,comment:comment})});
+    const timeObject = {date: getCurrentDateString(), time: getCurrentTimeString()};
+
+    const commentObject = {user:uid,comment:comment,time: timeObject};
+
+    await taskDocument.update({comments: FieldValue.arrayUnion(commentObject)});
 
 };
 
