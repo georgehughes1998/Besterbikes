@@ -6,7 +6,7 @@ import {getUser} from "../../firebase/authentication";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
-import {getTrips} from "../../firebase/reservations";
+import {cancelReservation, getTrips} from "../../firebase/reservations";
 import {SubmissionError} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions";
@@ -23,13 +23,35 @@ class CustomerDetails extends React.Component {
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
+        if (user === null)
+            this.props.history.push("signin");
+        return user
+    };
+    //Cancels a reservation using firebase and updates displayed trips
+    handleCancelTrip = (tripId) => {
+        return cancelReservation(tripId)
+            .then((obj) => {
+                // console.log(obj);
+                this.retrieveFirebaseTrips();
+            })
+            .catch((err) => {
+                console.log(err);
+                throw new SubmissionError({
+                    _error: err.message
+                })
+            })
+    };
+
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = async () => {
+        const user = await getUser();
         if (user == null) {
             this.props.history.push("/signin");
         } else if (user.type !== "manager") {
             this.props.history.push("/");
         }
 
-        console.log(user);
+        // console.log(user);
         this.setState({"currentUser": user});
         return user
     };
@@ -44,8 +66,9 @@ class CustomerDetails extends React.Component {
 
     //Communicates with firebase to load in all trips
     retrieveFirebaseTrips = async () => {
+        console.log(this.state.currentUser.uid);
         if(this.state.currentUser.uid){
-            const obj = await getTrips(this.state.currentUser.uid);
+            const obj = await getTrips("", this.state.currentUser.uid);
 
             if (obj) {
                 this.props.loadTrips(obj);
@@ -87,12 +110,26 @@ class CustomerDetails extends React.Component {
 
                 </Segment>
 
-                <ListOfLiveTrips/>
+                {/*{console.log(this.props.trips)}*/}
+                {/*{console.log(this.props.stations)}*/}
+
+                <ListOfLiveTrips
+                    items={this.props.trips}
+                    stations={this.props.stations}
+                    handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
+                    handleReport={() => this.handleReport()}
+                />
                 {/*{this.props.location.state.customerID}*/}
             </PageContainer>
         )
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        trips: state.JSON.trips,
+        stations: state.JSON.stations
+    };
+};
 
 export default withRouter(connect(mapStateToProps, {loadTrips, loadStations})(CustomerDetails));
