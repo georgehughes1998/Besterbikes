@@ -2,7 +2,7 @@
 import {Grid, Header, Icon, Segment} from "semantic-ui-react";
 import React from "react";
 
-class listOfLiveTrips extends React.Component{
+class listOfLiveTrips extends React.Component {
 
     renderItems = () => {
         if (this.props.items) {
@@ -30,7 +30,7 @@ class listOfLiveTrips extends React.Component{
                                 content={headerContent}
                             />
                             <Header
-                                as = 'h5'
+                                as='h5'
                                 content={`${headerSub}`}
                                 subheader={`Trip ID: ${tripId}`}
                             />
@@ -157,8 +157,8 @@ class listOfLiveTrips extends React.Component{
         }
     };
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 {this.renderItems()}
             </div>

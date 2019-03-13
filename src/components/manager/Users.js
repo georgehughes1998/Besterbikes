@@ -14,24 +14,16 @@ import withRouter from "react-router/es/withRouter";
 
 class Users extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            userType: "customer"
-        };
-    }
-
     handleUserClick = (customerID) => {
-        if(this.state.userType==="customer"){
+        if (this.state.userType === "customer") {
             this.props.history.push({
                 pathname: '/customerdetails',
-                state: { customerID: customerID }
+                state: {customerID: customerID}
             })
         }
     };
-
     renderListItems = () => {
-        if(this.state.userType==="customer" && this.props.customers){
+        if (this.state.userType === "customer" && this.props.customers) {
             return Object.values(this.props.customers).map((key, index) => {
 
                 let keys = Object.keys(this.props.customers);
@@ -52,7 +44,7 @@ class Users extends React.Component {
 
                 )
             })
-        }else if(this.state.userType==="operator" && this.props.operators){
+        } else if (this.state.userType === "operator" && this.props.operators) {
             return Object.values(this.props.operators).map((key, index) => {
 
                 let keys = Object.keys(this.props.operators);
@@ -72,8 +64,8 @@ class Users extends React.Component {
                     </List.Item>
                 )
             })
-        }else{
-            return(
+        } else {
+            return (
                 <div>
                     No users to display
                 </div>
@@ -81,39 +73,47 @@ class Users extends React.Component {
         }
 
     };
-
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
-        if (user == null){
+        if (user == null) {
             this.props.history.push("/signin");
-        }else if(user.type !== "manager"){
+        } else if (user.type !== "manager") {
             this.props.history.push("/");
         }
         return user
     };
-
-    componentDidMount() {
-        console.log("Mounted");
-        this.authenticateUser()
-            .then((user) =>  {
-                if(user)
-                    this.retrieveUsers("customer");
-                    this.retrieveUsers("operator");
-            })};
-
-
     //Communicates with firebase to load in all trips
     retrieveUsers = async (userType) => {
         const obj = await getUsersOfType(userType);
         if (obj) {
             console.log(userType, obj);
-            {userType === "customer"?this.props.loadCustomers(obj):this.props.loadOperators(obj)};
+            {
+                userType === "customer" ? this.props.loadCustomers(obj) : this.props.loadOperators(obj)
+            }
+            ;
         } else {
             throw new SubmissionError({
                 _error: obj.message
             });
         }
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            userType: "customer"
+        };
+    }
+
+    componentDidMount() {
+        console.log("Mounted");
+        this.authenticateUser()
+            .then((user) => {
+                if (user)
+                    this.retrieveUsers("customer");
+                this.retrieveUsers("operator");
+            })
     };
 
     render() {
@@ -128,8 +128,10 @@ class Users extends React.Component {
                 <br/>
 
                 <Menu pointing secondary widths={2}>
-                    <Menu.Item name="customers" active={this.state.userType === "customer"} onClick={() => this.setState({"userType": "customer"})}/>
-                    <Menu.Item name="operators" active={this.state.userType === "operator"} onClick={() => this.setState({"userType": "operator"})}/>
+                    <Menu.Item name="customers" active={this.state.userType === "customer"}
+                               onClick={() => this.setState({"userType": "customer"})}/>
+                    <Menu.Item name="operators" active={this.state.userType === "operator"}
+                               onClick={() => this.setState({"userType": "operator"})}/>
                 </Menu>
 
                 <Container>

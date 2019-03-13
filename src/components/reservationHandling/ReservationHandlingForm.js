@@ -161,7 +161,7 @@ class ReservationHandlingForm extends React.Component {
                     <Form onSubmit={this.props.handleSubmit(this.onSubmit)} error>
                         {this.renderHeader(this.props.header)}
 
-                        {this.props.header.title === "Select Bikes"? this.props.renderMap():null }
+                        {this.props.header.title === "Select Bikes" ? this.props.renderMap() : null}
 
                         {this.renderFields}
                         {this.props.error ? <FirebaseError error={this.props.error}/> : null}

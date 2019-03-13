@@ -24,15 +24,18 @@ export const makeReport = async (reservationID, category, comment) => {
     theReport['comment'] = comment;
     theReport['time'] = {
         date: getCurrentDateString(),
-        time: getCurrentTimeString()};
+        time: getCurrentTimeString()
+    };
 
     const reportDocument = await reportsCollection.add(theReport);
     const reportID = reportDocument.id;
 
 
-    await makeNewTask({reportID,
-                        category: "userReport",
-                        comment:"See attached report..."});
+    await makeNewTask({
+        reportID,
+        category: "userReport",
+        comment: "See attached report..."
+    });
 
     await incrementStatistic("reports.makeReport");
 

@@ -21,7 +21,6 @@ export const getManagers = async () => {
 };
 
 
-
 export const getUser = async (userID) => {
 
     const db = firebase.firestore();
@@ -43,13 +42,12 @@ export const getUsersOfType = async (userType) => {
 
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
-    const usersTypeCollection = usersCollection.where('type','==',userType);
+    const usersTypeCollection = usersCollection.where('type', '==', userType);
 
     const userSnapshot = await usersTypeCollection.get();
 
 
-    for (let doc in userSnapshot.docs)
-    {
+    for (let doc in userSnapshot.docs) {
 
         const singleUserSnapshot = userSnapshot.docs[doc];
 

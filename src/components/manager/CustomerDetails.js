@@ -4,22 +4,22 @@ import PageContainer from "../PageContainer";
 import ListOfLiveTrips from "../ListOfLiveTrips";
 import {getUser} from "../../firebase/authentication";
 
-class CustomerDetails extends React.Component{
-
-    componentDidMount() {
-        this.authenticateUser()
-    }
+class CustomerDetails extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
-        if (user == null){
+        if (user == null) {
             this.props.history.push("/signin");
-        }else if(user.type !== "manager"){
+        } else if (user.type !== "manager") {
             this.props.history.push("/");
         }
         return user
     };
+
+    componentDidMount() {
+        this.authenticateUser()
+    }
 
     render() {
         return (
@@ -31,6 +31,6 @@ class CustomerDetails extends React.Component{
             </PageContainer>
         )
     }
-    }
+}
 
 export default withRouter(CustomerDetails)

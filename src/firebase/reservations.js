@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
-import {getCurrentDateString, getCurrentTimeString, getDateString, getTimeString} from "./time";
+import {getCurrentDateString, getCurrentTimeString} from "./time";
 
 const FieldValue = firebase.firestore.FieldValue;
 
@@ -13,9 +13,9 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
 
     //In case value is blank and parseInt returns null
     if (!regularBikes)
-        regularBikes=0;
+        regularBikes = 0;
     if (!mountainBikes)
-        mountainBikes=0;
+        mountainBikes = 0;
 
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station, "road");
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
@@ -89,8 +89,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     console.log("Reservations to be added to user:");
     console.log(reservationsIDArray);
 
-    await incrementStatistic("reservation." + station + ".road.make",regularBikes);
-    await incrementStatistic("reservation." + station + ".mountain.make",mountainBikes);
+    await incrementStatistic("reservation." + station + ".road.make", regularBikes);
+    await incrementStatistic("reservation." + station + ".mountain.make", mountainBikes);
 
     return "success";
 
@@ -114,7 +114,9 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
             return bikes['numberOfAvailableBikes'];
 
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 
 };
 
@@ -133,8 +135,12 @@ export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes,
     const promise = thisStationDocument.update(bikesObject);
 
     return promise
-        .then(() => {return "success"})
-        .catch(err => {return err});
+        .then(() => {
+            return "success"
+        })
+        .catch(err => {
+            return err
+        });
 
 };
 
@@ -151,7 +157,7 @@ const appendUserReservationsArray = async (reservationReferences) => {
     const currentUserDocument = usersCollection.doc(uid);
 
     //TODO: Test
-    await currentUserDocument.update({reservationsArray: FieldValue.arrayUnion.apply(null,reservationReferences)});
+    await currentUserDocument.update({reservationsArray: FieldValue.arrayUnion.apply(null, reservationReferences)});
 
 };
 
@@ -168,11 +174,13 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
             console.log("Single Reservation of " + bikeType + " bike Added!");
             return ref.id;
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
 
 
-export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) => {
+export const getTrips = async (filterStatus = "", userID = "", maxNumberOfTrips = 10) => {
     //Returns a collection of objects containing data about the user's trips
 
     const db = firebase.firestore();
@@ -187,8 +195,7 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
     let fullReservationsCollection = {};
     let counter = 0;
 
-    if (userID === "")
-    {
+    if (userID === "") {
         const currentUser = firebase.auth().currentUser;
         if (currentUser)
             userID = currentUser.uid;
@@ -198,11 +205,11 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
 
 
     if (filterStatus !== "")
-        reservationsQuery = reservationsCollection.where('status',"==",filterStatus);
+        reservationsQuery = reservationsCollection.where('status', "==", filterStatus);
     else
         reservationsQuery = reservationsCollection;
 
-    reservationsQuery = reservationsQuery.where('user','==',userID);
+    reservationsQuery = reservationsQuery.where('user', '==', userID);
     const reservationSnapshot = await reservationsQuery.get();
 
     reservationSnapshot.docs.forEach(doc => {
@@ -247,7 +254,6 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
 };
 
 
-
 export const cancelReservation = async (reservationID) => {
     //Cancels the given reservation
 
@@ -276,13 +282,18 @@ export const cancelReservation = async (reservationID) => {
 
                             return "success"
                         })
-                        .catch(err => {return err})
+                        .catch(err => {
+                            return err
+                        })
                 })
-                .catch(err => {return err});
+                .catch(err => {
+                    return err
+                });
         })
-        .catch(err => {return err});
+        .catch(err => {
+            return err
+        });
 };
-
 
 
 export const updateTrips = async () => {
@@ -295,7 +306,7 @@ export const updateTrips = async () => {
 
     const reservationsCollection = db.collection('reservations');
 
-    const query = reservationsCollection.where('status','==','inactive');
+    const query = reservationsCollection.where('status', '==', 'inactive');
 
     return query.get()
         .then(async queryDoc => {
@@ -314,7 +325,7 @@ export const updateTrips = async () => {
 
                     const time = new Date();
 
-                    const singleDocDateDate = Date.parse(singleDocDate+" "+singleDocTime);
+                    const singleDocDateDate = Date.parse(singleDocDate + " " + singleDocTime);
 
                     if (singleDocDateDate <= time) {
                         const reservationDocument = reservationsCollection.doc(singleDocID);
@@ -328,10 +339,10 @@ export const updateTrips = async () => {
 
             });
 
-        }).catch(err => {return err});
+        }).catch(err => {
+            return err
+        });
 };
-
-
 
 
 // const getReservation = async (reservationID,reservationDocument) => {

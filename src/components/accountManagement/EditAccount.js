@@ -8,11 +8,7 @@ import {getUser} from "../../firebase/authentication";
 
 
 //Component that passes relevant fields to PageContainer for editing accountManagement details
-class EditAccount extends React.Component{
-
-    async componentDidMount() {
-        await this.authenticateUser();
-    }
+class EditAccount extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = () => {
@@ -24,8 +20,12 @@ class EditAccount extends React.Component{
             });
     };
 
+    async componentDidMount() {
+        await this.authenticateUser();
+    }
+
 //TODO: Make fields display current users details
-    render(){
+    render() {
         return (
             <PageContainer>
                 <Divider horizontal>Edit Account Details</Divider>

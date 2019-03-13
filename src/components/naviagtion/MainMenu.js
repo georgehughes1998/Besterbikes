@@ -12,35 +12,6 @@ import {loadWebPages} from "../../redux/actions/index";
 //TODO: Refactor main menu and make pretty
 class MainMenu extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state =
-            {
-                webPages: {},
-                menuItems:[
-                {
-                    link: "/signin",
-                    icon: "",
-                    name: ""
-                },
-                {
-                    link: "/signin",
-                    icon: "",
-                    name: ""
-                },
-                {
-                    link: "/signin",
-                    icon: "",
-                    name: ""
-                },
-                {
-                    link: "/signin",
-                    icon: "",
-                    name: ""
-                },
-            ]}
-        };
-
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
@@ -49,8 +20,38 @@ class MainMenu extends React.Component {
         return user
     };
 
+    constructor(props) {
+        super(props);
+        this.state =
+            {
+                webPages: {},
+                menuItems: [
+                    {
+                        link: "/signin",
+                        icon: "",
+                        name: ""
+                    },
+                    {
+                        link: "/signin",
+                        icon: "",
+                        name: ""
+                    },
+                    {
+                        link: "/signin",
+                        icon: "",
+                        name: ""
+                    },
+                    {
+                        link: "/signin",
+                        icon: "",
+                        name: ""
+                    },
+                ]
+            }
+    };
+
     renderUserSpecificContent(user) {
-        if(user!=null){
+        if (user != null) {
             switch (user.type) {
                 case "customer":
                     this.setState({menuItems: this.state.webPages.customer});
@@ -69,10 +70,10 @@ class MainMenu extends React.Component {
         }
     }
 
-    renderMenuIcons(){
+    renderMenuIcons() {
         var icons = [];
 
-        if(this.state.menuItems) {
+        if (this.state.menuItems) {
             for (let i = 0; i < 4; i++) {
                 icons.push(
                     <Grid.Column>

@@ -7,7 +7,7 @@ class OperatorDropdown extends React.Component {
     renderOperators = () => {
         let DropdownArray = [];
 
-        if (this.props.operators !== []) {
+        if (this.props.operators !== {}) {
             let keys = Object.keys(this.props.operators);
 
             console.log(this.props.operators);
@@ -26,14 +26,14 @@ class OperatorDropdown extends React.Component {
     };
 
 
-    render(){
-        return(
+    render() {
+        return (
             <Dropdown
                 selection
                 search
                 placeholder={this.props.placeholder}
                 options={this.renderOperators()}
-                onChange={this.props.onChange}
+                onChange={(param, data) => this.props.onChange(data)}
             />
         )
     }
