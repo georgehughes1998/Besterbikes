@@ -216,7 +216,6 @@ export const getUnlockedBikes = async () => {
 
 
 
-
 export const unlockBikeOperator = async (bikeID) => {
 
     //TODO: Test
@@ -249,14 +248,4 @@ export const unlockBikeOperator = async (bikeID) => {
 
     await incrementStatistic("station." + stationID + ".unlockOperator");
 
-
-
 };
-
-
-
-
-
-
-
-
