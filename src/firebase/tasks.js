@@ -3,6 +3,9 @@ import * as firebase from "firebase";
 import {getDateString, getTimeString} from "./time";
 import {incrementStatistic} from "./statistics";
 
+const FieldValue = firebase.firestore.FieldValue;
+
+
 //Task statuses:
 //  pending     - Operator hasn't accepted the task yet
 //  accepted    - Operator has accepted the task and is in the process of doing it
@@ -181,7 +184,7 @@ export const addTaskComment = async (taskID, comment) => {
     const tasksCollection = db.collection('tasks');
     const taskDocument = tasksCollection.doc(taskID);
 
-    await taskDocument.update({comments:db.FieldValue.arrayUnion({user:uid,comment:comment})});
+    await taskDocument.update({comments: FieldValue.arrayUnion({user:uid,comment:comment})});
 
 };
 
