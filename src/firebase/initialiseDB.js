@@ -30,6 +30,44 @@ data && Object.keys(data).forEach(key => {
 
         });
     }
+    else if (key === "users" && typeof nestedContent === "object")
+        {
+            Object.keys(nestedContent).forEach(docTitle => {
+
+                if (nestedContent[docTitle]['email'] &&
+                    nestedContent[docTitle]['password'] &&
+                    nestedContent[docTitle]['dateOfBirth'] &&
+                    nestedContent[docTitle]['name'] &&
+                    nestedContent[docTitle]['name']['firstName'] &&
+                    nestedContent[docTitle]['name']['lastName'] &&
+                    nestedContent[docTitle]['type'])
+                {
+                    const email = nestedContent[docTitle]['email'];
+                    const password = nestedContent[docTitle]['password'];
+
+                    firebaseAdmin.auth().deleteUser(docTitle)
+                        .then(() => {console.log("Overwriting user")})
+                        .catch(() => {console.log("There was no user")});
+                    firebaseAdmin.auth().createUser({uid: docTitle, email,password})
+                        .then(() => {console.log("Successfully created user.")});
+
+                    delete nestedContent[docTitle]['email'];
+                    delete nestedContent[docTitle]['password'];
+
+                    firebaseAdmin.firestore()
+                        .collection(key)
+                        .doc(docTitle)
+                        .set(nestedContent[docTitle])
+                        .then((res) => {
+                            console.log("Wrote " + key + " successfully!");
+                        })
+                        .catch((error) => {
+                            console.error("Error writing document: ", error);
+                        });
+                }
+                else {console.log("Inadequate data for user.")}
+            })
+        }
 
     else if (typeof nestedContent === "object") {
         Object.keys(nestedContent).forEach(docTitle => {
@@ -45,4 +83,8 @@ data && Object.keys(data).forEach(key => {
                 });
         });
     }
+
+
 });
+
+console.log("Done!");

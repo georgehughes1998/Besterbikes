@@ -2451,7 +2451,97 @@
       }
     }
   },
-  "users": {},
+  "users": {
+
+    "testCustomer1": {
+      "email": "customer1@customer.com",
+      "password": "password",
+
+      "name": {
+        "firstName": "Customer",
+        "lastName": "One"
+      },
+      "dateOfBirth": "01-12-1992",
+      "type": "customer"
+    },
+
+    "testCustomer2": {
+      "email": "customer2@customer.com",
+      "password": "password",
+
+      "name": {
+        "firstName": "Customer",
+        "lastName": "Two"
+      },
+      "dateOfBirth": "02-02-1994",
+      "type": "customer"
+    },
+
+    "testCustomer3": {
+      "email": "customer3@customer.com",
+      "password": "password",
+
+      "name": {
+        "firstName": "Customer",
+        "lastName": "Three"
+      },
+      "dateOfBirth": "09-11-1973",
+      "type": "customer"
+    },
+
+
+    "testOperator1": {
+      "email": "operator1@operator.com",
+      "password": "password",
+
+      "name": {
+        "firstName": "Operator",
+        "lastName": "One"
+      },
+      "dateOfBirth": "04-10-1983",
+      "type": "operator"
+    },
+
+    "testOperator2": {
+      "email": "operator2@operator.com",
+      "password": "password",
+
+      "name": {
+        "firstName": "Operator",
+        "lastName": "Two"
+      },
+      "dateOfBirth": "07-07-1978",
+      "type": "operator"
+    },
+
+    "testOperator3": {
+      "email": "operator3@operator.com",
+      "password": "password",
+
+      "name": {
+        "firstName": "Operator",
+        "lastName": "Three"
+      },
+      "dateOfBirth": "24-08-1984",
+      "type": "operator"
+    },
+
+
+    "testManager": {
+      "email": "manager@manager.com",
+      "password": "password",
+
+      "name": {
+        "firstName": "I am",
+        "lastName": "the Manager"
+      },
+      "dateOfBirth": "14-04-1993",
+      "type": "manager"
+    }
+
+
+
+  },
   "tasks": -1,
   "reports": -1,
   "reservations": -1
