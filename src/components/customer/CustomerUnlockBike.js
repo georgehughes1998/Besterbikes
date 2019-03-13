@@ -40,7 +40,7 @@ export class UnlockBike extends React.Component {
             })};
 
     retrieveFirebaseTrips = async () => {
-        const obj = await getTrips();
+        const obj = await getTrips("active");
         if (obj) {
             this.props.loadTrips(obj);
         } else {
