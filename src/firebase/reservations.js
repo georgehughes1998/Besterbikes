@@ -215,12 +215,20 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
                 }
 
                 const currentReservation = reservationsArrayReversed[r];
-                const reservationDocument = reservationsQuery.doc(currentReservation);
 
-                const theReservation = await getReservation(currentReservation,reservationDocument);
+                const reservationSnapshot = await reservationsQuery.get();
 
-                if (theReservation)
-                    fullReservationsCollection[currentReservation] = theReservation;
+
+                reservationSnapshot.docs.forEach(doc => {
+
+                    const theReservation = doc.data();
+
+                    if (theReservation['user'] === userID)
+                        fullReservationsCollection[currentReservation] = theReservation;
+
+                });
+
+
 
             }
 
@@ -234,10 +242,8 @@ const getReservation = async (reservationID,reservationDocument) => {
     //Used by getTrips to get a single reservation
     return reservationDocument.get()
         .then(doc => {
-            if (doc.exists())
-                return doc.data();
-            else
-                return null;
+            console.log(doc.data());
+            return doc.data();
         })
         .catch(err => {return err});
 };
