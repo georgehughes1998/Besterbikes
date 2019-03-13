@@ -414,7 +414,6 @@ export const updateTrips = async () => {
 
             //Cancel reservations that have been active for two hours but haven't been unlocked
             if (singleDocDateDate < time.getTime()) {
-                console.log(singleDocDateDate);
                 const reservationDocument = reservationsCollection.doc(singleDocID);
                 await reservationDocument.update('status', 'cancelled');
             }
