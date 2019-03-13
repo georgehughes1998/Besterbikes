@@ -34,6 +34,7 @@ class OperatorTasks extends React.Component {
 
     //Cancels a reservation using firebase and updates displayed trips
     handleUpdateStatus = (taskId, status) => {
+        console.log(taskId, status);
         return updateTaskStatus(taskId, status)
             .then((obj) => {
                 console.log(obj);
@@ -51,10 +52,6 @@ class OperatorTasks extends React.Component {
         const obj = await getTasks();
         if (obj) {
             this.props.loadTasks(obj);
-        } else {
-            throw new SubmissionError({
-                _error: obj.message
-            });
         }
     };
     //Communicates with firebase to load in all trips
@@ -62,10 +59,6 @@ class OperatorTasks extends React.Component {
         const obj = await reassignTask(taskID, comment, operatorId);
         if (obj) {
             this.retrieveOperatorTasks();
-        } else {
-            throw new SubmissionError({
-                _error: obj.message
-            });
         }
     };
 
@@ -86,10 +79,8 @@ class OperatorTasks extends React.Component {
                     items={this.props.tasks}
                     stations={this.props.stations}
                     operators={this.props.operators}
-                    handleUpdateStatus={(taskID) => this.handleUpdateStatus(taskID)}
+                    handleUpdateStatus={(taskID, status) => this.handleUpdateStatus(taskID, status)}
                     handleReassignTask={(taskID, comment, operatorId) => this.handleReassignTask(taskID, comment, operatorId)}
-
-                    // handleReport = { () => this.handleReport()}
                 />
             </PageContainer>
 

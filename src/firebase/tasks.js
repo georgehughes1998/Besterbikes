@@ -134,6 +134,7 @@ const getTask = async (taskID) => {
 export const updateTaskStatus = async (taskID, newStatus) => {
     //TODO: Test
 
+    console.log(taskID, newStatus);
     if (!(newStatus === "accepted" || newStatus === "complete" || newStatus === "reassigned"))
         throw new Error("newStatus must be one of 'accepted', 'complete' or 'reassigned'.");
 

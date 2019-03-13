@@ -5,6 +5,8 @@ import Modal from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
 import Input from "semantic-ui-react/dist/commonjs/elements/Input/Input";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import OperatorDropdown from "./dropdowns/OperatorDropdown";
+import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
+import Comment from "semantic-ui-react/dist/commonjs/views/Comment/Comment";
 
 class listOfLiveTasks extends React.Component {
 
@@ -32,6 +34,22 @@ class listOfLiveTasks extends React.Component {
             )
         })
     };
+
+    renderComments = (comments) => {
+        return Object.values(comments).map((key, index) => {
+            return (
+                     <Comment>
+                        <Comment.Avatar src={"bicycle"}/>
+                        <Comment.Content>
+                            {/*TODO: Refactor so operator name displays*/}
+                            <Comment.Author as='a'>{key.user}</Comment.Author>
+                            <Comment.Text>{key.comment}</Comment.Text>
+                        </Comment.Content>
+                    </Comment>
+            )
+        })
+    };
+
     //Render single reservation with provided paramters
     renderItem = ({color, iconNames, iconColors, status, category, opertaor, deadline, comments, taskId}) => {
         return (
@@ -58,6 +76,12 @@ class listOfLiveTasks extends React.Component {
                             {this.renderIcons(iconNames, iconColors, status, taskId)}
                         </Grid.Column>
                     </Grid.Row>
+                    <Comment.Group>
+                        <Header as='h3' dividing>
+                            Comments
+                        </Header>
+                        {this.renderComments(comments)}
+                    </Comment.Group>
                 </Grid>
             </Segment>
         )
@@ -72,8 +96,8 @@ class listOfLiveTasks extends React.Component {
             case "pending":
                 return this.renderItem({
                     color: "purple",
-                    iconNames: ["cancel", "check circle outline", "arrow alternate circle right outline"],
-                    iconColors: ["red", "green", "purple"],
+                    iconNames: ["check circle outline", "arrow alternate circle right outline"],
+                    iconColors: ["green", "purple"],
                     status: "Pending",
                     category: task["category"],
                     opertaor: task["operator"],
@@ -82,6 +106,33 @@ class listOfLiveTasks extends React.Component {
                     // `Bike available from ${startTime}`,
                     taskId: keys[index],
                 });
+            case "complete":
+                return this.renderItem({
+                    color: "green",
+                    iconNames: [],
+                    iconColors: [],
+                    status: "Complete",
+                    category: task["category"],
+                    opertaor: task["operator"],
+                    deadline: task["deadline"],
+                    comments: task["comments"],
+                    // `Bike available from ${startTime}`,
+                    taskId: keys[index],
+                });
+            case "reassigned":
+                return this.renderItem({
+                    color: "red",
+                    iconNames: [],
+                    iconColors: [],
+                    status: "Reassigned",
+                    category: task["category"],
+                    opertaor: "",
+                    deadline: "",
+                    comments: task["comments"],
+                    // `Bike available from ${startTime}`,
+                    taskId: keys[index],
+                });
+
             default:
                 return (<div>No more Trips to display</div>)
         }
@@ -90,10 +141,8 @@ class listOfLiveTasks extends React.Component {
     handleIconClick = (icon, taskId) => {
 
         switch (icon) {
-            case "Cancel":
-                this.props.handleUpdateStatus(taskId, "cancelled");
-                return;
             case "check circle outline":
+                console.log(taskId);
                 this.props.handleUpdateStatus(taskId, "complete");
                 return;
             case "arrow alternate circle right outline":
@@ -129,8 +178,15 @@ class listOfLiveTasks extends React.Component {
     render() {
         return (
             <div>
+                <br/>
+                <Container textAlign='center'>
+                    <Header as={"h1"}>Tasks</Header>
+                </Container>
+                <br/>
+
                 {this.renderItems()}
 
+                {/*TODO: Seperate component for this modal*/}
                 <Modal
                     open={this.state.modalOpen}
                     onClose={() => this.setState({"modalOpen": false})}

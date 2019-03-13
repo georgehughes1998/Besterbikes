@@ -88,7 +88,7 @@ class CreateTask extends React.Component {
                         <OperatorDropdown
                             placeholder='Select Operator'
                             operators={this.props.operators}
-                            onChange={(param, data) => this.setState({"operator": data.value})}
+                            onChange={(operator) => this.setState({"operator": operator})}
                         />
 
 

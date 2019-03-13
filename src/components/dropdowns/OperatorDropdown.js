@@ -33,7 +33,7 @@ class OperatorDropdown extends React.Component {
                 search
                 placeholder={this.props.placeholder}
                 options={this.renderOperators()}
-                onChange={(param, data) => this.props.onChange(data)}
+                onChange={(param, data) => this.props.onChange(data.value)}
             />
         )
     }
