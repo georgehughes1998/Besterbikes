@@ -402,29 +402,3 @@ export const updateTrips = async () => {
         });
 };
 
-
-// const getReservation = async (reservationID,reservationDocument) => {
-//     //Used by getTrips to get a single reservation
-//     return reservationDocument.get()
-//         .then(doc => {
-//             console.log(doc.data());
-//             return doc.data();
-//         })
-//         .catch(err => {return err});
-// };
-
-
-// export const getNestedPromise = async (promiseFunction, args, counter, max) => {
-//     counter++;
-//     if (counter <= max) {
-//         return promiseFunction(args)
-//             .then(() => {
-//                 return getNestedPromise(promiseFunction, args, counter, max)
-//             })
-//             .catch(err => {
-//                 return err
-//             });
-//     }
-//
-//
-// };
