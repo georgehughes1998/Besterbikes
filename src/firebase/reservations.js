@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
+import {getCurrentDateString, getCurrentTimeString, getDateString, getTimeString} from "./time";
 
 const FieldValue = firebase.firestore.FieldValue;
 
@@ -42,6 +43,12 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
                 time: startTime
             },
             station: station
+        },
+        creation: {
+            time: {
+                date: getCurrentDateString(),
+                time: getCurrentTimeString()
+            }
         },
         user: uid,
         status: 'inactive',
@@ -162,6 +169,18 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) => {
     //Returns a collection of objects containing data about the user's trips
 
+    const db = firebase.firestore();
+    const reservationsCollection = db.collection('reservations');
+
+
+    //This ensures that all trips that should be active will be marked as active.
+    await updateTrips();
+
+    let reservationsQuery;
+    let fullReservationsArray = [];
+    let fullReservationsCollection = {};
+    let counter = 0;
+
     if (userID === "")
     {
         const currentUser = firebase.auth().currentUser;
@@ -171,70 +190,55 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
             return null;
     }
 
-    //This ensures that all trips that should be active will be marked as active.
-    await updateTrips();
-
-    const db = firebase.firestore();
-
-
-    const usersCollection = db.collection('users');
-    const reservationsCollection = db.collection('reservations');
-
-    let reservationsQuery;
 
     if (filterStatus !== "")
-    {
         reservationsQuery = reservationsCollection.where('status',"==",filterStatus);
-    }
     else
         reservationsQuery = reservationsCollection;
 
-    const currentUserDocument = usersCollection.doc(userID);
+    reservationsQuery = reservationsQuery.where('user','==',userID);
+    const reservationSnapshot = await reservationsQuery.get();
 
+    reservationSnapshot.docs.forEach(doc => {
 
-    return currentUserDocument.get()
-        .then(async doc => {
+        console.log(doc.data());
 
-            if (!doc.exists) {throw new Error("Document '" + userID + "' doesn't exist")}
+        fullReservationsArray[counter++] = {id: doc.id, data: doc.data()};
 
-            const currentUserData = doc.data();
-            const reservationsArray = currentUserData['reservationsArray'];
+    });
 
-            const reservationsArrayReversed = reservationsArray.reverse();
+    //Sort the array of reservations based on the date/times
+    fullReservationsArray.sort(function (obj1, obj2) {
 
-            let fullReservationsCollection = {};
+        const date1 = obj1['data']['creation']['time']['date'];
+        const time1 = obj1['data']['creation']['time']['time'];
 
-            let counter = 0;
+        const date2 = obj2['data']['creation']['time']['date'];
+        const time2 = obj2['data']['creation']['time']['time'];
 
-            for (let r in reservationsArrayReversed) {
+        const theDate1 = Date.parse(date1 + " " + time1);
+        const theDate2 = Date.parse(date2 + " " + time2);
 
-                counter++;
+        console.log(theDate1,theDate2);
 
-                if (counter > maxNumberOfTrips) {
-                    break;
-                }
+        if (theDate1 < theDate2)
+            return 1;
+        if (theDate1 > theDate2)
+            return -1;
+        else
+            return 0;
+    });
 
-                const currentReservation = reservationsArrayReversed[r];
+    fullReservationsArray.forEach(obj => {
 
-                const reservationSnapshot = await reservationsQuery.get();
+        const id = obj['id'];
+        const data = obj['data'];
 
+        fullReservationsCollection[id] = data;
+    });
 
-                reservationSnapshot.docs.forEach(doc => {
+    return fullReservationsCollection;
 
-                    const theReservation = doc.data();
-
-                    if (theReservation['user'] === userID)
-                        fullReservationsCollection[currentReservation] = theReservation;
-
-                });
-
-
-
-            }
-
-            return fullReservationsCollection;
-        })
-        .catch(err => {return err});
 };
 
 
@@ -305,18 +309,7 @@ export const updateTrips = async () => {
 
                     const time = new Date();
 
-                    // const currentDate = time.getFullYear() + "-" +
-                    //     ("0" + time.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
-                    //     + "-" +
-                    //     ("0" + time.getDay()).slice(-2);
-                    //
-                    // const currentTime =
-                    //     ("0" + time.getHours()).slice(-2)
-                    //     + ":" +
-                    //     ("0" + time.getMinutes()).slice(-2);
-
                     const singleDocDateDate = Date.parse(singleDocDate+" "+singleDocTime);
-
 
                     if (singleDocDateDate <= time) {
                         const reservationDocument = reservationsCollection.doc(singleDocID);
@@ -325,19 +318,7 @@ export const updateTrips = async () => {
                         await reservationDocument.update('status', 'active');
                     }
 
-
-                    // if (singleDocData > currentDate) {
-                    //     console.log(singleDocDate + " > " + currentDate);
-                    // } else {
-                    //     console.log(singleDocDate + " <= " + currentDate);
-                    // }
-                    //
-                    // if (singleDocTime > currentTime) {
-                    //     console.log(singleDocTime + " > " + currentTime);
-                    // } else {
-                    //     console.log(singleDocTime + " <= " + currentTime);
-                    // }
-
+                    await incrementStatistic("reservation.update");
                 }
 
             });

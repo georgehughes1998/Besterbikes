@@ -21,6 +21,7 @@ import {getDay, getMonth, getYear} from "./time";
 //
 // reservation.[stationID].[bikeType].make
 // reservation.[stationID].[bikeType].cancel
+// reservation.update
 //
 // station.[stationID].unlock
 // station.[stationID].return
