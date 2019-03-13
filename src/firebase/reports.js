@@ -31,13 +31,15 @@ export const makeReport = async (reservationID, category, comment) => {
     const reportID = reportDocument.id;
 
 
-    await makeNewTask({
+    const operatorID = await makeNewTask({
         reportID,
         category: "userReport",
         comment: "See attached report..."
     });
 
     await incrementStatistic("reports.makeReport");
+
+    return operatorID
 
 };
 

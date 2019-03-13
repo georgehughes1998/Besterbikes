@@ -79,6 +79,8 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 
     await incrementStatistic("task.make");
 
+    return theTask['operator'];
+
 };
 
 
