@@ -14,11 +14,11 @@ import withRouter from "react-router/es/withRouter";
 
 class Users extends React.Component {
 
-    handleUserClick = (customerID) => {
+    handleUserClick = (customer, customerID) => {
         if (this.state.userType === "customer") {
             this.props.history.push({
                 pathname: '/customerdetails',
-                state: {customerID: customerID}
+                state: {customer: customer, customerID: customerID}
             })
         }
     };
@@ -29,7 +29,7 @@ class Users extends React.Component {
                 let keys = Object.keys(this.props.customers);
 
                 return (
-                    <List.Item onClick={() => this.handleUserClick(keys[index])}>
+                    <List.Item onClick={() => this.handleUserClick(key, keys[index])}>
                         <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
                         <List.Content>
                             <List.Header>
@@ -50,7 +50,7 @@ class Users extends React.Component {
                 let keys = Object.keys(this.props.operators);
 
                 return (
-                    <List.Item onClick={() => this.handleUserClick(keys[index])}>
+                    <List.Item onClick={() => this.handleUserClick(keys, keys[index])}>
                         <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
                         <List.Content>
                             <List.Header>

@@ -10,6 +10,7 @@ import {cancelReservation, getTrips} from "../../firebase/reservations";
 import {SubmissionError} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 
 class CustomerDetails extends React.Component {
 
@@ -20,13 +21,7 @@ class CustomerDetails extends React.Component {
         };
     }
 
-    //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = async () => {
-        const user = await getUser();
-        if (user === null)
-            this.props.history.push("signin");
-        return user
-    };
+
     //Cancels a reservation using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {
         return cancelReservation(tripId)
@@ -53,7 +48,7 @@ class CustomerDetails extends React.Component {
 
         // console.log(user);
         this.setState({"currentUser": user});
-        return user
+        return user;
     };
 
     componentDidMount() {
@@ -67,11 +62,14 @@ class CustomerDetails extends React.Component {
     //Communicates with firebase to load in all trips
     retrieveFirebaseTrips = async () => {
         console.log(this.state.currentUser.uid);
-        if(this.state.currentUser.uid){
-            const obj = await getTrips("", this.state.currentUser.uid);
+        console.log(this.props.history.location.state);
+
+        if(this.props.history.location.state.customerID){
+            const obj = await getTrips("", this.props.history.location.state.customerID);
 
             if (obj) {
                 this.props.loadTrips(obj);
+                console.log(obj);
             } else {
                 throw new SubmissionError({
                     _error: obj.message
@@ -90,20 +88,25 @@ class CustomerDetails extends React.Component {
                         <Header as={"h1"}>Customer Details</Header>
                         <p>
                             <strong>Forename: </strong>
-                            {this.state.currentUser.name?this.state.currentUser.name["firstName"]:null}
+                            {this.props.history.location.state.customer.name?this.props.history.location.state.customer.name["firstName"]:null}
                         </p>
                         <p>
                             <strong>Surname: </strong>
-                            {this.state.currentUser.name?this.state.currentUser.name["lastName"]:null}
+                            {this.props.history.location.state.customer.name?this.props.history.location.state.customer.name["lastName"]:null}
                         </p>
                         <p>
                             <strong>Date of Birth: </strong>
-                            {this.state.currentUser.dateOfBirth?this.state.currentUser.dateOfBirth:null}
+                            {this.props.history.location.state.customer.dateOfBirth?this.props.history.location.state.customer.dateOfBirth:null}
                         </p>
                         <p>
                             <strong>ID: </strong>
-                            {this.state.currentUser.uid?this.state.currentUser.uid:null}
+                            {this.props.history.location.state.customerID?this.props.history.location.state.customerID:null}
                         </p>
+
+                        <Button onClick={() => this.props.history.push("/users")}>
+                            Return to all users
+                        </Button>
+
                     </Container>
                     <br/>
 
