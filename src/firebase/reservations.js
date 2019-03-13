@@ -219,7 +219,6 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
         const theDate1 = Date.parse(date1 + " " + time1);
         const theDate2 = Date.parse(date2 + " " + time2);
 
-        console.log(theDate1,theDate2);
 
         if (theDate1 < theDate2)
             return 1;
