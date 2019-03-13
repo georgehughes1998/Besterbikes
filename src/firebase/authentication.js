@@ -130,6 +130,7 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
 };
 
+
 //
 // const mapStateToProps = (state) => {
 //     return {user: state.user.status}
