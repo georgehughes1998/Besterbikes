@@ -170,7 +170,7 @@ constructor(props){
                 >
                     <div>
 
-                        // <Header as='h4'>{this.state.activeMarker.name}</Header>
+                         <Header as='h4'>{this.state.activeMarker.name}</Header>
 
                         {this.state.activeMarker.stationDetails ?
                             <div>

@@ -8,6 +8,9 @@ import PageContainer from "../PageContainer";
 import {getUser} from "../../firebase/authentication";
 import {cancelReservation, getTrips} from "../../firebase/reservations";
 import ListOfLiveTrips from "../ListOfLiveTrips";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 
 
 //TODO: Implement loader
@@ -68,18 +71,19 @@ class MyTrips extends React.Component {
     render() {
 
         // if (this.props.trips === {}) {
-        //     {console.log("loaidng")}
+        //     {console.log("loading")}
         //     return (
         //         <Segment>
-        //             {console.log("loaidng")}
+        //             {console.log("loading")}
         //             <Dimmer active>
         //                 <Loader size='large'>Loading</Loader>
         //             </Dimmer>
         //         </Segment>
         //     );
         // }
+        return(
 
-        return (
+
             <PageContainer>
                 <ListOfLiveTrips
                     items={this.props.trips}
