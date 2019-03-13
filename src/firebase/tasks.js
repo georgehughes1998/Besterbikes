@@ -86,7 +86,9 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 export const getTasks = async () => {
     //TODO: Test
 
-    const theTasks = [];
+    const theTasksCollection = {};
+    const theTasksArray = [];
+    let counter = 0;
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -105,11 +107,46 @@ export const getTasks = async () => {
         const operatorTaskID = operatorTaskDoc.id;
         const operatorTaskData = operatorTaskDoc.data();
 
-        theTasks[operatorTaskID] = operatorTaskData;
+        theTasksArray[counter++] = {id: operatorTaskID, data: operatorTaskData};
     }
 
+    theTasksArray.sort(function (obj1, obj2) {
 
-    return theTasks;
+        const date1 = obj1['data']['deadline']['date'];
+        const time1 = obj1['data']['deadline']['time'];
+        const status1 = obj1['data']['status'];
+
+        const date2 = obj2['data']['deadline']['date'];
+        const time2 = obj2['data']['deadline']['time'];
+        const status2 = obj2['data']['status'];
+
+        const theDate1 = Date.parse(date1 + " " + time1);
+        const theDate2 = Date.parse(date2 + " " + time2);
+
+        //TODO: Test
+        if (status1 === "reassigned" && status2 === "complete")
+            return 1;
+        else if ((status1 === "reassigned" || status1 === "complete") && (status2 === "pending" || status2 === "active"))
+            return 1;
+
+
+        if (theDate1 < theDate2)
+            return -1;
+        if (theDate1 > theDate2)
+            return 1;
+        else
+            return 0;
+    });
+
+    theTasksArray.forEach(obj => {
+        const id = obj.id;
+        const data = obj.data;
+
+        theTasksCollection[id] = data;
+
+    });
+
+    return theTasksCollection;
 
 };
 
