@@ -4,12 +4,21 @@ import {getCurrentDateString, getCurrentTimeString} from "./time";
 
 const FieldValue = firebase.firestore.FieldValue;
 
+const maxNumberOfBikesCanReserve = 8;
+
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
     //Function to make reservations with the given data
 
+    const startTimeString = startDate + " " + startTime;
+    const startTimeDate = Date.parse(startTimeString);
+    const currentTime = new Date();
+
     regularBikes = parseInt(regularBikes);
     mountainBikes = parseInt(mountainBikes);
+
+    if (startTimeDate < currentTime)
+        throw new Error("Cannot book a reservation in the past");
 
     //In case value is blank and parseInt returns null
     if (!regularBikes)
@@ -21,8 +30,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
 
     //Prevent the user from doing anything absurd
-    if (regularBikes > 8 || mountainBikes > 8)
-        throw new Error("Cannot reserve more than 8 bikes at once.");
+    if (regularBikes > maxNumberOfBikesCanReserve || mountainBikes > maxNumberOfBikesCanReserve)
+        throw new Error("Cannot reserve more than " + maxNumberOfBikesCanReserve.toString() + " bikes at once.");
 
     if (numberOfAvailableRoadBikes < regularBikes)
         throw new Error("Not enough road bikes available at selected station");
