@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 // import * as time from "time";
-import {getDateString, getTimeString} from "./time";
+import {getCurrentDateString, getCurrentTimeString, getDateString, getTimeString} from "./time";
 import {incrementStatistic} from "./statistics";
 
 const FieldValue = firebase.firestore.FieldValue;
@@ -53,7 +53,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 
     //Assign comment to the task
     if (comment)
-        theTask['comments'] = [{user:uid,comment:comment}];
+        theTask['comments'] = [{user:uid,comment:comment,time:{date: getCurrentDateString(), time: getCurrentTimeString()}}];
     else
         throw new Error('No comment was specified');
 
@@ -78,6 +78,8 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
     // console.log(theTask);
 
     await incrementStatistic("task.make");
+
+    return theTask['operator'];
 
 };
 
@@ -107,6 +109,8 @@ export const getTasks = async () => {
         const operatorTaskID = operatorTaskDoc.id;
         const operatorTaskData = operatorTaskDoc.data();
 
+        operatorTaskData['comments'] = operatorTaskData['comments'].reverse();
+
         theTasksArray[counter++] = {id: operatorTaskID, data: operatorTaskData};
     }
 
@@ -123,11 +127,18 @@ export const getTasks = async () => {
         const theDate1 = Date.parse(date1 + " " + time1);
         const theDate2 = Date.parse(date2 + " " + time2);
 
+        const statusPriorityMap = {
+            pending: 2,
+            active: 2,
+            complete: 1,
+            reassigned: 0
+        };
+
         //TODO: Test
-        if (status1 === "reassigned" && status2 === "complete")
+        if (statusPriorityMap[status1] < statusPriorityMap[status2])
             return 1;
-        else if ((status1 === "reassigned" || status1 === "complete") && (status2 === "pending" || status2 === "active"))
-            return 1;
+        if (statusPriorityMap[status1] > statusPriorityMap[status2])
+            return -1;
 
 
         if (theDate1 < theDate2)
@@ -145,6 +156,10 @@ export const getTasks = async () => {
         theTasksCollection[id] = data;
 
     });
+
+    // console.log("----------------The Tasks----------------");
+    // console.log(theTasksCollection);
+    // console.log("-----------------------------------------");
 
     return theTasksCollection;
 
@@ -191,7 +206,12 @@ export const reassignTask = async (taskID, comment, operatorID) => {
     //TODO: test
 
     const db = firebase.firestore();
+    const auth = firebase.auth();
     const tasksCollection = db.collection('tasks');
+
+    if (auth.currentUser)
+        if (auth.currentUser.uid === operatorID)
+            throw new Error("Can't reassign a task to yourself");
 
     //Add the comment to the task
     await addTaskComment(taskID,comment);
@@ -222,7 +242,11 @@ export const addTaskComment = async (taskID, comment) => {
     const tasksCollection = db.collection('tasks');
     const taskDocument = tasksCollection.doc(taskID);
 
-    await taskDocument.update({comments: FieldValue.arrayUnion({user:uid,comment:comment})});
+    const timeObject = {date: getCurrentDateString(), time: getCurrentTimeString()};
+
+    const commentObject = {user:uid,comment:comment,time: timeObject};
+
+    await taskDocument.update({comments: FieldValue.arrayUnion(commentObject)});
 
 };
 

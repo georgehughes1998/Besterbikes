@@ -24,6 +24,7 @@ import {getDay, getMonth, getYear} from "./time";
 // reservation.update
 //
 // station.[stationID].unlock
+// station.[stationID].unlockOperator
 // station.[stationID].return
 //
 // task.make
