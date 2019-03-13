@@ -33,6 +33,8 @@ export const unlockBike = async (reservationID) => {
     const bikesCollection = db.collection('bikes');
     const bikeDocument = bikesCollection.doc(bikeID);
 
+    console.log(bikeDocument);
+    console.log(bikeID);
 
     await reservationDocument.update('status','unlocked');
     await reservationDocument.update('bike',bikeID);
