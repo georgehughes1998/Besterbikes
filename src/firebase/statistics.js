@@ -181,13 +181,18 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 
 //Station
 
-export const getStationStatistics = async (timeScale) => {
+export const getStationStatistics = async (stationID,year=-1,month=-1,day=-1) => {
     //TODO: Implement
+
+    const statisticPath = `${stationID}`;
+
+    return getStatistics(statisticPath,year,month,day);
 
 };
 
 
-const getStatistics = async (statisticType, year=-1, month=-1, day=-1) =>
+
+const getStatistics = async (statisticTypes, year=-1, month=-1, day=-1) =>
 {
     //TODO: Test
 
@@ -198,14 +203,14 @@ const getStatistics = async (statisticType, year=-1, month=-1, day=-1) =>
 
     let statisticsQuery;
 
-    if (day !== -1)
+    if (day !== -1 && month !== -1 && year !== -1)
     {
         statisticsQuery = statisticsCollection
             .where("date.day", "==", day)
             .where("date.month", "==", month)
             .where("date.year", "==", year);
     }
-    else if (month !== -1)
+    else if (month !== -1 && year !== -1)
     {
         statisticsQuery = statisticsCollection
             .where("date.month", "==", month)
@@ -232,9 +237,15 @@ const getStatistics = async (statisticType, year=-1, month=-1, day=-1) =>
         const day = statisticData.date.day;
         const month = statisticData.date.month;
         const year = statisticData.date.year;
-        const statistic = statisticData[statisticType];
 
-        statisticsObject[year][month][day] = statistic;
+        for (let s in statisticTypes)
+        {
+            const statisticType = statisticTypes[s]; //Either this or it's actually just s
+            const statistic = statisticData[statisticType];
+
+            statisticsObject[statisticType][year][month][day] = statistic;
+
+        }
     }
 
     return statisticsObject;
