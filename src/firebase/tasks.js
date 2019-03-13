@@ -206,7 +206,12 @@ export const reassignTask = async (taskID, comment, operatorID) => {
     //TODO: test
 
     const db = firebase.firestore();
+    const auth = firebase.auth();
     const tasksCollection = db.collection('tasks');
+
+    if (auth.currentUser)
+        if (auth.currentUser.uid === operatorID)
+            throw new Error("Can't reassign a task to yourself");
 
     //Add the comment to the task
     await addTaskComment(taskID,comment);
