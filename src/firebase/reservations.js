@@ -238,17 +238,6 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
 };
 
 
-const getReservation = async (reservationID,reservationDocument) => {
-    //Used by getTrips to get a single reservation
-    return reservationDocument.get()
-        .then(doc => {
-            console.log(doc.data());
-            return doc.data();
-        })
-        .catch(err => {return err});
-};
-
-
 
 export const cancelReservation = async (reservationID) => {
     //Cancels the given reservation
@@ -359,7 +348,15 @@ export const updateTrips = async () => {
 
 
 
-
+// const getReservation = async (reservationID,reservationDocument) => {
+//     //Used by getTrips to get a single reservation
+//     return reservationDocument.get()
+//         .then(doc => {
+//             console.log(doc.data());
+//             return doc.data();
+//         })
+//         .catch(err => {return err});
+// };
 
 
 // export const getNestedPromise = async (promiseFunction, args, counter, max) => {
