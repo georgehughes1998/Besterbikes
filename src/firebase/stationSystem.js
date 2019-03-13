@@ -115,10 +115,16 @@ const selectBike = async (stationID, bikeType) => {
     const stationData = stationDoc.data();
 
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
+    let bikeID;
 
-    //TODO: Get a random bike
-    const bikeID = bikesArray.pop();
-
+    if (bikesArray.length > 0)
+    {
+        //Select a random bike
+        const randomNumber = Math.round(Math.random() * (bikesArray.length - 1));
+        bikeID = bikesArray[randomNumber];
+    }
+    else
+        {throw new Error("There are no bikes at this station");}
 
     await removeBike(stationID, bikeID, bikeType);
 
