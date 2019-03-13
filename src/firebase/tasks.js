@@ -153,9 +153,9 @@ export const getTasks = async () => {
 
     });
 
-    console.log("----------------The Tasks----------------");
-    console.log(theTasksCollection);
-    console.log("-----------------------------------------");
+    // console.log("----------------The Tasks----------------");
+    // console.log(theTasksCollection);
+    // console.log("-----------------------------------------");
 
     return theTasksCollection;
 
