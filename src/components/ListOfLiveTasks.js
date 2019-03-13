@@ -127,7 +127,7 @@ class listOfLiveTasks extends React.Component {
                     status: "Reassigned",
                     category: task["category"],
                     opertaor: "",
-                    deadline: "",
+                    deadline: task["deadline"],
                     comments: task["comments"],
                     // `Bike available from ${startTime}`,
                     taskId: keys[index],
