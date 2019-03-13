@@ -181,10 +181,15 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 
 //Station
 
+//Gets all the statistics for a particular station
 export const getStationStatistics = async (stationID,year=-1,month=-1,day=-1) => {
-    //TODO: Implement
+    //TODO: Test
 
     const statisticPaths = [
+        `reservation.${stationID}.road.make`,
+        `reservation.${stationID}.road.cancel`,
+        `reservation.${stationID}.mountain.make`,
+        `reservation.${stationID}.mountain.cancel`,
         `station.${stationID}.unlock`,
         `station.${stationID}.return`
     ];
