@@ -11,6 +11,11 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     regularBikes = parseInt(regularBikes);
     mountainBikes = parseInt(mountainBikes);
 
+    if (!regularBikes)
+        regularBikes=0;
+    if (!mountainBikes)
+        mountainBikes=0;
+
     const numberOfAvailableRoadBikes = await getNumberOfAvailableBikes(station, "road");
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
 
