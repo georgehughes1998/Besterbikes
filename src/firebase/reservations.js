@@ -1,11 +1,16 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
 import {getCurrentDateString, getCurrentTimeString} from "./time";
+import {makeReport} from "./reports";
+import {makeNewTask} from "./tasks";
 
 const FieldValue = firebase.firestore.FieldValue;
 
 const maxNumberOfBikesCanReserve = 8;
 const maxHoursLimit = 3;
+const stationCapacity = 35;
+const maxCapacityPercentage = 0.7;
+const minCapacityPercentage = 0.3;
 
 
 export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
@@ -133,27 +138,62 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
 
 };
 
-export const setNumberOfAvailableBikes = async (station, numberOfAvailableBikes, bikeType) => {
+export const setNumberOfAvailableBikes = async (stationID, numberOfAvailableBikes, bikeType) => {
     //Sets the number of available bikes at a station to the provided number
 
     const db = firebase.firestore();
-    console.log("Setting number of available " + bikeType + " bikes at station " + station);
+    // console.log("Setting number of available " + bikeType + " bikes at station " + station);
+
+    if (numberOfAvailableBikes > stationCapacity)
+        throw new Error("Station is full");
+    if (numberOfAvailableBikes < 0)
+        throw new Error("Station is empty");
 
     const stationsCollection = db.collection('stations');
-    const thisStationDocument = stationsCollection.doc(station);
+    const thisStationDocument = stationsCollection.doc(stationID);
 
     let bikesObject = {};
     bikesObject[`bikes.${bikeType}.numberOfAvailableBikes`] = numberOfAvailableBikes;
 
-    const promise = thisStationDocument.update(bikesObject);
+    await thisStationDocument.update(bikesObject);
 
-    return promise
-        .then(() => {
-            return "success"
-        })
-        .catch(err => {
-            return err
-        });
+    //Check for station over capacity
+    if ( (numberOfAvailableBikes/stationCapacity) > maxCapacityPercentage)
+    {
+        const category = "Station Over Capacity Threshold";
+        const comment = "Alert: the attached station is over "
+            + (maxCapacityPercentage*100).toString()
+            + "% full.";
+
+        const tasksCollection = db.collection('tasks');
+        const tasksQuery = tasksCollection.where('category', '==',category)
+            .where('status','==','pending')
+            .where('station','==',stationID);
+
+        const tasksSnapshot = await tasksQuery.get();
+
+        if (tasksSnapshot.empty)
+            await makeNewTask({category, comment, station: stationID})
+    }
+
+    else if ( (numberOfAvailableBikes/stationCapacity) < minCapacityPercentage)
+    {
+        const category = "Station Under Capacity Threshold";
+        const comment = "Alert: the attached station is under "
+            + (minCapacityPercentage*100).toString()
+            + "% full.";
+
+        const tasksCollection = db.collection('tasks');
+        const tasksQuery = tasksCollection.where('category', '==',category)
+            .where('status','==','pending')
+            .where('station','==',stationID);
+
+        const tasksSnapshot = await tasksQuery.get();
+         if (tasksSnapshot.empty)
+             await makeNewTask({category, comment, station: stationID});
+    }
+
+    return "success"
 
 };
 
