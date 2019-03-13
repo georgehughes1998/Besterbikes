@@ -123,11 +123,18 @@ export const getTasks = async () => {
         const theDate1 = Date.parse(date1 + " " + time1);
         const theDate2 = Date.parse(date2 + " " + time2);
 
+        const statusPriorityMap = {
+            pending: 2,
+            active: 2,
+            complete: 1,
+            reassigned: 0
+        };
+
         //TODO: Test
-        if (status1 === "reassigned" && status2 === "complete")
+        if (statusPriorityMap[status1] < statusPriorityMap[status2])
             return 1;
-        else if ((status1 === "reassigned" || status1 === "complete") && (status2 === "pending" || status2 === "active"))
-            return 1;
+        if (statusPriorityMap[status1] > statusPriorityMap[status2])
+            return -1;
 
 
         if (theDate1 < theDate2)
@@ -145,6 +152,10 @@ export const getTasks = async () => {
         theTasksCollection[id] = data;
 
     });
+
+    console.log("----------------The Tasks----------------");
+    console.log(theTasksCollection);
+    console.log("-----------------------------------------");
 
     return theTasksCollection;
 
