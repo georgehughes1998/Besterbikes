@@ -115,6 +115,8 @@ const selectBike = async (stationID, bikeType) => {
     const stationData = stationDoc.data();
 
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
+
+    //TODO: Get a random bike
     const bikeID = bikesArray.pop();
 
 
@@ -208,9 +210,40 @@ export const getUnlockedBikes = async () => {
 
 
 
+export const unlockBikeOperator = async (bikeID) => {
 
+    //TODO: Test
 
+    const db = firebase.firestore();
 
+    const bikesCollection = db.collection('bikes');
+    const bikeDocument = bikesCollection.doc(bikeID);
+    const bikeSnapshot = await bikeDocument.get();
+    const bikeData = bikeSnapshot.data();
+    const bikeType = bikeData['type'];
+
+    const stationsCollection = db.collection('stations');
+    const stationsQuery = stationsCollection.where(`bikes.${bikeType}.bikesArray`,"array-contains", bikeID);
+    const stationsSnapshot = await stationsQuery.get();
+
+    //Check that the bike is not at multiple stations.
+    const numberOfStationsAt = stationsSnapshot.docs.length;
+    if (numberOfStationsAt > 1)
+        throw new Error("Something somewhere has gone horribly wrong because "
+            + bikeID + " is apparently at " + numberOfStationsAt.toString()
+            + " stations.");
+
+    const stationDoc = stationsSnapshot.docs.pop();
+    const stationID = stationDoc.id;
+
+    await removeBike(stationID,bikeID,bikeType);
+    await bikeDocument.update('status', 'unlocked');
+
+    await incrementStatistic("station." + stationID + ".unlockOperator");
+
+    return bikeID;
+
+};
 
 
 
