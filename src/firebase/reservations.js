@@ -11,6 +11,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     regularBikes = parseInt(regularBikes);
     mountainBikes = parseInt(mountainBikes);
 
+    //In case value is blank and parseInt returns null
     if (!regularBikes)
         regularBikes=0;
     if (!mountainBikes)
