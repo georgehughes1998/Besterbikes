@@ -81,6 +81,7 @@ export const getUser = async (userID = "") => {
         const userDetails = await usersDoc.get();
 
         if (userDetails.exists) {
+            userDetails["uid"] = userID;
             return userDetails.data()
         }
         else {
