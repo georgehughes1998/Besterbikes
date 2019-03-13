@@ -196,8 +196,11 @@ export const getStationStatistics = async (stationID, year = -1, month = -1, day
 };
 
 
-const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) => {
+export const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) => {
     //TODO: Test
+
+    console.log(statisticTypes);
+    console.log(year, month, day);
 
     const db = firebase.firestore();
     const statisticsCollection = db.collection('statistics');
@@ -218,6 +221,7 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
             .where("date.year", "==", year);
     }
     else if (year !== -1) {
+        console.log("here1");
         statisticsQuery = statisticsCollection
             .where("date.year", "==", year);
     }
@@ -237,8 +241,11 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
         const year = statisticData.date.year;
 
         for (let s in statisticTypes) {
+            console.log(s);
             const statisticType = statisticTypes[s]; //Either this or it's actually just s
+            console.log(statisticType);
             const statistic = statisticData[statisticType];
+            console.log(statistic);
 
             const statisticTypeStringArray = statisticType.split(".");
             let statisticTypeString = "";
