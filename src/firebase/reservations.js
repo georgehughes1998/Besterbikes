@@ -282,15 +282,30 @@ export const getTrips = async (filterStatus = "", userID = "", maxNumberOfTrips 
     //Sort the array of reservations based on the date/times
     fullReservationsArray.sort(function (obj1, obj2) {
 
+        const status1 = obj1['data']['status'];
         const date1 = obj1['data']['creation']['time']['date'];
         const time1 = obj1['data']['creation']['time']['time'];
 
+        const status2 = obj2['data']['status'];
         const date2 = obj2['data']['creation']['time']['date'];
         const time2 = obj2['data']['creation']['time']['time'];
 
         const theDate1 = Date.parse(date1 + " " + time1);
         const theDate2 = Date.parse(date2 + " " + time2);
 
+        const statusPriorityMap = {
+            active: 4,
+            inactive: 3,
+            unlocked: 2,
+            complete: 1,
+            cancelled: 0
+        };
+
+
+        if (statusPriorityMap[status1] < statusPriorityMap[status2])
+            return 1;
+        if (statusPriorityMap[status1] > statusPriorityMap[status2])
+            return -1;
 
         if (theDate1 < theDate2)
             return 1;
