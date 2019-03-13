@@ -159,10 +159,10 @@ const makeSingleReservation = async (reservationsCollection, reservationDocument
 };
 
 
-export const getTrips = async (userID="noArg", maxNumberOfTrips=10) => {
+export const getTrips = async (userID="", maxNumberOfTrips=10) => {
     //Returns a collection of objects containing data about the user's trips
 
-    if (userID === "noArg")
+    if (userID === "")
     {
         const currentUser = firebase.auth().currentUser;
         if (currentUser)
