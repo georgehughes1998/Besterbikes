@@ -55,8 +55,7 @@ class MyTrips extends React.Component {
     //Communicates with firebase to load in all trips
     retrieveFirebaseTrips = async () => {
         const obj = await getTrips();
-        console.log("BOOOOOOOOOOOOOoo");
-        console.log(obj);
+
         if (obj) {
             this.props.loadTrips(obj);
         } else {
