@@ -89,7 +89,7 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
                 newStatisticValue += statisticValue;
         }
 
-        console.log("Old value: " + statisticValue + ", New value:" + newStatisticValue);
+        //console.log("Old value: " + statisticValue + ", New value:" + newStatisticValue);
 
         const statisticDocument = statisticsCollection.doc(statisticID);
         await statisticDocument.update(statisticType,newStatisticValue);
