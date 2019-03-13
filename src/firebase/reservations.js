@@ -220,7 +220,7 @@ export const getTrips = async (filterStatus="",userID="", maxNumberOfTrips=10) =
                 const theReservation = await getReservation(currentReservation,reservationDocument);
 
                 if (theReservation)
-                    fullReservationsCollection[currentReservation];
+                    fullReservationsCollection[currentReservation] = theReservation;
 
             }
 
