@@ -11,16 +11,6 @@ import FirebaseError from "../FirebaseError";
 
 class Report extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            category: "",
-            description: "",
-            reservation: "",
-            error: ""
-        }
-    };
-
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
@@ -28,7 +18,6 @@ class Report extends React.Component {
             this.props.history.push("signin");
         return user
     };
-
     retrieveFirebaseTrips = async () => {
         const obj = await getTrips();
         if (obj) {
@@ -37,14 +26,6 @@ class Report extends React.Component {
 
         }
     };
-
-    componentDidMount() {
-        this.authenticateUser()
-            .then((user) =>  {
-                if(user)
-                    this.retrieveFirebaseTrips();
-            })};
-
     //TODO: Add firebase function to make report
     handleSubmit = async (values) => {
         return makeReport(this.state.reservation, this.state.category, this.state.description)
@@ -59,6 +40,24 @@ class Report extends React.Component {
                 // })
             })
         console.log(values)
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            category: "",
+            description: "",
+            reservation: "",
+            error: ""
+        }
+    };
+
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) => {
+                if (user)
+                    this.retrieveFirebaseTrips();
+            })
     };
 
     render() {
@@ -76,7 +75,7 @@ class Report extends React.Component {
                             selection
                             search
                             placeholder='Select Category'
-                            options={[  {key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
+                            options={[{key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
                                 {key: "stationFault", value: "Station Fault", text: "Station Fault"},
                                 {key: "feedback", value: "Feedback", text: "Feedback"}
                             ]}
@@ -88,16 +87,16 @@ class Report extends React.Component {
 
 
                         <TripsDropdown
-                            placeholder = 'Select Reservation'
-                            trips = {this.props.trips}
-                            handleSubmit = {(param, data) => this.setState({"reservation": data.value})}
+                            placeholder='Select Reservation'
+                            trips={this.props.trips}
+                            handleSubmit={(param, data) => this.setState({"reservation": data.value})}
                         />
 
                         <br/>
                         <br/>
                         <TextArea
                             autoHeight
-                            placeholder = "Please describe your query here"
+                            placeholder="Please describe your query here"
                             rows={10}
                             onChange={(param, data) => this.setState({"description": data.value})}
                         />
@@ -105,11 +104,11 @@ class Report extends React.Component {
                         <br/>
                         <br/>
                         <Button
-                            content= "Send Report"
+                            content="Send Report"
                             onClick={() => this.handleSubmit(this.state)}
                         />
 
-                        {this.state.error != ""?<FirebaseError error={this.state.error}/>:null}
+                        {this.state.error != "" ? <FirebaseError error={this.state.error}/> : null}
 
                     </Form>
 

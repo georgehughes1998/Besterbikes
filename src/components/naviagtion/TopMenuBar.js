@@ -10,28 +10,18 @@ import {getUser} from "../../firebase/authentication";
 //TODO: Make TopMenuBar Sticky
 class TopMenuBar extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentUser: ""
-        };
-    }
-
     handleHideClick = () => this.props.changeSideBar("Hide");
     handleShowClick = () => this.props.changeSideBar("Show");
-
-
     authenticateUser = async () => {
         const user = await getUser();
         if (user !== null && this.state.currentUser === "") {
-                const userDetails = await getUser();
-                this.setState({currentUser: userDetails.name.firstName});
-        }else if (user === null && this.state.currentUser !== "") {
+            const userDetails = await getUser();
+            this.setState({currentUser: userDetails.name.firstName});
+        } else if (user === null && this.state.currentUser !== "") {
             this.setState({currentUser: ""});
         }
         return user
     };
-
     //Function to display title of page based on pathname in react router dom
     getDisplayTitle = (pathname) => {
         switch (pathname) {
@@ -61,6 +51,12 @@ class TopMenuBar extends React.Component {
         }
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: ""
+        };
+    }
 
     render() {
 
@@ -82,7 +78,7 @@ class TopMenuBar extends React.Component {
 
                 <Menu.Item>
                     <Link to="/editaccount" className="item">
-                        {this.state.currentUser === ""?<div/>:<Icon name="user Circle"/>}
+                        {this.state.currentUser === "" ? <div/> : <Icon name="user Circle"/>}
                         {this.state.currentUser}
                     </Link>
                 </Menu.Item>

@@ -7,7 +7,6 @@ import {incrementStatistic} from "./statistics";
 const FieldValue = firebase.firestore.FieldValue;
 
 
-
 export const unlockBike = async (reservationID) => {
     //Unlocks a bike at the given station and the given reservation
 
@@ -20,26 +19,25 @@ export const unlockBike = async (reservationID) => {
     const reservationDoc = await reservationDocument.get();
     const reservationData = reservationDoc.data();
 
-    if ( !validateUnlockReservation(reservationData) )
-    {
+    if (!validateUnlockReservation(reservationData)) {
         throw Error("Invalid reservation for unlock.");
     }
 
     const bikeType = reservationData['bikeType'];
     const stationID = reservationData['start']['station'];
 
-    const bikeID = await selectBike(stationID,bikeType);
+    const bikeID = await selectBike(stationID, bikeType);
     const bikesCollection = db.collection('bikes');
     const bikeDocument = bikesCollection.doc(bikeID);
 
     console.log(bikeDocument);
     console.log(bikeID);
 
-    await reservationDocument.update('status','unlocked');
-    await reservationDocument.update('bike',bikeID);
+    await reservationDocument.update('status', 'unlocked');
+    await reservationDocument.update('bike', bikeID);
 
-    await bikeDocument.update('status','unlocked');
-    await bikeDocument.update('reservation',reservationID);
+    await bikeDocument.update('status', 'unlocked');
+    await bikeDocument.update('reservation', reservationID);
 
     await incrementStatistic("station." + stationID + ".unlock");
 
@@ -47,50 +45,54 @@ export const unlockBike = async (reservationID) => {
 };
 
 
-const validateUnlockReservation = (reservationData) =>
-{
+const validateUnlockReservation = (reservationData) => {
     //Used by unlockBike to validate a reservation
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
     let isValid = true;
 
-    if (!(reservationData['user'] === uid)) {isValid = false;}
-    if (!(reservationData['status'] === "active")) {isValid = false;}
+    if (!(reservationData['user'] === uid)) {
+        isValid = false;
+    }
+    if (!(reservationData['status'] === "active")) {
+        isValid = false;
+    }
 
     return isValid;
 };
 
 
-const validateReturnReservation = (reservationData) =>
-{
+const validateReturnReservation = (reservationData) => {
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
     let isValid = true;
 
-    if (!(reservationData['user'] === uid)) {isValid = false;}
-    if (!(reservationData['status'] === "unlocked")) {isValid = false;}
+    if (!(reservationData['user'] === uid)) {
+        isValid = false;
+    }
+    if (!(reservationData['status'] === "unlocked")) {
+        isValid = false;
+    }
 
     return isValid;
 };
 
 
-const removeBike = async (stationID,bikeID,bikeType) =>
-{
+const removeBike = async (stationID, bikeID, bikeType) => {
     //Used by unlockBike to remove a bike from the station bike array
     const db = firebase.firestore();
 
     const stationsCollection = db.collection('stations');
     const stationDocument = stationsCollection.doc(stationID);
 
-    return await stationDocument.update(`bikes.${bikeType}.bikesArray`,FieldValue.arrayRemove(bikeID));
+    return await stationDocument.update(`bikes.${bikeType}.bikesArray`, FieldValue.arrayRemove(bikeID));
 
 };
 
 //Add a bike to the bike array of the given station
-const addBike = async (stationID,bikeID,bikeType) =>
-{
+const addBike = async (stationID, bikeID, bikeType) => {
     //Used by return bike to add the given bike to the appropriate bike array of the given station
     const db = firebase.firestore();
 
@@ -102,8 +104,7 @@ const addBike = async (stationID,bikeID,bikeType) =>
 };
 
 
-const selectBike = async (stationID, bikeType) =>
-{
+const selectBike = async (stationID, bikeType) => {
     //Used by unlockBike to select a bike and get its bikeID from the given station
     const db = firebase.firestore();
 
@@ -117,7 +118,7 @@ const selectBike = async (stationID, bikeType) =>
     const bikeID = bikesArray.pop();
 
 
-    await removeBike(stationID,bikeID,bikeType);
+    await removeBike(stationID, bikeID, bikeType);
 
     return bikeID;
 
@@ -143,24 +144,23 @@ export const returnBike = async (bikeID, stationID) => {
     const reservationDoc = await reservationDocument.get();
     const reservationData = reservationDoc.data();
 
-    if (!validateReturnReservation(reservationData))
-    {
+    if (!validateReturnReservation(reservationData)) {
         throw Error("Invalid reservation for return.");
     }
 
-    await reservationDocument.update('status','complete');
-    await reservationDocument.update('end.time.date',getCurrentDateString());
-    await reservationDocument.update('end.time.time',getCurrentTimeString());
-    await reservationDocument.update('end.station',stationID);
+    await reservationDocument.update('status', 'complete');
+    await reservationDocument.update('end.time.date', getCurrentDateString());
+    await reservationDocument.update('end.time.time', getCurrentTimeString());
+    await reservationDocument.update('end.station', stationID);
 
-    await bikeDocument.update('reservation','');
-    await bikeDocument.update('status','available');
+    await bikeDocument.update('reservation', '');
+    await bikeDocument.update('status', 'available');
 
-    const numberOfAvailableBikes = await getNumberOfAvailableBikes(stationID,bikeType);
-    const newNumberOfAvailableBikes = parseInt(numberOfAvailableBikes)+1;
-    await setNumberOfAvailableBikes(stationID,newNumberOfAvailableBikes,bikeType);
+    const numberOfAvailableBikes = await getNumberOfAvailableBikes(stationID, bikeType);
+    const newNumberOfAvailableBikes = parseInt(numberOfAvailableBikes) + 1;
+    await setNumberOfAvailableBikes(stationID, newNumberOfAvailableBikes, bikeType);
 
-    await addBike(stationID,bikeID,bikeType);
+    await addBike(stationID, bikeID, bikeType);
 
     await incrementStatistic("station." + stationID + ".return");
 
@@ -168,10 +168,7 @@ export const returnBike = async (bikeID, stationID) => {
 };
 
 
-
-
-export const getUnlockedBikes = async () =>
-{
+export const getUnlockedBikes = async () => {
     const db = firebase.firestore();
 
     const auth = firebase.auth();
@@ -179,7 +176,7 @@ export const getUnlockedBikes = async () =>
 
     const reservationsCollection = db.collection('reservations');
     const bikesCollection = db.collection('bikes');
-    const unlockedQuery = bikesCollection.where('status','==','unlocked');
+    const unlockedQuery = bikesCollection.where('status', '==', 'unlocked');
 
     const bikesArray = [];
 
@@ -187,8 +184,7 @@ export const getUnlockedBikes = async () =>
     const queryDocs = querySnapshot.docs;
 
 
-    queryDocs.forEach(async singleDoc =>
-    {
+    queryDocs.forEach(async singleDoc => {
         const singleDocData = singleDoc.data();
 
         const reservationID = singleDocData['reservation'];
@@ -199,8 +195,7 @@ export const getUnlockedBikes = async () =>
 
         console.log(reservationID);
 
-        if (reservationData['user'] === uid)
-        {
+        if (reservationData['user'] === uid) {
             bikesArray.push(singleDoc.id);
         }
 

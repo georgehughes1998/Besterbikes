@@ -9,21 +9,10 @@ import {getUnlockedBikes, returnBike, unlockBike} from "../firebase/stationSyste
 //Simulation for stage 1 testing purposes to unlock and return bike
 class StationSystemSimulation extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            unlockStation: "",
-            unlockTrip: "",
-            returnStation: "",
-            returnBikes: [],
-            returnBike: ""
-        };
-    }
-
-        renderTrips = () => {
+    renderTrips = () => {
         let DropdownArray = [];
 
-        if (this.props.trips){
+        if (this.props.trips) {
             let keys = Object.keys(this.props.trips);
 
             Object.values(this.props.trips).map((key, index) => {
@@ -34,7 +23,6 @@ class StationSystemSimulation extends React.Component {
             return DropdownArray;
         }
     };
-
     renderStations = () => {
 
         let DropdownArray = [];
@@ -47,30 +35,23 @@ class StationSystemSimulation extends React.Component {
 
         return DropdownArray
     };
-
     getAvailableBikes = () => {
-        return getUnlockedBikes().
-            then((obj) => {this.setState({returnBikes: obj})});
+        return getUnlockedBikes().then((obj) => {
+            this.setState({returnBikes: obj})
+        });
     };
-
     renderAvailableBikes = () => {
         let DropdownArray = [];
 
         let availableBikes = this.state.returnBikes;
 
         for (var i = 0, len = availableBikes.length; i < len; i++) {
-            DropdownArray.push({key: (availableBikes[i]), value: (availableBikes[i]), text: (availableBikes[i])});;
+            DropdownArray.push({key: (availableBikes[i]), value: (availableBikes[i]), text: (availableBikes[i])});
+            ;
         }
 
         return DropdownArray
     };
-
-    handleChange(input, data) {
-        this.setState({
-            [input] : data.value
-        });
-    }
-
     handleUnlock = async () => {
         console.log(this.state);
         unlockBike(this.state.unlockTrip)
@@ -81,9 +62,6 @@ class StationSystemSimulation extends React.Component {
                 console.log(err);
             })
     };
-
-
-
     handleReturn = () => {
         console.log(this.state);
         returnBike(this.state.returnBike, this.state.returnStation)
@@ -94,6 +72,23 @@ class StationSystemSimulation extends React.Component {
                 console.log(err);
             })
     };
+
+    constructor() {
+        super();
+        this.state = {
+            unlockStation: "",
+            unlockTrip: "",
+            returnStation: "",
+            returnBikes: [],
+            returnBike: ""
+        };
+    }
+
+    handleChange(input, data) {
+        this.setState({
+            [input]: data.value
+        });
+    }
 
     componentDidMount() {
         // this.retrieveFirebaseTrips()
@@ -118,8 +113,8 @@ class StationSystemSimulation extends React.Component {
                                 fluid
                                 selection
                                 options={this.renderStations()}
-                                value={ this.state.unlockStation }
-                                onChange={(param, data) => this.handleChange("unlockStation", data) }
+                                value={this.state.unlockStation}
+                                onChange={(param, data) => this.handleChange("unlockStation", data)}
                                 name="unlockStation"
                             />
 
@@ -127,8 +122,8 @@ class StationSystemSimulation extends React.Component {
                                 fluid
                                 selection
                                 options={this.renderTrips()}
-                                value={ this.state.unlockTrip }
-                                onChange={(param, data) => this.handleChange("unlockTrip", data) }
+                                value={this.state.unlockTrip}
+                                onChange={(param, data) => this.handleChange("unlockTrip", data)}
                                 name="unlockTrip"
                             />
 
@@ -147,8 +142,8 @@ class StationSystemSimulation extends React.Component {
                                 fluid
                                 selection
                                 options={this.renderStations()}
-                                value={ this.state.returnStation }
-                                onChange={(param, data) => this.handleChange("returnStation", data) }
+                                value={this.state.returnStation}
+                                onChange={(param, data) => this.handleChange("returnStation", data)}
                                 name="returnStation"
                             />
 
@@ -156,8 +151,8 @@ class StationSystemSimulation extends React.Component {
                                 fluid
                                 selection
                                 options={this.renderAvailableBikes()}
-                                value={ this.state.returnBike }
-                                onChange={(param, data) => this.handleChange("returnBike", data) }
+                                value={this.state.returnBike}
+                                onChange={(param, data) => this.handleChange("returnBike", data)}
                                 name="returnBike"
                             />
 

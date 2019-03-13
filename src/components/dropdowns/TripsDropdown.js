@@ -29,17 +29,17 @@ class TripsDropdown extends React.Component {
     };
 
 
-        render(){
-            return(
-                <Dropdown
-                    selection
-                    search
-                    placeholder={this.props.placeholder}
-                    options={this.renderTrips()}
-                    onChange={this.props.onChange}
-                />
-            )
-        }
+    render() {
+        return (
+            <Dropdown
+                selection
+                search
+                placeholder={this.props.placeholder}
+                options={this.renderTrips()}
+                onChange={this.props.onChange}
+            />
+        )
+    }
 };
 
 export default withRouter(TripsDropdown)

@@ -62,10 +62,9 @@ export const signOut = () => {
 
 
 //Function to return a user's details - without an argument it will return the logged in user's details
-export const getUser = async (userID="noArg") => {
+export const getUser = async (userID = "noArg") => {
 
-    if (userID === "noArg")
-    {
+    if (userID === "noArg") {
         const currentUser = firebase.auth().currentUser;
         if (currentUser)
             userID = currentUser.uid;
@@ -73,8 +72,7 @@ export const getUser = async (userID="noArg") => {
             return null;
     }
 
-    if (userID)
-    {
+    if (userID) {
         const db = firebase.firestore();
 
         const usersCollection = db.collection('users');
@@ -82,16 +80,19 @@ export const getUser = async (userID="noArg") => {
 
         const userDetails = await usersDoc.get();
 
-        if (userDetails.exists)
-            {return userDetails.data()}
-        else
-            {throw new Error("Document '" + userID + "' doesn't exist")}
+        if (userDetails.exists) {
+            return userDetails.data()
+        }
+        else {
+            throw new Error("Document '" + userID + "' doesn't exist")
+        }
 
     }
-    else {throw new Error("UserID was null");}
+    else {
+        throw new Error("UserID was null");
+    }
 
 };
-
 
 
 //TODO: Also update email and password

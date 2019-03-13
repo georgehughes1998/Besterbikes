@@ -34,10 +34,7 @@ import {getDay, getMonth, getYear} from "./time";
 // report.make
 
 
-
-
-export const incrementStatistic = async (statisticType,incrementAmount=1) =>
-{
+export const incrementStatistic = async (statisticType, incrementAmount = 1) => {
 
     const db = firebase.firestore();
     const statisticsCollection = db.collection('statistics');
@@ -47,9 +44,9 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
     const year = getYear();
 
     const statisticsQuery = statisticsCollection
-        .where("date.day","==",day)
-        .where("date.month","==",month)
-        .where("date.year","==",year);
+        .where("date.day", "==", day)
+        .where("date.month", "==", month)
+        .where("date.year", "==", year);
 
     const statisticSingleQuery = statisticsQuery.limit(1);
     const statisticSnapshot = await statisticSingleQuery.get();
@@ -59,7 +56,7 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
 
     if (statisticSnapshot.empty) //If there is no document with this date
     {
-        const statisticObject = {date: {day,month,year}};
+        const statisticObject = {date: {day, month, year}};
         statisticObject[statisticType] = incrementAmount;
 
         await statisticsCollection.add(statisticObject);
@@ -93,26 +90,24 @@ export const incrementStatistic = async (statisticType,incrementAmount=1) =>
         //console.log("Old value: " + statisticValue + ", New value:" + newStatisticValue);
 
         const statisticDocument = statisticsCollection.doc(statisticID);
-        await statisticDocument.update(statisticType,newStatisticValue);
+        await statisticDocument.update(statisticType, newStatisticValue);
 
     }
 
 };
 
 
-
-
 //Users
 
 export const getNumberOfNewUsers = async (timeScale) => {
     //TODO: Test
-    return getStatistic("authentication.signUp",timeScale);
+    return getStatistic("authentication.signUp", timeScale);
 
 };
 
 export const getNumberOfLogins = async (timeScale) => {
     //TODO: Test
-    return getStatistic("authentication.signIn",timeScale);
+    return getStatistic("authentication.signIn", timeScale);
 
 };
 
@@ -121,25 +116,25 @@ export const getNumberOfLogins = async (timeScale) => {
 
 export const getNumberOfTripsCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("reservation.make",timeScale);
+    return getStatistic("reservation.make", timeScale);
 
 };
 
 export const getNumberOfBikesUnlocked = async (timeScale) => {
     //TODO: Test
-    return getStatistic("station.unlock",timeScale);
+    return getStatistic("station.unlock", timeScale);
 
 };
 
 export const getNumberOfTripsCompleted = async (timeScale) => {
     //TODO: Test
-    return getStatistic("station.return",timeScale);
+    return getStatistic("station.return", timeScale);
 
 };
 
 export const getNumberOfTripsCancelled = async (timeScale) => {
     //TODO: Test
-    return getStatistic("reservation.cancel",timeScale);
+    return getStatistic("reservation.cancel", timeScale);
 
 };
 
@@ -148,25 +143,25 @@ export const getNumberOfTripsCancelled = async (timeScale) => {
 
 export const getNumberOfTasksCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.make",timeScale);
+    return getStatistic("task.make", timeScale);
 
 };
 
 export const getNumberOfTasksCompleted = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.complete",timeScale);
+    return getStatistic("task.complete", timeScale);
 
 };
 
 export const getNumberOfTasksReassigned = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.reassign",timeScale);
+    return getStatistic("task.reassign", timeScale);
 
 };
 
 export const getNumberOfTasksExtended = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.extend",timeScale);
+    return getStatistic("task.extend", timeScale);
 
 };
 
@@ -175,7 +170,7 @@ export const getNumberOfTasksExtended = async (timeScale) => {
 
 export const getNumberOfReportsCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("report.make",timeScale);
+    return getStatistic("report.make", timeScale);
 
 };
 
@@ -183,7 +178,7 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 //Station
 
 //Gets all the statistics for a particular station
-export const getStationStatistics = async (stationID,year=-1,month=-1,day=-1) => {
+export const getStationStatistics = async (stationID, year = -1, month = -1, day = -1) => {
     //TODO: Test
 
     const statisticPaths = [
@@ -195,15 +190,12 @@ export const getStationStatistics = async (stationID,year=-1,month=-1,day=-1) =>
         `station.${stationID}.return`
     ];
 
-    return getStatistics(statisticPaths,year,month,day);
+    return getStatistics(statisticPaths, year, month, day);
 
 };
 
 
-
-
-const getStatistics = async (statisticTypes, year=-1, month=-1, day=-1) =>
-{
+const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) => {
     //TODO: Test
 
     const db = firebase.firestore();
@@ -213,26 +205,22 @@ const getStatistics = async (statisticTypes, year=-1, month=-1, day=-1) =>
 
     let statisticsQuery;
 
-    if (day !== -1 && month !== -1 && year !== -1)
-    {
+    if (day !== -1 && month !== -1 && year !== -1) {
         statisticsQuery = statisticsCollection
             .where("date.day", "==", day)
             .where("date.month", "==", month)
             .where("date.year", "==", year);
     }
-    else if (month !== -1 && year !== -1)
-    {
+    else if (month !== -1 && year !== -1) {
         statisticsQuery = statisticsCollection
             .where("date.month", "==", month)
             .where("date.year", "==", year);
     }
-    else if (year !== -1)
-    {
+    else if (year !== -1) {
         statisticsQuery = statisticsCollection
             .where("date.year", "==", year);
     }
-    else
-    {
+    else {
         statisticsQuery = statisticsCollection;
     }
 
@@ -240,16 +228,14 @@ const getStatistics = async (statisticTypes, year=-1, month=-1, day=-1) =>
     const statisticsDocs = statisticsSnapshot.docs;
 
 
-    for (let doc in statisticsDocs)
-    {
+    for (let doc in statisticsDocs) {
         const statisticData = statisticsDocs[doc].data();
 
         const day = statisticData.date.day;
         const month = statisticData.date.month;
         const year = statisticData.date.year;
 
-        for (let s in statisticTypes)
-        {
+        for (let s in statisticTypes) {
             const statisticType = statisticTypes[s]; //Either this or it's actually just s
             const statistic = statisticData[statisticType];
 
@@ -260,7 +246,7 @@ const getStatistics = async (statisticTypes, year=-1, month=-1, day=-1) =>
                 statisticTypeString += s + "_";
             });
 
-            statisticTypeString = statisticTypeString.slice(0,-1); //All but last char
+            statisticTypeString = statisticTypeString.slice(0, -1); //All but last char
 
             statisticsObject[statisticTypeString][year][month][day] = statistic;
 
@@ -271,7 +257,7 @@ const getStatistics = async (statisticTypes, year=-1, month=-1, day=-1) =>
 };
 
 
-const getStatistic = async (statisticType,timeScale) => {
+const getStatistic = async (statisticType, timeScale) => {
     //TODO: Test
 
     const db = firebase.firestore();
@@ -283,21 +269,18 @@ const getStatistic = async (statisticType,timeScale) => {
 
     let statisticsQuery;
 
-    if (timeScale === 0)
-    {
+    if (timeScale === 0) {
         statisticsQuery = statisticsCollection
             .where("date.day", "==", day)
             .where("date.month", "==", month)
             .where("date.year", "==", year);
     }
-    else if (timeScale === 1)
-    {
+    else if (timeScale === 1) {
         statisticsQuery = statisticsCollection
             .where("date.month", "==", month)
             .where("date.year", "==", year);
     }
-    else if (timeScale === 2)
-    {
+    else if (timeScale === 2) {
         statisticsQuery = statisticsCollection
             .where("date.year", "==", year);
     }
@@ -311,8 +294,7 @@ const getStatistic = async (statisticType,timeScale) => {
     let statisticSum = 0;
 
     //Sum the values
-    for (let doc in statisticsDocs)
-    {
+    for (let doc in statisticsDocs) {
         const statisticData = doc.data();
         const statisticValue = statisticData[statisticType];
 

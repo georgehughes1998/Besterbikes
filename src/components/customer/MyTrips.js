@@ -25,14 +25,6 @@ class MyTrips extends React.Component {
             this.props.history.push("signin");
         return user
     };
-
-    componentDidMount() {
-        this.authenticateUser()
-            .then((user) =>  {
-                if(user)
-                    this.retrieveFirebaseTrips();
-            })};
-
     //Cancels a reservation using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {
         return cancelReservation(tripId)
@@ -47,11 +39,9 @@ class MyTrips extends React.Component {
                 })
             })
     };
-
     handleReport = () => {
         this.props.history.push("/report");
     };
-
     //Communicates with firebase to load in all trips
     retrieveFirebaseTrips = async () => {
         const obj = await getTrips();
@@ -65,6 +55,13 @@ class MyTrips extends React.Component {
         }
     };
 
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) => {
+                if (user)
+                    this.retrieveFirebaseTrips();
+            })
+    };
 
     render() {
 
@@ -86,7 +83,7 @@ class MyTrips extends React.Component {
                     items={this.props.trips}
                     stations={this.props.stations}
                     handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
-                    handleReport = { () => this.handleReport()}
+                    handleReport={() => this.handleReport()}
                 />
                 {/*TODO: Implement filter*/}
 

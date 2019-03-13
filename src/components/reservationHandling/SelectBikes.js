@@ -12,8 +12,8 @@ import BesterbikesMap from "../map/BesterbikesMap";
 class SelectBikes extends React.Component {
 
 
-    renderMap =() => {
-        return(
+    renderMap = () => {
+        return (
             <Segment style={{minHeight: "300px"}}>
                 <div>
                     <BesterbikesMap style={{
@@ -42,7 +42,7 @@ class SelectBikes extends React.Component {
                         icon: "bicycle"
                     }}
 
-                    renderMap = {() => this.renderMap()}
+                    renderMap={() => this.renderMap()}
 
                     fields={{
                         station: {

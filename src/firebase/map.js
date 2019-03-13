@@ -1,8 +1,7 @@
 import * as firebase from "firebase";
 
 
-export const getStationsFilter = async ({isSpacesAvailable, isRoadBikes, isMountainBikes}) =>
-{
+export const getStationsFilter = async ({isSpacesAvailable, isRoadBikes, isMountainBikes}) => {
     //TODO: Implement
     const db = firebase.firestore;
 
@@ -69,18 +68,6 @@ const getBike = async (bikeID) => {
         });
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // export const getNumberOfAvailableBikes = async (stationID) => {

@@ -6,17 +6,17 @@ import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import withRouter from "react-router/es/withRouter";
 import {reduxForm} from "redux-form";
 
-class ReservationComplete extends React.Component{
+class ReservationComplete extends React.Component {
 
-    state = { modalOpen: true };
+    state = {modalOpen: true};
 
-    handleOpen = () => this.setState({ modalOpen: true });
+    handleOpen = () => this.setState({modalOpen: true});
 
-    handleClose = () => this.setState({ modalOpen: false });
+    handleClose = () => this.setState({modalOpen: false});
 
 
-    render(){
-        return(
+    render() {
+        return (
             <Modal
 
                 open={this.state.modalOpen}
@@ -25,7 +25,7 @@ class ReservationComplete extends React.Component{
                 size='small'
             >
                 {console.log(this.props._reduxForm.values)}
-                <Header icon='calendar' content='Reservation Complete' />
+                <Header icon='calendar' content='Reservation Complete'/>
                 <Modal.Content>
                     {/*TODO: Display station name*/}
                     <h3>
@@ -37,7 +37,7 @@ class ReservationComplete extends React.Component{
                 </Modal.Content>
                 <Modal.Actions>
                     <Button color='green' onClick={() => this.props.history.push("/mytrips")} inverted>
-                        <Icon name='checkmark' /> View my trips
+                        <Icon name='checkmark'/> View my trips
                     </Button>
                 </Modal.Actions>
             </Modal>
