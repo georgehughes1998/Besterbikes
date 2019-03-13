@@ -53,7 +53,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 
     //Assign comment to the task
     if (comment)
-        theTask['comments'] = [{user:uid,comment:comment}];
+        theTask['comments'] = [{user:uid,comment:comment,time:{date: getCurrentDateString(), time: getCurrentTimeString()}}];
     else
         throw new Error('No comment was specified');
 
