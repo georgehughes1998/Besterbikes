@@ -10,6 +10,7 @@ const FieldValue = firebase.firestore.FieldValue;
 export const unlockBike = async (reservationID) => {
     //Unlocks a bike at the given station and the given reservation
 
+    if (!reservationID) {throw new Error("No reservation selected")}
 
     const db = firebase.firestore();
 
