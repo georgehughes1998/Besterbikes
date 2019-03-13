@@ -253,7 +253,16 @@ const getStatistics = async (statisticTypes, year=-1, month=-1, day=-1) =>
             const statisticType = statisticTypes[s]; //Either this or it's actually just s
             const statistic = statisticData[statisticType];
 
-            statisticsObject[statisticType][year][month][day] = statistic;
+            const statisticTypeStringArray = statisticType.split(".");
+            let statisticTypeString = "";
+
+            statisticTypeStringArray.forEach(s => {
+                statisticTypeString += s + "_";
+            });
+
+            statisticTypeString = statisticTypeString.slice(0,-1); //All but last char
+
+            statisticsObject[statisticTypeString][year][month][day] = statistic;
 
         }
     }
