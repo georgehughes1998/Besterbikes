@@ -179,13 +179,15 @@ export const getUnlockedBikes = async () =>
 
     const reservationsCollection = db.collection('reservations');
     const bikesCollection = db.collection('bikes');
-    const query = bikesCollection.where('status','==','unlocked');
+    const unlockedQuery = bikesCollection.where('status','==','unlocked');
 
     const bikesArray = [];
 
-    const queryDoc = await query.get();
+    const querySnapshot = await unlockedQuery.get();
+    const queryDocs = querySnapshot.docs;
 
-    queryDoc.forEach(async singleDoc =>
+
+    queryDocs.forEach(async singleDoc =>
     {
         const singleDocData = singleDoc.data();
 
@@ -194,6 +196,8 @@ export const getUnlockedBikes = async () =>
 
         const reservationDoc = await reservationDocument.get();
         const reservationData = reservationDoc.data();
+
+        console.log(reservationID);
 
         if (reservationData['user'] === uid)
         {
