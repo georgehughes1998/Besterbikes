@@ -32,6 +32,8 @@ export class BesterbikesMap extends Component {
 
                 bikesAtStations[keys[index]]['road'] = await getNumberOfAvailableBikes(keys[index],"road");
                 bikesAtStations[keys[index]]['mountain'] = await getNumberOfAvailableBikes(keys[index],"mountain");
+
+                this.forceUpdate(); //Added so that markers render once the number of available bikes has loaded
                 // console.log(bikesAtStations);
             });
 
