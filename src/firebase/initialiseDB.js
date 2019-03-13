@@ -22,14 +22,23 @@ console.log(data);
 data && Object.keys(data).forEach(key => {
     const nestedContent = data[key];
 
-    if (typeof nestedContent === "object") {
+    if (nestedContent === -1)
+    {
+        firebaseAdmin.firestore().collection(key).get().then(snapshot => {
+
+            snapshot.docs.forEach(doc => {firebaseAdmin.firestore().collection(key).doc(doc.id).delete().then(() => {console.log("Deleted" + key + " successfully.")})});
+
+        });
+    }
+
+    else if (typeof nestedContent === "object") {
         Object.keys(nestedContent).forEach(docTitle => {
             firebaseAdmin.firestore()
                 .collection(key)
                 .doc(docTitle)
                 .set(nestedContent[docTitle])
                 .then((res) => {
-                    console.log("Document successfully written!");
+                    console.log("Wrote " + key + " successfully!");
                 })
                 .catch((error) => {
                     console.error("Error writing document: ", error);
