@@ -58,6 +58,8 @@ class TopMenuBar extends React.Component {
                 return "Statistics";
             case "/customerdetails":
                 return "Customer";
+            case "/createtask":
+                return "Create a task";
             default:
                 return null;
         }

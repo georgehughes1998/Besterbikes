@@ -16,6 +16,8 @@ class MainMenu extends React.Component {
         super(props);
         this.state =
             {
+                userType: "",
+                webPages:{},
                 menuItems:[
                 {
                     link: "",
@@ -40,17 +42,40 @@ class MainMenu extends React.Component {
             ]}
         };
 
+    async componentDidMount() {
+        console.log(this.state);
+        await this.getWebPagesJSON();
+        await this.authenticateUser();
+        console.log(this.state);
+        await this.renderUserSpecificContent();
+        console.log(this.state);
+        console.log("");
+    }
+
+    async getWebPagesJSON() {
+        const webPages = await JSON.parse(await getJSONFromFile("/JSONFiles/webPages.json"));
+        this.setState({webPages: webPages});
+    }
+
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
-        if (user === null)
+        if (user === null){
             this.props.history.push("signin");
-        return user
+        }else if (user.type === "customer") {
+            this.setState({"userType" : "customer"})
+        }else if (user.type === "operator") {
+            this.setState({"userType" : "operator"})
+        }else if (user.type === "manager") {
+            this.setState({"userType" : "manager"})
+        }
+
+        return user;
     };
 
-    renderUserSpecificContent(user) {
-        if(user!=null){
-            switch (user.type) {
+    renderUserSpecificContent() {
+        if(this.state.userType!=null){
+            switch (this.state.userType) {
                 case "customer":
                     this.setState({menuItems: this.state.webPages.customer});
                     this.props.loadWebPages(this.state.menuItems);
@@ -135,15 +160,6 @@ class MainMenu extends React.Component {
         return icons;
     }
 
-    componentDidMount() {
-        this.getWebPagesJSON();
-        this.authenticateUser().then((user) => this.renderUserSpecificContent(user));
-    }
-
-    async getWebPagesJSON() {
-        const webPages = JSON.parse(await getJSONFromFile("/JSONFiles/webPages.json"));
-        this.setState({webPages: webPages});
-    }
 
     render() {
         return (
