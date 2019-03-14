@@ -2,8 +2,9 @@
 import {Grid, Header, Icon, Segment} from "semantic-ui-react";
 import React from "react";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
+import withRouter from "react-router/es/withRouter";
 
-class listOfLiveTrips extends React.Component {
+class ListOfLiveTrips extends React.Component {
 
     renderItems = () => {
         if (this.props.items) {
@@ -18,8 +19,21 @@ class listOfLiveTrips extends React.Component {
         }
     };
 
+    renderIcons = (iconNames, iconColors, status, taskId) => {
+        return Object.values(iconNames).map((key, index) => {
+            return (
+                <div>
+                    <Grid.Row onClick={() => this.handleIconClick(key, taskId)}>
+                        <Icon name={key} color={iconColors[index]} size="big"/>
+                    </Grid.Row>
+                </div>
+
+            )
+        })
+    };
+
     //Render single reservation with provided paramters
-    renderItem = ({color, iconName, iconColor, status, headerContent, headerSub, tripId, image}) => {
+    renderItem = ({color, iconNames, iconColors, status, headerContent, headerSub, tripId, image}) => {
         return (
             //TODO: Make this into own prop
             <Segment color={color} fluid>
@@ -39,9 +53,8 @@ class listOfLiveTrips extends React.Component {
                             <Header as="h4" color={color}>{status}</Header>
                         </Grid.Column>
 
-                        <Grid.Column width={1} verticalAlign='middle'
-                                     onClick={() => this.handleIconClick(status, tripId)}>
-                            <Icon name={iconName} color={iconColor} size="big"/>
+                        <Grid.Column width={1} verticalAlign='middle'>
+                                     {this.renderIcons(iconNames, iconColors, status, tripId)}
                         </Grid.Column>
                     </Grid.Row>
 
@@ -69,7 +82,7 @@ class listOfLiveTrips extends React.Component {
         const headerSub = `My ${trip.status} trip from 
                             ${trip.start["station"]} on 
                             ${trip.start["time"]["date"]} at 
-                            ${trip.start["time"]["time"]}`
+                            ${trip.start["time"]["time"]}`;
 
         let keys = Object.keys(this.props.items);
 
@@ -77,8 +90,8 @@ class listOfLiveTrips extends React.Component {
             case "inactive":
                 return this.renderItem({
                     color: "purple",
-                    iconName: "cancel",
-                    iconColor: "red",
+                    iconNames: ["cancel", "exclamation circle"],
+                    iconColors: ["red", "red"],
                     status: "Reserved",
                     headerContent: stationName,
                     // `Bike available from ${startTime}`,
@@ -89,8 +102,8 @@ class listOfLiveTrips extends React.Component {
             case "active":
                 return this.renderItem({
                     color: "yellow",
-                    iconName: "cancel",
-                    iconColor: "red",
+                    iconNames: ["lock open", "cancel", "exclamation circle"],
+                    iconColors: ["blue", "red", "red"],
                     status: "Ready to unlock",
                     headerContent: stationName,
                     // `Bike available until ${startTime}`,
@@ -101,8 +114,8 @@ class listOfLiveTrips extends React.Component {
             case "unlocked":
                 return this.renderItem({
                     color: "green",
-                    iconName: "exclamation circle",
-                    iconColor: "red",
+                    iconNames: ["exclamation circle"],
+                    iconColors: ["red"],
                     status: "In Progress",
                     headerContent: stationName,
                     //TODO: Implement current duration calculator
@@ -115,8 +128,8 @@ class listOfLiveTrips extends React.Component {
             case "complete":
                 return this.renderItem({
                     color: "grey",
-                    iconName: "exclamation circle",
-                    iconColor: "red",
+                    iconNames: ["exclamation circle"],
+                    iconColors: ["red"],
                     status: "Complete",
                     headerContent: stationName,
                     //TODO: Implement end station and total duration calculator
@@ -128,8 +141,8 @@ class listOfLiveTrips extends React.Component {
             case "cancelled":
                 return this.renderItem({
                     color: "red",
-                    iconName: "exclamation circle",
-                    iconColor: "red",
+                    iconNames: ["exclamation circle"],
+                    iconColors: ["red"],
                     status: "Cancelled",
                     headerContent: stationName,
                     headerSub,
@@ -142,15 +155,18 @@ class listOfLiveTrips extends React.Component {
     };
 
     //Function to handle click of an icon depending on it's functionality
-    handleIconClick = (status, tripId) => {
-        console.log(status);
+    handleIconClick = (icon, tripId) => {
+        console.log(icon);
 
-        switch (status) {
-            case "Ready to unlock":
+        switch (icon) {
+            case "cancel":
                 this.props.handleCancelTrip(tripId);
                 return;
-            case "Reserved":
-                this.props.handleCancelTrip(tripId);
+            case "exclamation circle":
+                this.props.handleReport();
+                return;
+            case "lock open":
+                this.props.history.push("/unlockbike");
                 return;
             default:
                 this.props.handleReport();
@@ -173,4 +189,4 @@ class listOfLiveTrips extends React.Component {
     }
 }
 
-export default listOfLiveTrips;
+export default withRouter(ListOfLiveTrips);
