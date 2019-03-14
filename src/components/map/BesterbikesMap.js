@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
-import {Header, List} from "semantic-ui-react"
+import {Container, Header, List} from "semantic-ui-react"
 
 import {getJSONFromFile} from '../../handleJSON.js'
 import {getUser} from "../../firebase/authentication";
 import {getNumberOfAvailableBikes} from "../../firebase/reservations";
-import {withRouter} from "react-router";
+import {withRouter} from "react-router-dom";
+import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
+import Grid from "semantic-ui-react/dist/commonjs/collections/Grid/Grid";
 
 //TODO: Implement loader correctly
 //TODO: Render markers red or green bikes depending on spaces available
@@ -136,6 +138,10 @@ export class BesterbikesMap extends Component {
         console.log("Updated");
     }
 
+    handleRedirect = (link) => {
+        this.props.history.push(link);
+    };
+
     render() {
         // if (!this.props.stations) {
         //     return (
@@ -170,24 +176,60 @@ export class BesterbikesMap extends Component {
                 >
                     <div>
 
-                         <Header as='h4'>{this.state.activeMarker.name}</Header>
+                         <Header as='h3'>{this.state.activeMarker.name}</Header>
 
                         {this.state.activeMarker.stationDetails ?
-                            <div>
-                                <Header.Subheader>{this.state.activeMarker.stationDetails["notes"]}</Header.Subheader>
+                            <Container>
+                                <Header.Subheader>
+                                    {this.state.activeMarker.stationDetails.notes}
+                                    </Header.Subheader>
+                                <br/>
                                 <List>
-                                    <List.Item>Mountain: {this.state.activeMarker.stationDetails["capacity"]["mountain"]} </List.Item>
-                                    <List.Item>Road: {this.state.activeMarker.stationDetails["capacity"]["road"]} </List.Item>
-                                    {/*TODO: Implement book trip link to reservations page*/}
-                                    {/*<List.item>*/}
-                                    {/*<Link To={"/reserveabike"}>*/}
-                                    {/*Book Trip*/}
-                                    {/*</Link>*/}
-                                    {/*</List.item>*/}
+                                    <Header as={"h5"}>Avaiable Bikes</Header>
+                                    <List.Item>
+                                        <Icon name={"bicycle"}/>
+                                        <List.Content>
+                                            <List.Header>
+                                                Mountain bikes
+                                            </List.Header>
+                                            <List.Description>
+                                                {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} avaiable`}
+                                            </List.Description>
+                                        </List.Content>
+                                    </List.Item>
+
+                                    <List.Item>
+                                        <Icon name={"bicycle"}/>
+                                        <List.Content>
+                                            <List.Header>
+                                                Road bikes
+                                            </List.Header>
+                                            <List.Description>
+                                                {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} avaiable`}
+                                            </List.Description>
+                                        </List.Content>
+                                    </List.Item>
+
+                                    <br/>
+                                    <Grid columns='equal'>
+                                        <Grid.Column>
+                                            {/*TODO: On click not working */}
+                                            <Container textAlign='center' >
+                                                <Icon name={"calendar"} color={"blue"} size={"big"} onClick={() => this.handleRedirect("./reservebike")}/>
+                                            </Container>
+                                        </Grid.Column>
+                                        <Grid.Column>
+                                            <Container textAlign='center'>
+                                                <Icon name={"exclamation circle"} color={"red"} size={"big"} onClick={() => this.handleRedirect("./report")}/>
+                                            </Container>
+                                        </Grid.Column>
+                                    </Grid>
+
+
                                 </List>
                                 <img src={this.state.activeMarker.stationDetails["url"]} alt={'new'}
                                      style={{maxWidth: "200px"}}/>
-                            </div>
+                            </Container>
 
                             :
                             //TODO: Display error

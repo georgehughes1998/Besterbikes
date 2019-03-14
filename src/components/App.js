@@ -12,7 +12,7 @@ import SignIn from './accountManagement/SignIn'
 import SignUp from './accountManagement/SignUp'
 import EditAccount from "./accountManagement/EditAccount";
 import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
-import MapContainer from "./map/BesterbikesMap";
+import BesterbikesMap from "./map/BesterbikesMap";
 import MyTrips from "./customer/MyTrips";
 import {getJSONFromFile} from "../handleJSON";
 import UnlockBike from "./UnlockBike";
@@ -61,7 +61,7 @@ class App extends React.Component {
                                 <div>
                                     {/*TODO: Refactor to use JSON*/}
                                     <Route path="/" exact component={MainMenu}/>
-                                    <Route path="/map" exact component={MapContainer}/>
+                                    <Route path="/map" exact component={BesterbikesMap}/>
                                     <Route path="/unlockbike" exact component={UnlockBike}/>
 
                                     {/*Customer Routes*/}
