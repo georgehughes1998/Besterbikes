@@ -16,25 +16,24 @@ class MainMenu extends React.Component {
         super(props);
         this.state =
             {
-                webPages: {},
                 menuItems:[
                 {
-                    link: "/signin",
+                    link: "",
                     icon: "",
                     name: ""
                 },
                 {
-                    link: "/signin",
+                    link: "",
                     icon: "",
                     name: ""
                 },
                 {
-                    link: "/signin",
+                    link: "",
                     icon: "",
                     name: ""
                 },
                 {
-                    link: "/signin",
+                    link: "",
                     icon: "",
                     name: ""
                 },
@@ -70,7 +69,7 @@ class MainMenu extends React.Component {
     }
 
     renderMenuIcons(){
-        var icons = [];
+        let icons = [];
 
         if(this.state.menuItems) {
             // for (let i = 0; i < 2; i++) {
@@ -137,8 +136,8 @@ class MainMenu extends React.Component {
     }
 
     componentDidMount() {
-        this.authenticateUser().then((user) => this.renderUserSpecificContent(user));
         this.getWebPagesJSON();
+        this.authenticateUser().then((user) => this.renderUserSpecificContent(user));
     }
 
     async getWebPagesJSON() {
@@ -162,6 +161,8 @@ class MainMenu extends React.Component {
                 <br/>
                 <br/>
                 <br/>
+                <br/>
+                <br/>
 
 
                 <Container>
@@ -169,10 +170,6 @@ class MainMenu extends React.Component {
                         {this.renderMenuIcons()}
                     </Grid>
                 </Container>
-
-                <br/>
-                <br/>
-                <br/>
 
                 <SignOut/>
             </PageContainer>
