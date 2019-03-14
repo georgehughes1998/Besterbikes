@@ -12,6 +12,7 @@ class TopMenuBar extends React.Component {
 
     handleHideClick = () => this.props.changeSideBar("Hide");
     handleShowClick = () => this.props.changeSideBar("Show");
+
     authenticateUser = async () => {
         const user = await getUser();
         if (user !== null && this.state.currentUser === "") {
@@ -22,6 +23,11 @@ class TopMenuBar extends React.Component {
         }
         return user
     };
+
+    componentDidUpdate(){
+        this.authenticateUser();
+    }
+
     //Function to display title of page based on pathname in react router dom
     getDisplayTitle = (pathname) => {
         switch (pathname) {
@@ -66,10 +72,10 @@ class TopMenuBar extends React.Component {
 
     render() {
 
-        this.authenticateUser();
-
         return (
             <Menu color="blue" inverted widths={3} fixed='top'>
+
+                {/*{console.log(this.state.currentUser)}*/}
 
                 <Menu.Item disabled={this.props.sideBarVisible || this.state.currentUser === ""}
                            onClick={this.props.sideBarVisible ? this.handleHideClick : this.handleShowClick}>

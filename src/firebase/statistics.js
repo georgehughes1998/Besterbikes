@@ -210,12 +210,15 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
     let statisticsQuery;
 
     if (day !== -1 && month !== -1 && year !== -1) {
+        console.log("here13");
         statisticsQuery = statisticsCollection
             .where("date.day", "==", day)
             .where("date.month", "==", month)
             .where("date.year", "==", year);
+        console.log(statisticsQuery);
     }
     else if (month !== -1 && year !== -1) {
+        console.log("here12");
         statisticsQuery = statisticsCollection
             .where("date.month", "==", month)
             .where("date.year", "==", year);
@@ -227,13 +230,17 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
     }
     else {
         statisticsQuery = statisticsCollection;
+        console.log(statisticsQuery);
     }
 
     const statisticsSnapshot = await statisticsQuery.get();
+    console.log(statisticsSnapshot);
     const statisticsDocs = statisticsSnapshot.docs;
+    console.log(statisticsDocs);
 
 
     for (let doc in statisticsDocs) {
+        console.log(doc);
         const statisticData = statisticsDocs[doc].data();
 
         const day = statisticData.date.day;
@@ -332,6 +339,7 @@ const getStatistic = async (statisticType, timeScale) => {
         statisticSum += statisticValue;
     }
 
+    console.log(statisticSum);
     return statisticSum;
 
 };

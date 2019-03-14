@@ -55,10 +55,9 @@ class Statistics extends React.Component{
                     icon = "user"
                     values = {
                         [
-                            {name: "Sign Ins", value: this.retrieveStatistic(["authentication.signIn"], -1, 3, 12)},
+                            {name: "Sign Ins", value: this.retrieveStatistic(["authentication.signUp"], 2019, 3, 12)},
                             {name: "Sign Ups", value: 1},
                             {name: "Update Details", value: 2}
-
                         ]
                     }
                 />

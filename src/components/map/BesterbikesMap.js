@@ -50,7 +50,7 @@ export class BesterbikesMap extends Component {
 
             const bikesAtStations = {};
 
-            Object.values(stations).map(async (station, index) => {
+            await Object.values(stations).map(async (station, index) => {
                 bikesAtStations[keys[index]] = {road: 0, mountain: 0};
 
                 bikesAtStations[keys[index]]['road'] = await getNumberOfAvailableBikes(keys[index], "road");

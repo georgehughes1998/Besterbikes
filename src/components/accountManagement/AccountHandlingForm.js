@@ -43,13 +43,13 @@ class AccountHandlingForm extends React.Component {
                 return;
 
             case "Sign Out":
-                this.props.history.push("/signin");
                 await signOut();
+                this.props.history.push("/signin");
                 return;
 
             case "Save Changes":
-                this.props.history.push("/");
                 await setUserDetails(formValues);
+                this.props.history.push("/");
                 return;
 
             default:
