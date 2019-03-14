@@ -53,7 +53,7 @@ class MainMenu extends React.Component {
     }
 
     async getWebPagesJSON() {
-        const webPages = await JSON.parse(await getJSONFromFile("/JSONFiles/webPages.json"));
+        const webPages = await JSON.parse(await getJSONFromFile(window.location.origin + "/JSONFiles/webpages.json"));
         this.setState({webPages: webPages});
     }
 
