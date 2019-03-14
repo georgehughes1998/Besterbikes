@@ -198,9 +198,11 @@ export const getStationStatistics = async (stationID, year = -1, month = -1, day
 
 export const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) => {
     //TODO: Test
+    month -= 1; // Since January is 0 but we want it to be 1
 
-    console.log(statisticTypes);
-    console.log(year, month, day);
+    // console.log("---------------------------------------");
+    // console.log(statisticTypes);
+    // console.log(year, month, day);
 
     const db = firebase.firestore();
     const statisticsCollection = db.collection('statistics');
@@ -210,37 +212,29 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
     let statisticsQuery;
 
     if (day !== -1 && month !== -1 && year !== -1) {
-        console.log("here13");
         statisticsQuery = statisticsCollection
             .where("date.day", "==", day)
             .where("date.month", "==", month)
             .where("date.year", "==", year);
-        console.log(statisticsQuery);
     }
     else if (month !== -1 && year !== -1) {
-        console.log("here12");
         statisticsQuery = statisticsCollection
             .where("date.month", "==", month)
             .where("date.year", "==", year);
     }
     else if (year !== -1) {
-        console.log("here1");
         statisticsQuery = statisticsCollection
             .where("date.year", "==", year);
     }
     else {
         statisticsQuery = statisticsCollection;
-        console.log(statisticsQuery);
     }
 
     const statisticsSnapshot = await statisticsQuery.get();
-    console.log(statisticsSnapshot);
     const statisticsDocs = statisticsSnapshot.docs;
-    console.log(statisticsDocs);
 
 
     for (let doc in statisticsDocs) {
-        console.log(doc);
         const statisticData = statisticsDocs[doc].data();
 
         const day = statisticData.date.day;
@@ -254,19 +248,23 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
             // const statistic = statisticData[statisticType];
 
             let statisticValue = statisticData;
-            let doesExist = true;
 
             //Loop through the string path to get the data at that location
             const statisticSplit = statisticType.split(".");
+
             for (let s in statisticSplit) {
                 if (statisticValue) {
                     statisticValue = statisticValue[statisticSplit[s]];
                 }
                 else {
-                    doesExist = false;
+                    statisticValue = 0;
                     break;
                 }
             }
+
+            if (!statisticValue)
+                statisticValue = 0;
+
 
             const statisticTypeStringArray = statisticType.split(".");
             let statisticTypeString = "";
@@ -291,6 +289,7 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
         }
     }
 
+    console.log(statisticsObject);
     return statisticsObject;
 };
 
