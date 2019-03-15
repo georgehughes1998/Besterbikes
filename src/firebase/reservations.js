@@ -7,7 +7,7 @@ import {makeNewTask} from "./tasks";
 const FieldValue = firebase.firestore.FieldValue;
 
 const maxNumberOfBikesCanReserve = 8;
-const maxReserveHoursLimit = 3;
+const maxReserveHoursLimit = 24;
 const maxActiveHoursLimit = 1;
 const stationCapacity = 35;
 const maxCapacityPercentage = 0.7;
