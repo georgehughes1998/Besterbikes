@@ -16,15 +16,16 @@ class Statistics extends React.Component{
         };
     }
 
-    retrieveStatistic = async (statistic,year = -1 , month = -1, day = -1) => {
+    retrieveStatistic = async (statistic,year , month, day) => {
 
         console.log(statistic, year, month, day);
         const obj = await getStatistics(statistic, year, month, day);
         if (obj) {
             console.log(obj);
-            {
-                return obj
-            };
+            console.log(obj[statistic]);
+            console.log(obj["authentication_signIn"]);
+            console.log(obj[statistic][year][month][day]);
+            return obj[year][`0${month}`][day];
         } else {
             throw new SubmissionError({
                 _error: obj.message
@@ -55,7 +56,7 @@ class Statistics extends React.Component{
                     icon = "user"
                     values = {
                         [
-                            {name: "Sign Ins", value: this.retrieveStatistic(["authentication.signUp"], 2019, 3, 12)},
+                            {name: "Sign Ins", value: this.retrieveStatistic(["authentication_signIn"], 2019, 3, 12)},
                             {name: "Sign Ups", value: 1},
                             {name: "Update Details", value: 2}
                         ]
