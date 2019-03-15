@@ -258,8 +258,6 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
     for (let doc in statisticsDocs) {
         const statisticData = statisticsDocs[doc].data();
 
-        console.log(statisticData);
-
         const day = statisticData.date.day;
         const month = statisticData.date.month;
         const year = statisticData.date.year;
@@ -278,8 +276,6 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
             for (let s in statisticSplit) {
                 if (statisticValue) {
                     statisticValue = statisticValue[statisticSplit[s]];
-                    console.log(statisticValue);
-                    console.log(statisticSplit[s]);
                 }
                 else {
                     statisticValue = 0;
@@ -315,7 +311,6 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
         }
     }
 
-    console.log(statisticsObject);
     return statisticsObject;
 };
 
