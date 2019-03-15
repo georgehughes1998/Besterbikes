@@ -102,19 +102,19 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
 
 export const getNumberOfNewUsers = async (timeScale) => {
     //TODO: Test
-    return getStatistic("authentication.signUp", timeScale);
+    return getSingleStatistic("authentication.signUp", timeScale);
 
 };
 
 export const getNumberOfLogins = async (timeScale) => {
     //TODO: Test
-    return getStatistic("authentication.signIn", timeScale);
+    return getSingleStatistic("authentication.signIn", timeScale);
 
 };
 
 export const getNumberOfUpdateDetails = async (timeScale) => {
     //TODO: Test
-    return getStatistic("authentication.updateDetails", timeScale);
+    return getSingleStatistic("authentication.updateDetails", timeScale);
 
 };
 
@@ -123,25 +123,25 @@ export const getNumberOfUpdateDetails = async (timeScale) => {
 
 export const getNumberOfTripsCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("reservation.make", timeScale);
+    return getSingleStatistic("reservation.make", timeScale);
 
 };
 
 export const getNumberOfBikesUnlocked = async (timeScale) => {
     //TODO: Test
-    return getStatistic("station.unlock", timeScale);
+    return getSingleStatistic("station.unlock", timeScale);
 
 };
 
 export const getNumberOfTripsCompleted = async (timeScale) => {
     //TODO: Test
-    return getStatistic("station.return", timeScale);
+    return getSingleStatistic("station.return", timeScale);
 
 };
 
 export const getNumberOfTripsCancelled = async (timeScale) => {
     //TODO: Test
-    return getStatistic("reservation.cancel", timeScale);
+    return getSingleStatistic("reservation.cancel", timeScale);
 
 };
 
@@ -150,25 +150,25 @@ export const getNumberOfTripsCancelled = async (timeScale) => {
 
 export const getNumberOfTasksCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.make", timeScale);
+    return getSingleStatistic("task.make", timeScale);
 
 };
 
 export const getNumberOfTasksCompleted = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.complete", timeScale);
+    return getSingleStatistic("task.complete", timeScale);
 
 };
 
 export const getNumberOfTasksReassigned = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.reassign", timeScale);
+    return getSingleStatistic("task.reassign", timeScale);
 
 };
 
 export const getNumberOfTasksExtended = async (timeScale) => {
     //TODO: Test
-    return getStatistic("task.extend", timeScale);
+    return getSingleStatistic("task.extend", timeScale);
 
 };
 
@@ -177,7 +177,7 @@ export const getNumberOfTasksExtended = async (timeScale) => {
 
 export const getNumberOfReportsCreated = async (timeScale) => {
     //TODO: Test
-    return getStatistic("report.make", timeScale);
+    return getSingleStatistic("report.make", timeScale);
 
 };
 
@@ -299,7 +299,7 @@ export const getStatistics = async (statisticTypes, year = -1, month = -1, day =
 };
 
 
-const getStatistic = async (statisticType, timeScale) => {
+const getSingleStatistic = async (statisticType, timeScale) => {
     //TODO: Test
 
     const db = firebase.firestore();
