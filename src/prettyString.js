@@ -84,8 +84,6 @@ export const getPrettyString = (theString) =>
         case "reservation_stationPortobelloBeachEast_mountain_cancel":   return "Reservations of mountain bikes cancelled at Portobello Beach East";
 
 
-
-
         //Station unlock
         case "reservation_stationHeriotWattUniversity_unlock":   return "Bikes unlocked at Heriot Watt University";
         case "reservation_stationWaverley_unlock":   return "Bikes unlocked at Waverley";
@@ -112,7 +110,13 @@ export const getPrettyString = (theString) =>
         case "reservation_stationPortobelloBeachNorth_return":   return "Bikes returned at Portobello Beach North";
         case "reservation_stationPortobelloBeachEast_return":   return "Bikes returned at Portobello Beach East";
 
-
+        //Date
+        default:
+            if(/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(theString)){
+                console.log(theString);
+                const DMY = (theString.split("-"));
+                return `${DMY[2]}/${DMY[1]}/${DMY[0]}`;
+            }
     }
 
 };

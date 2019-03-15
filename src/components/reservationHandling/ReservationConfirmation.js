@@ -5,6 +5,7 @@ import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import withRouter from "react-router/es/withRouter";
 import {reduxForm} from "redux-form";
+import {getPrettyString} from "../../prettyString";
 
 class ReservationComplete extends React.Component {
 
@@ -28,9 +29,9 @@ class ReservationComplete extends React.Component {
                     {/*TODO: Display station name*/}
                     <h3>
                         {`You're all booked for your trip on
-                        ${this.props._reduxForm.values.startDate} at
+                        ${getPrettyString(this.props._reduxForm.values.startDate)} at
                         ${this.props._reduxForm.values.startTime} starting from
-                        ${this.props._reduxForm.values.station}`}
+                        ${getPrettyString(this.props._reduxForm.values.station)}`}
                     </h3>
                 </Modal.Content>
                 <Modal.Actions>

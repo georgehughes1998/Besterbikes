@@ -23,6 +23,7 @@ const StationDropdown = (props) => {
 
     return (
         <Dropdown
+            clearable
             fluid
             selection
             search

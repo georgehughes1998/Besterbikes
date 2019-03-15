@@ -32,6 +32,7 @@ class TripsDropdown extends React.Component {
     render() {
         return (
             <Dropdown
+                clearable
                 selection
                 search
                 placeholder={this.props.placeholder}

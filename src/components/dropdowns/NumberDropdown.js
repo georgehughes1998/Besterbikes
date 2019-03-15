@@ -26,6 +26,7 @@ const NumberDropdown = (props) => {
 
     return(
         <Dropdown
+            clearable
             fluid
             selection
             search
