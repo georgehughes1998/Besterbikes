@@ -112,6 +112,12 @@ export const getNumberOfLogins = async (timeScale) => {
 
 };
 
+export const getNumberOfUpdateDetails = async (timeScale) => {
+    //TODO: Test
+    return getStatistic("authentication.updateDetails", timeScale);
+
+};
+
 
 //Trips
 
@@ -300,7 +306,7 @@ const getStatistic = async (statisticType, timeScale) => {
     const statisticsCollection = db.collection('statistics');
 
     const day = getDay();
-    const month = getMonth();
+    const month = getMonth()+1;
     const year = getYear();
 
     let statisticsQuery;
@@ -331,13 +337,26 @@ const getStatistic = async (statisticType, timeScale) => {
 
     //Sum the values
     for (let doc in statisticsDocs) {
-        const statisticData = doc.data();
-        const statisticValue = statisticData[statisticType];
+        const statisticData = statisticsDocs[doc].data();
+
+        let statisticValue = statisticData;
+
+        //Loop through the string path to get the data at that location
+        const statisticSplit = statisticType.split(".");
+
+        for (let s in statisticSplit) {
+            if (statisticValue) {
+                statisticValue = statisticValue[statisticSplit[s]];
+            }
+            else {
+                statisticValue = 0;
+                break;
+            }
+        }
 
         statisticSum += statisticValue;
     }
 
-    console.log(statisticSum);
     return statisticSum;
 
 };
