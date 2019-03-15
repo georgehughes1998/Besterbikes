@@ -7,23 +7,25 @@ import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 
 class StatisticSegment extends React.Component{
 
-    renderStatistics = () => {
-            if (this.props) {
-                return Object.values(this.props.values).map((key, index) => {
-                    return (
-                        <Grid.Column widths={1}>
-                            <Header as='h1'>{key.value}</Header>
-                            <Header as='h4'>{key.name}</Header>
-                        </Grid.Column>
-
-                    )
-                })
-            }
-    };
+    // renderStatistics = () => {
+    //     console.log("Seg", this.props);
+    //         if (this.props) {
+    //             return Object.values(this.props.values).map((key, index) => {
+    //                 return (
+    //                     <Grid.Column widths={1}>
+    //                         <Header as='h1'>{key.value}</Header>
+    //                         <Header as='h4'>{key.name}</Header>
+    //                     </Grid.Column>
+    //
+    //                 )
+    //             })
+    //         }
+    // };
 
     render(){
         return(
             <Segment>
+                {console.log("Seg", this.props)}
                 <Container textAlign='center'>
                     <Header as='h2'>
                         <Icon name={this.props.icon} />
@@ -33,7 +35,7 @@ class StatisticSegment extends React.Component{
                     </Header>
                     <br/>
                     <Grid columns='equal'>
-                        {this.renderStatistics()}
+                        {/*{this.renderStatistics()}*/}
                     </Grid>
                 </Container>
             </Segment>

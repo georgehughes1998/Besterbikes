@@ -24,14 +24,39 @@ class Statistics extends React.Component{
             console.log(obj);
             console.log(obj[statistic]);
             console.log(obj["authentication_signIn"]);
-            console.log(obj["authentication_signIn"]["2019"]["2"]["12"]);
-            return obj["authentication_signIn"]["2019"]["2"]["12"];
+            console.log(obj["authentication_signIn"]["2019"]["3"]["12"]);
+            this.setState({statistic: obj["authentication_signIn"]["2019"]["3"]["12"]});
         } else {
             throw new SubmissionError({
                 _error: obj.message
             });
         }
     };
+
+    renderStatistic = (statistics, year, month, day) => {
+        return statistics.map((key, index) => {
+
+            const stat = this.retrieveStatistic(key, year, month, day);
+            console.log(key, stat);
+
+            return (
+                <StatisticSegment
+                    name = "Authentication"
+                    icon = "user"
+                    values = {
+                            {name: "Sign Ins", value: 12},
+                            {name: "Sign Ins", value: 245},
+                            {name: "Sign Ups", value: 1},
+                            {name: "Update Details", value: 2}
+                    }
+                />
+            )
+    })
+    };
+
+    componentDidMount(){
+        this.retrieveStatistic(["authentication_signIn"], 2019, 3, 12)()
+    }
 
     render(){
         return(
@@ -51,18 +76,7 @@ class Statistics extends React.Component{
                                onClick={() => this.setState({"statisticDMY": "y"})}/>
                 </Menu>
 
-                <StatisticSegment
-                    name = "Authentication"
-                    icon = "user"
-                    values = {
-                        [
-                            // {name: "Sign Ins", value: this.retrieveStatistic(["authentication_signIn"], 2019, 3, 12)},
-                            {name: "Sign Ins", value: 245},
-                            {name: "Sign Ups", value: 1},
-                            {name: "Update Details", value: 2}
-                        ]
-                    }
-                />
+                {this.renderStatistic(["authentication_signIn"], 2019, 3, 12)}
 
             </PageContainer>
         )
