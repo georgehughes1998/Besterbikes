@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
-import {Container, Header, List} from "semantic-ui-react"
+import {Header, List} from "semantic-ui-react"
 
 import {getJSONFromFile} from '../../handleJSON.js'
 import {getUser} from "../../firebase/authentication";
 import {getNumberOfAvailableBikes} from "../../firebase/reservations";
 import {withRouter} from "react-router-dom";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
-import Grid from "semantic-ui-react/dist/commonjs/collections/Grid/Grid";
+import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 
 //TODO: Implement loader correctly
 //TODO: Render markers red or green bikes depending on spaces available
@@ -176,60 +176,65 @@ export class BesterbikesMap extends Component {
                 >
                     <div>
 
-                         <Header as='h3'>{this.state.activeMarker.name}</Header>
-
                         {this.state.activeMarker.stationDetails ?
-                            <Container>
+                            <div>
+
+                                <Header as='h3'>
+
+                                    {this.state.activeMarker.name}
+
+                                </Header>
+
                                 <Header.Subheader>
                                     {this.state.activeMarker.stationDetails.notes}
-                                    </Header.Subheader>
+                                </Header.Subheader>
                                 <br/>
                                 <List>
                                     <Header as={"h5"}>Avaiable Bikes</Header>
                                     <List.Item>
-                                        <Icon name={"bicycle"}/>
-                                        <List.Content>
+
+                                        {/*<List.Content>*/}
                                             <List.Header>
+                                                <Icon name={"bicycle"}/>
                                                 Mountain bikes
                                             </List.Header>
                                             <List.Description>
                                                 {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} avaiable`}
                                             </List.Description>
-                                        </List.Content>
+                                        {/*</List.Content>*/}
                                     </List.Item>
 
                                     <List.Item>
+
+                                    <List.Header>
                                         <Icon name={"bicycle"}/>
-                                        <List.Content>
-                                            <List.Header>
-                                                Road bikes
-                                            </List.Header>
+                                        Mountain bikes
+                                    </List.Header>
                                             <List.Description>
                                                 {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} avaiable`}
                                             </List.Description>
-                                        </List.Content>
                                     </List.Item>
+                                </List>
+                                <Image src={this.state.activeMarker.stationDetails["url"]} alt={'new'}
+                                       style={{maxWidth: "200px"}}/>
 
                                     <br/>
-                                    <Grid columns='equal'>
-                                        <Grid.Column>
-                                            {/*TODO: On click not working */}
-                                            <Container textAlign='center' >
-                                                <Icon name={"calendar"} color={"blue"} size={"big"} onClick={() => this.handleRedirect("./reservebike")}/>
-                                            </Container>
-                                        </Grid.Column>
-                                        <Grid.Column>
-                                            <Container textAlign='center'>
-                                                <Icon name={"exclamation circle"} color={"red"} size={"big"} onClick={() => this.handleRedirect("./report")}/>
-                                            </Container>
-                                        </Grid.Column>
-                                    </Grid>
+                                    {/*<Grid>*/}
+                                        {/*<Grid.Column>*/}
+                                            {/*/!*TODO: On click not working *!/*/}
+                                            {/*<Container textAlign='center' >*/}
+                                                {/*<Icon name={"calendar"} color={"blue"} size={"big"} onClick={() => this.handleRedirect("./reservebike")}/>*/}
+                                            {/*</Container>*/}
+                                        {/*</Grid.Column>*/}
+                                        {/*<Grid.Column>*/}
+                                            {/*<Container textAlign='center'>*/}
+                                                {/*<Icon name={"exclamation circle"} color={"red"} size={"big"} onClick={() => this.handleRedirect("./report")}/>*/}
+                                            {/*</Container>*/}
+                                        {/*</Grid.Column>*/}
+                                    {/*</Grid>*/}
 
 
-                                </List>
-                                <img src={this.state.activeMarker.stationDetails["url"]} alt={'new'}
-                                     style={{maxWidth: "200px"}}/>
-                            </Container>
+                            </div>
 
                             :
                             //TODO: Display error
