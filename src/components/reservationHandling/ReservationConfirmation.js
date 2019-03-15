@@ -14,11 +14,9 @@ class ReservationComplete extends React.Component {
 
     handleClose = () => this.setState({modalOpen: false});
 
-
     render() {
         return (
             <Modal
-
                 open={this.state.modalOpen}
                 onClose={this.handleClose}
                 basic

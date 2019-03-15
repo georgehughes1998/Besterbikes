@@ -19,21 +19,26 @@ const Payment = (props) => {
                 }}
 
                 fields={{
-                    cardNumber: {
-                        name: 'cardNumber',
-                        label: 'Card Number',
-                        type: 'number',
-                    },
-                    expirationDate: {
-                        name: 'expirationDate',
-                        label: 'Expiration Date',
-                        type: 'date',
-                    },
-                    CVV: {
-                        name: 'CVV',
-                        label: 'CVV',
-                        type: 'number',
-                    }
+                    paymentMethod: {
+                            name: 'paymentMethod',
+                            label: 'DETAILS OF PAYMENT SCHEME',
+                            type: 'checkbox',
+                        },
+                    // cardNumber: {
+                    //     name: 'cardNumber',
+                    //     label: 'Card Number',
+                    //     type: 'number',
+                    // },
+                    // expirationDate: {
+                    //     name: 'expirationDate',
+                    //     label: 'Expiration Date',
+                    //     type: 'date',
+                    // },
+                    // CVV: {
+                    //     name: 'CVV',
+                    //     label: 'CVV',
+                    //     type: 'number',
+                    // }
                     // country: {
                     //     name: 'country',
                     //     label: 'Country',

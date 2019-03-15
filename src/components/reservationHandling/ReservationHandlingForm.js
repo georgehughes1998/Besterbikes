@@ -3,8 +3,11 @@ import {Button, Container, Form, Header, Icon, Message, Progress, Segment} from 
 import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
 import StationDropdown from "../dropdowns/StationDropdown";
+import NumberDropdown from "../dropdowns/NumberDropdown";
 import FirebaseError from "../FirebaseError";
 import ReservationComplete from "./ReservationConfirmation";
+import validate from './validate'
+import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
@@ -57,7 +60,7 @@ class ReservationHandlingForm extends React.Component {
     renderInput = ({input, label, type, meta}) => {
 
         switch (type) {
-            case "dropdown":
+            case "stationDropdown":
                 return (
                     <Form.Field required>
                         <label>{label}</label>
@@ -65,16 +68,31 @@ class ReservationHandlingForm extends React.Component {
                         {this.renderReduxError(meta)}
                     </Form.Field>
                 );
+            case "bikeDropdown":
+                return (
+                    <Form.Field>
+                        <label>{label}</label>
+                        <NumberDropdown input={{input}}/>
+                        {this.renderReduxError(meta)}
+                    </Form.Field>
+                );
+            case "checkbox":
+                return (
+                    <Form.Field>
+                        <Checkbox readOnly defaultChecked label={label} />
+                    </Form.Field>
+                );
 
             case "readOnly":
                 return (
                     //TODO: Display station text not value
-                    <Form.Field>
+                    <Form.Field required>
                         <label>{label}</label>
                         <input
                             {...input}
                             readOnly
                         />
+                        {/*{this.renderReduxError(meta)}*/}
                     </Form.Field>
                 );
 
@@ -178,18 +196,6 @@ class ReservationHandlingForm extends React.Component {
     }
 }
 
-//TODO: Validate using regex and stop negative bikes
-const validate = (formValues) => {
-
-    const errors = {};
-
-    if (/([0-2][1-9])|10|20|30|31\/([0][1-9])|10|11|12\/(19[0-9][0-9])|(200[0-9])/.test(formValues.expirationDate)) {
-        errors.expirationDate = 'Invalid date'
-    }
-
-    return errors;
-
-};
 
 export default reduxForm({
     form: 'reservebike',  //Form name is same

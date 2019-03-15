@@ -48,17 +48,17 @@ class SelectBikes extends React.Component {
                         station: {
                             name: 'station',
                             label: 'Station',
-                            type: 'dropdown',
+                            type: 'stationDropdown'
                         },
                         mountainBikes: {
                             name: 'mountainBikes',
                             label: 'Mountain Bikes',
-                            type: 'number'
+                            type: 'bikeDropdown'
                         },
                         regularBikes: {
                             name: 'regularBikes',
                             label: 'Regular Bikes',
-                            type: 'number'
+                            type: 'bikeDropdown'
                         },
 
                     }}
