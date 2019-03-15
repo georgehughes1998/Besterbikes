@@ -41,7 +41,7 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
     const statisticsCollection = db.collection('statistics');
 
     const day = getDay();
-    const month = getMonth();
+    const month = getMonth()+1;
     const year = getYear();
 
     const statisticsQuery = statisticsCollection
@@ -198,7 +198,6 @@ export const getStationStatistics = async (stationID, year = -1, month = -1, day
 
 export const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) => {
     //TODO: Test
-    month -= 1; // Since January is 0 but we want it to be 1
 
     // console.log("---------------------------------------");
     // console.log(statisticTypes);
