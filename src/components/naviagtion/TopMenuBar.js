@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {Header, Icon, Menu} from 'semantic-ui-react'
 import {changeSideBar} from "../../redux/actions";
 import {getUser} from "../../firebase/authentication";
-import {getPrettyString} from "../../prettyString";
+import {getPrettyString} from "../../dataHandling/prettyString";
 
 
 //TODO: Make TopMenuBar Sticky

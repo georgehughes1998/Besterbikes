@@ -4,7 +4,7 @@ import React from "react";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import withRouter from "react-router/es/withRouter";
 import TripStatusDropdown from "./dropdowns/TripStatusDropdown";
-import {getPrettyString} from "../prettyString";
+import {getPrettyString} from "../dataHandling/prettyString";
 
 class ListOfLiveTrips extends React.Component {
 
@@ -183,7 +183,6 @@ class ListOfLiveTrips extends React.Component {
             <div>
                 <br/>
                 <Container textAlign='center'>
-                    {/*<Header as={"h1"}>Trips</Header>*/}
                     <TripStatusDropdown
                         onChange={(value) => this.setState({"viewTripsWithStatus": value})}
                     />

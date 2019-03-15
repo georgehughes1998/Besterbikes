@@ -1,7 +1,7 @@
 import React from "react";
 import {Dropdown} from "semantic-ui-react";
 import withRouter from "react-router/es/withRouter";
-import {getPrettyString} from "../../prettyString";
+import {getPrettyString} from "../../dataHandling/prettyString";
 
 class TripsDropdown extends React.Component {
 

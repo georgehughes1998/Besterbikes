@@ -4,7 +4,7 @@ import SignOut from "../accountManagement/SignOut";
 import {getUser} from "../../firebase/authentication";
 import {Container, Grid, Header, Icon} from "semantic-ui-react";
 import PageContainer from "../PageContainer";
-import {getJSONFromFile} from "../../handleJSON";
+import {getJSONFromFile} from "../../dataHandling/handleJSON";
 import connect from "react-redux/es/connect/connect";
 import {loadWebPages} from "../../redux/actions/index";
 

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import {Header, List} from "semantic-ui-react"
 
-import {getJSONFromFile} from '../../handleJSON.js'
+import {getJSONFromFile} from '../../dataHandling/handleJSON.js'
 import {getUser} from "../../firebase/authentication";
 import {getNumberOfAvailableBikes} from "../../firebase/reservations";
 import {withRouter} from "react-router-dom";

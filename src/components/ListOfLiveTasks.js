@@ -7,6 +7,8 @@ import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import OperatorDropdown from "./dropdowns/OperatorDropdown";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Comment from "semantic-ui-react/dist/commonjs/views/Comment/Comment";
+import TaskStatusDropdown from "./dropdowns/TaskStatusDropdown";
+import {getPrettyString} from "../dataHandling/prettyString";
 
 class listOfLiveTasks extends React.Component {
 
@@ -39,10 +41,12 @@ class listOfLiveTasks extends React.Component {
         return Object.values(comments).map((key, index) => {
             return (
                 <Comment>
-                    <Comment.Avatar src={"bicycle"}/>
+                    {console.log(key)}
+                    <Comment.Avatar as='a' src='https://react.semantic-ui.com/icons/avatar/small/joe.jpg' />
                     <Comment.Content>
                         {/*TODO: Refactor so operator name displays*/}
-                        <Comment.Author as='a'>{key.user}</Comment.Author>
+                        <Comment.Author>{key.user}</Comment.Author>
+                        <Comment.Metadata>{getPrettyString(key.time.date)} {key.time.time}</Comment.Metadata>
                         <Comment.Text>{key.comment}</Comment.Text>
                     </Comment.Content>
                 </Comment>
@@ -52,39 +56,42 @@ class listOfLiveTasks extends React.Component {
 
     //Render single reservation with provided paramters
     renderItem = ({color, iconNames, iconColors, status, category, opertaor, deadline, comments, taskId}) => {
-        return (
-            //TODO: Make this into own prop
+        console.log(this.state.viewTasksWithStatus, status);
+        if (this.state.viewTasksWithStatus.length === 0 || this.state.viewTasksWithStatus.includes(status)) {
+            return (
+                //TODO: Make this into own prop
 
-            <Segment color={color} fluid>
-                <Grid>
-                    <Grid.Row>
-                        <Grid.Column width={13}>
-                            <Header
-                                as='h1'
-                                content={category}
-                            />
-                            <Header
-                                as='h5'
-                                content={`Deadline: ${deadline["date"]} at ${deadline["time"]}`}
-                                subheader={`Task ID: ${taskId}`}
-                            />
+                <Segment color={color} fluid>
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column width={13}>
+                                <Header
+                                    as='h1'
+                                    content={category}
+                                />
+                                <Header
+                                    as='h5'
+                                    content={`Deadline: ${deadline["date"]} at ${deadline["time"]}`}
+                                    subheader={`Task ID: ${taskId}`}
+                                />
 
-                            <Header as="h4" color={color}>{status}</Header>
-                        </Grid.Column>
+                                <Header as="h4" color={color}>{status}</Header>
+                            </Grid.Column>
 
-                        <Grid.Column width={1} verticalAlign='middle'>
-                            {this.renderIcons(iconNames, iconColors, status, taskId)}
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Comment.Group>
-                        <Header as='h3' dividing>
-                            Comments
-                        </Header>
-                        {this.renderComments(comments)}
-                    </Comment.Group>
-                </Grid>
-            </Segment>
-        )
+                            <Grid.Column width={1} verticalAlign='middle'>
+                                {this.renderIcons(iconNames, iconColors, status, taskId)}
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Comment.Group>
+                            <Header as='h3' dividing>
+                                Comments
+                            </Header>
+                            {this.renderComments(comments)}
+                        </Comment.Group>
+                    </Grid>
+                </Segment>
+
+        )}
     };
     getItemValues = (task, index) => {
 
@@ -171,7 +178,8 @@ class listOfLiveTasks extends React.Component {
             modalHeader: "",
             modalSubHeader: "",
             modalTask: "",
-            opertaors: []
+            opertaors: [],
+            viewTasksWithStatus: []
         };
     }
 
@@ -180,7 +188,9 @@ class listOfLiveTasks extends React.Component {
             <div>
                 <br/>
                 <Container textAlign='center'>
-                    <Header as={"h1"}>Tasks</Header>
+                    <TaskStatusDropdown
+                        onChange={(value) => this.setState({"viewTasksWithStatus": value})}
+                    />
                 </Container>
                 <br/>
 
@@ -219,6 +229,12 @@ class listOfLiveTasks extends React.Component {
                     </Modal.Actions>
 
                 </Modal>
+
+                <Segment>
+                    <Header as='h2' icon textAlign='center'>
+                        <Header.Content>No more tasks to display</Header.Content>
+                    </Header>
+                </Segment>
             </div>
         )
     }

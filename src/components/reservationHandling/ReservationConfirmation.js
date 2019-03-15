@@ -1,7 +1,7 @@
 import React from 'react'
 import withRouter from "react-router/es/withRouter";
 import {reduxForm} from "redux-form";
-import {getPrettyString} from "../../prettyString";
+import {getPrettyString} from "../../dataHandling/prettyString";
 import ConfirmationModal from "../ConfirmationModal";
 
 class ReservationComplete extends React.Component {
