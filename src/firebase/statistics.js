@@ -58,9 +58,10 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
     if (statisticSnapshot.empty) //If there is no document with this date
     {
         const statisticObject = {date: {day, month, year}};
-        statisticObject[statisticType] = incrementAmount;
+        //statisticObject[statisticType] = incrementAmount;
 
-        await statisticsCollection.add(statisticObject);
+        const statisticDoc = await statisticsCollection.add(statisticObject);
+        await statisticDoc.update(statisticType,incrementAmount);
 
     }
     else //If there exists a document with this date
