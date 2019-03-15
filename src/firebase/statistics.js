@@ -18,6 +18,7 @@ import {getDay, getMonth, getYear} from "./time";
 //
 // authentication.signUp
 // authentication.signIn
+// authentication.updateDetails
 //
 // reservation.[stationID].[bikeType].make
 // reservation.[stationID].[bikeType].cancel
@@ -195,6 +196,7 @@ export const getStationStatistics = async (stationID, year = -1, month = -1, day
         `reservation.${stationID}.mountain.make`,
         `reservation.${stationID}.mountain.cancel`,
         `station.${stationID}.unlock`,
+        `station.${stationID}.unlockOperator`,
         `station.${stationID}.return`
     ];
 
@@ -295,6 +297,7 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
             statisticTypeStringArray.forEach(s => {
                 statisticTypeString += s + "_";
             });
+
 
             statisticTypeString = statisticTypeString.slice(0, -1); //All but last char
 
