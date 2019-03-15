@@ -3,10 +3,32 @@ export const getPrettyString = (theString) =>
 
     switch (theString)
     {
+
+        //Stations
+        case "stationHeriotWattUniversity":   return "Heriot Watt University";
+        case "stationWaverley":   return "Waverley";
+        case "stationHaymarket":   return "Haymarket";
+        case "stationNationalMuseumOfScotland":   return "National Museum of Scotland";
+        case "stationEdinburghZoo":   return "Edinburgh Zoo";
+        case "stationEdinburghUniversityLibrary":   return "Edinburgh University Library";
+        case "stationScottishParliament":   return "the Scottish Parliament";
+        case "stationMerchistonCrossroads":   return "Merchiston Crossroads";
+        case "stationRoyalBotanicGarden":   return "the Royal Botanic Garden";
+        case "stationPortobelloBeachNorth":   return "Portobello Beach North";
+        case "stationPortobelloBeachEast":   return "Portobello Beach East";
+
+
         //Statistics
         case "authentication_signUp":           return "Sign Ups";
         case "authentication.signIn":           return "Sign Ins";
         case "authentication.updateDetails":    return "Updated Details";
+
+        //Tasks & Reports
+        case "task.make":       return "Tasks Created";
+        case "task.complete":      return "Tasks Completed";
+        case "task.reassign":       return "Tasks Reassigned";
+        case "task.extend":       return "Tasks Extended";
+        case "report.make":       return "Reports Created";
 
         //Road bike make
         case "reservation.stationHeriotWattUniversity.road.make":   return "Reservations of road bikes made at Heriot Watt University";
@@ -91,29 +113,6 @@ export const getPrettyString = (theString) =>
         case "reservation.stationPortobelloBeachEast.return":   return "Bikes returned at Portobello Beach East";
 
 
-        case "task.make":       return "Tasks Created";
-        case "task.complete":      return "Tasks Completed";
-        case "task.reassign":       return "Tasks Reassigned";
-        case "task.extend":       return "Tasks Extended";
-
     }
 
 };
-
-// authentication.signUp
-// authentication.signIn
-//
-// reservation.[stationID].[bikeType].make
-// reservation.[stationID].[bikeType].cancel
-// reservation.update
-//
-// station.[stationID].unlock
-// station.[stationID].unlockOperator
-// station.[stationID].return
-//
-// task.make
-// task.complete
-// task.reassign
-// task.extend
-//
-// report.make
