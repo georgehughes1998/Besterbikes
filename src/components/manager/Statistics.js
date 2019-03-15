@@ -1,6 +1,6 @@
 import React from 'react'
 import PageContainer from "../PageContainer";
-import {getStatistics} from "../../firebase/statistics";
+import {getAuthenticationStatistics, getStatistics} from "../../firebase/statistics";
 import SubmissionError from "redux-form/es/SubmissionError";
 
 class Statistics extends React.Component{
@@ -24,7 +24,7 @@ class Statistics extends React.Component{
     retrieveStatistic = async () => {
         console.log("Retrieving stat");
 
-        const obj = await getStatistics(["authentication_signIn"], 2019, 3, 12);
+        const obj = await getAuthenticationStatistics(2019, 3, 12);
 
         if (obj) {
             console.log(obj);
