@@ -8,9 +8,7 @@ import PageContainer from "../PageContainer";
 import {getUser} from "../../firebase/authentication";
 import {cancelReservation, getTrips} from "../../firebase/reservations";
 import ListOfLiveTrips from "../ListOfLiveTrips";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import CustomLoader from "../CustomLoader";
 
 
 //TODO: Implement loader
@@ -18,7 +16,7 @@ import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 //TODO: Review columns and desktop/mobile compatability
 //TODO: Display cancelled image
 //TODO: Make cancel icon a button
-//TODO: Render 5 trips at a time
+
 class MyTrips extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not
@@ -51,12 +49,20 @@ class MyTrips extends React.Component {
 
         if (obj) {
             this.props.loadTrips(obj);
+            this.setState({"readyToDisplay": true})
         } else {
             throw new SubmissionError({
                 _error: obj.message
             });
         }
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            readyToDisplay: false
+        };
+    }
 
     componentDidMount() {
         this.authenticateUser()
@@ -67,37 +73,35 @@ class MyTrips extends React.Component {
     };
 
     render() {
-
-        // if (this.props.trips === {}) {
-        //     {console.log("loading")}
-        //     return (
-        //         <Segment>
-        //             {console.log("loading")}
-        //             <Dimmer active>
-        //                 <Loader size='large'>Loading</Loader>
-        //             </Dimmer>
-        //         </Segment>
-        //     );
-        // }
-        return(
-
-
-            <PageContainer>
-                <ListOfLiveTrips
-                    items={this.props.trips}
-                    stations={this.props.stations}
-                    handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
-                    handleReport={() => this.handleReport()}
+        if (!this.state.readyToDisplay) {
+            console.log("loading");
+            return (
+                <CustomLoader
+                    text={"Happiness is just a moment away..."}
+                    icon={"tasks"}
                 />
-                {/*TODO: Implement filter*/}
+            );
+        } else {
+            console.log(this.props.trips);
+            return (
+                <PageContainer>
 
-                <Link to={"/stationsim"}>
-                    Link to stationSim
-                </Link>
+                    <ListOfLiveTrips
+                        items={this.props.trips}
+                        stations={this.props.stations}
+                        handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
+                        handleReport={() => this.handleReport()}
+                    />
+                    {/*TODO: Implement filter*/}
 
-            </PageContainer>
+                    <Link to={"/stationsim"}>
+                        Link to stationSim
+                    </Link>
 
-        )
+                </PageContainer>
+
+            )
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {Header, Icon, Menu} from 'semantic-ui-react'
 import {changeSideBar} from "../../redux/actions";
 import {getUser} from "../../firebase/authentication";
+import {getPrettyString} from "../../prettyString";
 
 
 //TODO: Make TopMenuBar Sticky
@@ -23,46 +24,9 @@ class TopMenuBar extends React.Component {
         }
         return user
     };
-
-    componentDidUpdate(){
-        this.authenticateUser();
-    }
-
     //Function to display title of page based on pathname in react router dom
     getDisplayTitle = (pathname) => {
-        switch (pathname) {
-            //TODO: Use JSON/API to load details of web pages
-            case "/":
-                return "Main Menu";
-            case "/signin":
-                return "Sign In";
-            case "/signout":
-                return "Sign Out";
-            case "/signup":
-                return "Sign Up";
-            case "/editaccount":
-                return "Edit Account";
-            case "/reservebike":
-                return "Reserve Bikes";
-            case "/map":
-                return "Map";
-            case "/unlockbike":
-                return "Unlock Bike";
-            case "/mytrips":
-                return "My Trips";
-            case "/report":
-                return "Report Issue";
-            case "/users":
-                return "All Users";
-            case "/statistics":
-                return "Statistics";
-            case "/customerdetails":
-                return "Customer";
-            case "/createtask":
-                return "Create a task";
-            default:
-                return null;
-        }
+        return getPrettyString(pathname);
     };
 
     constructor(props) {
@@ -70,6 +34,10 @@ class TopMenuBar extends React.Component {
         this.state = {
             currentUser: ""
         };
+    }
+
+    componentDidUpdate() {
+        this.authenticateUser();
     }
 
     render() {

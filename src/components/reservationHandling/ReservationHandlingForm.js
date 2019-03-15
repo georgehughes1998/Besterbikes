@@ -79,7 +79,7 @@ class ReservationHandlingForm extends React.Component {
             case "checkbox":
                 return (
                     <Form.Field>
-                        <Checkbox readOnly defaultChecked label={label} />
+                        <Checkbox readOnly defaultChecked label={label}/>
                     </Form.Field>
                 );
 

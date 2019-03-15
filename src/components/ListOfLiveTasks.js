@@ -38,14 +38,14 @@ class listOfLiveTasks extends React.Component {
     renderComments = (comments) => {
         return Object.values(comments).map((key, index) => {
             return (
-                     <Comment>
-                        <Comment.Avatar src={"bicycle"}/>
-                        <Comment.Content>
-                            {/*TODO: Refactor so operator name displays*/}
-                            <Comment.Author as='a'>{key.user}</Comment.Author>
-                            <Comment.Text>{key.comment}</Comment.Text>
-                        </Comment.Content>
-                    </Comment>
+                <Comment>
+                    <Comment.Avatar src={"bicycle"}/>
+                    <Comment.Content>
+                        {/*TODO: Refactor so operator name displays*/}
+                        <Comment.Author as='a'>{key.user}</Comment.Author>
+                        <Comment.Text>{key.comment}</Comment.Text>
+                    </Comment.Content>
+                </Comment>
             )
         })
     };
