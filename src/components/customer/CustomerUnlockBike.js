@@ -1,5 +1,4 @@
 import React from 'react'
-import {Dropdown} from "semantic-ui-react";
 import {getUser} from "../../firebase/authentication";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions/index";
@@ -10,6 +9,7 @@ import FirebaseError from "../FirebaseError";
 import {Form} from "semantic-ui-react/dist/commonjs/collections/Form/Form";
 import ConfirmationModal from "../ConfirmationModal";
 import CustomLoader from "../CustomLoader";
+import TripsDropdown from "../dropdowns/TripsDropdown";
 
 
 //TODO: Implement web api NFC features
@@ -32,30 +32,6 @@ export class UnlockBike extends React.Component {
             this.setState({"readyToDisplay": true})
         } else {
 
-        }
-    };
-
-    renderTrips = () => {
-        let DropdownArray = [];
-
-        if (this.props.trips) {
-            let keys = Object.keys(this.props.trips);
-            console.log(this.props.trips);
-
-            Object.values(this.props.trips).map((key, index) => {
-                DropdownArray.push({
-                    key: keys[index],
-                    value: keys[index],
-                    text:
-                        `My ${key.status} trip from 
-                        ${key.start["station"]} on 
-                        ${key.start["time"]["date"]} at 
-                        ${key.start["time"]["time"]}`
-                });
-                return DropdownArray;
-            });
-
-            return DropdownArray;
         }
     };
 
@@ -114,15 +90,16 @@ export class UnlockBike extends React.Component {
         } else {
             return (
                 <div>
-                    <Dropdown
+                    <TripsDropdown
                         fluid
                         selection
-                        options={this.renderTrips()}
+                        trips={this.props.trips}
                         placeholder={"Please select a valid reservation to unlock a bike"}
                         onChange={(param, data) => this.setState({unlockTrip: data.value})}
                         name="unlockTrip"
                     />
 
+                    <br/>
                     <br/>
 
                     <Button onClick={() => this.handleUnlock()}>

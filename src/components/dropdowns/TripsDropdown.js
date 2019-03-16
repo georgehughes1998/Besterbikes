@@ -18,23 +18,22 @@ class TripsDropdown extends React.Component {
                     value: keys[index],
                     text:
                         `My ${getPrettyString(key.status)} trip from 
-                        ${key.start["station"]} on 
-                        ${key.start["time"]["date"]} at 
+                        ${getPrettyString(key.start["station"])} on 
+                        ${getPrettyString(key.start["time"]["date"])} at 
                         ${key.start["time"]["time"]}`
                 });
 
                 return DropdownArray;
             });
 
+            return DropdownArray;
         }
     };
 
     render() {
         return (
             <Dropdown
-                clearable
                 selection
-                search
                 placeholder={this.props.placeholder}
                 options={this.renderTrips()}
                 onChange={this.props.onChange}

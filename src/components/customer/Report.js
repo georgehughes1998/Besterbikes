@@ -8,6 +8,8 @@ import {getTrips} from "../../firebase/reservations";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions";
 import FirebaseError from "../FirebaseError";
+import CustomLoader from "../CustomLoader";
+import ConfirmationModal from "../ConfirmationModal";
 
 class Report extends React.Component {
 
@@ -18,28 +20,25 @@ class Report extends React.Component {
             this.props.history.push("signin");
         return user
     };
+
     retrieveFirebaseTrips = async () => {
         const obj = await getTrips();
         if (obj) {
             this.props.loadTrips(obj);
-        } else {
-
+            console.log(this.props);
+            this.setState({"readyToDisplay": true})
         }
     };
+
     //TODO: Add firebase function to make report
     handleSubmit = async (values) => {
         return makeReport(this.state.reservation, this.state.category, this.state.description)
             .then((obj) => {
-
+                this.setState({"reportSubmitted": true})
             })
             .catch((err) => {
                 console.log(err.message);
-                this.setState({error: err.message});
-                // throw new SubmissionError({
-                //     _error: err.message
-                // })
-            })
-        console.log(values)
+            });
     };
 
     constructor(props) {
@@ -48,7 +47,9 @@ class Report extends React.Component {
             category: "",
             description: "",
             reservation: "",
-            error: ""
+            error: "",
+            readyToDisplay: false,
+            reportSubmitted: false
         }
     };
 
@@ -61,60 +62,79 @@ class Report extends React.Component {
     };
 
     render() {
-        return (
+        if (!this.state.readyToDisplay) {
+            console.log("loading");
+            return (
+                <CustomLoader
+                    text={"As it turns out, carbon is eminently repairable."}
+                    icon={"exclamation circle"}
+                />
+            );
+        } else {
+            return (
 
-            <PageContainer>
-                <br/>
-                <Container textAlign='center'>
-                    <Form>
+                <PageContainer>
+                    <br/>
+                    <Container textAlign='center'>
+                        <Form>
 
-                        <Header as="h1">How can we help?</Header>
+                            <Header as="h1">How can we help?</Header>
 
-                        <br/>
-                        <Dropdown
-                            selection
-                            search
-                            placeholder='Select Category'
-                            options={[{key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
-                                {key: "stationFault", value: "Station Fault", text: "Station Fault"},
-                                {key: "feedback", value: "Feedback", text: "Feedback"}
-                            ]}
-                            onChange={(param, data) => this.setState({"category": data.value})}
+                            <br/>
+                            <Dropdown
+                                selection
+                                search
+                                placeholder='Select Category'
+                                options={[{key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
+                                    {key: "stationFault", value: "Station Fault", text: "Station Fault"},
+                                    {key: "feedback", value: "Feedback", text: "Feedback"}
+                                ]}
+                                onChange={(param, data) => this.setState({"category": data.value})}
+                            />
+
+                            <br/>
+                            <br/>
+
+                            <TripsDropdown
+                                placeholder='Select Reservation'
+                                trips={this.props.trips}
+                                handleSubmit={(param, data) => this.setState({"reservation": data.value})}
+                            />
+
+                            <br/>
+                            <br/>
+                            <TextArea
+                                autoHeight
+                                placeholder="Please describe your query here"
+                                rows={10}
+                                onChange={(param, data) => this.setState({"description": data.value})}
+                            />
+
+                            <br/>
+                            <br/>
+                            <Button
+                                content="Send Report"
+                                onClick={() => this.handleSubmit(this.state)}
+                            />
+
+                            {this.state.error != "" ? <FirebaseError error={this.state.error}/> : null}
+
+                        </Form>
+                    </Container>
+
+                    {this.state.reportSubmitted ?
+                        <ConfirmationModal
+                            icon='send'
+                            header='Report Submitted'
+                            text={`Your report has been submitted, one of our team will be in touch shortly`}
+                            link="/"
+                            linkText="Return to main menu"
                         />
+                        : null}
 
-                        <br/>
-                        <br/>
-
-
-                        <TripsDropdown
-                            placeholder='Select Reservation'
-                            trips={this.props.trips}
-                            handleSubmit={(param, data) => this.setState({"reservation": data.value})}
-                        />
-
-                        <br/>
-                        <br/>
-                        <TextArea
-                            autoHeight
-                            placeholder="Please describe your query here"
-                            rows={10}
-                            onChange={(param, data) => this.setState({"description": data.value})}
-                        />
-
-                        <br/>
-                        <br/>
-                        <Button
-                            content="Send Report"
-                            onClick={() => this.handleSubmit(this.state)}
-                        />
-
-                        {this.state.error != "" ? <FirebaseError error={this.state.error}/> : null}
-
-                    </Form>
-
-                </Container>
-            </PageContainer>
-        )
+                </PageContainer>
+            )
+        }
     }
 }
 

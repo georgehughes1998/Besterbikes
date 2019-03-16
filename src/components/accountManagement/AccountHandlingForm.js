@@ -3,7 +3,7 @@ import {Field, reduxForm, SubmissionError} from "redux-form";
 import {withRouter} from "react-router-dom";
 import {Button, Container, Form, Message} from 'semantic-ui-react'
 
-import {setUserDetails, signIn, signOut, signUp} from "../../firebase/authentication";
+import {signIn, signOut, signUp, updateUserDetails} from "../../firebase/authentication";
 import FirebaseError from '../FirebaseError'
 
 
@@ -48,7 +48,7 @@ class AccountHandlingForm extends React.Component {
                 return;
 
             case "Save Changes":
-                await setUserDetails(formValues);
+                await updateUserDetails(formValues);
                 this.props.history.push("/");
                 return;
 
@@ -75,7 +75,7 @@ class AccountHandlingForm extends React.Component {
     renderInput = ({input, label, type, meta}) => {
 
         return (
-            <Form.Field required>
+            <Form.Field>
                 <label>{label}</label>
                 <input
                     autofocus={type === "email" ? "true" : "false"}

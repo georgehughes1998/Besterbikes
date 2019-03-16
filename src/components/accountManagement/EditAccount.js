@@ -16,6 +16,7 @@ class EditAccount extends React.Component {
             .then(user => {
                 if (user === null)
                     this.props.history.push("signin");
+                    this.setState({currentUser: user});
                 return user
             });
     };
@@ -46,17 +47,17 @@ class EditAccount extends React.Component {
                         //     type: 'password'
                         // },
                         Forename: {
-                            name: 'forename',
+                            name: 'updateForename',
                             label: 'First Name',
                             type: 'text'
                         },
                         Surname: {
-                            name: 'surname',
+                            name: 'updateSurname',
                             label: 'Surname',
                             type: 'text'
                         },
                         DateOfBirth: {
-                            name: 'dateOfBirth',
+                            name: 'updateDateOfBirth',
                             label: 'Date of Birth',
                             type: 'date'
                         }

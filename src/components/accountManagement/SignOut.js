@@ -1,14 +1,14 @@
 import React from 'react'
 
 import AccountForm from "./AccountHandlingForm";
-import PageContainer from "../PageContainer";
+import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 
 
 //Component that passes relevant fields to PageContainer for a sign out
 const SignOut = () => {
 
     return (
-        <PageContainer>
+        <Container>
 
             {/*Sign Out Form*/}
             <AccountForm
@@ -20,7 +20,7 @@ const SignOut = () => {
                 }}
 
             />
-        </PageContainer>
+        </Container>
     )
 };
 
