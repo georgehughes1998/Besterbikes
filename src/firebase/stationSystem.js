@@ -197,18 +197,22 @@ export const getUnlockedBikes = async () => {
 
     queryDocs.forEach(async singleDoc => {
         const singleDocData = singleDoc.data();
-
         const reservationID = singleDocData['reservation'];
-        const reservationDocument = reservationsCollection.doc(reservationID);
 
-        const reservationDoc = await reservationDocument.get();
-        const reservationData = reservationDoc.data();
+        if (reservationID) {
+            const reservationDocument = reservationsCollection.doc(reservationID);
 
-        console.log(reservationID);
+            const reservationDoc = await reservationDocument.get();
+            const reservationData = reservationDoc.data();
 
-        if (reservationData['user'] === uid) {
-            bikesArray.push(singleDoc.id);
+            console.log(reservationID);
+
+            if (reservationData['user'] === uid) {
+                bikesArray.push(singleDoc.id);
+            }
         }
+        else
+            console.log("Unlocked bike " + singleDoc.id + " found without reservation.");
 
     });
 
