@@ -13,7 +13,7 @@ const maxCapacityPercentage = 0.7;
 const minCapacityPercentage = 0.3;
 
 
-export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes}) => {
+export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes},user) => {
     //Function to make reservations with the given data
 
     const startTimeString = startDate + " " + startTime;
@@ -60,7 +60,10 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     const db = firebase.firestore();
 
     const auth = firebase.auth();
-    const uid = auth.currentUser.uid;
+
+    let uid =  auth.currentUser.uid;
+    if (user)
+        uid = user;
 
     const reservationsCollection = db.collection('reservations');
 
