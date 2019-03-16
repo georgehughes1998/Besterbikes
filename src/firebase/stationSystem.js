@@ -221,9 +221,7 @@ export const getUnlockedBikes = async () => {
 };
 
 
-export const unlockBikeOperator = async (bikeID) => {
-
-    //TODO: Test
+export const unlockBikeOperator = async (bikeID, force=false) => {
 
     const db = firebase.firestore();
 
@@ -247,10 +245,14 @@ export const unlockBikeOperator = async (bikeID) => {
     const stationDoc = stationsSnapshot.docs.pop();
     const stationID = stationDoc.id;
 
+    if (stationDoc[bikeType]['numberOfAvailableBikes'] === 0 && !force)
+        return 1;
+
     await removeBike(stationID, bikeID, bikeType);
     await bikeDocument.update('status', 'unlocked');
 
-
     await incrementStatistic("station." + stationID + ".unlockOperator");
+
+    return 0;
 
 };
