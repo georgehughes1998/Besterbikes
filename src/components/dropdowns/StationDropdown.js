@@ -21,18 +21,33 @@ const StationDropdown = (props) => {
         return DropdownArray
     };
 
-    return (
-        <Dropdown
-            clearable
-            fluid
-            selection
-            search
-            placeholder='Select Station'
-            options={createDropdownObject()}
-            value={props.input.value}
-            onChange={(param, data) => props.input.input.onChange(data.value)}
-        >{console.log(createDropdownObject())}</Dropdown>
-    )
+    if (props.input) {
+        return (
+            <Dropdown
+                clearable
+                fluid
+                selection
+                search
+                placeholder='Select Station'
+                options={createDropdownObject()}
+                value={props.input.value}
+                onChange={(param, data) => props.input.input.onChange(data.value)}
+            />
+        )
+    }else{
+        return(
+                <Dropdown
+                    clearable
+                    fluid
+                    selection
+                    search
+                    placeholder='Select Station'
+                    options={createDropdownObject()}
+                    onChange={(param, data) => props.onChange(data.value)}
+                />
+            )
+
+    }
 };
 
 const mapStateToProps = (state) => {
