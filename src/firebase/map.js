@@ -1,15 +1,6 @@
 import * as firebase from "firebase";
 
 
-export const getStationsFilter = async ({isSpacesAvailable, isRoadBikes, isMountainBikes}) => {
-    //TODO: Implement
-    const db = firebase.firestore;
-
-    const stationsCollection = db.collection('stations')
-
-
-};
-
 export const getBikesAt = async (stationID) => {
 
     if (!stationID)
@@ -49,36 +40,3 @@ export const getBikesAt = async (stationID) => {
     return bikesArray;
 
 };
-
-
-const getBike = async (bikeID) => {
-    const db = firebase.firestore();
-    const bikesCollection = db.collection('bikes');
-
-    const bikeDocument = bikesCollection.doc(bikeID);
-
-    return bikeDocument.get()
-        .then(doc => {
-
-            return doc.data();
-
-
-        })
-        .catch(err => {
-            return err
-        });
-
-};
-
-
-// export const getNumberOfAvailableBikes = async (stationID) => {
-//
-//     const numberOfRoadBikes = await reservations.getNumberOfAvailableBikes(stationID, "road");
-//     const numberOfMountainBikes = await reservations.getNumberOfAvailableBikes(stationID, "mountain");
-//
-//     return {
-//         road: numberOfRoadBikes,
-//         mountain: numberOfMountainBikes
-//     };
-//
-// };

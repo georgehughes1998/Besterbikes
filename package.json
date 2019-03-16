@@ -18,7 +18,7 @@
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
     "semantic-ui-react": "^0.84.0",
-    "victory": "^32.0.1"
+    "victory": "^32.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
