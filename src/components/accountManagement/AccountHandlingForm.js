@@ -48,6 +48,7 @@ class AccountHandlingForm extends React.Component {
                 return;
 
             case "Save Changes":
+                console.log(formValues);
                 await updateUserDetails(formValues);
                 this.props.history.push("/");
                 return;

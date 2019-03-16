@@ -9,6 +9,7 @@ import {loadOperators} from "../../redux/actions";
 import OperatorDropdown from "../dropdowns/OperatorDropdown";
 import {makeNewTask} from "../../firebase/tasks";
 import FirebaseError from "../FirebaseError";
+import ConfirmationModal from "../ConfirmationModal";
 
 class CreateTask extends React.Component {
 
@@ -38,6 +39,7 @@ class CreateTask extends React.Component {
         })
             .then((obj) => {
                 console.log(obj)
+                this.setState({taskCreated: true});
             })
             .catch((err) => {
                 console.log(err);
@@ -50,16 +52,20 @@ class CreateTask extends React.Component {
         this.state = {
             category: "",
             description: "",
-            operator: ""
+            operator: "",
+            taskCreated: false
         }
     };
 
     componentDidMount() {
-        this.retrieveOperators()
-            .then((user) => {
-                if (user)
-                    this.retrieveOperators();
-            })
+        this.authenticateUser().then(
+            this.retrieveOperators()
+                .then((user) => {
+                    if (user)
+                        this.retrieveOperators();
+                })
+        )
+
     };
 
     render() {
@@ -76,8 +82,7 @@ class CreateTask extends React.Component {
                             search
                             placeholder='Select Category'
                             options={[{key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
-                                {key: "stationFault", value: "Station Fault", text: "Station Fault"},
-                                {key: "feedback", value: "Feedback", text: "Feedback"}
+                                {key: "stationFault", value: "Station Fault", text: "Station Fault"}
                             ]}
                             onChange={(param, data) => this.setState({"category": data.value})}
                         />
@@ -111,6 +116,16 @@ class CreateTask extends React.Component {
 
                     </Form>
                 </Container>
+
+                {this.state.taskCreated ?
+                    <ConfirmationModal
+                        icon='send'
+                        header='Task Created'
+                        text={`Your ${this.state.category} has been registered and assiged to an operator`}
+                        link="/"
+                        linkText="Return to main menu"
+                    />
+                    : null}
             </PageContainer>
         )
     }

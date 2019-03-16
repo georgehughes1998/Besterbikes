@@ -35,17 +35,16 @@ class EditAccount extends React.Component {
                 <AccountForm
                     fields={{
                         //TODO: Implement so these fields can be changed
-                        // Email: {
-                        //     name: 'email',
-                        //     label: 'Email',
-                        //     type: 'text',
-                        //     value: 'Hello'
-                        // },
-                        // Password: {
-                        //     name: 'password',
-                        //     label: 'Password',
-                        //     type: 'password'
-                        // },
+                        Email: {
+                            name: 'updateEmail',
+                            label: 'Email',
+                            type: 'text'
+                        },
+                        Password: {
+                            name: 'updatePassword',
+                            label: 'Password',
+                            type: 'password'
+                        },
                         Forename: {
                             name: 'updateForename',
                             label: 'First Name',
