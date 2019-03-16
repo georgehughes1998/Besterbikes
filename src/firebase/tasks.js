@@ -89,15 +89,19 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 
 
 //Return a list of task objects
-export const getTasks = async () => {
+export const getTasks = async (operatorID) => {
     //TODO: Test
+
+    //TODO: Add operatorID as argument
 
     const theTasksCollection = {};
     const theTasksArray = [];
     let counter = 0;
 
     const auth = firebase.auth();
-    const uid = auth.currentUser.uid;
+    let uid = auth.currentUser.uid;
+
+    if (operatorID) uid = operatorID;
 
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
