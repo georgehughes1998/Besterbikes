@@ -11,42 +11,40 @@ export const getStationsFilter = async ({isSpacesAvailable, isRoadBikes, isMount
 };
 
 export const getBikesAt = async (stationID) => {
-    //TODO: Return the bike object, not just the bike ID
+
+    const bikesArray = {road: {}, mountain: {}};
 
     const db = firebase.firestore();
 
     const stationsCollection = db.collection('stations');
     const bikesCollection = db.collection('bikes');
+    const bikesSnapshot = await bikesCollection.get();
+    const bikesDocs = bikesSnapshot.docs;
 
     const stationDocument = stationsCollection.doc(stationID);
+    const stationDoc = await stationDocument.get();
+    const stationData = stationDoc.data();
+    const roadBikesArray = stationData['bikes']['road']['bikesArray'];
+    const mountainBikesArray = stationData['bikes']['road']['bikesArray'];
 
-    return stationDocument.get()
-        .then(async doc => {
+    bikesDocs.forEach(bikeDoc => {
 
-            const stationData = doc.data();
+        const bikeID = bikeDoc.id;
+        const bikeData = bikeDoc.data();
 
-            console.log("Station Data:");
-            console.log(stationData);
-            const roadBikesArray = stationData['bikes']['road']['bikesArray'];
-            const mountainBikesArray = stationData['bikes']['mountain']['bikesArray'];
+        if (roadBikesArray.includes(bikeID))
+        {
+            bikesArray['road'][bikeID] = bikeData;
+        }
+        else if (mountainBikesArray.includes(bikeID))
+        {
+            bikesArray['mountain'][bikeID] = bikeData;
+        }
 
-            const bikesArray = {road: {}, mountain: {}};
+    });
 
-            for (let b in roadBikesArray) {
-                const currentBike = roadBikesArray[b];
+    return bikesArray;
 
-                bikesArray['road'][currentBike] = await getBike(currentBike);
-
-            }
-
-            for (let b in mountainBikesArray) {
-                const currentBike = mountainBikesArray[b];
-
-                bikesArray['mountain'][currentBike] = await getBike(currentBike);
-            }
-
-            return bikesArray;
-        });
 };
 
 
