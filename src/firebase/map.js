@@ -25,7 +25,7 @@ export const getBikesAt = async (stationID) => {
     const stationDoc = await stationDocument.get();
     const stationData = stationDoc.data();
     const roadBikesArray = stationData['bikes']['road']['bikesArray'];
-    const mountainBikesArray = stationData['bikes']['road']['bikesArray'];
+    const mountainBikesArray = stationData['bikes']['mountain']['bikesArray'];
 
     bikesDocs.forEach(bikeDoc => {
 
