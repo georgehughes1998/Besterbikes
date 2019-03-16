@@ -197,18 +197,22 @@ export const getUnlockedBikes = async () => {
 
     queryDocs.forEach(async singleDoc => {
         const singleDocData = singleDoc.data();
-
         const reservationID = singleDocData['reservation'];
-        const reservationDocument = reservationsCollection.doc(reservationID);
 
-        const reservationDoc = await reservationDocument.get();
-        const reservationData = reservationDoc.data();
+        if (reservationID) {
+            const reservationDocument = reservationsCollection.doc(reservationID);
 
-        console.log(reservationID);
+            const reservationDoc = await reservationDocument.get();
+            const reservationData = reservationDoc.data();
 
-        if (reservationData['user'] === uid) {
-            bikesArray.push(singleDoc.id);
+            console.log(reservationID);
+
+            if (reservationData['user'] === uid) {
+                bikesArray.push(singleDoc.id);
+            }
         }
+        else
+            console.log("Unlocked bike " + singleDoc.id + " found without reservation.");
 
     });
 
@@ -217,9 +221,7 @@ export const getUnlockedBikes = async () => {
 };
 
 
-export const unlockBikeOperator = async (bikeID) => {
-
-    //TODO: Test
+export const unlockBikeOperator = async (bikeID, force=false) => {
 
     const db = firebase.firestore();
 
@@ -243,10 +245,14 @@ export const unlockBikeOperator = async (bikeID) => {
     const stationDoc = stationsSnapshot.docs.pop();
     const stationID = stationDoc.id;
 
+    if (stationDoc[bikeType]['numberOfAvailableBikes'] === 0 && !force)
+        return 1;
+
     await removeBike(stationID, bikeID, bikeType);
     await bikeDocument.update('status', 'unlocked');
 
-
     await incrementStatistic("station." + stationID + ".unlockOperator");
+
+    return 0;
 
 };

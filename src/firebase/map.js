@@ -12,6 +12,9 @@ export const getStationsFilter = async ({isSpacesAvailable, isRoadBikes, isMount
 
 export const getBikesAt = async (stationID) => {
 
+    if (!stationID)
+        throw new Error("Must specify a station.");
+
     const bikesArray = {road: {}, mountain: {}};
 
     const db = firebase.firestore();
