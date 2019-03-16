@@ -25,6 +25,7 @@ import OperatorTasks from "./operator/OperatorTasks";
 import Users from "./manager/Users";
 import CustomerDetails from "./manager/CustomerDetails";
 import Statistics from "./manager/Statistics";
+import OperatorDetails from "./manager/OperatorDetails";
 
 
 //TODO: Add prop types and typescript to app
@@ -81,6 +82,7 @@ class App extends React.Component {
 
                                     {/*Operator Routes*/}
                                     <Route path="/operatorTasks" component={OperatorTasks}/>
+                                    <Route path="/operatordetails" component={OperatorDetails}/>
 
                                     {/*Manager Routes*/}
                                     <Route path="/users" component={Users}/>

@@ -10,7 +10,7 @@ import Comment from "semantic-ui-react/dist/commonjs/views/Comment/Comment";
 import TaskStatusDropdown from "./dropdowns/TaskStatusDropdown";
 import {getPrettyString} from "../dataHandling/prettyString";
 
-class listOfLiveTasks extends React.Component {
+class ListOfLiveTasks extends React.Component {
 
     renderItems = () => {
         if (this.props.items) {
@@ -157,7 +157,8 @@ class listOfLiveTasks extends React.Component {
             case "arrow alternate circle right outline":
                 this.setState({"modalTask": taskId});
                 this.setState({"modalHeader": "Reassign Task"});
-                this.setState({"modalSubHeader": "Please enter a comment for the reassigned task"});
+                this.setState({"modalSubHeader": "Please fill out the following fields to reassign a task"});
+                this.setState({"modaPlaceholder": "Comment"});
                 this.setState({"modalOpen": true});
                 return;
             default:
@@ -168,7 +169,7 @@ class listOfLiveTasks extends React.Component {
     closeModal = () => {
         console.log(this.state);
         this.props.handleReassignTask(this.state.modalTask, this.state.modalMessage, this.state.modalOperator);
-        this.setState({open: false});
+        this.setState({modalOpen: false});
     };
 
     constructor(props) {
@@ -209,11 +210,17 @@ class listOfLiveTasks extends React.Component {
                             <p>{this.state.modalSubHeader}</p>
                             <Input
                                 value={this.state.modalMessage}
-                                onChange={(e) => (this.setState({"modalMessage": e.target.value}))}
+                                onChange={(e) => {
+                                    (this.setState({"modalMessage": e.target.value}))
+                                }}
+                                placeholder={this.state.modaPlaceholder}
                             />
+                            <br/>
+                            <br/>
                             <OperatorDropdown
                                 operators={this.props.operators}
                                 onChange={(operator) => this.setState({"modalOperator": operator})}
+                                placeholder={"Please select an operator"}
                             />
                         </Form>
                     </Modal.Content>
@@ -242,4 +249,4 @@ class listOfLiveTasks extends React.Component {
     }
 }
 
-export default listOfLiveTasks;
+export default ListOfLiveTasks;

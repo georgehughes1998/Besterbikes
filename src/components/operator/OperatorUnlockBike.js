@@ -9,6 +9,7 @@ import connect from "react-redux/es/connect/connect";
 import {loadStations} from "../../redux/actions";
 import StationDropdown from "../dropdowns/StationDropdown";
 import BikesDropdown from "../dropdowns/BikesDropdown";
+import {unlockBikeOperator} from "../../firebase/stationSystem";
 
 class OperatorUnlockBike extends React.Component {
 
@@ -29,17 +30,20 @@ class OperatorUnlockBike extends React.Component {
     retrieveBikes = async (station) => {
 
         const obj = await getBikesAt(station);
+
         if (obj) {
+            let keys = Object.keys(obj.mountain);
             console.log(obj);
-            // const allBikes = [];
-            // obj.bikes.mountain.bikesArray.map((key, index) => {
-            //     allBikes.push(key)
-            // });
-            // obj.bikes.road.bikesArray.map((key, index) => {
-            //     allBikes.push(key)
-            // });
-            //
-            // this.setState({bikes: allBikes});
+            const allBikes = [];
+            Object.values(obj.mountain).map((key, index) => {
+                allBikes.push(keys[index])
+            });
+            keys = Object.keys(obj.road);
+            Object.values(obj.road).map((key, index) => {
+                allBikes.push(keys[index])
+            });
+            console.log(allBikes);
+            this.setState({bikes: allBikes});
         }else {
 
         }
@@ -48,16 +52,15 @@ class OperatorUnlockBike extends React.Component {
 
     handleUnlock = async () => {
         console.log(this.state);
-        // unlockBike(this.state.unlockTrip)
-        //     .then((bikeID) => {
-        //         if (bikeID) {
-        //             this.setState({activeBikeID: bikeID})
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         this.setState({firebaseError: err.message})
-        //     })
+        unlockBikeOperator(this.state.unlockBike)
+            .then((obj) => {
+                console.log(obj);
+                this.setState({activeBikeID: this.state.unlockBike})
+            })
+            .catch((err) => {
+                console.log(err);
+                this.setState({firebaseError: err.message})
+            })
     };
 
     constructor() {
@@ -98,6 +101,7 @@ class OperatorUnlockBike extends React.Component {
                     onChange={(station) => this.retrieveBikes(station)}
                 />
 
+                <br/>
                 {this.state.bikes.length>0?
                     <BikesDropdown
                         fluid

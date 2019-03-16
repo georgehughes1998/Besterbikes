@@ -47,17 +47,19 @@ class OperatorTasks extends React.Component {
                 })
             })
     };
+
     //Communicates with firebase to load in all trips
-    retrieveOperatorTasks = async () => {
-        const obj = await getTasks();
-        if (obj) {
-            this.props.loadTasks(obj);
-        }
+    retrieveOperatorTasks = () => {
+        return getTasks().then((obj => {
+            this.props.loadTasks(obj)
+        }))
     };
+
     //Communicates with firebase to load in all trips
     handleReassignTask = async (taskID, comment, operatorId) => {
         const obj = await reassignTask(taskID, comment, operatorId);
         if (obj) {
+            console.log(obj);
             this.retrieveOperatorTasks();
         }
     };
@@ -83,7 +85,6 @@ class OperatorTasks extends React.Component {
                     handleReassignTask={(taskID, comment, operatorId) => this.handleReassignTask(taskID, comment, operatorId)}
                 />
             </PageContainer>
-
         )
     }
 }

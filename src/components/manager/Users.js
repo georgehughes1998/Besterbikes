@@ -14,56 +14,48 @@ import withRouter from "react-router/es/withRouter";
 
 class Users extends React.Component {
 
-    handleUserClick = (customer, customerID) => {
+    handleUserClick = (user, userID) => {
         if (this.state.userType === "customer") {
             this.props.history.push({
                 pathname: '/customerdetails',
-                state: {customer: customer, customerID: customerID}
+                state: {customer: user, customerID: userID}
+            })
+        }else if(this.state.userType === "operator"){
+            this.props.history.push({
+                pathname: '/operatorDetails',
+                state: {operator: user, operatorID: userID}
             })
         }
     };
+
+    renderListJSX = (listOfUsers) => {
+        return Object.values(listOfUsers).map((key, index) => {
+
+            let keys = Object.keys(listOfUsers);
+
+            return (
+                <List.Item onClick={() => this.handleUserClick(key, keys[index])}>
+                    <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
+                    <List.Content>
+                        <List.Header>
+                            {`${key.name["firstName"]} ${key.name["lastName"]}`}
+                        </List.Header>
+
+                        <Header as={"h5"}>
+                            ID: {keys[index]}
+                        </Header>
+                    </List.Content>
+                </List.Item>
+
+            )
+        })
+    }
+
     renderListItems = () => {
-        if (this.state.userType === "customer" && this.props.customers) {
-            return Object.values(this.props.customers).map((key, index) => {
-
-                let keys = Object.keys(this.props.customers);
-
-                return (
-                    <List.Item onClick={() => this.handleUserClick(key, keys[index])}>
-                        <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
-                        <List.Content>
-                            <List.Header>
-                                {`${key.name["firstName"]} ${key.name["lastName"]}`}
-                            </List.Header>
-
-                            <Header as={"h5"}>
-                                ID: {keys[index]}
-                            </Header>
-                        </List.Content>
-                    </List.Item>
-
-                )
-            })
-        } else if (this.state.userType === "operator" && this.props.operators) {
-            return Object.values(this.props.operators).map((key, index) => {
-
-                let keys = Object.keys(this.props.operators);
-
-                return (
-                    <List.Item onClick={() => this.handleUserClick(keys, keys[index])}>
-                        <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
-                        <List.Content>
-                            <List.Header>
-                                {`${key.name["firstName"]} ${key.name["lastName"]}`}
-                            </List.Header>
-
-                            <Header as={"h4"}>
-                                ID: {keys[index]}
-                            </Header>
-                        </List.Content>
-                    </List.Item>
-                )
-            })
+        if (this.state.userType === "customer" && this.props.customers){
+            return this.renderListJSX(this.props.customers)
+        }else if(this.state.userType === "operator" && this.props.operators){
+            return this.renderListJSX(this.props.operators)
         } else {
             return (
                 <div>
@@ -90,8 +82,7 @@ class Users extends React.Component {
             console.log(userType, obj);
             {
                 userType === "customer" ? this.props.loadCustomers(obj) : this.props.loadOperators(obj)
-            }
-            ;
+            };
         } else {
             throw new SubmissionError({
                 _error: obj.message

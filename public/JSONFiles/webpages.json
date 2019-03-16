@@ -60,9 +60,9 @@
       "name": "Statistics"
     },
     {
-      "link": "/tasks",
-      "icon": "tasks",
-      "name": "Tasks"
+      "link": "/createtask",
+      "icon": "plus",
+      "name": "Create Task"
     }
   ]
 }
