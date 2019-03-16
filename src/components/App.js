@@ -24,7 +24,7 @@ import './naviagtion/sideBarOverride.css'
 import OperatorTasks from "./operator/OperatorTasks";
 import Users from "./manager/Users";
 import CustomerDetails from "./manager/CustomerDetails";
-import Statistics from "./manager/Statistics";
+import Statistics from "./manager/statistics/Statistics";
 import OperatorDetails from "./manager/OperatorDetails";
 
 
