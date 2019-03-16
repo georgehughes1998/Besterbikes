@@ -42,7 +42,7 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
     const statisticsCollection = db.collection('statistics');
 
     const day = getDay();
-    const month = getMonth()+1;
+    const month = getMonth() + 1;
     const year = getYear();
 
     const statisticsQuery = statisticsCollection
@@ -62,7 +62,7 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
         //statisticObject[statisticType] = incrementAmount;
 
         const statisticDoc = await statisticsCollection.add(statisticObject);
-        await statisticDoc.update(statisticType,incrementAmount);
+        await statisticDoc.update(statisticType, incrementAmount);
 
     }
     else //If there exists a document with this date
@@ -212,10 +212,9 @@ export const getAuthenticationStatistics = async (year = -1, month = -1, day = -
         "authentication.updateDetails"
     ];
 
-    return getStatistics(statisticPaths,year,month,day);
+    return getStatistics(statisticPaths, year, month, day);
 
 };
-
 
 
 const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) => {
@@ -322,7 +321,7 @@ const getSingleStatistic = async (statisticType, timeScale) => {
     const statisticsCollection = db.collection('statistics');
 
     const day = getDay();
-    const month = getMonth()+1;
+    const month = getMonth() + 1;
     const year = getYear();
 
     let statisticsQuery;

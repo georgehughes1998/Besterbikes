@@ -14,7 +14,7 @@ import EditAccount from "./accountManagement/EditAccount";
 import ReserveBikeContainer from "./reservationHandling/ReserveBikeContainer";
 import BesterbikesMap from "./map/BesterbikesMap";
 import MyTrips from "./customer/MyTrips";
-import {getJSONFromFile} from "../handleJSON";
+import {getJSONFromFile} from "../dataHandling/handleJSON";
 import UnlockBike from "./UnlockBike";
 import StationSystemSimulation from "./StationSystemSimulation";
 import Report from "./customer/Report";

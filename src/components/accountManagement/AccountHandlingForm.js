@@ -103,8 +103,8 @@ class AccountHandlingForm extends React.Component {
     //Renders main body of an accountManagement handling form
     render() {
         return (
-
             <Container>
+
                 <Form onSubmit={this.props.handleSubmit(this.onSubmit)} error>
 
                     {this.renderFields}

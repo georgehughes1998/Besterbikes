@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import {Header, List} from "semantic-ui-react"
 
-import {getJSONFromFile} from '../../handleJSON.js'
+import {getJSONFromFile} from '../../dataHandling/handleJSON.js'
 import {getUser} from "../../firebase/authentication";
 import {getNumberOfAvailableBikes} from "../../firebase/reservations";
 import {withRouter} from "react-router-dom";
@@ -24,6 +24,9 @@ export class BesterbikesMap extends Component {
                     this.props.history.push("signin");
                 return user
             });
+    };
+    handleRedirect = (link) => {
+        this.props.history.push(link);
     };
 
     constructor(props) {
@@ -79,12 +82,10 @@ export class BesterbikesMap extends Component {
         });
     }
 
-
     async getMapJSON() {
         const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
         this.setState({mapJSON: stations})
     }
-
 
     renderMarkers() {
         const stations = this.state.mapJSON;
@@ -111,8 +112,8 @@ export class BesterbikesMap extends Component {
                     if (mountainBikes)
                         bikesAvailable += mountainBikes;
 
-                    console.log("At " + stationName + ", there are " + roadBikes + " road bikes and " + mountainBikes +
-                        " mountain bikes " + " with a total of " + bikesAvailable + " available bikes.");
+                    // console.log("At " + stationName + ", there are " + roadBikes + " road bikes and " + mountainBikes +
+                    //     " mountain bikes " + " with a total of " + bikesAvailable + " available bikes.");
 
                 }
 
@@ -137,10 +138,6 @@ export class BesterbikesMap extends Component {
     componentDidUpdate() {
         console.log("Updated");
     }
-
-    handleRedirect = (link) => {
-        this.props.history.push(link);
-    };
 
     render() {
         // if (!this.props.stations) {
@@ -194,44 +191,44 @@ export class BesterbikesMap extends Component {
                                     <List.Item>
 
                                         {/*<List.Content>*/}
-                                            <List.Header>
-                                                <Icon name={"bicycle"}/>
-                                                Mountain bikes
-                                            </List.Header>
-                                            <List.Description>
-                                                {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} avaiable`}
-                                            </List.Description>
+                                        <List.Header>
+                                            <Icon name={"bicycle"}/>
+                                            Mountain bikes
+                                        </List.Header>
+                                        <List.Description>
+                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} avaiable`}
+                                        </List.Description>
                                         {/*</List.Content>*/}
                                     </List.Item>
 
                                     <List.Item>
 
-                                    <List.Header>
-                                        <Icon name={"bicycle"}/>
-                                        Mountain bikes
-                                    </List.Header>
-                                            <List.Description>
-                                                {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} avaiable`}
-                                            </List.Description>
+                                        <List.Header>
+                                            <Icon name={"bicycle"}/>
+                                            Mountain bikes
+                                        </List.Header>
+                                        <List.Description>
+                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} avaiable`}
+                                        </List.Description>
                                     </List.Item>
                                 </List>
                                 <Image src={this.state.activeMarker.stationDetails["url"]} alt={'new'}
                                        style={{maxWidth: "200px"}}/>
 
-                                    <br/>
-                                    {/*<Grid>*/}
-                                        {/*<Grid.Column>*/}
-                                            {/*/!*TODO: On click not working *!/*/}
-                                            {/*<Container textAlign='center' >*/}
-                                                {/*<Icon name={"calendar"} color={"blue"} size={"big"} onClick={() => this.handleRedirect("./reservebike")}/>*/}
-                                            {/*</Container>*/}
-                                        {/*</Grid.Column>*/}
-                                        {/*<Grid.Column>*/}
-                                            {/*<Container textAlign='center'>*/}
-                                                {/*<Icon name={"exclamation circle"} color={"red"} size={"big"} onClick={() => this.handleRedirect("./report")}/>*/}
-                                            {/*</Container>*/}
-                                        {/*</Grid.Column>*/}
-                                    {/*</Grid>*/}
+                                <br/>
+                                {/*<Grid>*/}
+                                {/*<Grid.Column>*/}
+                                {/*/!*TODO: On click not working *!/*/}
+                                {/*<Container textAlign='center' >*/}
+                                {/*<Icon name={"calendar"} color={"blue"} size={"big"} onClick={() => this.handleRedirect("./reservebike")}/>*/}
+                                {/*</Container>*/}
+                                {/*</Grid.Column>*/}
+                                {/*<Grid.Column>*/}
+                                {/*<Container textAlign='center'>*/}
+                                {/*<Icon name={"exclamation circle"} color={"red"} size={"big"} onClick={() => this.handleRedirect("./report")}/>*/}
+                                {/*</Container>*/}
+                                {/*</Grid.Column>*/}
+                                {/*</Grid>*/}
 
 
                             </div>

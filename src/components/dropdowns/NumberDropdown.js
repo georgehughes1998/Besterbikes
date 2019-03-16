@@ -6,14 +6,14 @@ const NumberDropdown = (props) => {
     const createDropdownObject = () => {
 
         let DropdownArray = [];
-        let keys = [1,2,3,4,5,6,7,8,9,10];
+        let keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         keys.map((key, index) => {
             let text;
 
-            if(key === 1) {
+            if (key === 1) {
                 text = `${key} Bike`
-            }else {
+            } else {
                 text = `${key} Bikes`
             }
 
@@ -24,8 +24,9 @@ const NumberDropdown = (props) => {
         return DropdownArray
     };
 
-    return(
+    return (
         <Dropdown
+            clearable
             fluid
             selection
             search

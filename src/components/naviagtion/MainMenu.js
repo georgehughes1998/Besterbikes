@@ -4,7 +4,7 @@ import SignOut from "../accountManagement/SignOut";
 import {getUser} from "../../firebase/authentication";
 import {Container, Grid, Header, Icon} from "semantic-ui-react";
 import PageContainer from "../PageContainer";
-import {getJSONFromFile} from "../../handleJSON";
+import {getJSONFromFile} from "../../dataHandling/handleJSON";
 import connect from "react-redux/es/connect/connect";
 import {loadWebPages} from "../../redux/actions/index";
 
@@ -12,35 +12,52 @@ import {loadWebPages} from "../../redux/actions/index";
 //TODO: Refactor main menu and make pretty
 class MainMenu extends React.Component {
 
-    constructor(props){
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = async () => {
+        const user = await getUser();
+        if (user === null) {
+            this.props.history.push("signin");
+        } else if (user.type === "customer") {
+            this.setState({"userType": "customer"})
+        } else if (user.type === "operator") {
+            this.setState({"userType": "operator"})
+        } else if (user.type === "manager") {
+            this.setState({"userType": "manager"})
+        }
+
+        return user;
+    };
+
+    constructor(props) {
         super(props);
         this.state =
             {
                 userType: "",
-                webPages:{},
-                menuItems:[
-                {
-                    link: "",
-                    icon: "",
-                    name: ""
-                },
-                {
-                    link: "",
-                    icon: "",
-                    name: ""
-                },
-                {
-                    link: "",
-                    icon: "",
-                    name: ""
-                },
-                {
-                    link: "",
-                    icon: "",
-                    name: ""
-                },
-            ]}
-        };
+                webPages: {},
+                menuItems: [
+                    {
+                        link: "",
+                        icon: "",
+                        name: ""
+                    },
+                    {
+                        link: "",
+                        icon: "",
+                        name: ""
+                    },
+                    {
+                        link: "",
+                        icon: "",
+                        name: ""
+                    },
+                    {
+                        link: "",
+                        icon: "",
+                        name: ""
+                    },
+                ]
+            }
+    };
 
     async componentDidMount() {
         console.log(this.state);
@@ -57,24 +74,8 @@ class MainMenu extends React.Component {
         this.setState({webPages: webPages});
     }
 
-    //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = async () => {
-        const user = await getUser();
-        if (user === null){
-            this.props.history.push("signin");
-        }else if (user.type === "customer") {
-            this.setState({"userType" : "customer"})
-        }else if (user.type === "operator") {
-            this.setState({"userType" : "operator"})
-        }else if (user.type === "manager") {
-            this.setState({"userType" : "manager"})
-        }
-
-        return user;
-    };
-
     renderUserSpecificContent() {
-        if(this.state.userType!=null){
+        if (this.state.userType != null) {
             switch (this.state.userType) {
                 case "customer":
                     this.setState({menuItems: this.state.webPages.customer});
@@ -93,10 +94,10 @@ class MainMenu extends React.Component {
         }
     }
 
-    renderMenuIcons(){
+    renderMenuIcons() {
         let icons = [];
 
-        if(this.state.menuItems) {
+        if (this.state.menuItems) {
             // for (let i = 0; i < 2; i++) {
             //
             //     icons.push(
@@ -114,44 +115,48 @@ class MainMenu extends React.Component {
 
             //TODO: make this less awful
             icons.push(
-                <Grid verticalAlign='middle' centered columns = {2}>
-                <Grid.Row centered >
-                    <Grid.Column>
-                        <Link to={this.state.menuItems[0].link ? this.state.menuItems[0].link : "/signin"}>
-                            <Container textAlign='center'>
-                                <Icon name={this.state.menuItems[0].icon} size="huge" center  color="black" />
-                                <Header as="h3" textAlign='center' color="blue">{this.state.menuItems[0].name}</Header>
-                            </Container>
-                        </Link>
-                    </Grid.Column>
-                    <Grid.Column >
-                        <Link to={this.state.menuItems[1].link ? this.state.menuItems[1].link : "/signin"}>
-                            <Container textAlign='center'>
-                                <Icon name={this.state.menuItems[1].icon} size="huge" center color="black"/>
-                                <Header as="h3" textAlign='center' color="blue">{this.state.menuItems[1].name}</Header>
-                            </Container>
-                        </Link>
-                    </Grid.Column>
-                </Grid.Row>
+                <Grid verticalAlign='middle' centered columns={2}>
+                    <Grid.Row centered>
+                        <Grid.Column>
+                            <Link to={this.state.menuItems[0].link ? this.state.menuItems[0].link : "/signin"}>
+                                <Container textAlign='center'>
+                                    <Icon name={this.state.menuItems[0].icon} size="huge" center color="black"/>
+                                    <Header as="h3" textAlign='center'
+                                            color="blue">{this.state.menuItems[0].name}</Header>
+                                </Container>
+                            </Link>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Link to={this.state.menuItems[1].link ? this.state.menuItems[1].link : "/signin"}>
+                                <Container textAlign='center'>
+                                    <Icon name={this.state.menuItems[1].icon} size="huge" center color="black"/>
+                                    <Header as="h3" textAlign='center'
+                                            color="blue">{this.state.menuItems[1].name}</Header>
+                                </Container>
+                            </Link>
+                        </Grid.Column>
+                    </Grid.Row>
 
-                <Grid.Row centered>
-                    <Grid.Column >
-                        <Link to={this.state.menuItems[2].link ? this.state.menuItems[2].link : "/signin"}>
-                            <Container textAlign='center'>
-                                <Icon name={this.state.menuItems[2].icon} size="huge" center  color="black" />
-                                <Header as="h3" textAlign='center' color="blue">{this.state.menuItems[2].name}</Header>
-                            </Container>
-                        </Link>
-                    </Grid.Column>
-                    <Grid.Column >
-                        <Link to={this.state.menuItems[3].link ? this.state.menuItems[3].link : "/signin"}>
-                            <Container textAlign='center'>
-                                <Icon name={this.state.menuItems[3].icon} size="huge" center  color="black" />
-                                <Header as="h3" textAlign='center' color="blue">{this.state.menuItems[3].name}</Header>
-                            </Container>
-                        </Link>
-                    </Grid.Column>
-                </Grid.Row>
+                    <Grid.Row centered>
+                        <Grid.Column>
+                            <Link to={this.state.menuItems[2].link ? this.state.menuItems[2].link : "/signin"}>
+                                <Container textAlign='center'>
+                                    <Icon name={this.state.menuItems[2].icon} size="huge" center color="black"/>
+                                    <Header as="h3" textAlign='center'
+                                            color="blue">{this.state.menuItems[2].name}</Header>
+                                </Container>
+                            </Link>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Link to={this.state.menuItems[3].link ? this.state.menuItems[3].link : "/signin"}>
+                                <Container textAlign='center'>
+                                    <Icon name={this.state.menuItems[3].icon} size="huge" center color="black"/>
+                                    <Header as="h3" textAlign='center'
+                                            color="blue">{this.state.menuItems[3].name}</Header>
+                                </Container>
+                            </Link>
+                        </Grid.Column>
+                    </Grid.Row>
                 </Grid>
             )
 

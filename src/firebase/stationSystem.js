@@ -10,7 +10,9 @@ const FieldValue = firebase.firestore.FieldValue;
 export const unlockBike = async (reservationID) => {
     //Unlocks a bike at the given station and the given reservation
 
-    if (!reservationID) {throw new Error("No reservation selected")}
+    if (!reservationID) {
+        throw new Error("No reservation selected")
+    }
 
     const db = firebase.firestore();
 
@@ -118,14 +120,14 @@ const selectBike = async (stationID, bikeType) => {
     const bikesArray = stationData['bikes'][bikeType]['bikesArray'];
     let bikeID;
 
-    if (bikesArray.length > 0)
-    {
+    if (bikesArray.length > 0) {
         //Select a random bike
         const randomNumber = Math.round(Math.random() * (bikesArray.length - 1));
         bikeID = bikesArray[randomNumber];
     }
-    else
-        {throw new Error("There are no bikes at this station");}
+    else {
+        throw new Error("There are no bikes at this station");
+    }
 
     await removeBike(stationID, bikeID, bikeType);
 
@@ -215,7 +217,6 @@ export const getUnlockedBikes = async () => {
 };
 
 
-
 export const unlockBikeOperator = async (bikeID) => {
 
     //TODO: Test
@@ -229,7 +230,7 @@ export const unlockBikeOperator = async (bikeID) => {
     const bikeType = bikeData['type'];
 
     const stationsCollection = db.collection('stations');
-    const stationsQuery = stationsCollection.where(`bikes.${bikeType}.bikesArray`,"array-contains", bikeID);
+    const stationsQuery = stationsCollection.where(`bikes.${bikeType}.bikesArray`, "array-contains", bikeID);
     const stationsSnapshot = await stationsQuery.get();
 
     //Check that the bike is not at multiple stations.
@@ -242,7 +243,7 @@ export const unlockBikeOperator = async (bikeID) => {
     const stationDoc = stationsSnapshot.docs.pop();
     const stationID = stationDoc.id;
 
-    await removeBike(stationID,bikeID,bikeType);
+    await removeBike(stationID, bikeID, bikeType);
     await bikeDocument.update('status', 'unlocked');
 
 

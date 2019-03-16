@@ -3,6 +3,8 @@ import {Grid, Header, Icon, Segment} from "semantic-ui-react";
 import React from "react";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import withRouter from "react-router/es/withRouter";
+import TripStatusDropdown from "./dropdowns/TripStatusDropdown";
+import {getPrettyString} from "../dataHandling/prettyString";
 
 class ListOfLiveTrips extends React.Component {
 
@@ -18,7 +20,6 @@ class ListOfLiveTrips extends React.Component {
             })
         }
     };
-
     renderIcons = (iconNames, iconColors, status, taskId) => {
         return Object.values(iconNames).map((key, index) => {
             return (
@@ -31,48 +32,39 @@ class ListOfLiveTrips extends React.Component {
             )
         })
     };
-
     //Render single reservation with provided paramters
-    renderItem = ({color, iconNames, iconColors, status, headerContent, headerSub, tripId, image}) => {
-        return (
-            //TODO: Make this into own prop
-            <Segment color={color} fluid>
-                <Grid>
-                    <Grid.Row>
-                        <Grid.Column width={13}>
-                            <Header
-                                as='h1'
-                                content={headerContent}
-                            />
-                            <Header
-                                as='h5'
-                                content={`${headerSub}`}
-                                subheader={`Trip ID: ${tripId}`}
-                            />
+    renderItem = ({color, iconNames, iconColors, status, displayStatus, headerContent, headerSub, tripId, image}) => {
+        console.log(this.state.viewTripsWithStatus, status);
+        if (this.state.viewTripsWithStatus.length === 0 || this.state.viewTripsWithStatus.includes(status)) {
+            return (
+                //TODO: Make this into own prop
+                <Segment color={color} fluid>
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column width={13}>
+                                <Header
+                                    as='h1'
+                                    content={headerContent}
+                                />
+                                <Header
+                                    as='h5'
+                                    content={`${headerSub}`}
+                                    subheader={`Trip ID: ${tripId}`}
+                                />
 
-                            <Header as="h4" color={color}>{status}</Header>
-                        </Grid.Column>
+                                <Header as="h4" color={color}>{displayStatus}</Header>
+                            </Grid.Column>
 
-                        <Grid.Column width={1} verticalAlign='middle'>
-                                     {this.renderIcons(iconNames, iconColors, status, tripId)}
-                        </Grid.Column>
-                    </Grid.Row>
+                            <Grid.Column width={1} verticalAlign='middle'>
+                                {this.renderIcons(iconNames, iconColors, status, tripId)}
+                            </Grid.Column>
+                        </Grid.Row>
 
-                    <Grid.Row>
-                        <Grid.Column>
-                            {/*<Segment>*/}
-                            {/*/!*<BesterbikesMap/>*!/*/}
-                            {/*{console.log(image)}*/}
-                            {/*<Image src={image}/>*/}
-                            {/*</Segment>*/}
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            </Segment>
-        )
+                    </Grid>
+                </Segment>
+            )
+        }
     };
-
-
     getItemValues = (trip, index) => {
 
         const stationKey = trip["start"]["station"];
@@ -80,8 +72,8 @@ class ListOfLiveTrips extends React.Component {
         const startTime = trip["start"]["time"]["time"];
         const image = this.props.stations[stationKey]["url"];
         const headerSub = `My ${trip.status} trip from 
-                            ${trip.start["station"]} on 
-                            ${trip.start["time"]["date"]} at 
+                            ${getPrettyString(trip.start["station"])} on 
+                            ${getPrettyString(trip.start["time"]["date"])} at 
                             ${trip.start["time"]["time"]}`;
 
         let keys = Object.keys(this.props.items);
@@ -92,7 +84,8 @@ class ListOfLiveTrips extends React.Component {
                     color: "purple",
                     iconNames: ["cancel", "exclamation circle"],
                     iconColors: ["red", "red"],
-                    status: "Reserved",
+                    status: "inactive",
+                    displayStatus: "Reserved",
                     headerContent: stationName,
                     // `Bike available from ${startTime}`,
                     headerSub,
@@ -104,7 +97,8 @@ class ListOfLiveTrips extends React.Component {
                     color: "yellow",
                     iconNames: ["lock open", "cancel", "exclamation circle"],
                     iconColors: ["blue", "red", "red"],
-                    status: "Ready to unlock",
+                    status: "active",
+                    displayStatus: "Ready to Unlock",
                     headerContent: stationName,
                     // `Bike available until ${startTime}`,
                     headerSub,
@@ -116,7 +110,8 @@ class ListOfLiveTrips extends React.Component {
                     color: "green",
                     iconNames: ["exclamation circle"],
                     iconColors: ["red"],
-                    status: "In Progress",
+                    status: "unlocked",
+                    displayStatus: "In Progress",
                     headerContent: stationName,
                     //TODO: Implement current duration calculator
                     // "Current duration: 4hrs 3mins"
@@ -130,7 +125,8 @@ class ListOfLiveTrips extends React.Component {
                     color: "grey",
                     iconNames: ["exclamation circle"],
                     iconColors: ["red"],
-                    status: "Complete",
+                    status: "complete",
+                    displayStatus: "Complete",
                     headerContent: stationName,
                     //TODO: Implement end station and total duration calculator
                     // "To Edinburgh University Library lasting 4hrs 3mins",
@@ -143,7 +139,8 @@ class ListOfLiveTrips extends React.Component {
                     color: "red",
                     iconNames: ["exclamation circle"],
                     iconColors: ["red"],
-                    status: "Cancelled",
+                    status: "cancelled",
+                    displayStatus: "Cancelled",
                     headerContent: stationName,
                     headerSub,
                     tripId: keys[index],
@@ -153,7 +150,6 @@ class ListOfLiveTrips extends React.Component {
                 return (<div>No more trips to display</div>)
         }
     };
-
     //Function to handle click of an icon depending on it's functionality
     handleIconClick = (icon, tripId) => {
         console.log(icon);
@@ -174,16 +170,34 @@ class ListOfLiveTrips extends React.Component {
         }
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            viewTripsWithStatus: []
+        };
+    }
+
     render() {
+        console.log(this.state);
         return (
             <div>
                 <br/>
                 <Container textAlign='center'>
-                    <Header as={"h1"}>Trips</Header>
+                    <TripStatusDropdown
+                        onChange={(value) => this.setState({"viewTripsWithStatus": value})}
+                    />
                 </Container>
                 <br/>
 
                 {this.renderItems()}
+
+                <br/>
+                <Segment>
+                    <Header as='h2' icon textAlign='center'>
+                        {/*<Icon name='battery empty'/>*/}
+                        <Header.Content>No more trips to display</Header.Content>
+                    </Header>
+                </Segment>
             </div>
         )
     }

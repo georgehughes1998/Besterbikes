@@ -2,7 +2,7 @@
 export const getJSONFromFile = (jsonFilePath) => {
 
     return fetch(jsonFilePath, {
-        headers : {
+        headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }

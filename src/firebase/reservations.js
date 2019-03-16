@@ -1,7 +1,6 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
-import {getCurrentDateString, getCurrentTimeString, getTimeString} from "./time";
-import {makeReport} from "./reports";
+import {getCurrentDateString, getCurrentTimeString} from "./time";
 import {makeNewTask} from "./tasks";
 
 const FieldValue = firebase.firestore.FieldValue;
@@ -164,17 +163,16 @@ export const setNumberOfAvailableBikes = async (stationID, numberOfAvailableBike
     await thisStationDocument.update(bikesObject);
 
     //Check for station over capacity
-    if ( (numberOfAvailableBikes/stationCapacity) > maxCapacityPercentage)
-    {
+    if ((numberOfAvailableBikes / stationCapacity) > maxCapacityPercentage) {
         const category = "Station Over Capacity Threshold";
         const comment = "Alert: the attached station is over "
-            + (maxCapacityPercentage*100).toString()
+            + (maxCapacityPercentage * 100).toString()
             + "% full.";
 
         const tasksCollection = db.collection('tasks');
-        const tasksQuery = tasksCollection.where('category', '==',category)
-            .where('status','==','pending')
-            .where('station','==',stationID);
+        const tasksQuery = tasksCollection.where('category', '==', category)
+            .where('status', '==', 'pending')
+            .where('station', '==', stationID);
 
         const tasksSnapshot = await tasksQuery.get();
 
@@ -182,21 +180,20 @@ export const setNumberOfAvailableBikes = async (stationID, numberOfAvailableBike
             await makeNewTask({category, comment, station: stationID})
     }
 
-    else if ( (numberOfAvailableBikes/stationCapacity) < minCapacityPercentage)
-    {
+    else if ((numberOfAvailableBikes / stationCapacity) < minCapacityPercentage) {
         const category = "Station Under Capacity Threshold";
         const comment = "Alert: the attached station is under "
-            + (minCapacityPercentage*100).toString()
+            + (minCapacityPercentage * 100).toString()
             + "% full.";
 
         const tasksCollection = db.collection('tasks');
-        const tasksQuery = tasksCollection.where('category', '==',category)
-            .where('status','==','pending')
-            .where('station','==',stationID);
+        const tasksQuery = tasksCollection.where('category', '==', category)
+            .where('status', '==', 'pending')
+            .where('station', '==', stationID);
 
         const tasksSnapshot = await tasksQuery.get();
-         if (tasksSnapshot.empty)
-             await makeNewTask({category, comment, station: stationID});
+        if (tasksSnapshot.empty)
+            await makeNewTask({category, comment, station: stationID});
     }
 
     return "success"
@@ -423,7 +420,7 @@ export const updateTrips = async () => {
             const singleDocTime = singleDocData['start']['time']['time'];
 
             const time = new Date();
-            time.setHours(time.getHours()-maxActiveHoursLimit);
+            time.setHours(time.getHours() - maxActiveHoursLimit);
 
             const singleDocDateDate = Date.parse(singleDocDate + " " + singleDocTime);
 
@@ -434,8 +431,6 @@ export const updateTrips = async () => {
             }
         }
     });
-
-
 
 
     await incrementStatistic("reservation.update");

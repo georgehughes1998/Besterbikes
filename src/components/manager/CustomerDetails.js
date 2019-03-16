@@ -14,14 +14,6 @@ import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 
 class CustomerDetails extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentUser: {}
-        };
-    }
-
-
     //Cancels a reservation using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {
         return cancelReservation(tripId)
@@ -36,7 +28,6 @@ class CustomerDetails extends React.Component {
                 })
             })
     };
-
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
@@ -50,21 +41,12 @@ class CustomerDetails extends React.Component {
         this.setState({"currentUser": user});
         return user;
     };
-
-    componentDidMount() {
-        this.authenticateUser()
-            .then((user) => {
-                if (user)
-                    this.retrieveFirebaseTrips();
-            })
-    }
-
     //Communicates with firebase to load in all trips
     retrieveFirebaseTrips = async () => {
         console.log(this.state.currentUser.uid);
         console.log(this.props.history.location.state);
 
-        if(this.props.history.location.state.customerID){
+        if (this.props.history.location.state.customerID) {
             const obj = await getTrips("", this.props.history.location.state.customerID);
 
             if (obj) {
@@ -78,6 +60,21 @@ class CustomerDetails extends React.Component {
         }
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: {}
+        };
+    }
+
+    componentDidMount() {
+        this.authenticateUser()
+            .then((user) => {
+                if (user)
+                    this.retrieveFirebaseTrips();
+            })
+    }
+
     render() {
         return (
             <PageContainer>
@@ -88,19 +85,19 @@ class CustomerDetails extends React.Component {
                         <Header as={"h1"}>Customer Details</Header>
                         <p>
                             <strong>Forename: </strong>
-                            {this.props.history.location.state.customer.name?this.props.history.location.state.customer.name["firstName"]:null}
+                            {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["firstName"] : null}
                         </p>
                         <p>
                             <strong>Surname: </strong>
-                            {this.props.history.location.state.customer.name?this.props.history.location.state.customer.name["lastName"]:null}
+                            {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["lastName"] : null}
                         </p>
                         <p>
                             <strong>Date of Birth: </strong>
-                            {this.props.history.location.state.customer.dateOfBirth?this.props.history.location.state.customer.dateOfBirth:null}
+                            {this.props.history.location.state.customer.dateOfBirth ? this.props.history.location.state.customer.dateOfBirth : null}
                         </p>
                         <p>
                             <strong>ID: </strong>
-                            {this.props.history.location.state.customerID?this.props.history.location.state.customerID:null}
+                            {this.props.history.location.state.customerID ? this.props.history.location.state.customerID : null}
                         </p>
 
                         <Button onClick={() => this.props.history.push("/users")}>

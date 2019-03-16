@@ -20,10 +20,10 @@ const Payment = (props) => {
 
                 fields={{
                     paymentMethod: {
-                            name: 'paymentMethod',
-                            label: 'DETAILS OF PAYMENT SCHEME',
-                            type: 'checkbox',
-                        },
+                        name: 'paymentMethod',
+                        label: 'DETAILS OF PAYMENT SCHEME',
+                        type: 'checkbox',
+                    },
                     // cardNumber: {
                     //     name: 'cardNumber',
                     //     label: 'Card Number',
