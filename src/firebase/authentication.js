@@ -138,22 +138,17 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
 
-
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
 
-    const userDetails = {};
-
-    if (updateForename)       userDetails['name']['forename'] = updateForename;
-    if (updateSurname)        userDetails['name']['lastName'] = updateSurname;
-    if (updateDateOfBirth)    userDetails['dateOfBirth'] = updateDateOfBirth;
+    //Update given fields
+    if (updateForename)       await usersDoc.update("name.firstName",updateForename);
+    if (updateSurname)        await usersDoc.update("name.lastName",updateSurname);
+    if (updateDateOfBirth)    await usersDoc.update("dateOfBirth",updateDateOfBirth);
     if (updateEmail)          await auth.currentUser.updateEmail(updateEmail);
     if (updatePassword)       await auth.currentUser.updatePassword(updatePassword);
 
-    console.log(userDetails);
-
-    await usersDoc.update(userDetails);
     await incrementStatistic("authentication.updateDetails");
 
     return "success"
