@@ -83,6 +83,7 @@ export const getUser = async (userID = "") => {
         if (userDetailsSnapshot.exists) {
             const userDetailsData = userDetailsSnapshot.data();
             userDetailsData["uid"] = userID;
+            userDetailsData["email"] = firebase.auth().currentUser.email;
 
             return userDetailsData;
         }
