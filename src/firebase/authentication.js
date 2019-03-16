@@ -133,7 +133,7 @@ const setUserDetails = ({forename, surname, dateOfBirth}) => {
 };
 
 
-export const updateUserDetails = async ({email, password, forename, surname, dateOfBirth}) => {
+export const updateUserDetails = async ({updateEmail, updatePassword, updateForename, updateSurname, updateDateOfBirth}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -145,14 +145,15 @@ export const updateUserDetails = async ({email, password, forename, surname, dat
 
     const userDetails = {};
 
-    if (forename)       userDetails.name.forename = forename;
-    if (surname)        userDetails.name.lastName = surname;
-    if (dateOfBirth)    userDetails.dateOfBirth = dateOfBirth;
-    if (email)          await auth.currentUser.updateEmail(email);
-    if (password)       await auth.currentUser.updatePassword(password);
+    if (updateForename)       userDetails['name']['forename'] = updateForename;
+    if (updateSurname)        userDetails['name']['lastName'] = updateSurname;
+    if (updateDateOfBirth)    userDetails['dateOfBirth'] = updateDateOfBirth;
+    if (updateEmail)          await auth.currentUser.updateEmail(updateEmail);
+    if (updatePassword)       await auth.currentUser.updatePassword(updatePassword);
 
+    console.log(userDetails);
 
-    await usersDoc.set(userDetails);
+    await usersDoc.update(userDetails);
     await incrementStatistic("authentication.updateDetails");
 
     return "success"
