@@ -1,18 +1,25 @@
 import React from 'react'
 import withRouter from "react-router/es/withRouter";
 import PageContainer from "../PageContainer";
-import ListOfLiveTrips from "../ListOfLiveTrips";
 import {getUser} from "../../firebase/authentication";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import {SubmissionError} from "redux-form";
 import connect from "react-redux/es/connect/connect";
-import {loadStations, loadTrips} from "../../redux/actions";
+import {loadOperators, loadStations, loadTasks} from "../../redux/actions";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
-import {getTasks} from "../../firebase/tasks";
+import {getTasks, reassignTask, updateTaskStatus} from "../../firebase/tasks";
+import ListOfLiveTasks from "../ListOfLiveTasks";
+import {getJSONFromFile} from "../../dataHandling/handleJSON";
+import {getOperators} from "../../firebase/users";
 
 class OperatorDetails extends React.Component {
+
+    async getStations() {
+        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+        this.props.loadStations(stations)
+    }
 
     //Cancels a reservation using firebase and updates displayed trips
     handleUpdateStatus = (taskId, status) => {
@@ -53,11 +60,12 @@ class OperatorDetails extends React.Component {
         return user;
     };
     //Communicates with firebase to load in all trips
-    retrieveOperatorTasks = async () => {
-        const obj = await getTasks();
-        if (obj) {
+    retrieveOperatorTasks = () => {
+        console.log(this.props.history.location.state.operatorID);
+        return getTasks(this.props.history.location.state.operatorID).then((obj => {
+            console.log(obj);
             this.props.loadTasks(obj);
-        }
+        }));
     };
 
     constructor(props) {
@@ -67,11 +75,22 @@ class OperatorDetails extends React.Component {
         };
     }
 
+    retrieveOperators = async () => {
+        const obj = await getOperators();
+        if (obj) {
+            this.props.loadOperators(obj);
+            this.setState({"operators": obj});
+        }
+    };
+
     componentDidMount() {
         this.authenticateUser()
             .then((user) => {
-                if (user)
-                    this.retrieveFirebaseTrips();
+                if (user){
+                    this.retrieveOperators();
+                    this.getStations();
+                    this.retrieveOperatorTasks();
+                }
             })
     }
 
@@ -82,22 +101,22 @@ class OperatorDetails extends React.Component {
 
                     <br/>
                     <Container textAlign='left'>
-                        <Header as={"h1"}>Customer Details</Header>
+                        <Header as={"h1"}>Operator Details</Header>
                         <p>
                             <strong>Forename: </strong>
-                            {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["firstName"] : null}
+                            {this.props.history.location.state.operator.name ? this.props.history.location.state.operator.name["firstName"] : null}
                         </p>
                         <p>
                             <strong>Surname: </strong>
-                            {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["lastName"] : null}
+                            {this.props.history.location.state.operator.name ? this.props.history.location.state.operator.name["lastName"] : null}
                         </p>
                         <p>
                             <strong>Date of Birth: </strong>
-                            {this.props.history.location.state.customer.dateOfBirth ? this.props.history.location.state.customer.dateOfBirth : null}
+                            {this.props.history.location.state.operator.dateOfBirth ? this.props.history.location.state.operator.dateOfBirth : null}
                         </p>
                         <p>
                             <strong>ID: </strong>
-                            {this.props.history.location.state.customerID ? this.props.history.location.state.customerID : null}
+                            {this.props.history.location.state.operatorID ? this.props.history.location.state.operatorID : null}
                         </p>
 
                         <Button onClick={() => this.props.history.push("/users")}>
@@ -113,13 +132,14 @@ class OperatorDetails extends React.Component {
                 {/*{console.log(this.props.trips)}*/}
                 {/*{console.log(this.props.stations)}*/}
 
-                <ListOfLiveTrips
-                    items={this.props.trips}
+                <ListOfLiveTasks
+                    items={this.props.tasks}
                     stations={this.props.stations}
-                    handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
-                    handleReport={() => this.handleReport()}
+                    operators={this.props.operators}
+                    handleUpdateStatus={(taskID, status) => this.handleUpdateStatus(taskID, status)}
+                    handleReassignTask={(taskID, comment, operatorId) => this.handleReassignTask(taskID, comment, operatorId)}
                 />
-                {/*{this.props.location.state.customerID}*/}
+                {/*{this.props.location.state.operatorID}*/}
             </PageContainer>
         )
     }
@@ -127,9 +147,10 @@ class OperatorDetails extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        trips: state.JSON.trips,
-        stations: state.JSON.stations
+        tasks: state.JSON.tasks,
+        stations: state.JSON.stations,
+        operators: state.JSON.operators
     };
 };
 
-export default withRouter(connect(mapStateToProps, {loadTrips, loadStations})(CustomerDetails));
+export default withRouter(connect(mapStateToProps, {loadTasks, loadOperators, loadStations})(OperatorDetails));

@@ -23,7 +23,7 @@ class Users extends React.Component {
         }else if(this.state.userType === "operator"){
             this.props.history.push({
                 pathname: '/operatorDetails',
-                state: {customer: user, customerID: userID}
+                state: {operator: user, operatorID: userID}
             })
         }
     };
@@ -82,8 +82,7 @@ class Users extends React.Component {
             console.log(userType, obj);
             {
                 userType === "customer" ? this.props.loadCustomers(obj) : this.props.loadOperators(obj)
-            }
-            ;
+            };
         } else {
             throw new SubmissionError({
                 _error: obj.message
