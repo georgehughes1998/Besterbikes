@@ -98,7 +98,6 @@ export const getUser = async (userID = "") => {
 };
 
 
-//TODO: Also update email and password
 //Set the current user's details in the firestore
 const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
