@@ -100,7 +100,7 @@ export const getUser = async (userID = "") => {
 
 //TODO: Also update email and password
 //Set the current user's details in the firestore
-export const setUserDetails = ({forename, surname, dateOfBirth}) => {
+const setUserDetails = ({forename, surname, dateOfBirth}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -109,7 +109,6 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
-
 
     const userDetails = {
         name: {
@@ -130,6 +129,33 @@ export const setUserDetails = ({forename, surname, dateOfBirth}) => {
         .catch(err => {
             return err
         });
+
+};
+
+
+export const updateUserDetails = async ({email, password, forename, surname, dateOfBirth}) => {
+
+    const auth = firebase.auth();
+    const uid = auth.currentUser.uid;
+
+
+    const db = firebase.firestore();
+    const usersCollection = db.collection('users');
+    const usersDoc = usersCollection.doc(uid);
+
+    const userDetails = {};
+
+    if (forename)       userDetails.name.forename = forename;
+    if (surname)        userDetails.name.lastName = surname;
+    if (dateOfBirth)    userDetails.dateOfBirth = dateOfBirth;
+    if (email)          await auth.currentUser.updateEmail(email);
+    if (password)       await auth.currentUser.updatePassword(password);
+
+
+    await usersDoc.set(userDetails);
+    await incrementStatistic("authentication.updateDetails");
+
+    return "success"
 
 };
 
