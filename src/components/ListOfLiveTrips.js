@@ -78,13 +78,19 @@ class ListOfLiveTrips extends React.Component {
                             ${trip.start["time"]["time"]}`;
 
         let keys = Object.keys(this.props.items);
+        let iconNames=[];
+        let iconColors=[];
 
         switch (trip['status']) {
             case "inactive":
+
+                iconNames = this.props.userType === "customer"?["exclamation circle", "cancel"]:["cancel"];
+                iconColors = this.props.userType === "customer"?["orange", "red"]:["red"];
+
                 return this.renderItem({
                     color: "purple",
-                    iconNames: ["exclamation circle", "cancel"],
-                    iconColors: ["orange", "red"],
+                    iconNames: iconNames,
+                    iconColors: iconColors,
                     status: "inactive",
                     displayStatus: "Reserved",
                     headerContent: stationName,
@@ -94,10 +100,14 @@ class ListOfLiveTrips extends React.Component {
                     image
                 });
             case "active":
+
+                iconNames = this.props.userType === "customer"?["lock open", "exclamation circle", "cancel"]:["cancel"];
+                iconColors = this.props.userType === "customer"? ["blue", "orange", "red"]:["red"];
+
                 return this.renderItem({
                     color: "yellow",
-                    iconNames: ["lock open", "exclamation circle", "cancel"],
-                    iconColors: ["blue", "orange", "red"],
+                    iconNames: iconNames,
+                    iconColors: iconColors,
                     status: "active",
                     displayStatus: "Ready to Unlock",
                     headerContent: stationName,
@@ -107,10 +117,14 @@ class ListOfLiveTrips extends React.Component {
                     image
                 });
             case "unlocked":
+
+                iconNames = this.props.userType === "customer"?["exclamation circle"]:[];
+                iconColors = this.props.userType === "customer"?["orange"]:[];
+
                 return this.renderItem({
                     color: "green",
-                    iconNames: ["exclamation circle"],
-                    iconColors: ["orange"],
+                    iconNames: iconNames,
+                    iconColors: iconColors,
                     status: "unlocked",
                     displayStatus: "In Progress",
                     headerContent: stationName,
@@ -122,10 +136,14 @@ class ListOfLiveTrips extends React.Component {
                 });
 
             case "complete":
+
+                iconNames = this.props.userType === "customer"?["exclamation circle"]:[];
+                iconColors = this.props.userType === "customer"?["orange"]:[];
+
                 return this.renderItem({
                     color: "grey",
-                    iconNames: ["exclamation circle"],
-                    iconColors: ["orange"],
+                    iconNames: iconNames,
+                    iconColors: iconColors,
                     status: "complete",
                     displayStatus: "Complete",
                     headerContent: stationName,
@@ -136,10 +154,14 @@ class ListOfLiveTrips extends React.Component {
                     image
                 });
             case "cancelled":
+
+                iconNames = this.props.userType === "customer"?["exclamation circle"]:[];
+                iconColors = this.props.userType === "customer"?["orange"]:[];
+
                 return this.renderItem({
                     color: "red",
-                    iconNames: ["exclamation circle"],
-                    iconColors: ["orange"],
+                    iconNames: iconNames,
+                    iconColors: iconColors,
                     status: "cancelled",
                     displayStatus: "Cancelled",
                     headerContent: stationName,

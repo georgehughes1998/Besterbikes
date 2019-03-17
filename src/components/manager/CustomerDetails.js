@@ -11,15 +11,18 @@ import {SubmissionError} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 import {loadStations, loadTrips} from "../../redux/actions";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
+import CustomLoader from "../CustomLoader";
 
 class CustomerDetails extends React.Component {
 
     //Cancels a reservation using firebase and updates displayed trips
     handleCancelTrip = (tripId) => {
+        this.setState({"readyToDisplay": false});
         return cancelReservation(tripId)
             .then((obj) => {
                 // console.log(obj);
                 this.retrieveFirebaseTrips();
+                this.setState({"readyToDisplay": true});
             })
             .catch((err) => {
                 console.log(err);
@@ -62,10 +65,12 @@ class CustomerDetails extends React.Component {
 
 
     handleBlackList() {
-        console.log(this.props.history.location.state.customerID)
+        console.log(this.props.history.location.state.customerID);
+        this.setState({"readyToDisplay": false});
         return blacklistUser(this.props.history.location.state.customerID)
             .then((obj) => {
                 console.log("Blacklisted")
+                this.setState({"readyToDisplay": true});
             })
             .catch((err) => {
                 console.log(err);
@@ -78,7 +83,8 @@ class CustomerDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: {}
+            currentUser: {},
+            readyToDisplay: true
         };
     }
 
@@ -91,58 +97,68 @@ class CustomerDetails extends React.Component {
     }
 
     render() {
-        return (
-            <PageContainer>
-                <Segment raised>
-
-                    <br/>
-                    <Container textAlign='left'>
-                        <Header as={"h1"}>Customer Details</Header>
-                        <p>
-                            <strong>Forename: </strong>
-                            {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["firstName"] : null}
-                        </p>
-                        <p>
-                            <strong>Surname: </strong>
-                            {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["lastName"] : null}
-                        </p>
-                        <p>
-                            <strong>Date of Birth: </strong>
-                            {this.props.history.location.state.customer.dateOfBirth ? this.props.history.location.state.customer.dateOfBirth : null}
-                        </p>
-                        <p>
-                            <strong>ID: </strong>
-                            {this.props.history.location.state.customerID ? this.props.history.location.state.customerID : null}
-                        </p>
-
-                        <Button  onClick={() => this.handleBlackList()}>
-                            Blacklist User
-                        </Button>
-
-                        <Button onClick={() => this.props.history.push("/users")}>
-                            Return to all users
-                        </Button>
-
-                    </Container>
-                    <br/>
-
-
-                </Segment>
-
-                {/*{console.log(this.props.trips)}*/}
-                {/*{console.log(this.props.stations)}*/}
-
-                <ListOfLiveTrips
-                    items={this.props.trips}
-                    stations={this.props.stations}
-                    handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
-                    handleReport={() => this.handleReport()}
+        if (!this.state.readyToDisplay) {
+            console.log("loading");
+            return (
+                <CustomLoader
+                    text={"Working on it..."}
+                    icon={"thumbs up outline"}
                 />
-                {/*{this.props.location.state.customerID}*/}
-            </PageContainer>
-        )
-    }
+            );
+        }else{
+            return (
+                <PageContainer>
+                    <Segment raised>
 
+                        <br/>
+                        <Container textAlign='left'>
+                            <Header as={"h1"}>Customer Details</Header>
+                            <p>
+                                <strong>Forename: </strong>
+                                {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["firstName"] : null}
+                            </p>
+                            <p>
+                                <strong>Surname: </strong>
+                                {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["lastName"] : null}
+                            </p>
+                            <p>
+                                <strong>Date of Birth: </strong>
+                                {this.props.history.location.state.customer.dateOfBirth ? this.props.history.location.state.customer.dateOfBirth : null}
+                            </p>
+                            <p>
+                                <strong>ID: </strong>
+                                {this.props.history.location.state.customerID ? this.props.history.location.state.customerID : null}
+                            </p>
+
+                            <Button  onClick={() => this.handleBlackList()}>
+                                Blacklist User
+                            </Button>
+
+                            <Button onClick={() => this.props.history.push("/users")}>
+                                Return to all users
+                            </Button>
+
+                        </Container>
+                        <br/>
+
+
+                    </Segment>
+
+                    {/*{console.log(this.props.trips)}*/}
+                    {/*{console.log(this.props.stations)}*/}
+
+                    <ListOfLiveTrips
+                        items={this.props.trips}
+                        stations={this.props.stations}
+                        handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
+                        handleReport={() => this.handleReport()}
+                        userType="manager"
+                    />
+                    {/*{this.props.location.state.customerID}*/}
+                </PageContainer>
+            )
+        }
+    }
 }
 
 const mapStateToProps = (state) => {
