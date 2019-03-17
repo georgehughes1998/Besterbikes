@@ -77,3 +77,18 @@ export const validateDateOfBirth = (dateOfBirthString) => {
         throw new Error(`You must be ${minAgeLimit} or older to use the system.`);
 
 };
+
+
+
+
+
+export const getBackwardCurrentDateString = () => {
+    const time = new Date();
+
+    const currentDate = time.getFullYear() + "-" +
+        ("0" + (time.getMonth()+1)).slice(-2) //slice(-2) returns the last two chars of the string
+        + "-" +
+        ("0" + time.getDate()).slice(-2);
+
+    return currentDate;
+};
