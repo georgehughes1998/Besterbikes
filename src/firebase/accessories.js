@@ -12,7 +12,7 @@ import * as firebase from "firebase";
 
 
 //Get an array of the accessories as objects from a certain station
-export const getAccessories = async (stationID,filterStatus="") => {
+export const getAccessories = async (stationID, filterStatus = "") => {
 
     const accessoriesObject = {};
 
@@ -42,8 +42,7 @@ export const getAccessories = async (stationID,filterStatus="") => {
         const accessoryID = accessoryDoc.id;
         const accessoryData = accessoryDoc.data();
 
-        if (accessoriesArray.includes(accessoryID))
-        {
+        if (accessoriesArray.includes(accessoryID)) {
             accessoriesObject[accessoryID] = accessoryData;
         }
 

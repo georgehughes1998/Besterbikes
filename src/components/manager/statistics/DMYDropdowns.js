@@ -5,21 +5,20 @@ import {getPrettyString} from "../../../dataHandling/prettyString";
 
 class DMYDropdown extends React.Component {
 
+    daysInMonth = (iMonth, iYear) => {
+        const date = new Date(iYear, iMonth, 32).getDate();
+        // console.log(date);
+        return (32 - date);
+    };
+
     constructor(props) {
         super(props);
         this.state = {
             y: new Date().getFullYear(),
-            m: new Date().getMonth()+1,
+            m: new Date().getMonth() + 1,
             d: new Date().getDate(),
             updateNeeded: false
         }
-    };
-
-
-    daysInMonth = (iMonth, iYear) => {
-        const date =  new Date(iYear, iMonth, 32).getDate();
-        // console.log(date);
-        return (32 - date);
     };
 
     renderDailyDropdown() {
@@ -52,8 +51,8 @@ class DMYDropdown extends React.Component {
                     value={this.state.d}
                     text={`Day: ${this.state.d}`}
                     placeholder={"Please select day"}
-                    options=  {days}
-                    onChange={(param, data) => this.setState({d: data.value, updateNeeded:true})}
+                    options={days}
+                    onChange={(param, data) => this.setState({d: data.value, updateNeeded: true})}
                 />
             </div>
         )
@@ -85,8 +84,8 @@ class DMYDropdown extends React.Component {
                     text={`Month: ${getPrettyString(this.state.m)}`}
                     value={this.state.m}
                     placeholder={"Please select month"}
-                    options=  {months}
-                    onChange={(param, data) => this.setState({m: data.value, updateNeeded:true})}
+                    options={months}
+                    onChange={(param, data) => this.setState({m: data.value, updateNeeded: true})}
                 />
             </div>
         )
@@ -104,34 +103,34 @@ class DMYDropdown extends React.Component {
                 text={`Year: ${this.state.y}`}
                 value={this.state.y}
                 placeholder={"Please select year"}
-                options=  {[{
+                options={[{
                     key: y,
                     text: y,
                     value: y
                 }]}
-                onChange={(param, data) => this.setState({y: data.value, updateNeeded:true})}
+                onChange={(param, data) => this.setState({y: data.value, updateNeeded: true})}
             />
         )
     }
 
-    componentDidUpdate(){
-        if(this.state.updateNeeded){
+    componentDidUpdate() {
+        if (this.state.updateNeeded) {
             switch (this.props.state.timescale) {
                 case("Yearly"):
-                    if(this.state.y){
+                    if (this.state.y) {
                         this.props.onChange({y: this.state.y});
                         this.setState({updateNeeded: false});
                         return;
                     }
                 case("Monthly"):
-                    if(this.state.m){
+                    if (this.state.m) {
                         this.props.onChange({m: this.state.m, y: this.state.y});
                         this.setState({updateNeeded: false});
                         return;
                     }
                 case("Daily"):
-                    if(this.state.d){
-                        this.props.onChange({d:this.state.d, m: this.state.m, y: this.state.y});
+                    if (this.state.d) {
+                        this.props.onChange({d: this.state.d, m: this.state.m, y: this.state.y});
                         this.setState({updateNeeded: false});
                         return;
                     }

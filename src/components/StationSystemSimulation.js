@@ -53,17 +53,17 @@ class StationSystemSimulation extends React.Component {
         return DropdownArray
     };
     handleUnlock = async () => {
-        console.log(this.state);
+        // console.log(this.state);
         unlockBike(this.state.unlockTrip)
             .then((obj) => {
-                console.log(obj)
+                // console.log(obj)
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
     };
     handleReturn = () => {
-        console.log(this.state);
+        // console.log(this.state);
         returnBike(this.state.returnBike, this.state.returnStation)
             .then((obj) => {
                 console.log(obj)

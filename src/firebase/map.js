@@ -26,12 +26,10 @@ export const getBikesAt = async (stationID) => {
         const bikeID = bikeDoc.id;
         const bikeData = bikeDoc.data();
 
-        if (roadBikesArray.includes(bikeID))
-        {
+        if (roadBikesArray.includes(bikeID)) {
             bikesArray['road'][bikeID] = bikeData;
         }
-        else if (mountainBikesArray.includes(bikeID))
-        {
+        else if (mountainBikesArray.includes(bikeID)) {
             bikesArray['mountain'][bikeID] = bikeData;
         }
 

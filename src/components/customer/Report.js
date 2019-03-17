@@ -45,19 +45,6 @@ class Report extends React.Component {
                 console.log(err.message);
             });
     };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            category: "",
-            description: "",
-            reservation: "",
-            error: "",
-            readyToDisplay: false,
-            operatorName: ""
-        }
-    };
-
     retrieveOperators = async () => {
         const obj = await getOperators();
         if (obj) {
@@ -66,7 +53,6 @@ class Report extends React.Component {
             // this.setState({"operators": obj});
         }
     };
-
     getOperatorName = (opID) => {
         let keys = Object.keys(this.props.operators);
 
@@ -80,18 +66,29 @@ class Report extends React.Component {
             } else {
                 return "";
             }
-            })
+        })
 
         return opName;
-        };
+    };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            category: "",
+            description: "",
+            reservation: "",
+            error: "",
+            readyToDisplay: false,
+            operatorName: ""
+        }
+    };
 
     componentDidMount() {
         this.authenticateUser()
             .then((user) => {
                 if (user)
                     this.retrieveFirebaseTrips();
-                    this.retrieveOperators()
+                this.retrieveOperators()
             })
     };
 
@@ -121,7 +118,11 @@ class Report extends React.Component {
                                 placeholder='Select Category'
                                 options={[{key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
                                     {key: "stationFault", value: "Station Fault", text: "Station Fault"},
-                                    {key: "reservationProblem", value: "Reservation Problem", text: "Reservation Problem"},
+                                    {
+                                        key: "reservationProblem",
+                                        value: "Reservation Problem",
+                                        text: "Reservation Problem"
+                                    },
                                     {key: "feedback", value: "Feedback", text: "Feedback"}
                                 ]}
                                 onChange={(param, data) => this.setState({"category": data.value})}

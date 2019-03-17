@@ -1,7 +1,7 @@
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 import React from "react";
 
-class BikesDropdown extends React.Component{
+class BikesDropdown extends React.Component {
 
     createDropdownObject = () => {
 
@@ -16,7 +16,7 @@ class BikesDropdown extends React.Component{
         return DropdownArray
     };
 
-    render(){
+    render() {
         return (
             <Dropdown
                 clearable

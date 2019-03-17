@@ -3,7 +3,7 @@ import TableStatisticSegment from "./TableStatisticSegment";
 import React from "react";
 import {getIndividualValues} from "./evaluateStatistics";
 
-class LoadedStatistics extends React.Component{
+class LoadedStatistics extends React.Component {
 
 
     renderStatistics() {
@@ -23,13 +23,28 @@ class LoadedStatistics extends React.Component{
                         icon="calendar"
                         values={this.props.state}
                     />
+                );
+            case "Stations":
+                return (
+                    <TableStatisticSegment
+                        name={this.props.state.statisticType}
+                        icon="bicycle"
+                        values={this.props.state}
+                    />
                 )
-
+            case "Tasks":
+                return (
+                    <SimpleStatisticSegment
+                        name={this.props.state.statisticType}
+                        icon="tasks"
+                        values={getIndividualValues(this.props.state)}
+                    />
+                )
         }
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 {this.renderStatistics()}
             </div>

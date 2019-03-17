@@ -2,12 +2,12 @@ import React from "react";
 import Radio from "semantic-ui-react/dist/commonjs/addons/Radio/Radio";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid/Grid";
 
-class TimeScaleRadios extends React.Component{
+class TimeScaleRadios extends React.Component {
 
     renderRadios = () => {
         return ["Daily", "Monthly", "Yearly"].map((timescale) => {
             // console.log(timescale, this.props.timescale);
-            return(
+            return (
                 <Grid.Column>
                     <Radio
                         label={timescale}
@@ -21,7 +21,7 @@ class TimeScaleRadios extends React.Component{
         })
     }
 
-    render(){
+    render() {
         return (
             <Grid columns='equal'>
                 {this.renderRadios()}

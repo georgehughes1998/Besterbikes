@@ -2,7 +2,7 @@ import React from 'react'
 import {reduxForm} from 'redux-form'
 import validate from './validate'
 import ReservationHandlingForm from "./ReservationHandlingForm";
-import {getBackwardCurrentDateString, getCurrentTimeString, getTimeString} from "../../firebase/time";
+import {getBackwardCurrentDateString, getCurrentTimeString} from "../../firebase/time";
 
 
 //Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process

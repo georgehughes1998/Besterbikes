@@ -192,13 +192,13 @@ class ReservationHandlingForm extends React.Component {
                             {this.renderButtons}
                         </Container>
 
-                        {this.state.success ? <ReservationComplete/> :null}
+                        {this.state.success ? <ReservationComplete/> : null}
                         {(this.state.submitted && !(this.state.success)) ?
                             <CustomLoader
                                 text="Making your dreams come true"
                                 icon={"calendar"}
                             />
-                            :null}
+                            : null}
 
                     </Form>
                 </Segment>

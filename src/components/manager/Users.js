@@ -21,7 +21,7 @@ class Users extends React.Component {
                 pathname: '/customerdetails',
                 state: {customer: user, customerID: userID}
             })
-        }else if(this.state.userType === "operator"){
+        } else if (this.state.userType === "operator") {
             this.props.history.push({
                 pathname: '/operatorDetails',
                 state: {operator: user, operatorName: userID}
@@ -39,12 +39,12 @@ class Users extends React.Component {
             if (key.imageURL)
                 image = key['imageURL'];
 
-            console.log(key['imageURL'],key,index);
+            console.log(key['imageURL'], key, index);
 
             return (
                 <List.Item onClick={() => this.handleUserClick(key, keys[index])}>
                     {/*<List.Icon name='bicycle' size='large' verticalAlign='middle'/>*/}
-                    <Image avatar width={15} src={image} />
+                    <Image avatar width={15} src={image}/>
                     <List.Content>
                         <List.Header as={"h4"}>
                             {`${key.name["firstName"]} ${key.name["lastName"]}`}
@@ -54,8 +54,8 @@ class Users extends React.Component {
                             ID: {keys[index]}
                         </Header>
 
-                        <Header as={"h6"} style={{'color':'#ff0d00'}}>
-                            {key.disabled ? "Account Blacklisted":""}
+                        <Header as={"h6"} style={{'color': '#ff0d00'}}>
+                            {key.disabled ? "Account Blacklisted" : ""}
                         </Header>
 
                     </List.Content>
@@ -66,9 +66,9 @@ class Users extends React.Component {
     }
 
     renderListItems = () => {
-        if (this.state.userType === "customer" && this.props.customers){
+        if (this.state.userType === "customer" && this.props.customers) {
             return this.renderListJSX(this.props.customers)
-        }else if(this.state.userType === "operator" && this.props.operators){
+        } else if (this.state.userType === "operator" && this.props.operators) {
             return this.renderListJSX(this.props.operators)
         } else {
             return (
@@ -96,7 +96,8 @@ class Users extends React.Component {
             console.log(userType, obj);
             {
                 userType === "customer" ? this.props.loadCustomers(obj) : this.props.loadOperators(obj)
-            };
+            }
+            ;
         } else {
             throw new SubmissionError({
                 _error: obj.message

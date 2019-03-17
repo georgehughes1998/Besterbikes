@@ -63,6 +63,13 @@ class CustomerDetails extends React.Component {
         }
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: {},
+            readyToDisplay: true
+        };
+    }
 
     handleBlackList() {
         console.log(this.props.history.location.state.customerID);
@@ -78,14 +85,6 @@ class CustomerDetails extends React.Component {
                     _error: err.message
                 })
             })
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentUser: {},
-            readyToDisplay: true
-        };
     }
 
     componentDidMount() {
@@ -105,7 +104,7 @@ class CustomerDetails extends React.Component {
                     icon={"thumbs up outline"}
                 />
             );
-        }else{
+        } else {
             return (
                 <PageContainer>
                     <Segment raised>
@@ -114,8 +113,8 @@ class CustomerDetails extends React.Component {
                         <Container textAlign='left'>
                             <Header as={"h1"}>Customer Details</Header>
 
-                            <Header as={"h4"} style={{'color':'#ff0d00'}}>
-                                {this.props.history.location.state.customer.disabled ? "Account Blacklisted":""}
+                            <Header as={"h4"} style={{'color': '#ff0d00'}}>
+                                {this.props.history.location.state.customer.disabled ? "Account Blacklisted" : ""}
                             </Header>
 
                             <p>
@@ -142,7 +141,7 @@ class CustomerDetails extends React.Component {
                                 {this.props.history.location.state.customerID ? this.props.history.location.state.customerID : null}
                             </p>
 
-                            <Button  onClick={() => this.handleBlackList()}>
+                            <Button onClick={() => this.handleBlackList()}>
                                 Blacklist User
                             </Button>
 

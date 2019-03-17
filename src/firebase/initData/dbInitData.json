@@ -2452,473 +2452,369 @@
     }
   },
   "users": {
-
-
     "rrtirfg758rhi76ghr5hryH5jsAS": {
       "email": "stevie.robertson1@email.com",
       "password": "passwordSR",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Steven",
         "lastName": "Robertson"
       },
-
       "dateOfBirth": "21-02-1982",
       "type": "manager"
     },
-
     "f7dhrnsmeJkdJKSDjsdfj78dsmkv": {
       "email": "phawthorne15@email.com",
       "password": "passwordPH",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Pierce",
         "lastName": "Hawthorne"
       },
-
       "dateOfBirth": "15-10-1970",
       "type": "manager"
     },
-
     "Ahsdk4ks7h4QyR13msirpocE4m51": {
       "email": "kira321@email.com",
       "password": "passwordKM",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/kira_mcginlay.jpg?alt=media&token=e0e69a41-96cd-40fd-acfa-ba8aa17e1fbd",
-      "name":
-      {
+      "name": {
         "firstName": "Kira",
         "lastName": "McGinlay"
       },
-
       "dateOfBirth": "01-12-1988",
       "type": "manager"
     },
-
     "UIdferfj489sHsi4nsnajAjAedjk": {
       "email": "aaronP123@email.com",
       "password": "passwordAP",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Aaron",
         "lastName": "Peterson"
       },
-
       "dateOfBirth": "23-08-1990",
       "type": "operator"
     },
-
     "Bhsdk4k4nfhQyR13msirpocE4m79": {
       "email": "kira123@email.com",
       "password": "passwordKP",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Kira",
         "lastName": "Poulter"
       },
-
       "dateOfBirth": "01-12-1990",
       "type": "operator"
     },
-
     "y1sha2n7aB5ashQhnrm38A4ndmr0": {
       "email": "housegreg80@email.com",
       "password": "passwordGH",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Greg",
         "lastName": "House"
       },
-
       "dateOfBirth": "13-6-1980",
       "type": "operator"
     },
-
     "jjs4uriQmc7I8tmp5osnkmQ2e2jp": {
       "email": "amber.smith00@email.com",
       "password": "passwordAS",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Amber",
         "lastName": "Smith"
       },
-
       "dateOfBirth": "25-10-1981",
       "type": "operator"
     },
-
     "yrc5qiAp0Dyti4p23ME7qbW2lpoZ": {
       "email": "fm888@email.com",
       "password": "passwordFM",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Frank",
         "lastName": "McIntosh"
       },
-
       "dateOfBirth": "06-06-1977",
       "type": "operator"
     },
-
     "qp0bcdSnMM5wz0H7f4Mdpe1m1QsI": {
       "email": "dan.stevenson1969@email.com",
       "password": "passwordDS",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Daniel",
         "lastName": "Stevenson"
       },
-
       "dateOfBirth": "19-09-1969",
       "type": "operator"
     },
-
     "hswiS3nmt6gsqIOmew0V45soEghb": {
       "email": "MaryJ@email.com",
       "password": "passwordMJ",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/mary_johnson.jpg?alt=media&token=11e2284b-79da-4a20-8aaf-09e6181e1df4",
-      "name":
-      {
+      "name": {
         "firstName": "Mary",
         "lastName": "Johnson"
       },
-
       "dateOfBirth": "30-03-1988",
       "type": "operator"
     },
-
     "lo6Wj87bqocXto9z3mHjkTw77Fda": {
       "email": "jamesfletcher76@email.com",
       "password": "passwordJF",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "James",
         "lastName": "Fletcher"
       },
-
       "dateOfBirth": "04-11-1976",
       "type": "operator"
     },
-
     "o0yhRfn4qeu5De17mbV4jePo6gch": {
       "email": "jwilson@email.com",
       "password": "passwordJW",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/john_wilson.jpg?alt=media&token=1670f28e-fa96-4d59-92a6-8722ac46e0e5",
-      "name":
-      {
+      "name": {
         "firstName": "John",
         "lastName": "Wilson"
       },
-
       "dateOfBirth": "07-09-1983",
       "type": "operator"
     },
-
     "wHgapo10ZgTRjp4m8Wp04gg87Tcd": {
       "email": "cat.warner@email.com",
       "password": "passwordCW",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Caitlyn",
         "lastName": "Warner"
       },
-
       "dateOfBirth": "20-12-1982",
       "type": "operator"
     },
-
     "6Truhdy7me3ponFhe34mlpHsw8x2": {
       "email": "larryhughes90@email.com",
       "password": "passwordLH",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/larry_hughes.jpg?alt=media&token=6be6d23b-59cd-4f39-9a01-806b58857218",
-      "name":
-      {
+      "name": {
         "firstName": "Larry",
         "lastName": "Hughes"
       },
-
       "dateOfBirth": "02-05-1990",
       "type": "customer"
     },
-
     "7Hqxcm3RelujsDUazbisaio9GHde": {
       "email": "tom.walker99@email.com",
       "password": "passwordTW",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Tom",
         "lastName": "Walker"
       },
-
       "dateOfBirth": "04-08-1999",
       "type": "customer"
     },
-
     "i84sxpIwfhT4nv7hYlkmq3j0cTc1": {
       "email": "dave.zientarski@email.com",
       "password": "passwordDZ",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "David",
         "lastName": "Zientarski"
       },
-
       "dateOfBirth": "22-03-1985",
       "type": "customer"
     },
-
     "3swnpdHbdU49mnsqOimrs87acPsw": {
       "email": "bob.f@email.com",
       "password": "passwordBF",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Bob",
         "lastName": "Fordyce"
       },
-
       "dateOfBirth": "08-10-1989",
       "type": "customer"
     },
-
     "V4mposgr9Ncqidlrm8x1hf4mUaet": {
       "email": "patrickshaw1984@email.com",
       "password": "passwordPS",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Patrick",
         "lastName": "Shaw"
       },
-
       "dateOfBirth": "07-06-1984",
       "type": "customer"
     },
-
     "o7xcQuyhmelKdvPsLu6Az6nrfp7b": {
       "email": "eric.s@email.com",
       "password": "passwordES",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Eric",
         "lastName": "Sparagano"
       },
-
       "dateOfBirth": "15-09-1960",
       "type": "customer"
     },
-
     "8cgwpOmK4dtcLar6z1h8tP0drm63": {
       "email": "andy.hunter@email.com",
       "password": "passwordAH",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Andrew",
         "lastName": "Hunter"
       },
-
       "dateOfBirth": "30-07-1998",
       "type": "customer"
     },
-
     "t67cmeWkj5mncGrepyuZ6bdneE87": {
       "email": "georgetaylor@email.com",
       "password": "passwordGT",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "George",
         "lastName": "Taylor"
       },
-
       "dateOfBirth": "26-11-1991",
       "type": "customer"
     },
-
     "hRao4b5MnwI81bkLdw9jhXepbyws": {
       "email": "nick.hendo@email.com",
       "password": "passwordNH",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Nicolas",
         "lastName": "Henderson"
       },
-
       "dateOfBirth": "21-09-1985",
       "type": "customer"
     },
-
     "olJdme65RlPo7xBsemu4Kazy6dri": {
       "email": "calum.williams@email.com",
       "password": "passwordCW",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/calum_williams.jpg?alt=media&token=3fbce36e-175c-4135-9fca-aa229abcb2c7",
-      "name":
-      {
+      "name": {
         "firstName": "Calum",
         "lastName": "Williams"
       },
-
       "dateOfBirth": "18-06-1979",
       "type": "customer"
     },
-
     "Q1mnt5U75mdCe3po6mfgFlxrtusw": {
       "email": "filip.malcolm83@email.com",
       "password": "passwordFM",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Filip",
         "lastName": "Malcolm"
       },
-
       "dateOfBirth": "07-04-1983",
       "type": "customer"
     },
-
     "Ierw7m24lcepWa5fkzpolkw90ma1": {
       "email": "jacko.paterson@email.com",
       "password": "passwordJP",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Jack",
         "lastName": "Paterson"
       },
-
       "dateOfBirth": "08-11-1996",
       "type": "customer"
     },
-
     "h34ZZqpngnrK8djhfb4kdnHjndjf": {
       "email": "oliviakerr@email.com",
       "password": "passwordOK",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Olivia",
         "lastName": "Kerr"
       },
-
       "dateOfBirth": "27-02-1990",
       "type": "customer"
     },
-
     "p03fcj6as2mdfj4podfb4Flkx34t": {
       "email": "liz.campbell94@email.com",
       "password": "passwordEC",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Elizabeth",
         "lastName": "Campbell"
       },
-
       "dateOfBirth": "20-05-1994",
       "type": "customer"
     },
-
     "87sdQ09jdncvPzmtTqjdkxPq8m45": {
       "email": "laurenstewart81@email.com",
       "password": "passwordLS",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Lauren",
         "lastName": "Stewart"
       },
-
       "dateOfBirth": "11-01-1981",
       "type": "customer"
     },
-
     "6t4jsd3YtenJ8sm2Pdsd7xnr32tA": {
       "email": "beth.martin@email.com",
       "password": "passwordBM",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/beth_martin.jpg?alt=media&token=49e0830a-016d-4e11-aa0a-e062980b19bb",
-      "name":
-      {
+      "name": {
         "firstName": "Beth",
         "lastName": "Martin"
       },
-
       "dateOfBirth": "05-07-1984",
       "type": "customer"
     },
-
     "Ldmesa87wqmPzUwmL51fv9wZ0tge": {
       "email": "jamieweir@email.com",
       "password": "passwordJW",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Jamie",
         "lastName": "Weir"
       },
-
       "dateOfBirth": "02-12-1997",
       "type": "customer"
     },
-
     "Udgne98manw3mC7aLgew54iLlXyf": {
       "email": "emurdoch000@email.com",
       "password": "passwordEM",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Evan",
         "lastName": "Murdoch"
       },
-
       "dateOfBirth": "03-04-2000",
       "type": "customer"
     },
-
     "Je39mbc6bGen20lnBazPomsw9be3": {
       "email": "amyoung88@email.com",
       "password": "passwordAY",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Amy",
         "lastName": "Young"
       },
-
       "dateOfBirth": "18-06-1988",
       "type": "customer"
     },
-
     "vKwdk56jceHma2jcwl4Jwjf9a25g": {
       "email": "euan.dunlop56@email.com",
       "password": "passwordED",
       "imageURL": "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a",
-      "name":
-      {
+      "name": {
         "firstName": "Euan",
         "lastName": "Dunlop"
       },
-
       "dateOfBirth": "24-10-1956",
       "type": "customer"
     }
-
-
-
-
   },
   "tasks": -1,
   "reports": -1,

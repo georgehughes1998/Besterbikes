@@ -13,7 +13,7 @@ const maxCapacityPercentage = 0.7;
 const minCapacityPercentage = 0.3;
 
 
-export const makeReservations = async ({startDate, startTime, station, mountainBikes, roadBikes, accessoriesArray=[]},user) => {
+export const makeReservations = async ({startDate, startTime, station, mountainBikes, roadBikes, accessoriesArray = []}, user) => {
     //Function to make reservations with the given data
 
     const startTimeString = startDate + " " + startTime;
@@ -61,7 +61,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
 
     const auth = firebase.auth();
 
-    let uid =  auth.currentUser.uid;
+    let uid = auth.currentUser.uid;
     if (user)
         uid = user;
 
@@ -334,7 +334,7 @@ const reserveAccessories = async (accessoriesArray) => {
 
     accessoriesArray.forEach(async accessoryID => {
         await reserveAccessory(accessoryID);
-        })
+    })
 
 };
 
@@ -344,12 +344,12 @@ const reserveAccessory = async (accessoryID) => {
     const db = firebase.firestore();
 
     const accessoriesCollection = db.collection('accessories')
-        .where('status','==','available'); //Only let it be reserved if it's available
+        .where('status', '==', 'available'); //Only let it be reserved if it's available
     const accessoryDocument = accessoriesCollection.doc(accessoryID);
     const accessorySnapshot = await accessoryDocument.get();
 
     if (accessorySnapshot.exists)
-        await accessoryDocument.update('status','reserved');
+        await accessoryDocument.update('status', 'reserved');
     else
         throw new Error("Accessory is not available for reserving.");
 
