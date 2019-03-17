@@ -48,7 +48,7 @@ class ListOfLiveTasks extends React.Component {
                     <Comment.Content>
                             {/*TODO: Refactor so operator name displays*/}
                             <Comment.Author>{key.user}</Comment.Author>
-                            <Comment.Metadata>{getPrettyString(key.time.date)} {key.time.time}</Comment.Metadata>
+                            <Comment.Metadata>{key.time.date} {key.time.time}</Comment.Metadata>
                             <Comment.Text>{key.comment}</Comment.Text>
                     </Comment.Content>
                 </Comment>
