@@ -190,9 +190,9 @@ export const getAllStationStatistics = async (year = -1, month = -1, day = -1) =
     const stationsObjects = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
     const stations = Object.keys(stationsObjects);
 
-    const stationStatistics = [];
+    const stationStatistics = {};
 
-    stations.forEach(async stationID => {
+    await stations.forEach(async stationID => {
 
         stationStatistics[stationID] = await getStationStatistics(stationID,year,month,day);
         // console.log(Object.keys(stationStatistics));

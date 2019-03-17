@@ -24,7 +24,7 @@ class Users extends React.Component {
         }else if(this.state.userType === "operator"){
             this.props.history.push({
                 pathname: '/operatorDetails',
-                state: {operator: user, operatorID: userID}
+                state: {operator: user, operatorName: userID}
             })
         }
     };

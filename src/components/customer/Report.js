@@ -6,10 +6,11 @@ import PageContainer from "../PageContainer";
 import TripsDropdown from "../dropdowns/TripsDropdown";
 import {getTrips} from "../../firebase/reservations";
 import connect from "react-redux/es/connect/connect";
-import {loadStations, loadTrips} from "../../redux/actions";
+import {loadOperators, loadStations, loadTrips} from "../../redux/actions";
 import FirebaseError from "../FirebaseError";
 import CustomLoader from "../CustomLoader";
 import ConfirmationModal from "../ConfirmationModal";
+import {getOperators} from "../../firebase/users";
 
 class Report extends React.Component {
 
@@ -36,7 +37,9 @@ class Report extends React.Component {
         this.setState({"readyToDisplay": false});
         return makeReport(this.state.reservation, this.state.category, this.state.description)
             .then((obj) => {
-                this.setState({"reportSubmitted": true, "readyToDisplay": true})
+                console.log(obj);
+                const opName = this.getOperatorName(obj);
+                this.setState({"operatorName": opName, "readyToDisplay": true})
             })
             .catch((err) => {
                 console.log(err.message);
@@ -51,15 +54,44 @@ class Report extends React.Component {
             reservation: "",
             error: "",
             readyToDisplay: false,
-            reportSubmitted: false
+            operatorName: ""
         }
     };
+
+    retrieveOperators = async () => {
+        const obj = await getOperators();
+        if (obj) {
+            this.props.loadOperators(obj);
+            console.log(this.props.operators)
+            // this.setState({"operators": obj});
+        }
+    };
+
+    getOperatorName = (opID) => {
+        let keys = Object.keys(this.props.operators);
+
+        let opName = "";
+
+        Object.values(this.props.operators).map((key, index) => {
+            console.log(keys[index], opID, keys[index] === opID);
+            if (keys[index] === opID) {
+                console.log(key.name.firstName);
+                opName = `${key.name.firstName + " " + key.name.lastName}`
+            } else {
+                return "";
+            }
+            })
+
+        return opName;
+        };
+
 
     componentDidMount() {
         this.authenticateUser()
             .then((user) => {
                 if (user)
                     this.retrieveFirebaseTrips();
+                    this.retrieveOperators()
             })
     };
 
@@ -125,11 +157,13 @@ class Report extends React.Component {
                         </Form>
                     </Container>
 
-                    {this.state.reportSubmitted ?
+                    {this.state.operatorName !== "" ?
                         <ConfirmationModal
                             icon='send'
                             header='Report Submitted'
-                            text={`Your report has been submitted, one of our team will be in touch shortly`}
+                            text={`Thank you for taking the time to fill out this form,
+                                    your report has been submitted to ${this.state.operatorName}
+                                    who is one of our trusted operators and will be dealt with shortly.`}
                             link="/"
                             linkText="Return to main menu"
                         />
@@ -144,11 +178,12 @@ class Report extends React.Component {
 const mapStateToProps = (state) => {
     return {
         trips: state.JSON.trips,
-        stations: state.JSON.stations
+        stations: state.JSON.stations,
+        operators: state.JSON.operators
     }
 };
 
-export default connect(mapStateToProps, {loadTrips, loadStations})(Report);
+export default connect(mapStateToProps, {loadTrips, loadStations, loadOperators})(Report);
 
 
 
