@@ -1,5 +1,5 @@
 import * as firebase from "firebase";
-import {getDateString, getDay, getMonth, getYear} from "./time";
+import {getDay, getMonth, getYear} from "./time";
 import {getJSONFromFile} from "../dataHandling/handleJSON";
 
 
@@ -195,7 +195,7 @@ export const getAllStationStatistics = async (year = -1, month = -1, day = -1) =
     stations.forEach(async stationID => {
 
         stationStatistics[stationID] = await getStationStatistics(stationID,year,month,day);
-        console.log(stationStatistics);
+        // console.log(stationStatistics);
 
     });
 
