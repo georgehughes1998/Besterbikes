@@ -2,9 +2,9 @@ export const getCurrentDateString = () => {
     const time = new Date();
 
     const currentDate = time.getFullYear() + "-" +
-        ("0" + time.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
+        ("0" + (time.getMonth()+1)).slice(-2) //slice(-2) returns the last two chars of the string
         + "-" +
-        ("0" + time.getDay()).slice(-2);
+        ("0" + time.getDate()).slice(-2);
 
     return currentDate;
 };
@@ -23,9 +23,9 @@ export const getCurrentTimeString = () => {
 export const getDateString = (dateObject) => {
 
     const currentDate = dateObject.getFullYear() + "-" +
-        ("0" + dateObject.getMonth()).slice(-2) //slice(-2) returns the last two chars of the string
+        ("0" + (dateObject.getMonth()+1)).slice(-2) //slice(-2) returns the last two chars of the string
         + "-" +
-        ("0" + dateObject.getDay()).slice(-2);
+        ("0" + dateObject.getDate()).slice(-2);
 
     return currentDate;
 
