@@ -11,6 +11,12 @@ export const signIn = async ({email, password, updateUserStatus}) => {
     return promise
         .then(async user => {
 
+            const userData = await getUser(auth.currentUser.uid);
+            const isDisabled = userData['disabled'];
+
+            if (isDisabled)
+                throw new Error("This account is blacklisted.");
+
             await incrementStatistic("authentication.signIn");
 
             return user;
@@ -159,12 +165,11 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
 
 export const blacklistUser = async (userID) => {
 
-    //TODO: Implement
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(userID);
 
-    usersDoc.update('disabled',true);
+    await usersDoc.update('disabled',true);
 
 };
 
