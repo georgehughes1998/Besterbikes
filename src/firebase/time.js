@@ -45,20 +45,17 @@ export const getTimeString = (dateObject) => {
 
 export const getDay = () => {
     const time = new Date();
-
     return time.getDate();
 };
 
 
 export const getMonth = () => {
     const time = new Date();
-
     return time.getMonth()+1;
 };
 
 
 export const getYear = () => {
     const time = new Date();
-
     return time.getFullYear();
 };
