@@ -3,7 +3,7 @@ import {Button, Container, Form, Header, Icon, Message, Progress, Segment} from 
 import {Field, reduxForm, SubmissionError} from "redux-form";
 import {makeReservations} from "../../firebase/reservations";
 import StationDropdown from "../dropdowns/StationDropdown";
-import NumberDropdown from "../dropdowns/NumberDropdown";
+import NumberBikesDropdown from "../dropdowns/NumberBikesDropdown";
 import FirebaseError from "../FirebaseError";
 import ReservationComplete from "./ReservationConfirmation";
 import validate from './validate'
@@ -74,7 +74,7 @@ class ReservationHandlingForm extends React.Component {
                 return (
                     <Form.Field>
                         <label>{label}</label>
-                        <NumberDropdown input={{input}}/>
+                        <NumberBikesDropdown input={{input}}/>
                         {this.renderReduxError(meta)}
                     </Form.Field>
                 );

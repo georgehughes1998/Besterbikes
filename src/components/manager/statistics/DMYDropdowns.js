@@ -1,33 +1,69 @@
-import Grid from "semantic-ui-react/dist/commonjs/collections/Grid/Grid";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 import React from "react";
+import {Form} from "semantic-ui-react";
 
-const StatisticTypeDropdown = (props) => {
-    return(
-        <Grid columns={"equal"}>
-            <Grid.Column>
-                <Dropdown
-                    placeholder="Daily"
-                    fluid
-                    selection
-                    options={
-                        [
-                            { key: 'yearly', text: 'Yearly', value: 'yearly' },
-                            { key: 'monthly', text: 'Monthly', value: 'monthly' },
-                            { key: 'daily', text: 'Daily', value: 'daily' }
-                        ]
-                    }
-                    // onChange={(param, data) => this.setState({"timeScale": data.value})}
-                />
-            </Grid.Column>
-            <Grid.Column>
+class DMYDropdown extends React.Component {
 
-            </Grid.Column>
-            <Grid.Column>
+    constructor(props) {
+        super(props);
+        this.state = {
 
-            </Grid.Column>
-        </Grid>
-    )
+        }
+    };
+
+    renderYearlyDropdown() {
+
+        const y = new Date().getFullYear();
+        return (
+            <Dropdown
+                clearable
+                selection
+                search
+                value={this.state.y}
+                placeholder={"Please select year"}
+                options=  {[{
+                    key: y,
+                    text: y,
+                    value: y
+                }]}
+                onChange={(param, data) => this.setState({y: data.value})}
+            />
+        )
+    }
+
+    componentDidUpdate(){
+        switch (this.props.state.timescale) {
+            case("Yearly"):
+                if(this.state.y){
+                    this.props.onChange({y: this.state.y});
+                    return
+                }
+
+        }
+    };
+
+    render() {
+        switch (this.props.state.timescale) {
+            case("Daily"):
+                return (
+                    <div>
+                        Daily
+                    </div>
+                )
+            case("Monthly"):
+                return (
+                    <div>
+                        Monthly
+                    </div>
+                )
+            case("Yearly"):
+                return (
+                    <Form>
+                        {this.renderYearlyDropdown()}
+                    </Form>
+                )
+        }
+    }
 };
 
-export default StatisticTypeDropdown
+export default DMYDropdown

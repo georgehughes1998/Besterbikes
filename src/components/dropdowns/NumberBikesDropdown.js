@@ -1,7 +1,7 @@
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 import React from "react";
 
-const NumberDropdown = (props) => {
+const NumberBikesDropdown = (props) => {
 
     const createDropdownObject = () => {
 
@@ -38,4 +38,4 @@ const NumberDropdown = (props) => {
     )
 };
 
-export default NumberDropdown
+export default NumberBikesDropdown
