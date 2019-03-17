@@ -216,6 +216,22 @@ export const getAuthenticationStatistics = async (year = -1, month = -1, day = -
 
 };
 
+export const getTasksStatistics = async (year = -1, month = -1, day = -1) => {
+
+    const statisticPaths = [
+        "task.make",
+        "task.complete",
+        "task.reassign",
+        "task.extend",
+
+        "report.make"
+
+    ];
+
+    return getStatistics(statisticPaths, year, month, day);
+
+};
+
 
 const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) => {
     //TODO: Test
