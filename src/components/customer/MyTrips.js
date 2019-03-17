@@ -94,6 +94,7 @@ class MyTrips extends React.Component {
                             this.handleCancelTrip(tripID)
                         }}
                         handleReport={() => this.handleReport()}
+                        userType="customer"
                     />
                     {/*TODO: Implement filter*/}
 
