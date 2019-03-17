@@ -17,10 +17,10 @@ class TripsDropdown extends React.Component {
                     key: keys[index],
                     value: keys[index],
                     text:
-                        `My ${getPrettyString(key.status)} trip from 
+                        `${getPrettyString(key.status)} trip from 
                         ${getPrettyString(key.start["station"])} on 
                         ${getPrettyString(key.start["time"]["date"])} at 
-                        ${key.start["time"]["time"]}`
+                        ${key.start["time"]["time"]} with ID: ${keys[index]}`
                 });
 
                 return DropdownArray;
