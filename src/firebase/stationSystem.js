@@ -28,19 +28,20 @@ export const unlockBike = async (reservationID) => {
 
     const bikeType = reservationData['bikeType'];
     const stationID = reservationData['start']['station'];
+    const accessoriesArray = reservationData['accessories'];
 
     const bikeID = await selectBike(stationID, bikeType);
     const bikesCollection = db.collection('bikes');
     const bikeDocument = bikesCollection.doc(bikeID);
 
-    console.log(bikeDocument);
-    console.log(bikeID);
 
     await reservationDocument.update('status', 'unlocked');
     await reservationDocument.update('bike', bikeID);
 
     await bikeDocument.update('status', 'unlocked');
     await bikeDocument.update('reservation', reservationID);
+
+    await unlockAccessories(accessoriesArray);
 
     await incrementStatistic("station." + stationID + ".unlock");
 
@@ -135,6 +136,62 @@ const selectBike = async (stationID, bikeType) => {
 
 };
 
+
+//Unlock all accessories in an array
+const unlockAccessories = async (accessories) => {
+
+    accessories.forEach(async accessoryID => {
+        unlockAccessory(accessoryID);
+    })
+
+};
+
+//Unlock a single accessory
+const unlockAccessory = async (accessoryID) => {
+
+    const db = firebase.firestore();
+
+    const accessoriesCollection = db.collection('accessories')
+        .where('status','==','reserved'); //Only let it be unlocked if it's reserved
+    const accessoryDocument = accessoriesCollection.doc(accessoryID);
+    const accessorySnapshot = await accessoryDocument.get();
+
+    if (accessorySnapshot.exists)
+        await accessoryDocument.update('status','unlocked');
+    else
+        throw new Error("Accessory is not available for unlocking.");
+
+};
+
+
+//Return all accessories in an accessories array
+const returnAccessories = async (accessories) => {
+
+    accessories.forEach(async accessoryID => {
+        returnAccessory(accessoryID);
+    })
+
+};
+
+//Return a single accessory
+const returnAccessory = async (accessoryID) => {
+
+    const db = firebase.firestore();
+
+    const accessoriesCollection = db.collection('accessories')
+        .where('status','==','unlocked'); //Only let it be returned if it's unlocked
+    const accessoryDocument = accessoriesCollection.doc(accessoryID);
+    const accessorySnapshot = await accessoryDocument.get();
+
+    if (accessorySnapshot.exists)
+        await accessoryDocument.update('status','available');
+    else
+        throw new Error("Accessory is not available for returning.");
+
+};
+
+
+
 export const returnBike = async (bikeID, stationID) => {
     //Return the given bike to the given station
 
@@ -158,6 +215,9 @@ export const returnBike = async (bikeID, stationID) => {
     if (!validateReturnReservation(reservationData)) {
         throw Error("Invalid reservation for return.");
     }
+
+    const accessoriesArray = reservationData['accessories'];
+    await returnAccessories(accessoriesArray);
 
     await reservationDocument.update('status', 'complete');
     await reservationDocument.update('end.time.date', getCurrentDateString());
