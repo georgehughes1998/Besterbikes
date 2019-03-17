@@ -308,10 +308,10 @@ export const unlockBikeOperator = async (bikeID, force=false) => {
             + " stations.");
 
     const stationDoc = stationsSnapshot.docs.pop();
+    const stationData = stationDoc.data();
     const stationID = stationDoc.id;
 
-    //TODO: Solve error where numberofavailablebikes is not a property of undefined
-    if (stationDoc[bikeType]['numberOfAvailableBikes'] === 0 && !force)
+    if (stationData['bikes'][bikeType]['numberOfAvailableBikes'] === 0 && !force)
         return 1;
 
     await removeBike(stationID, bikeID, bikeType);
