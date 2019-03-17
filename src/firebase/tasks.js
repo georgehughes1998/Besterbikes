@@ -256,14 +256,25 @@ export const addTaskComment = async (taskID, comment) => {
 
 export const updateTaskDeadline = async (taskID, newDate, newTime) => {
 
-    //TODO: Ensure date is later than old date
-
     if (!Date.parse(newDate)) throw new Error("Invalid date.");
     if (!Date.parse(newTime)) throw new Error("Invalid time.");
 
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
     const taskDocument = tasksCollection.doc(taskID);
+
+    const taskDoc = await taskDocument.get();
+
+    if (!taskDoc.exists) throw new Error("Task not found.");
+
+    const taskData = taskDoc.data();
+    const taskDeadline = taskData['deadline'];
+    const taskDeadlineString = taskDeadline['date'] + " " + taskDeadline['time'];
+    const taskDeadlineTime = Date.parse(taskDeadlineString);
+
+    const newTaskDeadlineTime = Date.parse(newDate + " " + newTime);
+
+    if (taskDeadlineTime > newTaskDeadlineTime) throw new Error("New deadline must be after old deadline.");
 
     await taskDocument.update({
         'deadline.date': newDate,
