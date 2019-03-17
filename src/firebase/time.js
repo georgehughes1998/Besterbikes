@@ -1,3 +1,5 @@
+export const minAgeLimit = 16;
+
 export const getCurrentDateString = () => {
     const time = new Date();
 
@@ -58,4 +60,20 @@ export const getMonth = () => {
 export const getYear = () => {
     const time = new Date();
     return time.getFullYear();
+};
+
+
+export const validateDateOfBirth = (dateOfBirthString) => {
+
+    const dateOfBirth = Date.parse(dateOfBirthString);
+
+    if (!dateOfBirth)
+        throw new Error("Invalid date of birth.");
+
+    const time = new Date();
+    time.setFullYear(time.getFullYear()-minAgeLimit);
+
+    if (dateOfBirth > time)
+        throw new Error(`You must be ${minAgeLimit} or older to use the system.`);
+
 };
