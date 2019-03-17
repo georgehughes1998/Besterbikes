@@ -1,6 +1,11 @@
 import React from 'react'
 import PageContainer from "../../PageContainer";
-import {getAllStationStatistics, getAuthenticationStatistics, getStatistics} from "../../../firebase/statistics";
+import {
+    getAllStationStatistics,
+    getAuthenticationStatistics,
+    getStationStatistics,
+    getStatistics
+} from "../../../firebase/statistics";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
@@ -55,7 +60,9 @@ class Statistics extends React.Component {
 
                 (Object.keys(retrievedStatistics)).forEach(key => {
 
-                    console.log(key, retrievedStatistics[key]);
+                    const stationID = key;
+                    const stationStatistics = retrievedStatistics[key]
+                    console.log(stationID, stationStatistics);
 
                 });
 

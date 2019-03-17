@@ -192,14 +192,10 @@ export const getAllStationStatistics = async (year = -1, month = -1, day = -1) =
 
     const stationStatistics = {};
 
-    await stations.forEach(async stationID => {
-
-        stationStatistics[stationID] = {};
-        stationStatistics[stationID] = await getStationStatistics(stationID,year,month,day);
-        console.log(await getStationStatistics(stationID,year,month,day));
-        // console.log(Object.keys(stationStatistics));
-
-    });
+    for (let stationN in stations) {
+        const stationID = stations[stationN];
+        stationStatistics[stationID] = await getStationStatistics(stationID, year, month, day);
+    }
 
     return stationStatistics;
 
