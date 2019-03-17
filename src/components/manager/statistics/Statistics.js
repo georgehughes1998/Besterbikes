@@ -43,17 +43,22 @@ class Statistics extends React.Component {
         let retrievedStatistics = [];
 
         switch (this.state.statisticType) {
-            case "Authentication":
+            case "Authentication": {
                 retrievedStatistics = await getAuthenticationStatistics();
                 console.log(retrievedStatistics);
                 this.setState({retrievedStatistics: retrievedStatistics, readyToViewLoadedStats: true});
-                return ;
-            case "Reservations":
-                let keys = Object.keys(this.props.stations);
+                return;
+            }
+            case "Reservations": {
+                // let keys = Object.keys(this.props.stations);
                 retrievedStatistics = await getAllStationStatistics();
-                console.log(retrievedStatistics);
+
+                console.log(Object.keys(retrievedStatistics));
+
+                // console.log(retrievedStatistics.map(a => {console.log(a)}));
                 this.setState({retrievedStatistics: [retrievedStatistics], readyToViewLoadedStats: true});
-                return ;
+                return;
+            }
         }
     }
 
