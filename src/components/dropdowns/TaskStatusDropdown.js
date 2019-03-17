@@ -33,7 +33,7 @@ const TripStatusDropdown = (props) => {
 
     return (
         <Dropdown
-            text='Filter Trips'
+            text='Filter Tasks'
             icon='filter'
             labeled
             button
