@@ -114,6 +114,7 @@ class ReservationHandlingForm extends React.Component {
     };
     //Renders Redux Form Fields for all the props passed in from the parent component
     renderFields = Object.values(this.props.fields).map((key, index) => {
+        console.log("Beep beep", key.value);
         return (
             <Field
                 name={key.name}
