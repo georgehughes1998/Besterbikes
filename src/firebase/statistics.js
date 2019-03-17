@@ -185,6 +185,45 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 };
 
 
+
+
+
+//Gets all the reservation statistics for all stations
+export const getAllReservationStatistics = async (year = -1, month = -1, day = -1) => {
+
+    const stationsObjects = await JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+    const stations = Object.keys(stationsObjects);
+
+    const stationStatistics = {};
+
+    for (let stationN in stations) {
+        const stationID = stations[stationN];
+        stationStatistics[stationID] = await getReservationStatistics(stationID, year, month, day);
+    }
+
+    return stationStatistics;
+
+};
+
+//Gets all the reservation statistics for a particular station
+export const getReservationStatistics = async (stationID, year = -1, month = -1, day = -1) => {
+    //TODO: Test
+
+    const statisticPaths = [
+        `reservation.${stationID}.road.make`,
+        `reservation.${stationID}.mountain.make`,
+        `reservation.${stationID}.road.cancel`,
+        `reservation.${stationID}.mountain.cancel`,
+    ];
+
+    return await getStatistics(statisticPaths, year, month, day);
+
+};
+
+
+
+
+//Gets all the station statistics for all stations
 export const getAllStationStatistics = async (year = -1, month = -1, day = -1) => {
 
     const stationsObjects = await JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
@@ -201,26 +240,21 @@ export const getAllStationStatistics = async (year = -1, month = -1, day = -1) =
 
 };
 
-
-//Station
-
-//Gets all the statistics for a particular station
+//Gets all the station statistics for a particular station
 export const getStationStatistics = async (stationID, year = -1, month = -1, day = -1) => {
-    //TODO: Test
 
     const statisticPaths = [
-        `reservation.${stationID}.road.make`,
-        `reservation.${stationID}.road.cancel`,
-        `reservation.${stationID}.mountain.make`,
-        `reservation.${stationID}.mountain.cancel`,
         `station.${stationID}.unlock`,
-        `station.${stationID}.unlockOperator`,
-        `station.${stationID}.return`
+        `station.${stationID}.return`,
+        `station.${stationID}.unlockOperator`
     ];
 
     return await getStatistics(statisticPaths, year, month, day);
 
 };
+
+
+
 
 export const getAuthenticationStatistics = async (year = -1, month = -1, day = -1) => {
 
