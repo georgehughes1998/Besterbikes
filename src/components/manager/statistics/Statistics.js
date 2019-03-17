@@ -1,12 +1,15 @@
 import React from 'react'
 import PageContainer from "../../PageContainer";
-import {getAuthenticationStatistics, getStatistics} from "../../../firebase/statistics";
+import {getAuthenticationStatistics, getStationStatistics, getStatistics} from "../../../firebase/statistics";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
-import StatisticSegment from "../StatisticSegment";
+import SimpleStatisticSegment from "./SimpleStatisticSegment";
 import StatisticTypeDropdown from "./StatisticTypeDropdown";
 import TimeScaleDropdown from "./TimeScaleDropdown";
 import DMYDropdown from "./DMYDropdowns";
+import TableStatisticSegment from "./TableStatisticSegment";
+import {getJSONFromFile} from "../../../dataHandling/handleJSON";
 
 class Statistics extends React.Component {
 
@@ -48,6 +51,27 @@ class Statistics extends React.Component {
         }
     };
 
+
+
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            statisticType: "",
+            timescale: "daily",
+            day: new Date().getDate(),
+            month: new Date().getMonth()+1,
+            year: new Date().getFullYear(),
+            retrievedStatistics: {}
+        };
+    }
+
+    async getStations() {
+        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+        this.setState({stations})
+    }
+
     getIndividualValues = () => {
 
         let keys = Object.keys(this.state.retrievedStatistics);
@@ -60,38 +84,55 @@ class Statistics extends React.Component {
         return groupStatisticArray;
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            statisticType: "Authentication",
-            timescale: "daily",
-            day: new Date().getDate(),
-            month: new Date().getMonth()+1,
-            year: new Date().getFullYear(),
-            retrievedStatistics: {}
-        };
-    }
-
-
     componentDidMount () {
-        this.retrieveStatistics();
+        if(!this.state.stations)
+            this.getStations();
+        this.retrieveStatistics(this.state.statisticType)
     }
 
-    async retrieveStatistics() {
+    async retrieveStatistics(stats) {
+        let retrievedStatistics = [];
 
-        let retrievedStatistics;
-
-        switch (this.state.statisticType) {
-            case "authentication":
+        switch (stats) {
+            case "Authentication":
                 retrievedStatistics = await getAuthenticationStatistics();
-                this.setState({retrievedStatistics});
+                this.setState({retrievedStatistics: retrievedStatistics});
                 return ;
-            case "reservations":
-                // retrievedStatistics = await getStationStatistics();
-                // this.setState({retrievedStatistics});
+            case "Reservations":
+                let keys = Object.keys(this.state.stations);
+                retrievedStatistics = [];
+                console.log("Here");
+
+                await Object.values(this.state.stations).map(async (key, index) => {
+                    console.log(keys[index], key);
+                    await retrievedStatistics.push(await getStationStatistics(keys[index]));
+                });
+
+                this.setState({retrievedStatistics: retrievedStatistics});
                 return ;
         }
+    }
 
+    renderStatistics() {
+        switch (this.state.statisticType) {
+            case "Authentication":
+                return (
+                    <SimpleStatisticSegment
+                        name={this.state.statisticType}
+                        icon="user"
+                        values={this.getIndividualValues()}
+                    />
+                );
+            case "Reservations":
+                return (
+                    <TableStatisticSegment
+                        name={this.state.statisticType}
+                        icon="calendar"
+                        values={this.getIndividualValues()}
+                    />
+                )
+
+        }
     }
 
     render() {
@@ -106,22 +147,24 @@ class Statistics extends React.Component {
 
                 <StatisticTypeDropdown
                     onChange={(param, data) => {
-                        this.setState({"statisticType": data.value})
+                        this.setState({"statisticType": data.value});
+                        // this.forceUpdate();
                     }}
                 />
                 <TimeScaleDropdown
                     onChange={(param, data) => {
                         this.setState({"timescale": data.value})
+                        // this.retrieveStatistics();
                     }}
                 />
                 <DMYDropdown/>
                 <br/>
 
-                <StatisticSegment
-                    name = {this.state.statisticType}
-                    icon = "user"
-                    values = {this.getIndividualValues()}
-                />
+                {this.renderStatistics()}
+
+                <Button onClick={() => this.retrieveStatistics(this.state.statisticType)}>
+                    Update Statistics
+                </Button>
 
                 </Container>
             </PageContainer>
