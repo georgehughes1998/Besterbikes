@@ -183,7 +183,7 @@ export class BesterbikesMap extends Component {
                                 </Header>
 
                                 <Header.Subheader>
-                                    {this.state.activeMarker.stationDetails.notes}
+                                    {this.state.activeMarker.stationDetails.description}
                                 </Header.Subheader>
                                 <br/>
                                 <List>
