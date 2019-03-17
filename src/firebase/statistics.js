@@ -187,17 +187,15 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 
 export const getAllStationStatistics = async (year = -1, month = -1, day = -1) => {
 
-    const stationsObjects = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+    const stationsObjects = await JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
     const stations = Object.keys(stationsObjects);
 
     const stationStatistics = {};
 
-    await stations.forEach(async stationID => {
-
-        stationStatistics[stationID] = await getStationStatistics(stationID,year,month,day);
-        // console.log(Object.keys(stationStatistics));
-
-    });
+    for (let stationN in stations) {
+        const stationID = stations[stationN];
+        stationStatistics[stationID] = await getStationStatistics(stationID, year, month, day);
+    }
 
     return stationStatistics;
 

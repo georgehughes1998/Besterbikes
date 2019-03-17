@@ -1,6 +1,11 @@
 import React from 'react'
 import PageContainer from "../../PageContainer";
-import {getAllStationStatistics, getAuthenticationStatistics, getStatistics} from "../../../firebase/statistics";
+import {
+    getAllStationStatistics,
+    getAuthenticationStatistics,
+    getStationStatistics,
+    getStatistics
+} from "../../../firebase/statistics";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
@@ -53,10 +58,16 @@ class Statistics extends React.Component {
                 // let keys = Object.keys(this.props.stations);
                 retrievedStatistics = await getAllStationStatistics();
 
-                console.log(retrievedStatistics);
+                (Object.keys(retrievedStatistics)).forEach(key => {
+
+                    const stationID = key;
+                    const stationStatistics = retrievedStatistics[key];
+                    console.log(stationID, stationStatistics);
+
+                });
 
                 // console.log(retrievedStatistics.map(a => {console.log(a)}));
-                this.setState({retrievedStatistics: retrievedStatistics, readyToViewLoadedStats: true});
+                this.setState({retrievedStatistics: [retrievedStatistics], readyToViewLoadedStats: true});
                 return;
             }
         }
