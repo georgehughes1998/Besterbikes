@@ -120,7 +120,6 @@ const setUserDetails = ({forename, surname, dateOfBirth, email, imageURL="https:
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
 
-    //TODO: Validate date of birth
 
     const userDetails = {
         name: {
