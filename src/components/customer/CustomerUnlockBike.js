@@ -82,7 +82,7 @@ export class UnlockBike extends React.Component {
                 <ConfirmationModal
                     icon='lock'
                     header='No bikes to unlock'
-                    text={`None of your rservations are ready to be unlocked, check out My trips to see the status of your reservations`}
+                    text={`None of your reservations are ready to be unlocked, check out My trips to see the status of your reservations`}
                     link="/mytrips"
                     linkText="My trips"
                 />
