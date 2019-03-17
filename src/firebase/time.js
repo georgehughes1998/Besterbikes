@@ -6,8 +6,6 @@ export const getCurrentDateString = () => {
         + "-" +
         time.getFullYear();
 
-    console.log(currentDate);
-
     return currentDate;
 };
 
