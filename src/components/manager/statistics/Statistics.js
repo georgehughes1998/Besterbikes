@@ -10,68 +10,88 @@ import DMYDropdown from "./DMYDropdowns";
 
 class Statistics extends React.Component {
 
-    getDailySum(statObj, year, month, day){
-        return statObj[year][month][day]
+    getDailySum(individualStat, y, m, d){
+        let daily = individualStat[y][m][d];
+        return Number(daily)
     }
 
-    getMonthlySum(statObj, year, month){
+    getMonthlySum(individualStat, y, m){
         let sum = 0;
-        console.log(statObj);
-        Object.values(statObj[year][month]).map((day) => {
-            sum += this.getDailySum(statObj, year, month, day)
+
+        Object.values(individualStat[y][m]).map((d) => {
+            sum += d;
         });
         return sum;
     }
 
-    getYearlySum(statObj, year){
+    getYearlySum(individualStat, y){
         let sum = 0;
-        Object.values(statObj[year]).map((month) => {
-            sum += this.getMonthlySum(statObj, year, month)
+        Object.values(individualStat[y]).map((m) => {
+            Object.values(m).map((d) => {
+                sum += d;
+            })
+
         });
         return sum;
     }
 
-    sumFirestoreStatObj = (groupStat, individualStat, year, month, day) => {
-        let statObj = this.state[groupStat][individualStat];
+    sumFirestoreStatObj = (individualStat) => {
 
-        switch (this.state.statisticDMY){
-            case "d":
-                return this.getDailySum(statObj, year, month, day);
-            case "m":
-                return this.getMonthlySum(statObj, year, month);
-            case "y":
-                return this.getYearlySum(statObj, year);
+        switch (this.state.timescale){
+            case "daily":
+                return this.getDailySum(individualStat, this.state.year, this.state.month, this.state.day);
+            case "monthly":
+                return this.getMonthlySum(individualStat, this.state.year, this.state.month);
+            case "yearly":
+                return this.getYearlySum(individualStat, this.state.year);
 
         }
     };
 
-    retrieveStatistics = async (year, month, day) => {
-        console.log("Retrieving stats");
-            this.setState({authenticationStat: await getAuthenticationStatistics(year, month, day)});
+    getIndividualValues = () => {
+
+        let keys = Object.keys(this.state.retrievedStatistics);
+        let groupStatisticArray = [];
+
+        Object.values(this.state.retrievedStatistics).map((key, index) => {
+            groupStatisticArray.push({name: keys[index], value: this.sumFirestoreStatObj(key)})
+        });
+
+        return groupStatisticArray;
     };
 
     constructor(props) {
         super(props);
         this.state = {
+            statisticType: "Authentication",
             timescale: "daily",
             day: new Date().getDate(),
-            month:"",
-            year:"",
-            authenticationStat: null
+            month: new Date().getMonth()+1,
+            year: new Date().getFullYear(),
+            retrievedStatistics: {}
         };
     }
 
 
-    componentDidMount() {
-        switch (this.state.timescale){
-            case "daily":
-                return this.getDailySum(statObj, year, month, day);
-            case "monthly":
-                return this.getMonthlySum(statObj, year, month);
-            case "yearly":
-                return this.getYearlySum(statObj, year);
+    componentDidMount () {
+        this.retrieveStatistics();
+    }
 
+    async retrieveStatistics() {
+
+        let retrievedStatistics;
+
+        switch (this.state.statisticType) {
+            case "authentication":
+                retrievedStatistics = await getAuthenticationStatistics();
+                this.setState({retrievedStatistics});
+                return ;
+            case "reservations":
+                // retrievedStatistics = await getStationStatistics();
+                // this.setState({retrievedStatistics});
+                return ;
         }
+
     }
 
     render() {
@@ -85,10 +105,14 @@ class Statistics extends React.Component {
                 <br/>
 
                 <StatisticTypeDropdown
-                    onChange={(param, data) => this.setState({"statisticType": data.value})}
+                    onChange={(param, data) => {
+                        this.setState({"statisticType": data.value})
+                    }}
                 />
                 <TimeScaleDropdown
-                    onChange={(param, data) => this.setState({"timeScale": data.value})}
+                    onChange={(param, data) => {
+                        this.setState({"timescale": data.value})
+                    }}
                 />
                 <DMYDropdown/>
                 <br/>
@@ -96,13 +120,15 @@ class Statistics extends React.Component {
                 <StatisticSegment
                     name = {this.state.statisticType}
                     icon = "user"
-                    values = ""
+                    values = {this.getIndividualValues()}
                 />
 
                 </Container>
             </PageContainer>
         )
     }
+
+
 }
 
 export default Statistics
