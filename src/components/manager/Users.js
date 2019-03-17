@@ -10,6 +10,9 @@ import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 import withRouter from "react-router/es/withRouter";
+import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import Comment from "semantic-ui-react/dist/commonjs/views/Comment/Comment";
+
 
 
 class Users extends React.Component {
@@ -33,9 +36,18 @@ class Users extends React.Component {
 
             let keys = Object.keys(listOfUsers);
 
+            let image = "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/no_image.png?alt=media&token=95ccf5cb-13b6-4089-8e83-7e73f1fee62a";
+
+            if (key.imageURL)
+                image = key['imageURL'];
+
+            console.log(key['imageURL'],key,index);
+
+            //TODO: Align profile pictures to left of text
             return (
                 <List.Item onClick={() => this.handleUserClick(key, keys[index])}>
-                    <List.Icon name='bicycle' size='large' verticalAlign='middle'/>
+                    {/*<List.Icon name='bicycle' size='large' verticalAlign='middle'/>*/}
+                    <Comment.Avatar width={30} src={image} />
                     <List.Content>
                         <List.Header>
                             {`${key.name["firstName"]} ${key.name["lastName"]}`}
