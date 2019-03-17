@@ -1,9 +1,10 @@
 import * as firebase from "firebase";
 import {incrementStatistic} from "./statistics";
+import {validateDateOfBirth} from "./time";
 
 
 //Function to sign in to firebase using props from redux form
-export const signIn = async ({email, password, updateUserStatus}) => {
+export const signIn = async ({email, password}) => {
 
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(email, password);
@@ -31,7 +32,7 @@ export const signIn = async ({email, password, updateUserStatus}) => {
 export const signUp = ({email, password, forename, surname, dateOfBirth, imageURL}) => {
     const auth = firebase.auth();
 
-    //TODO: Validate date of birth
+    validateDateOfBirth(dateOfBirth);
 
     const promise = auth.createUserWithEmailAndPassword(email, password);
 
@@ -155,7 +156,7 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
 
-    //TODO: Validate date of birth
+    validateDateOfBirth(updateDateOfBirth);
 
     //Update given fields
     if (updateForename)       await usersDoc.update("name.firstName",updateForename);
@@ -179,11 +180,3 @@ export const blacklistUser = async (userID) => {
     await usersDoc.update('disabled',true);
 
 };
-
-
-//
-// const mapStateToProps = (state) => {
-//     return {user: state.user.status}
-// };
-//
-// export default connect(mapStateToProps, {updateUserStatus})(signIn);
