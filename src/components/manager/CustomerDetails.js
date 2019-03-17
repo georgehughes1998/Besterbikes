@@ -116,7 +116,7 @@ class CustomerDetails extends React.Component {
                         </p>
 
                         <Button  onClick={() => this.handleBlackList()}>
-                            Blakclist User
+                            Blacklist User
                         </Button>
 
                         <Button onClick={() => this.props.history.push("/users")}>
