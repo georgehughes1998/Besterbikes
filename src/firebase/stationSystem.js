@@ -283,11 +283,16 @@ export const getUnlockedBikes = async () => {
 
 export const unlockBikeOperator = async (bikeID, force=false) => {
 
+    if (!bikeID)    throw new Error("No bike was specified.");
+
     const db = firebase.firestore();
 
     const bikesCollection = db.collection('bikes');
     const bikeDocument = bikesCollection.doc(bikeID);
     const bikeSnapshot = await bikeDocument.get();
+
+    if (!bikeSnapshot.exists)   throw new Error("Bike not found.");
+
     const bikeData = bikeSnapshot.data();
     const bikeType = bikeData['type'];
 
@@ -305,6 +310,7 @@ export const unlockBikeOperator = async (bikeID, force=false) => {
     const stationDoc = stationsSnapshot.docs.pop();
     const stationID = stationDoc.id;
 
+    //TODO: Solve error where numberofavailablebikes is not a property of undefined
     if (stationDoc[bikeType]['numberOfAvailableBikes'] === 0 && !force)
         return 1;
 
