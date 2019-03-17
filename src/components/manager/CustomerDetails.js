@@ -113,14 +113,26 @@ class CustomerDetails extends React.Component {
                         <br/>
                         <Container textAlign='left'>
                             <Header as={"h1"}>Customer Details</Header>
+
+                            <Header as={"h4"} style={{'color':'#ff0d00'}}>
+                                {this.props.history.location.state.customer.disabled ? "Account Blacklisted":""}
+                            </Header>
+
                             <p>
                                 <strong>Forename: </strong>
                                 {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["firstName"] : null}
                             </p>
+
                             <p>
                                 <strong>Surname: </strong>
                                 {this.props.history.location.state.customer.name ? this.props.history.location.state.customer.name["lastName"] : null}
                             </p>
+
+                            <p>
+                                <strong>Email: </strong>
+                                {this.props.history.location.state.customer.email ? this.props.history.location.state.customer.email : null}
+                            </p>
+
                             <p>
                                 <strong>Date of Birth: </strong>
                                 {this.props.history.location.state.customer.dateOfBirth ? this.props.history.location.state.customer.dateOfBirth : null}

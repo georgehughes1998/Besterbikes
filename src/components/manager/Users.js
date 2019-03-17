@@ -41,7 +41,6 @@ class Users extends React.Component {
 
             console.log(key['imageURL'],key,index);
 
-            //TODO: Align profile pictures to left of text
             return (
                 <List.Item onClick={() => this.handleUserClick(key, keys[index])}>
                     {/*<List.Icon name='bicycle' size='large' verticalAlign='middle'/>*/}
@@ -54,6 +53,11 @@ class Users extends React.Component {
                         <Header as={"h6"}>
                             ID: {keys[index]}
                         </Header>
+
+                        <Header as={"h6"} style={{'color':'#ff0d00'}}>
+                            {key.disabled ? "Account Blacklisted":""}
+                        </Header>
+
                     </List.Content>
                 </List.Item>
 
