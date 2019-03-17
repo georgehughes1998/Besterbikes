@@ -40,7 +40,7 @@ export const makeReport = async (reservationID, category, comment) => {
         comment: "See attached report..."
     });
 
-    await incrementStatistic("reports.makeReport");
+    await incrementStatistic("reports.make");
 
     return operatorID
 
