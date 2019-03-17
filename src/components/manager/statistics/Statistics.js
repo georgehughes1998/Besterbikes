@@ -45,16 +45,19 @@ class Statistics extends React.Component {
         switch (this.state.statisticType) {
             case "Authentication":
                 retrievedStatistics = await getAuthenticationStatistics();
+                console.log(retrievedStatistics);
                 this.setState({retrievedStatistics: retrievedStatistics, readyToViewLoadedStats: true});
                 return ;
             case "Reservations":
                 let keys = Object.keys(this.props.stations);
-                retrievedStatistics = [];
+                retrievedStatistics=[];
 
-                await Object.values(this.props.stations).map(async (key, index) => {
-                    console.log(keys[index], key);
-                    await retrievedStatistics.push(await getStationStatistics(keys[index]));
+                keys.map(async (index, key) => {
+                    let station = await getStationStatistics(keys[index]);
+                    retrievedStatistics.push(station)
                 });
+
+                console.log(retrievedStatistics);
 
                 this.setState({retrievedStatistics: retrievedStatistics, readyToViewLoadedStats: true});
                 return ;
@@ -64,7 +67,7 @@ class Statistics extends React.Component {
 
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         return (
             <PageContainer>
                 <br/>
@@ -92,7 +95,7 @@ class Statistics extends React.Component {
                     <TimeScaleRadios
                         timescale={this.state.timescale}
                         onChange={(data) => {
-                            console.log(data);
+                            // console.log(data);
                             this.setState({"timescale": data.value})
                         }}
                     />
@@ -102,7 +105,7 @@ class Statistics extends React.Component {
                     <DMYDropdown
                         state = {this.state}
                         onChange={(YMD) => {
-                            console.log(YMD);
+                            // console.log(YMD);
                             this.setState({"y": YMD.y, "m": YMD.m, "d": YMD.d})
                         }}
                     />

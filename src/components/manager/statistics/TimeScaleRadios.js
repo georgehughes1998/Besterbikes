@@ -6,7 +6,7 @@ class TimeScaleRadios extends React.Component{
 
     renderRadios = () => {
         return ["Daily", "Monthly", "Yearly"].map((timescale) => {
-            console.log(timescale, this.props.timescale);
+            // console.log(timescale, this.props.timescale);
             return(
                 <Grid.Column>
                     <Radio
