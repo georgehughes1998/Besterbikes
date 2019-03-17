@@ -2,7 +2,6 @@ import * as firebase from "firebase";
 // import * as time from "time";
 import {getCurrentDateString, getCurrentTimeString, getDateString, getTimeString} from "./time";
 import {incrementStatistic} from "./statistics";
-import {parseDate} from "tough-cookie";
 
 const FieldValue = firebase.firestore.FieldValue;
 
@@ -93,7 +92,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 export const getTasks = async (operatorID) => {
     //TODO: Test
 
-    //TODO: Add operatorID as argument
+    //TODO: Add operatorName as argument
 
     const theTasksCollection = {};
     const theTasksArray = [];

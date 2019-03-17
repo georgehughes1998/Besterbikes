@@ -61,8 +61,8 @@ class OperatorDetails extends React.Component {
     };
     //Communicates with firebase to load in all trips
     retrieveOperatorTasks = () => {
-        console.log(this.props.history.location.state.operatorID);
-        return getTasks(this.props.history.location.state.operatorID).then((obj => {
+        console.log(this.props.history.location.state.operatorName);
+        return getTasks(this.props.history.location.state.operatorName).then((obj => {
             console.log(obj);
             this.props.loadTasks(obj);
         }));
@@ -116,7 +116,7 @@ class OperatorDetails extends React.Component {
                         </p>
                         <p>
                             <strong>ID: </strong>
-                            {this.props.history.location.state.operatorID ? this.props.history.location.state.operatorID : null}
+                            {this.props.history.location.state.operatorName ? this.props.history.location.state.operatorName : null}
                         </p>
 
                         <Button onClick={() => this.props.history.push("/users")}>
