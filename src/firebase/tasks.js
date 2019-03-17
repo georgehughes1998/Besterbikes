@@ -256,6 +256,8 @@ export const addTaskComment = async (taskID, comment) => {
 
 export const updateTaskDeadline = async (taskID, newDate, newTime) => {
 
+    //TODO: Ensure date is later than old date
+
     if (!Date.parse(newDate)) throw new Error("Invalid date.");
     if (!Date.parse(newTime)) throw new Error("Invalid time.");
 
