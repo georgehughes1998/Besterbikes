@@ -187,7 +187,7 @@ export class BesterbikesMap extends Component {
                                 </Header.Subheader>
                                 <br/>
                                 <List>
-                                    <Header as={"h5"}>Avaiable Bikes</Header>
+                                    <Header as={"h5"}>Available Bikes</Header>
                                     <List.Item>
 
                                         {/*<List.Content>*/}
@@ -196,7 +196,7 @@ export class BesterbikesMap extends Component {
                                             Mountain bikes
                                         </List.Header>
                                         <List.Description>
-                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} avaiable`}
+                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} available`}
                                         </List.Description>
                                         {/*</List.Content>*/}
                                     </List.Item>
@@ -208,7 +208,7 @@ export class BesterbikesMap extends Component {
                                             Mountain bikes
                                         </List.Header>
                                         <List.Description>
-                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} avaiable`}
+                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} available`}
                                         </List.Description>
                                     </List.Item>
                                 </List>
