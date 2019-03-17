@@ -42,20 +42,23 @@ class ListOfLiveTasks extends React.Component {
         return Object.values(comments).map((key, index) => {
 
             let operatorName = "Unknown User";
+            let image = "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/no_image.png?alt=media&token=95ccf5cb-13b6-4089-8e83-7e73f1fee62a";
+
             console.log(this.props.operators);
             const operator = this.props.operators[key.user];
 
             if (operator) {
                 const nameObj = operator.name;
                 operatorName = nameObj['firstName'] + " " + nameObj['lastName'];
+                if (operator['imageURL'])
+                    image = operator['imageURL'];
+                console.log(image);
             }
 
             return (
                 <Comment>
                     {console.log(key)}
-                    <Comment.Avatar as={"div"}>
-                        <Icon name={"bicycle"}/>
-                    </Comment.Avatar>
+                    <Comment.Avatar src={image}/>
                     <Comment.Content>
                             <Comment.Author>{operatorName}</Comment.Author>
                             <Comment.Metadata>{key.time.date} {key.time.time}</Comment.Metadata>
