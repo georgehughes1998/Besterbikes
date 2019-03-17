@@ -61,7 +61,7 @@ class ListOfLiveTasks extends React.Component {
                     <Comment.Avatar src={image}/>
                     <Comment.Content>
                             <Comment.Author>{operatorName}</Comment.Author>
-                            <Comment.Metadata>{key.time.date} {key.time.time}</Comment.Metadata>
+                            <Comment.Metadata>{key.time.date} at {key.time.time}</Comment.Metadata>
                             <Comment.Text>{key.comment}</Comment.Text>
                     </Comment.Content>
                 </Comment>
