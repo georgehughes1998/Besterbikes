@@ -4,136 +4,64 @@ import {getAuthenticationStatistics, getStationStatistics, getStatistics} from "
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
-import SimpleStatisticSegment from "./SimpleStatisticSegment";
 import StatisticTypeDropdown from "./StatisticTypeDropdown";
-import TimeScaleDropdown from "./TimeScaleDropdown";
+import TimeScaleRadios from "./TimeScaleRadios";
 import DMYDropdown from "./DMYDropdowns";
-import TableStatisticSegment from "./TableStatisticSegment";
 import {getJSONFromFile} from "../../../dataHandling/handleJSON";
+import connect from "react-redux/es/connect/connect";
+import {loadStations} from "../../../redux/actions";
+import LoadedStatistics from "./LoadedStatistics";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 
 class Statistics extends React.Component {
-
-    getDailySum(individualStat, y, m, d){
-        let daily = individualStat[y][m][d];
-        return Number(daily)
-    }
-
-    getMonthlySum(individualStat, y, m){
-        let sum = 0;
-
-        Object.values(individualStat[y][m]).map((d) => {
-            sum += d;
-        });
-        return sum;
-    }
-
-    getYearlySum(individualStat, y){
-        let sum = 0;
-        Object.values(individualStat[y]).map((m) => {
-            Object.values(m).map((d) => {
-                sum += d;
-            })
-
-        });
-        return sum;
-    }
-
-    sumFirestoreStatObj = (individualStat) => {
-
-        switch (this.state.timescale){
-            case "daily":
-                return this.getDailySum(individualStat, this.state.year, this.state.month, this.state.day);
-            case "monthly":
-                return this.getMonthlySum(individualStat, this.state.year, this.state.month);
-            case "yearly":
-                return this.getYearlySum(individualStat, this.state.year);
-
-        }
-    };
-
-
-
-
 
     constructor(props) {
         super(props);
         this.state = {
+            loaded: false,
             statisticType: "",
-            timescale: "daily",
-            day: new Date().getDate(),
-            month: new Date().getMonth()+1,
-            year: new Date().getFullYear(),
-            retrievedStatistics: {}
+            timescale: "Daily",
+            y: new Date().getFullYear(),
+            m: new Date().getMonth()+1,
+            d: new Date().getDate(),
+            retrievedStatistics: {},
+            readyToViewLoadedStats: false
         };
     }
 
     async getStations() {
         const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-        this.setState({stations})
+        this.loadStations(stations)
     }
-
-    getIndividualValues = () => {
-
-        let keys = Object.keys(this.state.retrievedStatistics);
-        let groupStatisticArray = [];
-
-        Object.values(this.state.retrievedStatistics).map((key, index) => {
-            groupStatisticArray.push({name: keys[index], value: this.sumFirestoreStatObj(key)})
-        });
-
-        return groupStatisticArray;
-    };
 
     componentDidMount () {
-        if(!this.state.stations)
+        if(!this.props.stations)
             this.getStations();
-        this.retrieveStatistics(this.state.statisticType)
     }
 
-    async retrieveStatistics(stats) {
+    async retrieveStatistics() {
         let retrievedStatistics = [];
 
-        switch (stats) {
+        switch (this.state.statisticType) {
             case "Authentication":
                 retrievedStatistics = await getAuthenticationStatistics();
-                this.setState({retrievedStatistics: retrievedStatistics});
+                this.setState({retrievedStatistics: retrievedStatistics, readyToViewLoadedStats: true});
                 return ;
             case "Reservations":
-                let keys = Object.keys(this.state.stations);
+                let keys = Object.keys(this.props.stations);
                 retrievedStatistics = [];
-                console.log("Here");
 
-                await Object.values(this.state.stations).map(async (key, index) => {
+                await Object.values(this.props.stations).map(async (key, index) => {
                     console.log(keys[index], key);
                     await retrievedStatistics.push(await getStationStatistics(keys[index]));
                 });
 
-                this.setState({retrievedStatistics: retrievedStatistics});
+                this.setState({retrievedStatistics: retrievedStatistics, readyToViewLoadedStats: true});
                 return ;
         }
     }
 
-    renderStatistics() {
-        switch (this.state.statisticType) {
-            case "Authentication":
-                return (
-                    <SimpleStatisticSegment
-                        name={this.state.statisticType}
-                        icon="user"
-                        values={this.getIndividualValues()}
-                    />
-                );
-            case "Reservations":
-                return (
-                    <TableStatisticSegment
-                        name={this.state.statisticType}
-                        icon="calendar"
-                        values={this.getIndividualValues()}
-                    />
-                )
 
-        }
-    }
 
     render() {
         console.log(this.state);
@@ -145,33 +73,57 @@ class Statistics extends React.Component {
 
                 <br/>
 
-                <StatisticTypeDropdown
-                    onChange={(param, data) => {
-                        this.setState({"statisticType": data.value});
-                        // this.forceUpdate();
-                    }}
-                />
-                <TimeScaleDropdown
-                    onChange={(param, data) => {
-                        this.setState({"timescale": data.value})
-                        // this.retrieveStatistics();
-                    }}
-                />
-                <DMYDropdown/>
+                <Segment>
+                    <StatisticTypeDropdown
+                        onChange={(param, data) => {
+                            this.setState({"statisticType": data.value, readyToViewLoadedStats: false});
+                        }}
+                    />
+                    <br/>
+
+                    <Button onClick={() => this.retrieveStatistics()}>
+                        Update Statistics
+                    </Button>
+                </Segment>
+                <br/>
                 <br/>
 
-                <Button onClick={() => this.retrieveStatistics(this.state.statisticType)}>
-                    Update Statistics
-                </Button>
+                <Segment>
+                    <TimeScaleRadios
+                        timescale={this.state.timescale}
+                        onChange={(data) => {
+                            console.log(data);
+                            this.setState({"timescale": data.value})
+                        }}
+                    />
 
-                    {this.renderStatistics()}
+                    <br/>
 
+                    <DMYDropdown
+                        state = {this.state}
+                        onChange={(YMD) => {
+                            console.log(YMD);
+                            this.setState({"y": YMD.y, "m": YMD.m, "d": YMD.d})
+                        }}
+                    />
+
+                    <br/>
+
+                    {this.state.readyToViewLoadedStats?
+                        <LoadedStatistics
+                            state = {this.state}
+                        />
+                        :null
+                    }
+                </Segment>
                 </Container>
             </PageContainer>
         )
     }
-
-
 }
 
-export default Statistics
+const mapStateToProps = (state) => {
+    return {stations: state.JSON.stations}
+};
+
+export default connect(mapStateToProps, {loadStations})(Statistics);

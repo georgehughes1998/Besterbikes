@@ -9,16 +9,16 @@ class TableStatisticSegment extends React.Component{
 
     renderStatistics = () => {
         console.log("TableSeg", this.props);
-        if (this.props) {
-            return Object.values(this.props.values).map((key, index) => {
-                return (
-                    <Grid.Row>
-                        Row
-                    </Grid.Row>
-
-                )
-            })
-        }
+        // if (this.props) {
+        //     return Object.values(this.props.values).map((key, index) => {
+        //         return (
+        //             <Grid.Row>
+        //                 Row
+        //             </Grid.Row>
+        //
+        //         )
+        //     })
+        // }
     };
 
     render(){
