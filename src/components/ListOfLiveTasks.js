@@ -9,6 +9,7 @@ import Container from "semantic-ui-react/dist/commonjs/elements/Container/Contai
 import Comment from "semantic-ui-react/dist/commonjs/views/Comment/Comment";
 import TaskStatusDropdown from "./dropdowns/TaskStatusDropdown";
 import {getPrettyString} from "../dataHandling/prettyString";
+import {getUser} from "../firebase/authentication";
 
 class ListOfLiveTasks extends React.Component {
 
@@ -39,6 +40,7 @@ class ListOfLiveTasks extends React.Component {
 
     renderComments = (comments) => {
         return Object.values(comments).map((key, index) => {
+
             return (
                 <Comment>
                     {console.log(key)}
@@ -57,7 +59,7 @@ class ListOfLiveTasks extends React.Component {
     };
 
     //Render single reservation with provided paramters
-    renderItem = ({color, iconNames, iconColors, status, category, opertaor, deadline, comments, taskId}) => {
+    renderItem = ({color, iconNames, iconColors, status, category, operator, deadline, comments, taskId}) => {
         console.log(this.state.viewTasksWithStatus, status);
         if (this.state.viewTasksWithStatus.length === 0 || this.state.viewTasksWithStatus.includes(status)) {
             return (
@@ -109,7 +111,7 @@ class ListOfLiveTasks extends React.Component {
                     iconColors: ["green", "purple"],
                     status: "Pending",
                     category: task["category"],
-                    opertaor: task["operator"],
+                    operator: task["operator"],
                     deadline: task["deadline"],
                     comments: task["comments"],
                     // `Bike available from ${startTime}`,
@@ -122,7 +124,7 @@ class ListOfLiveTasks extends React.Component {
                     iconColors: [],
                     status: "Complete",
                     category: task["category"],
-                    opertaor: task["operator"],
+                    operator: task["operator"],
                     deadline: task["deadline"],
                     comments: task["comments"],
                     // `Bike available from ${startTime}`,
@@ -135,7 +137,7 @@ class ListOfLiveTasks extends React.Component {
                     iconColors: [],
                     status: "Reassigned",
                     category: task["category"],
-                    opertaor: "",
+                    operator: "",
                     deadline: task["deadline"],
                     comments: task["comments"],
                     // `Bike available from ${startTime}`,
@@ -181,7 +183,7 @@ class ListOfLiveTasks extends React.Component {
             modalHeader: "",
             modalSubHeader: "",
             modalTask: "",
-            opertaors: [],
+            operators: [],
             viewTasksWithStatus: []
         };
     }
