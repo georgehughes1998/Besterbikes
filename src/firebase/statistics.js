@@ -1,5 +1,5 @@
 import * as firebase from "firebase";
-import {getDay, getMonth, getYear} from "./time";
+import {getDateString, getDay, getMonth, getYear} from "./time";
 
 
 // timeScale Argument Rules:
@@ -311,6 +311,31 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
     }
 
     return statisticsObject;
+};
+
+
+export const changeNestedToGraphFormat = (obj) => {
+
+    const newObj = {};
+
+    obj.map(year => {
+        const yearObj = obj[year];
+        yearObj.map(month => {
+            const monthObj = yearObj[month];
+            monthObj.map(day => {
+
+                const theValue = monthObj[day];
+
+                const dateString = day.toString() + "-" + month.toString() + "-" + year.toString();
+
+                newObj[dateString] = theValue;
+
+            })
+        })
+    });
+
+    return newObj;
+
 };
 
 
