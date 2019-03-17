@@ -61,7 +61,7 @@ class Statistics extends React.Component {
                 (Object.keys(retrievedStatistics)).forEach(key => {
 
                     const stationID = key;
-                    const stationStatistics = retrievedStatistics[key]
+                    const stationStatistics = retrievedStatistics[key];
                     console.log(stationID, stationStatistics);
 
                 });
