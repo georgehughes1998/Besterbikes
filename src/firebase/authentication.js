@@ -160,6 +160,7 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     //Update given fields
     if (updateForename)       await usersDoc.update("name.firstName",updateForename);
     if (updateSurname)        await usersDoc.update("name.lastName",updateSurname);
+    if (updateImageURL)        await usersDoc.update("imageURL",updateImageURL);
     if (updatePassword)       await auth.currentUser.updatePassword(updatePassword);
     if (updateEmail)          {
         await auth.currentUser.updateEmail(updateEmail);
