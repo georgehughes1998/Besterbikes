@@ -157,18 +157,7 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
 
 export const blacklistUser = async (userID) => {
 
-    const firebaseAdmin = require("firebase-admin");
-    const serviceAccount = require("./initData/serviceKey.json");
-    const databaseURL = "https://bettersome-a5c8e.firebaseio.com";
-
-    firebaseAdmin.initializeApp(
-        {
-            credential: firebaseAdmin.credential.cert(serviceAccount),
-            databaseURL: databaseURL
-        }
-    );
-
-    await firebaseAdmin.auth().updateUser(userID,{disabled: true});
+    await firebase.auth().updateUser(userID,{disabled: true});
 
 };
 
