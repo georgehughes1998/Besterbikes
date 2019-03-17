@@ -1,4 +1,4 @@
-//Displays all Trips by mapping over returned Trips
+//Displays all Tasks by mapping over returned Tasks
 import {Form, Grid, Header, Icon, Segment} from "semantic-ui-react";
 import React from "react";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
@@ -143,7 +143,7 @@ class ListOfLiveTasks extends React.Component {
                 });
 
             default:
-                return (<div>No more Trips to display</div>)
+                return (<div>No more Tasks to display</div>)
         }
     };
     //Function to handle click of an icon depending on it's functionality
