@@ -190,12 +190,12 @@ export const getAllStationStatistics = async (year = -1, month = -1, day = -1) =
     const stationsObjects = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
     const stations = Object.keys(stationsObjects);
 
-    const stationStatistics = {};
+    const stationStatistics = [];
 
     stations.forEach(async stationID => {
 
         stationStatistics[stationID] = await getStationStatistics(stationID,year,month,day);
-        // console.log(stationStatistics);
+        // console.log(Object.keys(stationStatistics));
 
     });
 
@@ -220,7 +220,7 @@ export const getStationStatistics = async (stationID, year = -1, month = -1, day
         `station.${stationID}.return`
     ];
 
-    return getStatistics(statisticPaths, year, month, day);
+    return await getStatistics(statisticPaths, year, month, day);
 
 };
 
@@ -232,7 +232,7 @@ export const getAuthenticationStatistics = async (year = -1, month = -1, day = -
         "authentication.updateDetails"
     ];
 
-    return getStatistics(statisticPaths, year, month, day);
+    return await getStatistics(statisticPaths, year, month, day);
 
 };
 
@@ -248,7 +248,7 @@ export const getTasksStatistics = async (year = -1, month = -1, day = -1) => {
 
     ];
 
-    return getStatistics(statisticPaths, year, month, day);
+    return await getStatistics(statisticPaths, year, month, day);
 
 };
 
