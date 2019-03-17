@@ -328,7 +328,8 @@ export const changeNestedToGraphFormat = (obj) => {
 
                 const dateString = day.toString() + "-" + month.toString() + "-" + year.toString();
 
-                newObj[dateString] = theValue;
+                newObj['date'] = dateString;
+                newObj['value'] = theValue;
 
             })
         })
