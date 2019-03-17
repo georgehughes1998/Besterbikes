@@ -36,9 +36,11 @@ export class UnlockBike extends React.Component {
     };
 
     handleUnlock = async () => {
+        this.setState({"readyToDisplay": false})
         console.log(this.state);
         unlockBike(this.state.unlockTrip)
             .then((bikeID) => {
+                this.setState({"readyToDisplay": true})
                 if (bikeID) {
                     this.setState({activeBikeID: bikeID})
                 }
@@ -73,7 +75,7 @@ export class UnlockBike extends React.Component {
             console.log("loading");
             return (
                 <CustomLoader
-                    text={"5, 4, 3, 2, ... 2.5, 1, ..."}
+                    text={"BIKES BIKES BIKES"}
                     icon={"lock"}
                 />
             );

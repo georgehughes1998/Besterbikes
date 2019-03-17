@@ -2,7 +2,7 @@ import React from 'react'
 import withRouter from "react-router/es/withRouter";
 import PageContainer from "../PageContainer";
 import ListOfLiveTrips from "../ListOfLiveTrips";
-import {getUser} from "../../firebase/authentication";
+import {blacklistUser, getUser} from "../../firebase/authentication";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
@@ -60,6 +60,21 @@ class CustomerDetails extends React.Component {
         }
     };
 
+
+    handleBlackList() {
+        console.log(this.props.history.location.state.customerID)
+        return blacklistUser(this.props.history.location.state.customerID)
+            .then((obj) => {
+                console.log("Blacklisted")
+            })
+            .catch((err) => {
+                console.log(err);
+                throw new SubmissionError({
+                    _error: err.message
+                })
+            })
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -100,6 +115,10 @@ class CustomerDetails extends React.Component {
                             {this.props.history.location.state.customerID ? this.props.history.location.state.customerID : null}
                         </p>
 
+                        <Button  onClick={() => this.handleBlackList()}>
+                            Blakclist User
+                        </Button>
+
                         <Button onClick={() => this.props.history.push("/users")}>
                             Return to all users
                         </Button>
@@ -123,6 +142,7 @@ class CustomerDetails extends React.Component {
             </PageContainer>
         )
     }
+
 }
 
 const mapStateToProps = (state) => {

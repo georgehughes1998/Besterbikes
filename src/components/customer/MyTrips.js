@@ -77,7 +77,7 @@ class MyTrips extends React.Component {
             console.log("loading");
             return (
                 <CustomLoader
-                    text={"Happiness is just a moment away..."}
+                    text={"Happiness is just a pedal away..."}
                     icon={"tasks"}
                 />
             );
@@ -89,7 +89,10 @@ class MyTrips extends React.Component {
                     <ListOfLiveTrips
                         items={this.props.trips}
                         stations={this.props.stations}
-                        handleCancelTrip={(tripID) => this.handleCancelTrip(tripID)}
+                        handleCancelTrip={(tripID) => {
+                            this.setState({"readyToDisplay": false});
+                            this.handleCancelTrip(tripID)
+                        }}
                         handleReport={() => this.handleReport()}
                     />
                     {/*TODO: Implement filter*/}

@@ -98,20 +98,6 @@ class MainMenu extends React.Component {
         let icons = [];
 
         if (this.state.menuItems) {
-            // for (let i = 0; i < 2; i++) {
-            //
-            //     icons.push(
-            //       <Grid.Row>
-            //             <Link to={this.state.menuItems[i].link ? this.state.menuItems[i].link : "/signin"}>
-            //                 <Container textAlign='center'>
-            //                     <Icon name={this.state.menuItems[i].icon} size="big" center color="black"/>
-            //                     <Header as="h3" textAlign='center' color="blue">{this.state.menuItems[i].name}</Header>
-            //                 </Container>
-            //             </Link>
-            //         </Grid.Row>
-            //     )
-            //
-            // }
 
             //TODO: make this less awful
             icons.push(
@@ -120,7 +106,7 @@ class MainMenu extends React.Component {
                         <Grid.Column>
                             <Link to={this.state.menuItems[0].link ? this.state.menuItems[0].link : "/signin"}>
                                 <Container textAlign='center'>
-                                    <Icon name={this.state.menuItems[0].icon} size="huge" center color="black"/>
+                                    <Icon name={this.state.menuItems[0].icon} size="massive" center color="black"/>
                                     <Header as="h3" textAlign='center'
                                             color="blue">{this.state.menuItems[0].name}</Header>
                                 </Container>
@@ -129,7 +115,7 @@ class MainMenu extends React.Component {
                         <Grid.Column>
                             <Link to={this.state.menuItems[1].link ? this.state.menuItems[1].link : "/signin"}>
                                 <Container textAlign='center'>
-                                    <Icon name={this.state.menuItems[1].icon} size="huge" center color="black"/>
+                                    <Icon name={this.state.menuItems[1].icon} size="massive" center color="black"/>
                                     <Header as="h3" textAlign='center'
                                             color="blue">{this.state.menuItems[1].name}</Header>
                                 </Container>
@@ -141,7 +127,7 @@ class MainMenu extends React.Component {
                         <Grid.Column>
                             <Link to={this.state.menuItems[2].link ? this.state.menuItems[2].link : "/signin"}>
                                 <Container textAlign='center'>
-                                    <Icon name={this.state.menuItems[2].icon} size="huge" center color="black"/>
+                                    <Icon name={this.state.menuItems[2].icon} size="massive" center color="black"/>
                                     <Header as="h3" textAlign='center'
                                             color="blue">{this.state.menuItems[2].name}</Header>
                                 </Container>
@@ -150,7 +136,7 @@ class MainMenu extends React.Component {
                         <Grid.Column>
                             <Link to={this.state.menuItems[3].link ? this.state.menuItems[3].link : "/signin"}>
                                 <Container textAlign='center'>
-                                    <Icon name={this.state.menuItems[3].icon} size="huge" center color="black"/>
+                                    <Icon name={this.state.menuItems[3].icon} size="massive" center color="black"/>
                                     <Header as="h3" textAlign='center'
                                             color="blue">{this.state.menuItems[3].name}</Header>
                                 </Container>
@@ -178,11 +164,6 @@ class MainMenu extends React.Component {
                     </Header>
                 </Container>
 
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
                 <br/>
 
 

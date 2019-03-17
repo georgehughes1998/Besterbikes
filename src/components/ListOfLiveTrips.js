@@ -25,8 +25,9 @@ class ListOfLiveTrips extends React.Component {
             return (
                 <div>
                     <Grid.Row onClick={() => this.handleIconClick(key, taskId)}>
-                        <Icon name={key} color={iconColors[index]} size="big"/>
+                        <Icon name={key} color={iconColors[index]} size="huge"/>
                     </Grid.Row>
+                    <br/>
                 </div>
 
             )
@@ -41,7 +42,7 @@ class ListOfLiveTrips extends React.Component {
                 <Segment color={color} fluid>
                     <Grid>
                         <Grid.Row>
-                            <Grid.Column width={13}>
+                            <Grid.Column width={12}>
                                 <Header
                                     as='h1'
                                     content={headerContent}
@@ -82,8 +83,8 @@ class ListOfLiveTrips extends React.Component {
             case "inactive":
                 return this.renderItem({
                     color: "purple",
-                    iconNames: ["cancel", "exclamation circle"],
-                    iconColors: ["red", "red"],
+                    iconNames: ["exclamation circle", "cancel"],
+                    iconColors: ["orange", "red"],
                     status: "inactive",
                     displayStatus: "Reserved",
                     headerContent: stationName,
@@ -95,8 +96,8 @@ class ListOfLiveTrips extends React.Component {
             case "active":
                 return this.renderItem({
                     color: "yellow",
-                    iconNames: ["lock open", "cancel", "exclamation circle"],
-                    iconColors: ["blue", "red", "red"],
+                    iconNames: ["lock open", "exclamation circle", "cancel"],
+                    iconColors: ["blue", "orange", "red"],
                     status: "active",
                     displayStatus: "Ready to Unlock",
                     headerContent: stationName,
@@ -109,7 +110,7 @@ class ListOfLiveTrips extends React.Component {
                 return this.renderItem({
                     color: "green",
                     iconNames: ["exclamation circle"],
-                    iconColors: ["red"],
+                    iconColors: ["orange"],
                     status: "unlocked",
                     displayStatus: "In Progress",
                     headerContent: stationName,
@@ -124,7 +125,7 @@ class ListOfLiveTrips extends React.Component {
                 return this.renderItem({
                     color: "grey",
                     iconNames: ["exclamation circle"],
-                    iconColors: ["red"],
+                    iconColors: ["orange"],
                     status: "complete",
                     displayStatus: "Complete",
                     headerContent: stationName,
@@ -138,7 +139,7 @@ class ListOfLiveTrips extends React.Component {
                 return this.renderItem({
                     color: "red",
                     iconNames: ["exclamation circle"],
-                    iconColors: ["red"],
+                    iconColors: ["orange"],
                     status: "cancelled",
                     displayStatus: "Cancelled",
                     headerContent: stationName,

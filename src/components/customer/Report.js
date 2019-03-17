@@ -66,7 +66,7 @@ class Report extends React.Component {
             console.log("loading");
             return (
                 <CustomLoader
-                    text={"As it turns out, carbon is eminently repairable."}
+                    text={"We're all ears"}
                     icon={"exclamation circle"}
                 />
             );
@@ -87,6 +87,7 @@ class Report extends React.Component {
                                 placeholder='Select Category'
                                 options={[{key: "bikeFault", value: "Bike Fault", text: "Bike Fault"},
                                     {key: "stationFault", value: "Station Fault", text: "Station Fault"},
+                                    {key: "reservationProblem", value: "Reservation Problem", text: "Reservation Problem"},
                                     {key: "feedback", value: "Feedback", text: "Feedback"}
                                 ]}
                                 onChange={(param, data) => this.setState({"category": data.value})}
