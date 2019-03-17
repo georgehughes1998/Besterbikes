@@ -42,7 +42,7 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
     const statisticsCollection = db.collection('statistics');
 
     const day = getDay();
-    const month = getMonth() + 1;
+    const month = getMonth();
     const year = getYear();
 
     const statisticsQuery = statisticsCollection
@@ -347,7 +347,7 @@ const getSingleStatistic = async (statisticType, timeScale) => {
     const statisticsCollection = db.collection('statistics');
 
     const day = getDay();
-    const month = getMonth() + 1;
+    const month = getMonth();
     const year = getYear();
 
     let statisticsQuery;
