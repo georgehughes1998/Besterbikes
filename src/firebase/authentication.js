@@ -22,7 +22,7 @@ export const signIn = async ({email, password, updateUserStatus}) => {
 };
 
 //Function to sign up to firebase with auth using props from redux form
-export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
+export const signUp = ({email, password, forename, surname, dateOfBirth, imageURL}) => {
     const auth = firebase.auth();
     const promise = auth.createUserWithEmailAndPassword(email, password);
 
@@ -30,7 +30,7 @@ export const signUp = ({email, password, forename, surname, dateOfBirth}) => {
         .then(async user => {
 
             await auth.signInWithEmailAndPassword(email, password);
-            setUserDetails({forename, surname, dateOfBirth});
+            setUserDetails({forename, surname, dateOfBirth, imageURL});
 
             await incrementStatistic("authentication.signUp");
 
@@ -100,7 +100,7 @@ export const getUser = async (userID = "") => {
 
 
 //Set the current user's details in the firestore
-const setUserDetails = ({forename, surname, dateOfBirth}) => {
+const setUserDetails = ({forename, surname, dateOfBirth, imageURL="https://i.stack.imgur.com/l60Hf.png"}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -116,6 +116,7 @@ const setUserDetails = ({forename, surname, dateOfBirth}) => {
             lastName: surname
         },
         dateOfBirth: dateOfBirth,
+        imageURL: imageURL,
         type: "customer"
     };
 
@@ -133,7 +134,7 @@ const setUserDetails = ({forename, surname, dateOfBirth}) => {
 };
 
 
-export const updateUserDetails = async ({updateEmail, updatePassword, updateForename, updateSurname, updateDateOfBirth}) => {
+export const updateUserDetails = async ({updateEmail, updatePassword, updateForename, updateSurname, updateDateOfBirth, updateImageURL}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -146,12 +147,19 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     if (updateForename)       await usersDoc.update("name.firstName",updateForename);
     if (updateSurname)        await usersDoc.update("name.lastName",updateSurname);
     if (updateDateOfBirth)    await usersDoc.update("dateOfBirth",updateDateOfBirth);
+    if (updateImageURL)    await usersDoc.update("imageURL",updateImageURL);
     if (updateEmail)          await auth.currentUser.updateEmail(updateEmail);
     if (updatePassword)       await auth.currentUser.updatePassword(updatePassword);
 
     await incrementStatistic("authentication.updateDetails");
 
     return "success"
+
+};
+
+export const blacklistUser = async (userID) => {
+
+    await firebase.auth().updateUser(userID,{disabled: true});
 
 };
 
