@@ -147,7 +147,6 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     if (updateForename)       await usersDoc.update("name.firstName",updateForename);
     if (updateSurname)        await usersDoc.update("name.lastName",updateSurname);
     if (updateDateOfBirth)    await usersDoc.update("dateOfBirth",updateDateOfBirth);
-    if (updateImageURL)    await usersDoc.update("imageURL",updateImageURL);
     if (updateEmail)          await auth.currentUser.updateEmail(updateEmail);
     if (updatePassword)       await auth.currentUser.updatePassword(updatePassword);
 
