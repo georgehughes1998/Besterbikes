@@ -53,7 +53,11 @@ class Statistics extends React.Component {
                 // let keys = Object.keys(this.props.stations);
                 retrievedStatistics = await getAllStationStatistics();
 
-                console.log(Object.keys(retrievedStatistics));
+                (Object.keys(retrievedStatistics)).forEach(key => {
+
+                    console.log(key, retrievedStatistics[key]);
+
+                });
 
                 // console.log(retrievedStatistics.map(a => {console.log(a)}));
                 this.setState({retrievedStatistics: [retrievedStatistics], readyToViewLoadedStats: true});
