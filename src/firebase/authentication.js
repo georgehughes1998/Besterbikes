@@ -117,7 +117,8 @@ const setUserDetails = ({forename, surname, dateOfBirth, imageURL="https://i.sta
         },
         dateOfBirth: dateOfBirth,
         imageURL: imageURL,
-        type: "customer"
+        type: "customer",
+        disabled: false
     };
 
     const promise = usersDoc.set(userDetails);
@@ -158,7 +159,12 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
 
 export const blacklistUser = async (userID) => {
 
-    await firebase.auth().updateUser(userID,{disabled: true});
+    //TODO: Implement
+    const db = firebase.firestore();
+    const usersCollection = db.collection('users');
+    const usersDoc = usersCollection.doc(userID);
+
+    usersDoc.update('disabled',true);
 
 };
 
