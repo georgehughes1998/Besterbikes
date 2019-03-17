@@ -72,7 +72,6 @@ data && Object.keys(data).forEach(key => {
 
                     });
 
-                delete nestedContent[docTitle]['email'];
                 delete nestedContent[docTitle]['password'];
 
                 firebaseAdmin.firestore()
