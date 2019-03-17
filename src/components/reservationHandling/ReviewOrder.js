@@ -27,9 +27,9 @@ const ReviewOrder = (props) => {
                         label: 'Mountain Bikes',
                         type: 'readOnly',
                     },
-                    regularBikes: {
-                        name: 'regularBikes',
-                        label: 'Regular Bikes',
+                    roadBikes: {
+                        name: 'roadBikes',
+                        label: 'Road Bikes',
                         type: 'readOnly',
                     },
                     startDate: {

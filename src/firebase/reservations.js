@@ -13,7 +13,7 @@ const maxCapacityPercentage = 0.7;
 const minCapacityPercentage = 0.3;
 
 
-export const makeReservations = async ({startDate, startTime, station, mountainBikes, regularBikes, accessoriesArray=[]},user) => {
+export const makeReservations = async ({startDate, startTime, station, mountainBikes, roadBikes, accessoriesArray=[]},user) => {
     //Function to make reservations with the given data
 
     const startTimeString = startDate + " " + startTime;
@@ -21,7 +21,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     const currentTime = new Date();
     const futureLimitTime = (new Date).setHours(currentTime.getHours() + maxReserveHoursLimit);
 
-    regularBikes = parseInt(regularBikes);
+    roadBikes = parseInt(roadBikes);
     mountainBikes = parseInt(mountainBikes);
 
     if (startTimeDate < currentTime)
@@ -30,8 +30,8 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
         throw new Error("Cannot book a reservation more than " + maxReserveHoursLimit.toString() + " hours ahead.");
 
     //In case value is blank and parseInt returns null
-    if (!regularBikes)
-        regularBikes = 0;
+    if (!roadBikes)
+        roadBikes = 0;
     if (!mountainBikes)
         mountainBikes = 0;
 
@@ -44,16 +44,16 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     const numberOfAvailableMountainBikes = await getNumberOfAvailableBikes(station, "mountain");
 
     //Prevent the user from doing anything absurd
-    if (regularBikes > maxNumberOfBikesCanReserve || mountainBikes > maxNumberOfBikesCanReserve)
+    if (roadBikes > maxNumberOfBikesCanReserve || mountainBikes > maxNumberOfBikesCanReserve)
         throw new Error("Cannot reserve more than " + maxNumberOfBikesCanReserve.toString() + " bikes at once.");
 
-    if (numberOfAvailableRoadBikes < regularBikes)
+    if (numberOfAvailableRoadBikes < roadBikes)
         throw new Error("Not enough road bikes available at selected station.");
 
     if (numberOfAvailableMountainBikes < mountainBikes)
         throw new Error("Not enough mountain bikes available at selected station.");
 
-    if (mountainBikes < 0 || regularBikes < 0)
+    if (mountainBikes < 0 || roadBikes < 0)
         throw new Error("Number of bikes selected cannot be less than zero.");
 
 
@@ -88,15 +88,15 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     };
 
 
-    if (regularBikes > 0) {
+    if (roadBikes > 0) {
 
-        for (let i = 0; i < regularBikes; i++) {
+        for (let i = 0; i < roadBikes; i++) {
             const reservationID = await makeSingleReservation(reservationsCollection, reservationDocument, 'road');
             // console.log(reservationID);
             reservationsIDArray.push(reservationID);
         }
 
-        const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - regularBikes;
+        const newNumberOfAvailableRoadBikes = numberOfAvailableRoadBikes - roadBikes;
         await setNumberOfAvailableBikes(station, newNumberOfAvailableRoadBikes, "road");
     }
 
@@ -116,7 +116,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
     //console.log("Reservations to be added to user:");
     //console.log(reservationsIDArray);
 
-    await incrementStatistic("reservation." + station + ".road.make", regularBikes);
+    await incrementStatistic("reservation." + station + ".road.make", roadBikes);
     await incrementStatistic("reservation." + station + ".mountain.make", mountainBikes);
 
     return "success";

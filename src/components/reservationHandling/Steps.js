@@ -17,11 +17,11 @@ let Steps = (props) => {
         //console.log(props);
         switch (key.title) {
             case "Select Bikes":
-                return props.fields.station && props.fields.regularBikes && props.fields.mountainBikes;
+                return props.fields.station && props.fields.roadBikes && props.fields.mountainBikes;
             case "Date and Time":
                 return props.fields.startTime && props.fields.startDate;
             case "Review Order":
-                return props.fields.station && props.fields.regularBikes && props.fields.mountainBikes && props.fields.startTime && props.fields.startDate;
+                return props.fields.station && props.fields.roadBikes && props.fields.mountainBikes && props.fields.startTime && props.fields.startDate;
             case "Payment":
                 return props.fields.cardNumber && props.fields.CVV && props.fields.country && props.fields.expirationDate;
             default:
@@ -71,7 +71,7 @@ Steps = connect(state => {
     const fields = selector(state,
         'station',
         'mountainBikes',
-        'regularBikes',
+        'roadBikes',
         'startDate',
         'startTime',
         'cardNumber',

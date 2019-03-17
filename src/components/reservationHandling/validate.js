@@ -16,8 +16,8 @@ const validate = values => {
         errors.station = "You must select a valid station to reserve a bike"
     }
 
-    if (!values.mountainBikes && !values.regularBikes) {
-        errors.regularBikes = "You must select at least 1 bike to rent"
+    if (!values.mountainBikes && !values.roadBikes) {
+        errors.roadBikes = "You must select at least 1 bike to rent"
     }
 
     //TODO: Fix error that is preventing this from showing
