@@ -30,6 +30,9 @@ export const signIn = async ({email, password, updateUserStatus}) => {
 //Function to sign up to firebase with auth using props from redux form
 export const signUp = ({email, password, forename, surname, dateOfBirth, imageURL}) => {
     const auth = firebase.auth();
+
+    //TODO: Validate date of birth
+
     const promise = auth.createUserWithEmailAndPassword(email, password);
 
     return promise
@@ -116,6 +119,8 @@ const setUserDetails = ({forename, surname, dateOfBirth, imageURL="https://drive
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
 
+    //TODO: Validate date of birth
+
     const userDetails = {
         name: {
             firstName: forename,
@@ -149,6 +154,8 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
+
+    //TODO: Validate date of birth
 
     //Update given fields
     if (updateForename)       await usersDoc.update("name.firstName",updateForename);
