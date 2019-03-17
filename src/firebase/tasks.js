@@ -2,6 +2,7 @@ import * as firebase from "firebase";
 // import * as time from "time";
 import {getCurrentDateString, getCurrentTimeString, getDateString, getTimeString} from "./time";
 import {incrementStatistic} from "./statistics";
+import {parseDate} from "tough-cookie";
 
 const FieldValue = firebase.firestore.FieldValue;
 
@@ -53,7 +54,7 @@ export const makeNewTask = async ({operator, category, deadlineDate, deadlineTim
 
 
     //Assign comment to the task
-    if (comment)
+    if (comment && comment !== "")
         theTask['comments'] = [{
             user: uid,
             comment: comment,
@@ -164,34 +165,27 @@ export const getTasks = async (operatorID) => {
 
     });
 
-    // console.log("----------------The Tasks----------------");
-    // console.log(theTasksCollection);
-    // console.log("-----------------------------------------");
-
     return theTasksCollection;
 
 };
 
 
 //Return a single task object
-//This function may be redundant...
 const getTask = async (taskID) => {
-    //TODO: Test
 
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
     const taskDocument = tasksCollection.doc(taskID);
 
     const taskSnapshot = await taskDocument.get();
+    if (!taskSnapshot.exists)   throw new Error("Task does not exist.");
     return taskSnapshot.data();
 
 };
 
 
 export const updateTaskStatus = async (taskID, newStatus) => {
-    //TODO: Test
 
-    console.log(taskID, newStatus);
     if (!(newStatus === "accepted" || newStatus === "complete" || newStatus === "reassigned"))
         throw new Error("newStatus must be one of 'accepted', 'complete' or 'reassigned'.");
 
@@ -208,7 +202,10 @@ export const updateTaskStatus = async (taskID, newStatus) => {
 
 
 export const reassignTask = async (taskID, comment, operatorID) => {
-    //TODO: test
+
+    if (!taskID)                    throw new Error("No task was specified.");
+    if (!operatorID)                throw new Error("No operator was specified.");
+    if (!comment || comment === "") throw new Error("No comment was given.");
 
     const db = firebase.firestore();
     const auth = firebase.auth();
@@ -238,7 +235,9 @@ export const reassignTask = async (taskID, comment, operatorID) => {
 
 
 export const addTaskComment = async (taskID, comment) => {
-    //TODO: Test
+
+    if (!taskID)                    throw new Error("No task was specified.");
+    if (!comment || comment === "") throw new Error("No comment was given.");
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -248,7 +247,6 @@ export const addTaskComment = async (taskID, comment) => {
     const taskDocument = tasksCollection.doc(taskID);
 
     const timeObject = {date: getCurrentDateString(), time: getCurrentTimeString()};
-
     const commentObject = {user: uid, comment: comment, time: timeObject};
 
     await taskDocument.update({comments: FieldValue.arrayUnion(commentObject)});
@@ -257,7 +255,9 @@ export const addTaskComment = async (taskID, comment) => {
 
 
 export const updateTaskDeadline = async (taskID, newDate, newTime) => {
-    //TODO: Test
+
+    if (!Date.parse(newDate)) throw new Error("Invalid date.");
+    if (!Date.parse(newTime)) throw new Error("Invalid time.");
 
     const db = firebase.firestore();
     const tasksCollection = db.collection('tasks');
@@ -274,7 +274,6 @@ export const updateTaskDeadline = async (taskID, newDate, newTime) => {
 
 
 const chooseRandomOperator = async () => {
-    //TODO: Test
 
     const db = firebase.firestore();
     const usersCollection = db.collection('users');
