@@ -193,10 +193,10 @@ export class BesterbikesMap extends Component {
                                         {/*<List.Content>*/}
                                         <List.Header>
                                             <Icon name={"bicycle"}/>
-                                            Mountain bikes
+                                            Road bikes
                                         </List.Header>
                                         <List.Description>
-                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} available`}
+                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} available`}
                                         </List.Description>
                                         {/*</List.Content>*/}
                                     </List.Item>
@@ -208,7 +208,7 @@ export class BesterbikesMap extends Component {
                                             Mountain bikes
                                         </List.Header>
                                         <List.Description>
-                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["road"]} available`}
+                                            {`There are ${this.state.bikesAtStations[this.state.activeMarker.stationDetails.sid]["mountain"]} available`}
                                         </List.Description>
                                     </List.Item>
                                 </List>
