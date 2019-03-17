@@ -10,9 +10,7 @@ import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 import withRouter from "react-router/es/withRouter";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-import Comment from "semantic-ui-react/dist/commonjs/views/Comment/Comment";
-
+import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 
 
 class Users extends React.Component {
@@ -47,13 +45,13 @@ class Users extends React.Component {
             return (
                 <List.Item onClick={() => this.handleUserClick(key, keys[index])}>
                     {/*<List.Icon name='bicycle' size='large' verticalAlign='middle'/>*/}
-                    <Comment.Avatar width={30} src={image} />
+                    <Image avatar width={15} src={image} />
                     <List.Content>
-                        <List.Header>
+                        <List.Header as={"h4"}>
                             {`${key.name["firstName"]} ${key.name["lastName"]}`}
                         </List.Header>
 
-                        <Header as={"h5"}>
+                        <Header as={"h6"}>
                             ID: {keys[index]}
                         </Header>
                     </List.Content>

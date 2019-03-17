@@ -1,37 +1,69 @@
 const getDailySum = (individualStat, y, m, d) =>{
-    let daily = individualStat[y][m][d];
-    return Number(daily)
+    if(individualStat[y][m]){
+        if(individualStat[y][m][d]){
+            let daily = individualStat[y][m][d];
+            return Number(daily)
+        }else {
+            return 0;
+        }
+    }else{
+        return 0;
+    }
 };
 
 const getMonthlySum = (individualStat, y, m) => {
-    let sum = 0;
+    if(individualStat[y]){
+        let sum = 0;
 
-    Object.values(individualStat[y][m]).map((d) => {
-        sum += d;
-    });
-    return sum;
+        if(individualStat[y][m]){
+            Object.values(individualStat[y][m]).map((d) => {
+                sum += d;
+            });
+
+            return sum;
+        }else{
+            return 0
+        }
+    }else{
+        return 0;
+    }
+
 };
 
 const getYearlySum = (individualStat, y) =>{
-    let sum = 0;
-    Object.values(individualStat[y]).map((m) => {
-        Object.values(m).map((d) => {
-            sum += d;
-        })
+    if(individualStat){
+        let sum = 0;
+        Object.values(individualStat[y]).map((m) => {
+            Object.values(m).map((d) => {
+                sum += d;
+            })
 
-    });
-    return sum;
+        });
+        return sum;
+    }else{
+        return 0;
+    }
+
 };
 
 const sumFirestoreStatObj = (individualStat, timescale, y, m, d) => {
 
     switch (timescale){
         case "Daily":
-            return getDailySum(individualStat, y, m, d);
+            if(d)
+                return getDailySum(individualStat, y, m, d);
+            else
+                return 0;
         case "Monthly":
-            return getMonthlySum(individualStat, y, m);
+            if(m)
+                return getMonthlySum(individualStat, y, m);
+            else
+                return 0;
         case "Yearly":
-            return getYearlySum(individualStat, y);
+            if(y)
+                return getYearlySum(individualStat, y);
+            else
+                return 0;
 
     }
 };
