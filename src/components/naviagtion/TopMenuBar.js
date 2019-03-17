@@ -49,7 +49,7 @@ class TopMenuBar extends React.Component {
 
                 <Menu.Item disabled={this.props.sideBarVisible || this.state.currentUser === ""}
                            onClick={this.props.sideBarVisible ? this.handleHideClick : this.handleShowClick}>
-                    <Icon name="bars"/>
+                    <Icon name="bars" size={"big"}/>
                 </Menu.Item>
 
                 <Menu.Item>
@@ -60,7 +60,7 @@ class TopMenuBar extends React.Component {
 
                 <Menu.Item>
                     <Link to="/editaccount" className="item">
-                        {this.state.currentUser === "" ? <div/> : <Icon name="user Circle"/>}
+                        {this.state.currentUser === "" ? <div/> : <Icon name="user Circle" size={"big"}/>}
                         {this.state.currentUser}
                     </Link>
                 </Menu.Item>

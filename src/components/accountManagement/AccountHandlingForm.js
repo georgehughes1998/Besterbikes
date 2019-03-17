@@ -79,6 +79,7 @@ class AccountHandlingForm extends React.Component {
             <Form.Field>
                 <label>{label}</label>
                 <input
+                    size='big'
                     autofocus={type === "email" ? "true" : "false"}
                     {...input}
                     type={type}

@@ -160,11 +160,11 @@ class Statistics extends React.Component {
                 <DMYDropdown/>
                 <br/>
 
-                {this.renderStatistics()}
-
                 <Button onClick={() => this.retrieveStatistics(this.state.statisticType)}>
                     Update Statistics
                 </Button>
+
+                    {this.renderStatistics()}
 
                 </Container>
             </PageContainer>

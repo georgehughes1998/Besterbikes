@@ -8,6 +8,7 @@ import FirebaseError from "../FirebaseError";
 import ReservationComplete from "./ReservationConfirmation";
 import validate from './validate'
 import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox";
+import CustomLoader from "../CustomLoader";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
@@ -17,6 +18,7 @@ class ReservationHandlingForm extends React.Component {
     onSubmit = async (formValues) => {
         //TODO: If successful then Show complete screen with order overview
         if (this.props.header.title === "Payment") {
+            this.setState({submitted: true});
             return makeReservations(formValues)
                 .then((obj) => {
                     this.setState({success: "success"})
@@ -154,7 +156,9 @@ class ReservationHandlingForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            submitted: false
+        };
     }
 
     //Renders main body of an reservationHandlingForm
@@ -187,7 +191,13 @@ class ReservationHandlingForm extends React.Component {
                             {this.renderButtons}
                         </Container>
 
-                        {this.state.success ? <ReservationComplete/> : null}
+                        {this.state.success ? <ReservationComplete/> :null}
+                        {(this.state.submitted && !(this.state.success)) ?
+                            <CustomLoader
+                                text="Making your dreams come true"
+                                icon={"calendar"}
+                            />
+                            :null}
 
                     </Form>
                 </Segment>

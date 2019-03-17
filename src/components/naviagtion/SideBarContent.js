@@ -18,7 +18,7 @@ class SideBarContent extends React.Component {
                     <div key={0}>
                         <Link to={"/"}>
                             <Menu.Item>
-                                <Icon name={"home"}/>
+                                <Icon name={"home"} size={"massive"}/>
                                 Home
                             </Menu.Item>
                         </Link>

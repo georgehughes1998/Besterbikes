@@ -6,7 +6,7 @@ const NumberDropdown = (props) => {
     const createDropdownObject = () => {
 
         let DropdownArray = [];
-        let keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let keys = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
         keys.map((key, index) => {
             let text;

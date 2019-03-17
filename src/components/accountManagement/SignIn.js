@@ -18,7 +18,7 @@ const SignIn = ({error}) => {
 
             <Image
                 src={"https://drive.google.com/thumbnail?id=1DWfv569MmvtLipSX_vFQVihtJcbbmiTx"}
-                size='medium'
+                size='small'
                 alt="Besterbikes Logo"
                 centered
             />
