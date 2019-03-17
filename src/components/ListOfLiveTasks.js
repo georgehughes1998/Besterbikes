@@ -41,6 +41,15 @@ class ListOfLiveTasks extends React.Component {
     renderComments = (comments) => {
         return Object.values(comments).map((key, index) => {
 
+            let operatorName = "Unknown User";
+            console.log(this.props.operators);
+            const operator = this.props.operators[key.user];
+
+            if (operator) {
+                const nameObj = operator.name;
+                operatorName = nameObj['firstName'] + " " + nameObj['lastName'];
+            }
+
             return (
                 <Comment>
                     {console.log(key)}
@@ -48,8 +57,7 @@ class ListOfLiveTasks extends React.Component {
                         <Icon name={"bicycle"}/>
                     </Comment.Avatar>
                     <Comment.Content>
-                            {/*TODO: Refactor so operator name displays*/}
-                            <Comment.Author>{key.user}</Comment.Author>
+                            <Comment.Author>{operatorName}</Comment.Author>
                             <Comment.Metadata>{key.time.date} {key.time.time}</Comment.Metadata>
                             <Comment.Text>{key.comment}</Comment.Text>
                     </Comment.Content>
