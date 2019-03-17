@@ -156,14 +156,15 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(uid);
 
-    validateDateOfBirth(updateDateOfBirth);
-
     //Update given fields
     if (updateForename)       await usersDoc.update("name.firstName",updateForename);
     if (updateSurname)        await usersDoc.update("name.lastName",updateSurname);
-    if (updateDateOfBirth)    await usersDoc.update("dateOfBirth",updateDateOfBirth);
     if (updateEmail)          await auth.currentUser.updateEmail(updateEmail);
     if (updatePassword)       await auth.currentUser.updatePassword(updatePassword);
+    if (updateDateOfBirth) {
+        await usersDoc.update("dateOfBirth",updateDateOfBirth);
+        validateDateOfBirth(updateDateOfBirth);
+    }
 
     await incrementStatistic("authentication.updateDetails");
 
