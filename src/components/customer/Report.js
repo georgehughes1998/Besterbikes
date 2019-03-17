@@ -31,10 +31,12 @@ class Report extends React.Component {
     };
 
     //TODO: Add firebase function to make report
-    handleSubmit = async (values) => {
+    handleSubmit = async () => {
+        console.log(this.state);
+        this.setState({"readyToDisplay": false});
         return makeReport(this.state.reservation, this.state.category, this.state.description)
             .then((obj) => {
-                this.setState({"reportSubmitted": true})
+                this.setState({"reportSubmitted": true, "readyToDisplay": true})
             })
             .catch((err) => {
                 console.log(err.message);
@@ -99,7 +101,7 @@ class Report extends React.Component {
                             <TripsDropdown
                                 placeholder='Select Reservation'
                                 trips={this.props.trips}
-                                handleSubmit={(param, data) => this.setState({"reservation": data.value})}
+                                onChange={(param, data) => this.setState({"reservation": data.value})}
                             />
 
                             <br/>
