@@ -16,17 +16,12 @@ import {getOperators} from "../../firebase/users";
 
 class OperatorDetails extends React.Component {
 
-    async getStations() {
-        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-        this.props.loadStations(stations)
-    }
-
     //Cancels a reservation using firebase and updates displayed trips
     handleUpdateStatus = (taskId, status) => {
         console.log(taskId, status);
         return updateTaskStatus(taskId, status)
             .then((obj) => {
-                console.log(obj);
+                // console.log(obj);
                 this.retrieveOperatorTasks();
             })
             .catch((err) => {
@@ -36,8 +31,6 @@ class OperatorDetails extends React.Component {
                 })
             })
     };
-
-
     //Communicates with firebase to load in all trips
     handleReassignTask = async (taskID, comment, operatorId) => {
         const obj = await reassignTask(taskID, comment, operatorId);
@@ -45,7 +38,6 @@ class OperatorDetails extends React.Component {
             this.retrieveOperatorTasks();
         }
     };
-
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
@@ -61,11 +53,18 @@ class OperatorDetails extends React.Component {
     };
     //Communicates with firebase to load in all trips
     retrieveOperatorTasks = () => {
-        console.log(this.props.history.location.state.operatorName);
+        // console.log(this.props.history.location.state.operatorName);
         return getTasks(this.props.history.location.state.operatorName).then((obj => {
-            console.log(obj);
+            // console.log(obj);
             this.props.loadTasks(obj);
         }));
+    };
+    retrieveOperators = async () => {
+        const obj = await getOperators();
+        if (obj) {
+            this.props.loadOperators(obj);
+            this.setState({"operators": obj});
+        }
     };
 
     constructor(props) {
@@ -75,18 +74,15 @@ class OperatorDetails extends React.Component {
         };
     }
 
-    retrieveOperators = async () => {
-        const obj = await getOperators();
-        if (obj) {
-            this.props.loadOperators(obj);
-            this.setState({"operators": obj});
-        }
-    };
+    async getStations() {
+        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+        this.props.loadStations(stations)
+    }
 
     componentDidMount() {
         this.authenticateUser()
             .then((user) => {
-                if (user){
+                if (user) {
                     this.retrieveOperators();
                     this.getStations();
                     this.retrieveOperatorTasks();

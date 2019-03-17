@@ -177,7 +177,7 @@ const getTask = async (taskID) => {
     const taskDocument = tasksCollection.doc(taskID);
 
     const taskSnapshot = await taskDocument.get();
-    if (!taskSnapshot.exists)   throw new Error("Task does not exist.");
+    if (!taskSnapshot.exists) throw new Error("Task does not exist.");
     return taskSnapshot.data();
 
 };
@@ -202,8 +202,8 @@ export const updateTaskStatus = async (taskID, newStatus) => {
 
 export const reassignTask = async (taskID, comment, operatorID) => {
 
-    if (!taskID)                    throw new Error("No task was specified.");
-    if (!operatorID)                throw new Error("No operator was specified.");
+    if (!taskID) throw new Error("No task was specified.");
+    if (!operatorID) throw new Error("No operator was specified.");
     if (!comment || comment === "") throw new Error("No comment was given.");
 
     const db = firebase.firestore();
@@ -235,7 +235,7 @@ export const reassignTask = async (taskID, comment, operatorID) => {
 
 export const addTaskComment = async (taskID, comment) => {
 
-    if (!taskID)                    throw new Error("No task was specified.");
+    if (!taskID) throw new Error("No task was specified.");
     if (!comment || comment === "") throw new Error("No comment was given.");
 
     const auth = firebase.auth();

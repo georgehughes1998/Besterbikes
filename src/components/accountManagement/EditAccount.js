@@ -16,7 +16,7 @@ class EditAccount extends React.Component {
             .then(user => {
                 if (user === null)
                     this.props.history.push("signin");
-                    this.setState({currentUser: user});
+                this.setState({currentUser: user});
                 return user
             });
     };

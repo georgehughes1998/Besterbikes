@@ -34,18 +34,18 @@ const StationDropdown = (props) => {
                 onChange={(param, data) => props.input.input.onChange(data.value)}
             />
         )
-    }else{
-        return(
-                <Dropdown
-                    clearable
-                    fluid
-                    selection
-                    search
-                    placeholder='Select Station'
-                    options={createDropdownObject()}
-                    onChange={(param, data) => props.onChange(data.value)}
-                />
-            )
+    } else {
+        return (
+            <Dropdown
+                clearable
+                fluid
+                selection
+                search
+                placeholder='Select Station'
+                options={createDropdownObject()}
+                onChange={(param, data) => props.onChange(data.value)}
+            />
+        )
 
     }
 };

@@ -152,12 +152,12 @@ const unlockAccessory = async (accessoryID) => {
     const db = firebase.firestore();
 
     const accessoriesCollection = db.collection('accessories')
-        .where('status','==','reserved'); //Only let it be unlocked if it's reserved
+        .where('status', '==', 'reserved'); //Only let it be unlocked if it's reserved
     const accessoryDocument = accessoriesCollection.doc(accessoryID);
     const accessorySnapshot = await accessoryDocument.get();
 
     if (accessorySnapshot.exists)
-        await accessoryDocument.update('status','unlocked');
+        await accessoryDocument.update('status', 'unlocked');
     else
         throw new Error("Accessory is not available for unlocking.");
 
@@ -179,17 +179,16 @@ const returnAccessory = async (accessoryID) => {
     const db = firebase.firestore();
 
     const accessoriesCollection = db.collection('accessories')
-        .where('status','==','unlocked'); //Only let it be returned if it's unlocked
+        .where('status', '==', 'unlocked'); //Only let it be returned if it's unlocked
     const accessoryDocument = accessoriesCollection.doc(accessoryID);
     const accessorySnapshot = await accessoryDocument.get();
 
     if (accessorySnapshot.exists)
-        await accessoryDocument.update('status','available');
+        await accessoryDocument.update('status', 'available');
     else
         throw new Error("Accessory is not available for returning.");
 
 };
-
 
 
 export const returnBike = async (bikeID, stationID) => {
@@ -281,9 +280,9 @@ export const getUnlockedBikes = async () => {
 };
 
 
-export const unlockBikeOperator = async (bikeID, force=false) => {
+export const unlockBikeOperator = async (bikeID, force = false) => {
 
-    if (!bikeID)    throw new Error("No bike was specified.");
+    if (!bikeID) throw new Error("No bike was specified.");
 
     const db = firebase.firestore();
 
@@ -291,7 +290,7 @@ export const unlockBikeOperator = async (bikeID, force=false) => {
     const bikeDocument = bikesCollection.doc(bikeID);
     const bikeSnapshot = await bikeDocument.get();
 
-    if (!bikeSnapshot.exists)   throw new Error("Bike not found.");
+    if (!bikeSnapshot.exists) throw new Error("Bike not found.");
 
     const bikeData = bikeSnapshot.data();
     const bikeType = bikeData['type'];

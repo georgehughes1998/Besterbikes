@@ -21,12 +21,6 @@ class OperatorUnlockBike extends React.Component {
         this.setState({"currentUser": user.uid});
         return user
     };
-
-    async getStations() {
-        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
-        this.props.loadStations(stations)
-    }
-
     retrieveBikes = async (station) => {
 
         const obj = await getBikesAt(station);
@@ -44,12 +38,11 @@ class OperatorUnlockBike extends React.Component {
             });
             console.log(allBikes);
             this.setState({bikes: allBikes});
-        }else {
+        } else {
 
         }
 
     };
-
     handleUnlock = async () => {
         console.log(this.state);
         unlockBikeOperator(this.state.unlockBike)
@@ -71,8 +64,13 @@ class OperatorUnlockBike extends React.Component {
             currentUser: null,
             readyToDisplay: false,
             station: "",
-            bikes:[]
+            bikes: []
         };
+    }
+
+    async getStations() {
+        const stations = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+        this.props.loadStations(stations)
     }
 
     componentDidMount() {
@@ -97,12 +95,12 @@ class OperatorUnlockBike extends React.Component {
         return (
             <div>
                 <StationDropdown
-                    stations = {this.props.stations}
+                    stations={this.props.stations}
                     onChange={(station) => this.retrieveBikes(station)}
                 />
 
                 <br/>
-                {this.state.bikes.length>0?
+                {this.state.bikes.length > 0 ?
                     <BikesDropdown
                         fluid
                         selection
@@ -111,7 +109,7 @@ class OperatorUnlockBike extends React.Component {
                         onChange={(bike) => this.setState({unlockBike: bike})}
                         name="unlockTrip"
                     />
-                    :null
+                    : null
                 }
 
 

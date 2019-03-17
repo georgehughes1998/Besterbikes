@@ -16,11 +16,11 @@ export const getPrettyString = (theString) => {
         case "stationEdinburghUniversityLibrary":
             return "Edinburgh University Library";
         case "stationScottishParliament":
-            return "the Scottish Parliament";
+            return "The Scottish Parliament";
         case "stationMerchistonCrossroads":
             return "Merchiston Crossroads";
         case "stationRoyalBotanicGarden":
-            return "the Royal Botanic Garden";
+            return "The Royal Botanic Garden";
         case "stationPortobelloBeachNorth":
             return "Portobello Beach North";
         case "stationPortobelloBeachEast":

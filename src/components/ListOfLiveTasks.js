@@ -8,8 +8,6 @@ import OperatorDropdown from "./dropdowns/OperatorDropdown";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Comment from "semantic-ui-react/dist/commonjs/views/Comment/Comment";
 import TaskStatusDropdown from "./dropdowns/TaskStatusDropdown";
-import {getPrettyString} from "../dataHandling/prettyString";
-import {getUser} from "../firebase/authentication";
 
 class ListOfLiveTasks extends React.Component {
 
@@ -60,9 +58,9 @@ class ListOfLiveTasks extends React.Component {
                     {console.log(key)}
                     <Comment.Avatar src={image}/>
                     <Comment.Content>
-                            <Comment.Author>{operatorName}</Comment.Author>
-                            <Comment.Metadata>{key.time.date} at {key.time.time}</Comment.Metadata>
-                            <Comment.Text>{key.comment}</Comment.Text>
+                        <Comment.Author>{operatorName}</Comment.Author>
+                        <Comment.Metadata>{key.time.date} at {key.time.time}</Comment.Metadata>
+                        <Comment.Text>{key.comment}</Comment.Text>
                     </Comment.Content>
                 </Comment>
             )
@@ -106,7 +104,8 @@ class ListOfLiveTasks extends React.Component {
                     </Grid>
                 </Segment>
 
-        )}
+            )
+        }
     };
     getItemValues = (task, index) => {
 

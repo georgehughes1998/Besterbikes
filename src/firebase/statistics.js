@@ -185,9 +185,6 @@ export const getNumberOfReportsCreated = async (timeScale) => {
 };
 
 
-
-
-
 //Gets all the reservation statistics for all stations
 export const getAllReservationStatistics = async (year = -1, month = -1, day = -1) => {
 
@@ -221,8 +218,6 @@ export const getReservationStatistics = async (stationID, year = -1, month = -1,
 };
 
 
-
-
 //Gets all the station statistics for all stations
 export const getAllStationStatistics = async (year = -1, month = -1, day = -1) => {
 
@@ -252,8 +247,6 @@ export const getStationStatistics = async (stationID, year = -1, month = -1, day
     return await getStatistics(statisticPaths, year, month, day);
 
 };
-
-
 
 
 export const getAuthenticationStatistics = async (year = -1, month = -1, day = -1) => {

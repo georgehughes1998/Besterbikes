@@ -8,9 +8,9 @@ import {incrementStatistic} from "./statistics";
 //Make a customer report and attach it to a task, assigning that task to an operator
 export const makeReport = async (reservationID, category, comment) => {
 
-    if (!reservationID)                     throw new Error("No reservation was given");
-    if (!category)                          throw new Error("No category was given");
-    if (!comment || comment === "")         throw new Error("No comment was given");
+    if (!reservationID) throw new Error("No reservation was given");
+    if (!category) throw new Error("No category was given");
+    if (!comment || comment === "") throw new Error("No comment was given");
 
     const theReport = {};
 
