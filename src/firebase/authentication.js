@@ -155,7 +155,7 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
 
 };
 
-export const banUser = async (userID) => {
+export const blacklistUser = async (userID) => {
 
     const firebaseAdmin = require("firebase-admin");
     const serviceAccount = require("./initData/serviceKey.json");
