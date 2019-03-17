@@ -109,7 +109,7 @@ export const getUser = async (userID = "") => {
 
 
 //Set the current user's details in the firestore
-const setUserDetails = ({forename, surname, dateOfBirth, imageURL="https://drive.google.com/file/d/1sxlwkz2bSb1_gqPgwWNnB_fQmeKjFVE3/view?usp=sharing"}) => {
+const setUserDetails = ({forename, surname, dateOfBirth, imageURL="https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a"}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
