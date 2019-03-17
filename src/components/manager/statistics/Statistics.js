@@ -1,6 +1,11 @@
 import React from 'react'
 import PageContainer from "../../PageContainer";
-import {getAuthenticationStatistics, getStationStatistics, getStatistics} from "../../../firebase/statistics";
+import {
+    getAllStationStatistics,
+    getAuthenticationStatistics,
+    getStationStatistics,
+    getStatistics
+} from "../../../firebase/statistics";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
@@ -49,12 +54,14 @@ class Statistics extends React.Component {
                 return ;
             case "Reservations":
                 let keys = Object.keys(this.props.stations);
-                retrievedStatistics = [];
 
-                await Object.values(this.props.stations).map(async (key, index) => {
-                    console.log(keys[index], key);
-                    await retrievedStatistics.push(await getStationStatistics(keys[index]));
-                });
+                console.log(await getAllStationStatistics());
+                // retrievedStatistics = [];
+                //
+                // await Object.values(this.props.stations).map(async (key, index) => {
+                //     console.log(keys[index], key);
+                //     await retrievedStatistics.push(await getStationStatistics(keys[index]));
+                // });
 
                 this.setState({retrievedStatistics: retrievedStatistics, readyToViewLoadedStats: true});
                 return ;

@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 import {getDateString, getDay, getMonth, getYear} from "./time";
+import {getJSONFromFile} from "../dataHandling/handleJSON";
 
 
 // timeScale Argument Rules:
@@ -180,6 +181,25 @@ export const getNumberOfTasksExtended = async (timeScale) => {
 export const getNumberOfReportsCreated = async (timeScale) => {
     //TODO: Test
     return getSingleStatistic("report.make", timeScale);
+
+};
+
+
+export const getAllStationStatistics = async (year = -1, month = -1, day = -1) => {
+
+    const stationsObjects = JSON.parse(await getJSONFromFile("/JSONFiles/stations.json"));
+    const stations = Object.keys(stationsObjects);
+
+    const stationStatistics = {};
+
+    stations.forEach(async stationID => {
+
+        stationStatistics[stationID] = await getStationStatistics(stationID,year,month,day);
+        console.log(stationStatistics);
+
+    });
+
+    return stationStatistics;
 
 };
 
