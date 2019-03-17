@@ -4,12 +4,12 @@ import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import {Grid} from "semantic-ui-react";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
-import {getPrettyString} from "../../dataHandling/prettyString";
+import {getPrettyString} from "../../../dataHandling/prettyString";
 
-class StatisticSegment extends React.Component{
+class SimpleStatisticSegment extends React.Component{
 
     renderStatistics = () => {
-        // console.log("Seg", this.props);
+        console.log("SimpleSeg", this.props);
             if (this.props) {
                 return Object.values(this.props.values).map((key, index) => {
                     return (
@@ -44,4 +44,4 @@ class StatisticSegment extends React.Component{
     }
 }
 
-export default StatisticSegment
+export default SimpleStatisticSegment
