@@ -18,16 +18,16 @@ class DMYDropdown extends React.Component {
 
     daysInMonth = (iMonth, iYear) => {
         const date =  new Date(iYear, iMonth, 32).getDate();
-        console.log(date);
+        // console.log(date);
         return (32 - date);
     };
 
     renderDailyDropdown() {
 
         const days = [];
-        console.log(this.state.m);
+        // console.log(this.state.m);
         const daysInMonth = this.daysInMonth(this.state.m - 1, this.state.y);
-        console.log(daysInMonth);
+        // console.log(daysInMonth);
 
         for (let d = 1; d < daysInMonth + 1; d++) {
             days.push(

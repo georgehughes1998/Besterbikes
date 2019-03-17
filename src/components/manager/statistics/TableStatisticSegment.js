@@ -8,18 +8,16 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 class TableStatisticSegment extends React.Component{
 
     renderStatistics = () => {
-        console.log("TableSeg", this.props);
-        // if (this.props) {
-        //     return Object.values(this.props.values).map((key, index) => {
-        //         return (
-        //             <Grid.Row>
-        //                 Row
-        //             </Grid.Row>
-        //
-        //         )
-        //     })
-        // }
+        console.log(this.props.values.retrievedStatistics)
+
+        this.props.values.retrievedStatistics.map((key, index) => {
+            console.log(key)
+            console.log(index)
+        })
     };
+
+
+
 
     render(){
         return(

@@ -9,7 +9,7 @@ import {getPrettyString} from "../../../dataHandling/prettyString";
 class SimpleStatisticSegment extends React.Component{
 
     renderStatistics = () => {
-        console.log("SimpleSeg", this.props);
+        // console.log("SimpleSeg", this.props);
             if (this.props) {
                 return Object.values(this.props.values).map((key, index) => {
                     return (
