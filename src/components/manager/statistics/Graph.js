@@ -2,7 +2,7 @@ import React from "react";
 import {VictoryLine, VictoryChart, VictoryTheme, VictoryLabel} from 'victory';
 import Segment from "./SimpleStatisticSegment";
 
-var theData, theX, theY;
+var theData, theX, theY, theText;
 
 const theData = [
     {x: "02-03-19", y: 15},
@@ -29,10 +29,11 @@ class Graph extends React.Component {
         // }
 
         let data = theData;
+        let text = theText;
         let x = theX;
         let y = theY;
 
-        // console.log(this.props);
+        console.log(this.props);
 
         if (this.props) {
             if (this.props.data)
@@ -41,6 +42,8 @@ class Graph extends React.Component {
                 x = this.props.x;
             if (this.props.y)
                 y = this.props.y;
+            if (this.props.text)
+                text = this.props.text;
         }
 
         return (
@@ -52,6 +55,7 @@ class Graph extends React.Component {
                 padding={{top: 50, bottom: 50, left: 30, right: 30}}
                 domainPadding={20}
             >
+                <VictoryLabel text={text} x={225} y={30} textAnchor="middle"/>
 
                 <VictoryLine
                     data={data}

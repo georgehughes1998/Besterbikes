@@ -4,6 +4,7 @@ import Graph from "./Graph"
 import React from "react";
 import {getIndividualValues} from "./evaluateStatistics";
 import {changeNestedToGraphFormat} from "../../../firebase/statistics";
+import {getPrettyString} from "../../../dataHandling/prettyString";
 
 
 const graph = <Graph />
@@ -12,23 +13,25 @@ class LoadedStatistics extends React.Component {
 
     getGraphableStatistics(statisticValues) {
 
-        // changeNestedToGraphFormat()
-        console.log(statisticValues);
+        const theData = changeNestedToGraphFormat(statisticValues);
 
-        return [{x:1,y:2},{x:2,y:1},{x:3,y:9}];
+        console.log(theData);
+
+        return theData;
     }
 
-    renderSingleGraph(statistics) {
+    renderSingleGraph(statisticType,statistics) {
         return <Graph
-            x={"x"}
-            y={"y"}
+            x={"date"}
+            y={"value"}
             data={this.getGraphableStatistics(statistics)}
+            text={getPrettyString(statisticType)}
         />
     }
 
     renderGraphStatistics() {
 
-        let returnValue = <div></div>;
+        let returnValue = [];
 
         console.log(this.props.state.retrievedStatistics);
 
@@ -40,7 +43,7 @@ class LoadedStatistics extends React.Component {
 
             //For each statistic type, make a new graph and append it to the return value
             retrievedKeys.map(statisticKey => {
-                    returnValue += <div>{this.renderSingleGraph(retrievedStatistics[statisticKey])}</div>
+                    returnValue.push(<div>{this.renderSingleGraph(statisticKey,retrievedStatistics[statisticKey])}</div>);
                 }
             );
         }

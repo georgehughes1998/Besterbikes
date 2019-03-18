@@ -377,20 +377,31 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
 
 export const changeNestedToGraphFormat = (obj) => {
 
-    const newObj = {};
+    const newObj = [];
 
-    obj.map(year => {
-        const yearObj = obj[year];
-        yearObj.map(month => {
-            const monthObj = yearObj[month];
-            monthObj.map(day => {
+    const objKeys = Object.keys(obj);
 
-                const theValue = monthObj[day];
+    objKeys.map(yearKey => {
+        const year = yearKey;
+        const yearObj = obj[yearKey];
+        const yearObjKeys = Object.keys(yearObj);
+
+
+        yearObjKeys.map(monthKey => {
+            const month = monthKey;
+            const monthObj = yearObj[monthKey];
+            const monthObjKeys = Object.keys(monthObj);
+
+
+            monthObjKeys.map(dayKey => {
+
+                const day = dayKey;
+                const theValue = monthObj[dayKey];
 
                 const dateString = day.toString() + "-" + month.toString() + "-" + year.toString();
 
-                newObj['date'] = dateString;
-                newObj['value'] = theValue;
+                const newEntry = {date: dateString, value: theValue} ;
+                newObj.push(newEntry);
 
             })
         })
