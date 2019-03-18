@@ -6,7 +6,7 @@ import {Container, Grid, Header, Icon} from "semantic-ui-react";
 import PageContainer from "../PageContainer";
 import {getJSONFromFile} from "../../dataHandling/handleJSON";
 import connect from "react-redux/es/connect/connect";
-import {loadWebPages} from "../../redux/actions/index";
+import {loadWebpages} from "../../redux/actions/index";
 
 //TODO: Display message for each each user: Hello *Users first name*
 //TODO: Refactor main menu and make pretty
@@ -16,7 +16,7 @@ class MainMenu extends React.Component {
         super(props);
         this.state =
             {
-                webPages: {},
+                webpages: {},
                 menuItems: [
                     {
                         link: "/signin",
@@ -54,16 +54,16 @@ class MainMenu extends React.Component {
         if (user != null) {
             switch (user.type) {
                 case "customer":
-                    this.setState({menuItems: this.state.webPages.customer});
-                    this.props.loadWebPages(this.state.menuItems);
+                    this.setState({menuItems: this.state.webpages.customer});
+                    this.props.loadWebpages(this.state.menuItems);
                     return;
                 case "operator":
-                    this.setState({menuItems: this.state.webPages.operator});
-                    this.props.loadWebPages(this.state.menuItems);
+                    this.setState({menuItems: this.state.webpages.operator});
+                    this.props.loadWebpages(this.state.menuItems);
                     return;
                 case "manager":
-                    this.setState({menuItems: this.state.webPages.manager});
-                    this.props.loadWebPages(this.state.menuItems);
+                    this.setState({menuItems: this.state.webpages.manager});
+                    this.props.loadWebpages(this.state.menuItems);
                     return;
             }
         }
@@ -143,12 +143,12 @@ class MainMenu extends React.Component {
 
     componentDidMount() {
         this.authenticateUser().then((user) => this.renderUserSpecificContent(user));
-        this.getWebPagesJSON();
+        this.getWebpagesJSON();
     }
 
-    async getWebPagesJSON() {
-        const webPages = JSON.parse(await getJSONFromFile("/JSONFiles/webpages.json"));
-        this.setState({webPages: webPages});
+    async getWebpagesJSON() {
+        const webpages = JSON.parse(await getJSONFromFile("/JSONFiles/webpages.json"));
+        this.setState({webpages: webpages});
     }
 
     render() {
@@ -189,11 +189,11 @@ class MainMenu extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        webPages: state.user.webPages
+        webpages: state.user.webpages
     }
 };
 
 export default connect(
     mapStateToProps,
-    {loadWebPages}
+    {loadWebpages}
 )(MainMenu);

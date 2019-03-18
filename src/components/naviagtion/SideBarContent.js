@@ -4,14 +4,14 @@ import {connect} from "react-redux";
 import {Icon, Menu, Sidebar} from 'semantic-ui-react'
 
 import {changeSideBar} from "../../redux/actions/index";
-import {loadWebPages} from "../../redux/actions";
+import {loadWebpages} from "../../redux/actions";
 
 //Component that displays all content within Side Bar
 class SideBarContent extends React.Component {
 
     renderLinks = () => {
-        if (this.props.webPages) {
-            if (this.props.webPages[0]) {
+        if (this.props.webpages) {
+            if (this.props.webpages[0]) {
                 var icons = [];
 
                 icons.push(
@@ -28,10 +28,10 @@ class SideBarContent extends React.Component {
                 for (let i = 0; i < 4; i++) {
                     icons.push(
                         <div key={i + 1}>
-                            <Link to={this.props.webPages[i].link}>
+                            <Link to={this.props.webpages[i].link}>
                                 <Menu.Item>
-                                    <Icon name={this.props.webPages[i].icon}/>
-                                    {this.props.webPages[i].name}
+                                    <Icon name={this.props.webpages[i].icon}/>
+                                    {this.props.webpages[i].name}
                                 </Menu.Item>
                             </Link>
                         </div>
@@ -73,11 +73,11 @@ class SideBarContent extends React.Component {
 const mapStateToProps = (state) => {
     return {
         sideBarVisible: state.ui.sideBarVisible,
-        webPages: state.user.webPages
+        webpages: state.user.webpages
     }
 };
 
 export default withRouter(connect(
     mapStateToProps,
-    {changeSideBar, loadWebPages}
+    {changeSideBar, loadWebpages}
 )(SideBarContent));

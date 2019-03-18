@@ -9,6 +9,7 @@ import ReservationComplete from "./ReservationConfirmation";
 import validate from './validate'
 import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox";
 import CustomLoader from "../CustomLoader";
+import AccessoriesDropdown from "../dropdowns/AccessoriesDropdown";
 
 //TODO: Implement search to display stations by Category*
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
@@ -75,6 +76,14 @@ class ReservationHandlingForm extends React.Component {
                     <Form.Field>
                         <label>{label}</label>
                         <NumberBikesDropdown input={{input}}/>
+                        {this.renderReduxError(meta)}
+                    </Form.Field>
+                );
+            case "accessoriesDropdown":
+                return (
+                    <Form.Field>
+                        <label>{label}</label>
+                        <AccessoriesDropdown formValues= {this.props} input={{input}}/>
                         {this.renderReduxError(meta)}
                     </Form.Field>
                 );
@@ -158,7 +167,8 @@ class ReservationHandlingForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            submitted: false
+            submitted: false,
+            selectedStation: ""
         };
     }
 
