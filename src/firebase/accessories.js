@@ -14,6 +14,8 @@ import * as firebase from "firebase";
 //Get an array of the accessories as objects from a certain station
 export const getAccessories = async (stationID, filterStatus = "") => {
 
+    throw new Error("Don't call me.");
+
     const accessoriesObject = {};
 
     const db = firebase.firestore();
