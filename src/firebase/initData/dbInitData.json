@@ -394,5 +394,606 @@
   },
   "tasks": -1,
   "reports": -1,
-  "reservations": -1
+
+
+  "reservations": {
+    "DwKW24djeKseskl51PzO": {
+      "user": "olJdme65RlPo7xBsemu4Kazy6dri",
+      "bikeType": "mountain",
+
+      "creation": {
+        "time": {
+          "date": "10-03-2019",
+          "time": "19:32"
+        }
+      },
+
+      "start": {
+        "station": "stationRoyalBotanicGarden",
+        "time": {
+          "date": "11-03-2019",
+          "time": "12:40"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Qw38HN48sdbPoJ54mlVC": {
+      "user": "olJdme65RlPo7xBsemu4Kazy6dri",
+      "bikeType": "mountain",
+
+      "creation": {
+        "time": {
+          "date": "11-03-2019",
+          "time": "20:08"
+        }
+      },
+
+      "start": {
+        "station": "stationRoyalBotanicGarden",
+        "time": {
+          "date": "12-03-2019",
+          "time": "12:40"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "T34jdlmceOTe3dmaYen2": {
+      "user": "olJdme65RlPo7xBsemu4Kazy6dri",
+      "bikeType": "mountain",
+
+      "creation": {
+        "time": {
+          "date": "12-03-2019",
+          "time": "21:20"
+        }
+      },
+
+      "start": {
+        "station": "stationRoyalBotanicGarden",
+        "time": {
+          "date": "13-03-2019",
+          "time": "12:40"
+        }
+      },
+
+      "status": "cancelled"
+
+    },
+
+    "Rek6d7NKksdk74SJmx4l": {
+      "user": "olJdme65RlPo7xBsemu4Kazy6dri",
+      "bikeType": "mountain",
+
+      "creation": {
+        "time": {
+          "date": "13-03-2019",
+          "time": "19:12"
+        }
+      },
+
+      "start": {
+        "station": "stationRoyalBotanicGarden",
+        "time": {
+          "date": "14-03-2019",
+          "time": "12:40"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Ujdn79NndHS43jd3WjnS": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "10-03-2019",
+          "time": "17:13"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghZoo",
+        "time": {
+          "date": "11-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "D3jmdn867Bbdb234kkdf": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "10-03-2019",
+          "time": "17:15"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghUniversityLibrary",
+        "time": {
+          "date": "11-03-2019",
+          "time": "17:20"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Ys4m3kHJS3mgj59sdjJK": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "11-03-2019",
+          "time": "18:44"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghZoo",
+        "time": {
+          "date": "12-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Pdk7df9dfj4NjsdjBBlk": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "11-03-2019",
+          "time": "18:46"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghUniversityLibrary",
+        "time": {
+          "date": "12-03-2019",
+          "time": "17:20"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Sqj0jf84JShdjS3jd7N8": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "12-03-2019",
+          "time": "18:55"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghZoo",
+        "time": {
+          "date": "13-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Fsdj73hSH3j0dnsaKjas": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "12-03-2019",
+          "time": "18:57"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghUniversityLibrary",
+        "time": {
+          "date": "13-03-2019",
+          "time": "17:20"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Opdfk84jJSD4jdsj30sa": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "13-03-2019",
+          "time": "17:31"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghZoo",
+        "time": {
+          "date": "14-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "YdfJ4jd8HdfHw23g3iop": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "13-03-2019",
+          "time": "17:34"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghUniversityLibrary",
+        "time": {
+          "date": "14-03-2019",
+          "time": "17:20"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Rsdk74nIjfd4Jv54fgkf": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "14-03-2019",
+          "time": "18:19"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghZoo",
+        "time": {
+          "date": "15-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "GdfKke493nNJDjer84nJ": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "14-03-2019",
+          "time": "18:21"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghUniversityLibrary",
+        "time": {
+          "date": "15-03-2019",
+          "time": "17:20"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Hsak320sn32ncDq8Jdn4": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "17-03-2019",
+          "time": "18:33"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghZoo",
+        "time": {
+          "date": "18-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Wadm342ns65dfMdj43nN": {
+      "user": "6t4jsd3YtenJ8sm2Pdsd7xnr32tA",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "17-03-2019",
+          "time": "18:35"
+        }
+      },
+
+      "start": {
+        "station": "stationEdinburghUniversityLibrary",
+        "time": {
+          "date": "18-03-2019",
+          "time": "17:20"
+        }
+      },
+
+      "status": "inactive"
+
+    },
+
+    "IdsjJ4b5xi96klPsaq09": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "10-03-2019",
+          "time": "18:42"
+        }
+      },
+
+      "start": {
+        "station": "stationPortobelloBeachEast",
+        "time": {
+          "date": "11-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Esk3nGS43alkN94nxqO1": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "10-03-2019",
+          "time": "18:44"
+        }
+      },
+
+      "start": {
+        "station": "stationHaymarket",
+        "time": {
+          "date": "11-03-2019",
+          "time": "17:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Wsdk58VnN2sll20VxmaQ": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "11-03-2019",
+          "time": "19:36"
+        }
+      },
+
+      "start": {
+        "station": "stationPortobelloBeachEast",
+        "time": {
+          "date": "12-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "JsdmHS4jn3sJpql2MsdU": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "11-03-2019",
+          "time": "19:38"
+        }
+      },
+
+      "start": {
+        "station": "stationHaymarket",
+        "time": {
+          "date": "12-03-2019",
+          "time": "17:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Zsj64An2hEwm83mNfp53": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "12-03-2019",
+          "time": "19:58"
+        }
+      },
+
+      "start": {
+        "station": "stationPortobelloBeachEast",
+        "time": {
+          "date": "13-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Ysdn79jdNek3S23mcFsK": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "12-03-2019",
+          "time": "20:01"
+        }
+      },
+
+      "start": {
+        "station": "stationHaymarket",
+        "time": {
+          "date": "13-03-2019",
+          "time": "17:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Hsdf7n3naQmeWkgk93e2": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "13-03-2019",
+          "time": "19:51"
+        }
+      },
+
+      "start": {
+        "station": "stationPortobelloBeachEast",
+        "time": {
+          "date": "14-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Bsdk43kHsal2KsDrj43l": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "13-03-2019",
+          "time": "19:53"
+        }
+      },
+
+      "start": {
+        "station": "stationHaymarket",
+        "time": {
+          "date": "14-03-2019",
+          "time": "17:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Sfdj632bjkdJh32nNdna": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "13-03-2019",
+          "time": "19:23"
+        }
+      },
+
+      "start": {
+        "station": "stationPortobelloBeachEast",
+        "time": {
+          "date": "14-03-2019",
+          "time": "08:30"
+        }
+      },
+
+      "status": "complete"
+
+    },
+
+    "Ljsdk30vk4m0c7y6m34m": {
+      "user": "6Truhdy7me3ponFhe34mlpHsw8x2",
+      "bikeType": "road",
+
+      "creation": {
+        "time": {
+          "date": "13-03-2019",
+          "time": "19:25"
+        }
+      },
+
+      "start": {
+        "station": "stationHaymarket",
+        "time": {
+          "date": "14-03-2019",
+          "time": "17:30"
+        }
+      },
+
+      "status": "inactive"
+
+    }
+
+  }
 }
