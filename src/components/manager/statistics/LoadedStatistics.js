@@ -33,24 +33,59 @@ class LoadedStatistics extends React.Component {
 
         let returnValue = [];
 
-        console.log(this.props.state.retrievedStatistics);
+        switch (this.props.state.statisticType) {
+            case "Authentication": {
 
 
-        if (this.props.state.retrievedStatistics) {
+                console.log(this.props.state.retrievedStatistics);
 
-            const retrievedStatistics = this.props.state.retrievedStatistics;
-            const retrievedKeys = Object.keys(retrievedStatistics);
 
-            //For each statistic type, make a new graph and append it to the return value
-            retrievedKeys.map(statisticKey => {
-                    returnValue.push(<div>{this.renderSingleGraph(statisticKey,retrievedStatistics[statisticKey])}</div>);
+                if (this.props.state.retrievedStatistics) {
+
+                    const retrievedStatistics = this.props.state.retrievedStatistics;
+                    const retrievedKeys = Object.keys(retrievedStatistics);
+
+                    //For each statistic type, make a new graph and append it to the return value
+                    retrievedKeys.map(statisticKey => {
+                            returnValue.push(
+                                <div>{this.renderSingleGraph(statisticKey, retrievedStatistics[statisticKey])}</div>);
+                        }
+                    );
                 }
-            );
+
+                //Return value should be a bunch of components
+                return returnValue;
+
+            }
+            case "Reservations": {
+
+                if (this.props.state.retrievedStatistics) {
+
+                    const retrievedStatistics = this.props.state.retrievedStatistics;
+                    const retrievedKeys = Object.keys(retrievedStatistics);
+
+                    retrievedKeys.map(stationID => {
+
+                        const stationKeys = Object.keys(retrievedStatistics[stationID]);
+
+                        stationKeys.map(statisticKey => {
+                                returnValue.push(
+                                    <div>{this.renderSingleGraph(statisticKey, retrievedStatistics[stationID][statisticKey])}</div>);
+                            }
+                        );
+
+                    });
+
+                    //For each statistic type, make a new graph and append it to the return value
+
+                }
+
+                //Return value should be a bunch of components
+                return returnValue;
+
+            }
+
         }
-
-        //Return value should be a bunch of components
-        return returnValue;
-
     }
 
 
