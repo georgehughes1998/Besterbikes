@@ -74,9 +74,9 @@ class Report extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: "",
-            description: "",
-            reservation: "",
+            category: "NOT SELECTED",
+            description: "NOT SELECTED",
+            reservation: "NOT SELECTED",
             error: "",
             readyToDisplay: false,
             operatorName: ""

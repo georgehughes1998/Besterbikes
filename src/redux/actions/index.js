@@ -34,10 +34,10 @@ export const loadOperators = (operators) => {
     }
 };
 
-export const loadWebPages = (webPages) => {
+export const loadWebpages = (webpages) => {
     return {
         type: 'LOAD_WEB_PAGES',
-        payload: webPages
+        payload: webpages
     }
 };
 

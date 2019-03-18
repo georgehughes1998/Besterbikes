@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
     status: {},
-    webPages: {}
+    webpages: {}
 };
 
 export default (state = INITIAL_STATE, {type, payload}) => {
@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, {type, payload}) => {
 
         case 'LOAD_WEB_PAGES':
             if (!(payload === {})) {
-                return {...state, webPages: payload}
+                return {...state, webpages: payload}
             }
             break;
 
