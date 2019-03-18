@@ -60,11 +60,11 @@ class SelectBikes extends React.Component {
                             label: 'Road Bikes',
                             type: 'bikeDropdown'
                         },
-                        accessories: {
-                            name: 'accessories',
-                            label: 'Accessories',
-                            type: 'accessoriesDropdown'
-                        },
+                        // accessories: {
+                        //     name: 'accessories',
+                        //     label: 'Accessories',
+                        //     type: 'accessoriesDropdown'
+                        // },
 
                     }}
 
