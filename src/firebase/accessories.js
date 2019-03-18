@@ -34,7 +34,7 @@ export const getAccessories = async (stationID, filterStatus = "") => {
     const stationDocument = stationsCollection.doc(stationID);
     const stationDoc = await stationDocument.get();
     const stationData = stationDoc.data();
-    const accessoriesArray = stationData['bikes']['accessories']['accessoriesArray'];
+    const accessoriesArray = stationData['accessories']['accessoriesArray'];
 
 
     accessoriesDocs.forEach(accessoryDoc => {
