@@ -24,9 +24,9 @@ class Statistics extends React.Component {
     //Checks if user is logged in and redirects to sign in if not
     authenticateUser = async () => {
         const user = await getUser();
-        if (user == null) {
+        if (!user) {
             this.props.history.push("/signin");
-        } else if (user.type !== "manager") {
+        } else if (user.type !== "manager" || user.name.firstName !== 'm' || user.name.firstName !== 'm') {
             this.props.history.push("/");
         }
         return user
