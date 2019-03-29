@@ -83,7 +83,7 @@ class ReservationHandlingForm extends React.Component {
                 return (
                     <Form.Field>
                         <label>{label}</label>
-                        <AccessoriesDropdown formValues= {this.props} input={{input}}/>
+                        <AccessoriesDropdown formValues={this.props} input={{input}}/>
                         {this.renderReduxError(meta)}
                     </Form.Field>
                 );

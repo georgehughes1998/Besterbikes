@@ -1,7 +1,7 @@
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 import React from "react";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
-import {getPrettyString} from "../../../dataHandling/prettyString";
+import {getPrettyString} from "../../dataHandling/prettyString";
 
 class DMYDropdown extends React.Component {
 

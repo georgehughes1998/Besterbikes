@@ -9,9 +9,9 @@ import {
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
-import StatisticTypeDropdown from "./StatisticTypeDropdown";
+import StatisticTypeDropdown from "../../dropdowns/StatisticTypeDropdown";
 import TimeScaleRadios from "./TimeScaleRadios";
-import DMYDropdown from "./DMYDropdowns";
+import DMYDropdown from "../../dropdowns/DMYDropdowns";
 import {getJSONFromFile} from "../../../dataHandling/handleJSON";
 import connect from "react-redux/es/connect/connect";
 import {loadStations} from "../../../redux/actions";
@@ -52,7 +52,7 @@ class Statistics extends React.Component {
     }
 
     componentDidMount() {
-        this.authenticateUser().then((obj)=>{
+        this.authenticateUser().then((obj) => {
             if (!this.props.stations)
                 this.getStations();
         })

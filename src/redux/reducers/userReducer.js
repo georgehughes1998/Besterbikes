@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     status: {},
-    webpages: {}
+    webpages: {},
+    currentUser: {}
 };
 
 export default (state = INITIAL_STATE, {type, payload}) => {
@@ -16,6 +17,12 @@ export default (state = INITIAL_STATE, {type, payload}) => {
         case 'LOAD_WEB_PAGES':
             if (!(payload === {})) {
                 return {...state, webpages: payload}
+            }
+            break;
+
+        case 'LOAD_CURRENT_USER':
+            if (!(payload === {})) {
+                return {...state, currentUser: payload}
             }
             break;
 

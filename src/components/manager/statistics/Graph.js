@@ -1,6 +1,5 @@
 import React from "react";
-import {VictoryLine, VictoryChart, VictoryTheme, VictoryLabel} from 'victory';
-import Segment from "./SimpleStatisticSegment";
+import {VictoryChart, VictoryLabel, VictoryLine, VictoryTheme} from 'victory';
 
 var theData, theX, theY, theText;
 
@@ -18,6 +17,16 @@ const theData = [
 
 
 class Graph extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            x: theX,
+            y: theY,
+            data: theData
+        };
+    }
 
     getChart() {
 
@@ -60,7 +69,7 @@ class Graph extends React.Component {
                 <VictoryLine
                     data={data}
                     interpolation={'natural'}
-                    style={{ data: { stroke: "#2976c4", strokeWidth: 5, strokeLinecap: "round" } }}
+                    style={{data: {stroke: "#2976c4", strokeWidth: 5, strokeLinecap: "round"}}}
                     labelComponent={<VictoryLabel renderInPortal dy={-10}/>}
                     labels={(datum) => datum[y]}
 
@@ -74,22 +83,10 @@ class Graph extends React.Component {
 
     };
 
-    constructor(props)
-    {
-        super(props);
-
-        this.state = {
-            x: theX,
-            y: theY,
-            data: theData
-        };
-    }
-
-
     render() {
         return (
             <div>
-                {this.getChart(this.state.x,this.state.y,this.state.data)}
+                {this.getChart(this.state.x, this.state.y, this.state.data)}
             </div>
         );
     }

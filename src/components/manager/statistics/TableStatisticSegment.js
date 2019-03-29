@@ -40,24 +40,24 @@ class TableStatisticSegment extends React.Component {
 
         return Object.values(this.props.values.retrievedStatistics).map((stationStats, index) => {
             // console.log(stationStats);
-        //     console.log(keys[index]);
+            //     console.log(keys[index]);
             return (
                 <Table.Row>
                     <Table.Cell>
-                         {getPrettyString(keys[index])}
+                        {getPrettyString(keys[index])}
                     </Table.Cell>
                     {this.renderStatisticsColumns(stationStats)}
-                 </Table.Row>
-             )
+                </Table.Row>
+            )
         })
     };
 
-    renderHeaderRow(){
-        if(this.props.name === "Reservations"){
-            return(
+    renderHeaderRow() {
+        if (this.props.name === "Reservations") {
+            return (
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell rowSpan='2' >Station Name</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2'>Station Name</Table.HeaderCell>
                         <Table.HeaderCell colSpan='2'>Made</Table.HeaderCell>
                         <Table.HeaderCell colSpan='2'>Cancelled</Table.HeaderCell>
                     </Table.Row>
@@ -69,23 +69,23 @@ class TableStatisticSegment extends React.Component {
                     </Table.Row>
                 </Table.Header>
             )
-        }else{
-            return(
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell rowSpan='2' >Station Name</Table.HeaderCell>
-                            <Table.HeaderCell rowSpan='2'>Returned</Table.HeaderCell>
-                            <Table.HeaderCell colSpan='2'>Unlocked</Table.HeaderCell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.HeaderCell>Road</Table.HeaderCell>
-                            <Table.HeaderCell>Mountain</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                )
+        } else {
+            return (
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell rowSpan='2'>Station Name</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2'>Returned</Table.HeaderCell>
+                        <Table.HeaderCell colSpan='2'>Unlocked</Table.HeaderCell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.HeaderCell>Road</Table.HeaderCell>
+                        <Table.HeaderCell>Mountain</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+            )
 
         }
-}
+    }
 
 
     render() {

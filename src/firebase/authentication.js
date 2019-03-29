@@ -110,7 +110,7 @@ export const getUser = async (userID = "") => {
 
 
 //Set the current user's details in the firestore
-const setUserDetails = ({forename, surname, dateOfBirth, email, imageURL="https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a"}) => {
+const setUserDetails = ({forename, surname, dateOfBirth, email, imageURL = "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a"}) => {
 
     const auth = firebase.auth();
     const uid = auth.currentUser.uid;
@@ -157,16 +157,16 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     const usersDoc = usersCollection.doc(uid);
 
     //Update given fields
-    if (updateForename)       await usersDoc.update("name.firstName",updateForename);
-    if (updateSurname)        await usersDoc.update("name.lastName",updateSurname);
-    if (updateImageURL)        await usersDoc.update("imageURL",updateImageURL);
-    if (updatePassword)       await auth.currentUser.updatePassword(updatePassword);
-    if (updateEmail)          {
+    if (updateForename) await usersDoc.update("name.firstName", updateForename);
+    if (updateSurname) await usersDoc.update("name.lastName", updateSurname);
+    if (updateImageURL) await usersDoc.update("imageURL", updateImageURL);
+    if (updatePassword) await auth.currentUser.updatePassword(updatePassword);
+    if (updateEmail) {
         await auth.currentUser.updateEmail(updateEmail);
-        await await usersDoc.update("email",updateEmail);
+        await await usersDoc.update("email", updateEmail);
     }
     if (updateDateOfBirth) {
-        await usersDoc.update("dateOfBirth",updateDateOfBirth);
+        await usersDoc.update("dateOfBirth", updateDateOfBirth);
         validateDateOfBirth(updateDateOfBirth);
     }
 
@@ -182,6 +182,6 @@ export const blacklistUser = async (userID) => {
     const usersCollection = db.collection('users');
     const usersDoc = usersCollection.doc(userID);
 
-    await usersDoc.update('disabled',true);
+    await usersDoc.update('disabled', true);
 
 };

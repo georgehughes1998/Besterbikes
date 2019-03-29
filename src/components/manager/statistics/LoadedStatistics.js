@@ -7,7 +7,7 @@ import {changeNestedToGraphFormat} from "../../../firebase/statistics";
 import {getPrettyString} from "../../../dataHandling/prettyString";
 
 
-const graph = <Graph />
+const graph = <Graph/>
 
 class LoadedStatistics extends React.Component {
 
@@ -20,7 +20,7 @@ class LoadedStatistics extends React.Component {
         return theData;
     }
 
-    renderSingleGraph(statisticType,statistics) {
+    renderSingleGraph(statisticType, statistics) {
         return <Graph
             x={"date"}
             y={"value"}

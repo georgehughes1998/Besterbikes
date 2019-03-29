@@ -19,7 +19,7 @@ class AccessoriesDropdown extends React.Component {
 
         const station = this.props._reduxForm.values.station;
 
-        if(station){
+        if (station) {
             this.getAccessories(station)
         }
 

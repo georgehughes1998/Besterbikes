@@ -12,6 +12,14 @@ import {loadWebpages} from "../../redux/actions/index";
 //TODO: Refactor main menu and make pretty
 class MainMenu extends React.Component {
 
+    //Checks if user is logged in and redirects to sign in if not
+    authenticateUser = async () => {
+        const user = await getUser();
+        if (user === null)
+            this.props.history.push("signin");
+        return user
+    };
+
     constructor(props) {
         super(props);
         this.state =
@@ -40,14 +48,6 @@ class MainMenu extends React.Component {
                     },
                 ]
             }
-    };
-
-    //Checks if user is logged in and redirects to sign in if not
-    authenticateUser = async () => {
-        const user = await getUser();
-        if (user === null)
-            this.props.history.push("signin");
-        return user
     };
 
     renderUserSpecificContent(user) {

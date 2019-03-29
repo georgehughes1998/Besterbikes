@@ -54,3 +54,10 @@ export const updateUserStatus = (status) => {
         payload: status
     }
 };
+
+export const loadCurrentUser = (user) => {
+    return {
+        type: 'LOAD_CURRENT_USER',
+        payload: user
+    }
+};
