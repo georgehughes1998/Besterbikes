@@ -8,7 +8,6 @@ import {getUser} from "../../firebase/authentication";
 import {getPrettyString} from "../../dataHandling/prettyString";
 
 
-//TODO: Make TopMenuBar Sticky
 class TopMenuBar extends React.Component {
 
     handleHideClick = () => this.props.changeSideBar("Hide");

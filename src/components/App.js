@@ -29,7 +29,6 @@ import OperatorDetails from "./manager/OperatorDetails";
 
 
 //TODO: Add prop types and typescript to app
-//TODO: Move UI props over to JSON
 class App extends React.Component {
 
     componentDidMount() {

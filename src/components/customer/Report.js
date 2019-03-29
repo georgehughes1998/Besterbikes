@@ -31,7 +31,6 @@ class Report extends React.Component {
         }
     };
 
-    //TODO: Add firebase function to make report
     handleSubmit = async () => {
         console.log(this.state);
         this.setState({"readyToDisplay": false});
@@ -66,7 +65,7 @@ class Report extends React.Component {
             } else {
                 return "";
             }
-        })
+        });
 
         return opName;
     };
@@ -153,7 +152,7 @@ class Report extends React.Component {
                                 onClick={() => this.handleSubmit(this.state)}
                             />
 
-                            {this.state.error != "" ? <FirebaseError error={this.state.error}/> : null}
+                            {this.state.error !== "" ? <FirebaseError error={this.state.error}/> : null}
 
                         </Form>
                     </Container>

@@ -11,12 +11,6 @@ import ListOfLiveTrips from "../ListOfLiveTrips";
 import CustomLoader from "../CustomLoader";
 
 
-//TODO: Implement loader
-//TODO: Show google maps on active trips
-//TODO: Review columns and desktop/mobile compatability
-//TODO: Display cancelled image
-//TODO: Make cancel icon a button
-
 class MyTrips extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not

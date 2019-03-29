@@ -37,7 +37,7 @@ class ListOfLiveTasks extends React.Component {
     };
 
     renderComments = (comments) => {
-        return Object.values(comments).map((key, index) => {
+        return Object.values(comments).map((key) => {
 
             let operatorName = "Unknown User";
             let image = "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/no_image.png?alt=media&token=95ccf5cb-13b6-4089-8e83-7e73f1fee62a";
@@ -72,7 +72,7 @@ class ListOfLiveTasks extends React.Component {
         console.log(this.state.viewTasksWithStatus, status);
         if (this.state.viewTasksWithStatus.length === 0 || this.state.viewTasksWithStatus.includes(status)) {
             return (
-                //TODO: Make this into own prop
+
 
                 <Segment color={color} fluid>
                     <Grid>
@@ -111,7 +111,6 @@ class ListOfLiveTasks extends React.Component {
 
         let keys = Object.keys(this.props.items);
 
-        const headerSub = ``;
 
         switch (task['status']) {
             case "pending":

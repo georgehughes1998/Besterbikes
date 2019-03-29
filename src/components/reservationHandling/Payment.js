@@ -4,7 +4,6 @@ import validate from './validate'
 import ReservationHandlingForm from "./ReservationHandlingForm";
 
 
-//TODO: Add default payment options
 //Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 const Payment = (props) => {
 

@@ -29,7 +29,7 @@ class CreateTask extends React.Component {
 
         }
     };
-    //TODO: Add firebase function to create a task
+
     handleSubmit = async () => {
         console.log("this.state");
         return makeNewTask({
@@ -38,7 +38,7 @@ class CreateTask extends React.Component {
             comment: this.state.description
         })
             .then((obj) => {
-                console.log(obj)
+                console.log(obj);
                 this.setState({taskCreated: true});
             })
             .catch((err) => {
@@ -108,7 +108,7 @@ class CreateTask extends React.Component {
 
                         <br/>
                         <br/>
-                        {this.state.error != "" ? <FirebaseError error={this.state.error}/> : null}
+                        {this.state.error !== "" ? <FirebaseError error={this.state.error}/> : null}
                         <Button
                             content="Create Task"
                             onClick={() => this.handleSubmit(this.state)}

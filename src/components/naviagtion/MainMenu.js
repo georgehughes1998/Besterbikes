@@ -8,8 +8,7 @@ import {getJSONFromFile} from "../../dataHandling/handleJSON";
 import connect from "react-redux/es/connect/connect";
 import {loadWebpages} from "../../redux/actions/index";
 
-//TODO: Display message for each each user: Hello *Users first name*
-//TODO: Refactor main menu and make pretty
+
 class MainMenu extends React.Component {
 
     //Checks if user is logged in and redirects to sign in if not

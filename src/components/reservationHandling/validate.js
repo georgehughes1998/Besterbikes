@@ -1,4 +1,4 @@
-//TODO: Implement app wide vaidation
+
 const validate = values => {
     const errors = {};
     if (!values.firstName) {
@@ -20,7 +20,6 @@ const validate = values => {
         errors.roadBikes = "You must select at least 1 bike to rent"
     }
 
-    //TODO: Fix error that is preventing this from showing
     if (!values.startDate) {
         errors.startDate = "You must select a valid start date for your reservation"
     }
@@ -33,7 +32,6 @@ const validate = values => {
         errors.startTime = "You must select a valid start date and time for your reservation"
     }
 
-    //TODO: Refactor Georges duplicate code
     const startTimeDate = Date.parse(values.startDate + " " + values.startTime);
     const currentTime = new Date();
 

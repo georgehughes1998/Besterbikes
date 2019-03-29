@@ -11,17 +11,16 @@ import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox"
 import CustomLoader from "../CustomLoader";
 import AccessoriesDropdown from "../dropdowns/AccessoriesDropdown";
 
-//TODO: Implement search to display stations by Category*
+
 //Class to render a form related to firestore regarding reserving a bike flow and handle the submission
 class ReservationHandlingForm extends React.Component {
 
     //Calls firebase to submit details from form and manage any errors
     onSubmit = async (formValues) => {
-        //TODO: If successful then Show complete screen with order overview
         if (this.props.header.title === "Payment") {
             this.setState({submitted: true});
             return makeReservations(formValues)
-                .then((obj) => {
+                .then(() => {
                     this.setState({success: "success"})
                 })
                 .catch((err) => {
@@ -96,7 +95,6 @@ class ReservationHandlingForm extends React.Component {
 
             case "readOnly":
                 return (
-                    //TODO: Display station text not value
                     <Form.Field required>
                         <label>{label}</label>
                         <input

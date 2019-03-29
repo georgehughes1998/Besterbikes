@@ -80,7 +80,7 @@ class AccountHandlingForm extends React.Component {
                 <label>{label}</label>
                 <input
                     size='big'
-                    autofocus={type === "email" ? "true" : "false"}
+                    autoFocus={type === "email" ? "true" : "false"}
                     {...input}
                     type={type}
                 />
@@ -130,7 +130,6 @@ class AccountHandlingForm extends React.Component {
     }
 }
 
-// TODO: Fix validation and Use functions in Props object to validate
 //Validates inputs using redux forms
 const validate = (formValues) => {
 

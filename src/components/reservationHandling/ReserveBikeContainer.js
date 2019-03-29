@@ -6,7 +6,6 @@ import ReservationHandlingFormWizard from "./ReservationHandlingFormWizard";
 import {Segment} from "semantic-ui-react";
 
 
-// TODO: Review content of steps and consider using JSON file to store*/
 const ReserveBikeContainer = () => {
 
     return (

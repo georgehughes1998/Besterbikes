@@ -7,7 +7,6 @@ import AccountForm from "./AccountHandlingForm";
 import PageContainer from "../PageContainer";
 
 
-//TODO: Implement spinning wheels for loading icon
 //Component that passes relevant fields to PageContainer for a signin
 const SignIn = ({error}) => {
 

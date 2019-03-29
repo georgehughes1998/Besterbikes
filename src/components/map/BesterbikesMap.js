@@ -9,9 +9,6 @@ import {withRouter} from "react-router-dom";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 
-//TODO: Implement loader correctly
-//TODO: Render markers red or green bikes depending on spaces available
-//TODO: List of stations displayed beside bike
 
 export class BesterbikesMap extends Component {
 
@@ -45,7 +42,6 @@ export class BesterbikesMap extends Component {
     async componentDidMount() {
         const user = await this.authenticateUser();
         if (user) {
-            //TODO: Move to Redux
             if (!(this.state.mapJSON === {})) {
                 await this.getMapJSON();
             }
@@ -74,7 +70,7 @@ export class BesterbikesMap extends Component {
         }
     }
 
-    onMarkerClick(props, marker, e) {
+    onMarkerClick(props, marker) {
         this.setState({
             selectedPlace: props,
             activeMarker: marker,

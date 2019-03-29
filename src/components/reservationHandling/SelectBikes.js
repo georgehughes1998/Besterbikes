@@ -6,8 +6,7 @@ import ReservationHandlingForm from "./ReservationHandlingForm";
 import {Segment} from "semantic-ui-react";
 import BesterbikesMap from "../map/BesterbikesMap";
 
-//TODO: Render values in dropdown
-// TODO: Move map into segment and fix diaplsy issues
+
 //Component that passes relevant fields to ReservationHandlingForm for a reserving a bike process
 class SelectBikes extends React.Component {
 

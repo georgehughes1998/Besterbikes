@@ -4,7 +4,6 @@ import {Dropdown} from "semantic-ui-react";
 
 import {loadStations} from "../../redux/actions/index";
 
-//TODO: Add more detail to dropdown
 //Component that loads a dropdown box with all station details
 const StationDropdown = (props) => {
 

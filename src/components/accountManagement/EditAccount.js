@@ -25,7 +25,6 @@ class EditAccount extends React.Component {
         await this.authenticateUser();
     }
 
-//TODO: Make fields display current users details
     render() {
         return (
             <PageContainer>
@@ -34,7 +33,6 @@ class EditAccount extends React.Component {
                 {/*Sign Up Form*/}
                 <AccountForm
                     fields={{
-                        //TODO: Implement so these fields can be changed
                         Email: {
                             name: 'updateEmail',
                             label: 'Email',
@@ -77,6 +75,6 @@ class EditAccount extends React.Component {
     }
 
 
-};
+}
 
 export default EditAccount

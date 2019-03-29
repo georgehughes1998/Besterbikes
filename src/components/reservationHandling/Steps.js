@@ -5,8 +5,6 @@ import {formValueSelector, reduxForm} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 
 
-//TODO: Change functionality of clicking steps to work with redux form
-//TODO: Implement with error values
 //Display semantic UI steps at bottom of form that are marked complete when relevant fields from form has values
 let Steps = (props) => {
 

@@ -4,7 +4,6 @@ import DateAndTime from './DateAndTime'
 import Confirmation from "./ReviewOrder";
 import Payment from "./Payment";
 
-//TODO: Navigate to complete page after submitting form
 //Adpated code from redux form that builds multistep form
 class ReservationHandlingFormWizard extends Component {
 
