@@ -1,5 +1,8 @@
 //This file is to be run for the sake of preparing the firestore for INITIAL testing/use.
 
+// It uses the firebase admin functionality and a JSON object stored in a local file
+// by looping over each sub-object in the file and adding it's contents to the firestore
+// It also adds users by using the firebase admin's authentication functionality
 
 const firebaseAdmin = require("firebase-admin");
 
