@@ -198,7 +198,7 @@ const unlockAccessory = async (accessoryID) => {
         await accessoryDocument.update('status', 'unlocked');
     else
         throw new Error("Accessory is not available for unlocking.");
-        //If it doesn't exist, throw an error
+    //If it doesn't exist, throw an error
 
 };
 
@@ -230,7 +230,7 @@ const returnAccessory = async (accessoryID) => {
         await accessoryDocument.update('status', 'available');
     else
         throw new Error("Accessory is not available for returning.");
-        //Otherwise throw an error
+    //Otherwise throw an error
 
 };
 
@@ -337,7 +337,7 @@ export const getUnlockedBikes = async () => {
         }
         else
             console.log("Unlocked bike " + singleDoc.id + " found without reservation.");
-            //A console warning in the case that a bike without a reservation has been found here - this should NOT happen
+        //A console warning in the case that a bike without a reservation has been found here - this should NOT happen
 
     });
 

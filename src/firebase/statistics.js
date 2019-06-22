@@ -65,8 +65,7 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
     let statisticValue;
 
     //If there is no document with this date
-    if (statisticSnapshot.empty)
-    {
+    if (statisticSnapshot.empty) {
         //Create an object with the current date
         const statisticObject = {date: {day, month, year}};
 
@@ -79,8 +78,7 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
     }
 
     //If there already exists a document with this date
-    else
-    {
+    else {
         //Get the id and data from the first document (there should only be one)
         statisticID = statisticSnapshot.docs[0].id;
         let statisticValue = statisticSnapshot.docs[0].data();
@@ -119,7 +117,6 @@ export const incrementStatistic = async (statisticType, incrementAmount = 1) => 
     }
 
 };
-
 
 
 //Gets all the reservation statistics for all stations
@@ -340,7 +337,6 @@ const getStatistics = async (statisticTypes, year = -1, month = -1, day = -1) =>
 };
 
 
-
 //Function used by react component to turn the gathered statistics data into a
 //format that can be understood by Victory Graph.
 export const changeNestedToGraphFormat = (obj) => {
@@ -380,7 +376,7 @@ export const changeNestedToGraphFormat = (obj) => {
                 const dateString = day.toString() + "-" + month.toString() + "-" + year.toString();
 
                 //Create an entry containing the date and the statistic and add it to the return object
-                const newEntry = {date: dateString, value: theValue} ; //Since Victory Graph likes two dimensional objects, date is the x axis and value is the y axis
+                const newEntry = {date: dateString, value: theValue}; //Since Victory Graph likes two dimensional objects, date is the x axis and value is the y axis
                 newObj.push(newEntry);
 
             })

@@ -93,7 +93,7 @@ export const makeReservations = async ({startDate, startTime, station, mountainB
             station: station
         },
         creation: { //Creation date and time are selected using the current time
-                    //This is used to order trips upon displaying them
+            //This is used to order trips upon displaying them
             time: {
                 date: getCurrentDateString(),
                 time: getCurrentTimeString()
@@ -160,7 +160,9 @@ export const getNumberOfAvailableBikes = async (station, bikeType) => {
             return bikes['numberOfAvailableBikes'];
 
         })
-        .catch(err => {return err}); //Return the error upon failure
+        .catch(err => {
+            return err
+        }); //Return the error upon failure
 
 };
 
@@ -389,7 +391,7 @@ const reserveAccessory = async (accessoryID) => {
     if (accessorySnapshot.exists)
         await accessoryDocument.update('status', 'reserved');
     else
-        //Otherwise throw an error
+    //Otherwise throw an error
         throw new Error("Accessory is not available for reserving.");
 
 };

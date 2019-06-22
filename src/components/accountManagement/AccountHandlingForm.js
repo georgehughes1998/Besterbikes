@@ -12,9 +12,11 @@ class AccountHandlingForm extends React.Component {
 
     //Navigates or throws an error after a user has attempted to sign into firebase
     onAttemptedSignIn = (obj) => {
+        console.log("Signed In User");
+        console.log(obj)
         if (obj.user) {
+            this.props.getUserDetails(obj.user);
             this.props.history.push("/")
-
         } else {
             throw new SubmissionError({
                 _error: obj.message

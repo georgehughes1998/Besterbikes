@@ -48,13 +48,6 @@ export const loadCustomers = (customers) => {
     }
 };
 
-export const updateUserStatus = (status) => {
-    return {
-        type: 'UPDATE_USER_STATUS',
-        payload: status
-    }
-};
-
 export const loadCurrentUser = (user) => {
     return {
         type: 'LOAD_CURRENT_USER',

@@ -33,7 +33,9 @@ export const signIn = async ({email, password}) => {
             return user;
 
         })
-        .catch(async err => {return err;}); //Return the error upon failure
+        .catch(async err => {
+            return err;
+        }); //Return the error upon failure
 
 };
 
@@ -63,7 +65,9 @@ export const signUp = ({email, password, forename, surname, dateOfBirth, imageUR
             //Return the new user upon success
             return user;
         })
-        .catch(async err => {return err}); //Return the error upon failure
+        .catch(async err => {
+            return err
+        }); //Return the error upon failure
 };
 
 
@@ -83,7 +87,6 @@ export const signOut = () => {
             return err;
         });
 };
-
 
 
 //Function to return a user's details - without an argument it will return the logged in user's details
@@ -117,16 +120,20 @@ export const getUser = async (userID = "") => {
 
             return userDetailsData;
         }
-        else {throw new Error("Document '" + userID + "' doesn't exist")} //Return error if user wasn't found
+        else {
+            throw new Error("Document '" + userID + "' doesn't exist")
+        } //Return error if user wasn't found
 
     }
-    else {throw new Error("UserID was null");} //Return error if no user was given
+    else {
+        throw new Error("UserID was null");
+    } //Return error if no user was given
 
 };
 
 
 //Set the current user's details in the firestore
-const setUserDetails = ({forename, surname, dateOfBirth, email, imageURL="https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a"}) => {
+const setUserDetails = ({forename, surname, dateOfBirth, email, imageURL = "https://firebasestorage.googleapis.com/v0/b/bettersome-a5c8e.appspot.com/o/default_icon.png?alt=media&token=71282c13-cce6-4687-b9e9-7ac31883ed1a"}) => {
 
     //Get the logged in user's user ID
     const auth = firebase.auth();
@@ -176,19 +183,19 @@ export const updateUserDetails = async ({updateEmail, updatePassword, updateFore
     const usersDoc = usersCollection.doc(uid);
 
     //Update given fields
-    if (updateForename)       await usersDoc.update("name.firstName",updateForename);
-    if (updateSurname)        await usersDoc.update("name.lastName",updateSurname);
-    if (updateImageURL)       await usersDoc.update("imageURL",updateImageURL);
-    if (updatePassword)       await auth.currentUser.updatePassword(updatePassword); //Firebase authentication function for updating a user's password
-    if (updateEmail)          {
+    if (updateForename) await usersDoc.update("name.firstName", updateForename);
+    if (updateSurname) await usersDoc.update("name.lastName", updateSurname);
+    if (updateImageURL) await usersDoc.update("imageURL", updateImageURL);
+    if (updatePassword) await auth.currentUser.updatePassword(updatePassword); //Firebase authentication function for updating a user's password
+    if (updateEmail) {
         //Update the user's email both in firebase authentication and in their firestore document
         await auth.currentUser.updateEmail(updateEmail);
-        await await usersDoc.update("email",updateEmail);
+        await await usersDoc.update("email", updateEmail);
     }
     if (updateDateOfBirth) {
         //Validate and update date of birth
         validateDateOfBirth(updateDateOfBirth);
-        await usersDoc.update("dateOfBirth",updateDateOfBirth);
+        await usersDoc.update("dateOfBirth", updateDateOfBirth);
     }
 
     //Increment statistic for updating details
@@ -209,6 +216,6 @@ export const blacklistUser = async (userID) => {
     const usersDoc = usersCollection.doc(userID);
 
     //Set the disabled field to be true in the user's document
-    await usersDoc.update('disabled',true);
+    await usersDoc.update('disabled', true);
 
 };

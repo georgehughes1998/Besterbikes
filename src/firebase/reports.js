@@ -34,7 +34,7 @@ export const makeReport = async (reservationID, category, comment) => {
     theReport['category'] = category;
     theReport['comment'] = comment;
     theReport['time'] = { //Report's time object has two parts: one for date and one for time
-                          //which are specified by the functions for getting time strings
+        //which are specified by the functions for getting time strings
         date: getCurrentDateString(),
         time: getCurrentTimeString()
     };
