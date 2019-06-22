@@ -28,7 +28,6 @@ import Statistics from "./manager/statistics/Statistics";
 import OperatorDetails from "./manager/OperatorDetails";
 
 
-//TODO: Add prop types and typescript to app
 class App extends React.Component {
 
     componentDidMount() {
